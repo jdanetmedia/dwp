@@ -1,9 +1,16 @@
 /* Variables */
 /* Mixins */
 /* Base styling */
+.container {
+  margin-top: 60px; }
+
 /* Nav styling */
 .brand-logo {
   display: block;
   margin-right: 20px; }
+
+/* Product page styling */
+h1.product-title {
+  margin-top: 0; }
 
 /*# sourceMappingURL=custom.css.map */
