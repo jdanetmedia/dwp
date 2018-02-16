@@ -1,5 +1,6 @@
 <!DOCTYPE html>
   <html>
+    <html lang="da-DK">
     <head>
       <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
