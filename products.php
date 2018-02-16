@@ -24,6 +24,7 @@
     </div>
   </div>
   <div class="row">
+    <?php ?>
     <div class="col s12 m3">
       <div class="card">
         <div class="card-image">
