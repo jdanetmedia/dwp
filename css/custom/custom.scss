@@ -1,5 +1,5 @@
 /* Variables */
-
+$yellow: #f1c40f;
 /* Mixins */
 
 /* Base styling */
@@ -15,6 +15,24 @@
 /* Product page styling */
 h1.product-title {
   margin-top: 0;
+}
+
+.rated {
+  color: $yellow;
+}
+
+.reviews-top {
+  margin-bottom: 40px;
+  .review-top-txt {
+    margin-bottom: 20px;
+  }
+}
+
+.tabs .indicator {
+  background-color: $yellow;
+  a {
+    color: $yellow;
+  }
 }
 
 /* Products page styling*/

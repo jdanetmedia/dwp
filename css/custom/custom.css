@@ -13,6 +13,19 @@
 h1.product-title {
   margin-top: 0; }
 
+.rated {
+  color: #f1c40f; }
+
+.reviews-top {
+  margin-bottom: 40px; }
+  .reviews-top .review-top-txt {
+    margin-bottom: 20px; }
+
+.tabs .indicator {
+  background-color: #f1c40f; }
+  .tabs .indicator a {
+    color: #f1c40f; }
+
 /* Products page styling*/
 #price-slider {
   margin-top: 40px; }
