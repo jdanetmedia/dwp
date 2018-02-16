@@ -1,5 +1,4 @@
 /* Variables */
-$yellow: #f1c40f;
 
 /* Mixins */
 
@@ -18,6 +17,8 @@ h1.product-title {
   margin-top: 0;
 }
 
-.rated {
-  color: $yellow;
+/* Products page styling*/
+
+#price-slider {
+  margin-top: 40px;
 }
