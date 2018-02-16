@@ -32,6 +32,13 @@
         </div>
         <div class="card-action">
           <a href="#">$99.95</a>
+          <div class="stars-card">
+            <i class="material-icons tiny rated">star</i>
+            <i class="material-icons tiny rated">star</i>
+            <i class="material-icons tiny rated">star</i>
+            <i class="material-icons tiny rated">star</i>
+            <i class="material-icons tiny">star_border</i>
+          </div>
         </div>
       </div>
     </div>
