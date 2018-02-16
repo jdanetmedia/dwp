@@ -15,15 +15,17 @@
     <body>
       <nav class="teal">
         <div class="nav-wrapper">
-          <a href="#" class="brand-logo">Logo</a>
+          <a href="index.php" class="brand-logo">Logo</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><a href="products.php">Producks</a></li>
+            <li><a href="product.php">Jespers side</a></li>
             <li><a href="#">Ducking cart</a></li>
             <li><a href="contact.php">Quack at us</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
               <li><a href="products.php">Producks</a></li>
+              <li><a href="product.php">Jespers side</a></li>
               <li><a href="#">Ducking cart</a></li>
               <li><a href="contact.php">Quack at us</a></li>
           </ul>
