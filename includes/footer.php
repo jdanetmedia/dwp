@@ -29,7 +29,7 @@
       </div>
       <div class="footer-copyright">
         <div class="container">
-          <p class="center">© 2018 Copyright Text</p>
+          <p class="center">&copy; 2018 Copyright Text</p>
         </div>
       </div>
     </footer>

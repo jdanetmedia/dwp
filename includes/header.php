@@ -13,7 +13,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-      <nav class="teal lighten-3">
+      <nav class="teal">
         <div class="nav-wrapper">
           <a href="#!" class="brand-logo">Logo</a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
