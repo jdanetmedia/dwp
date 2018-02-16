@@ -1,6 +1,10 @@
 /* Variables */
 /* Mixins */
 /* Base styling */
+nav.teal {
+  margin-bottom: 60px;
+  border: 1px solid red; }
+
 /* Nav styling */
 .brand-logo {
   display: block;

@@ -9,7 +9,7 @@ $(document).ready(function() {
 // initialize slider
 var slider = document.getElementById('price-slider');
 noUiSlider.create(slider, {
- start: [20, 80],
+ start: [0, 100],
  connect: true,
  step: 1,
  orientation: 'horizontal', // 'horizontal' or 'vertical'
