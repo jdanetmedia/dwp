@@ -1,9 +1,10 @@
 /* Variables */
 $yellow: #f1c40f;
+$light-green: #009688;
 /* Mixins */
 
 /* Base styling */
-.container {
+.product-container {
   margin-top: 60px;
 }
 /* Nav styling */
@@ -28,10 +29,20 @@ h1.product-title {
   }
 }
 
-.tabs .indicator {
-  background-color: $yellow;
-  a {
-    color: $yellow;
+.tabs {
+  .tab {
+    a {
+      color: $light-green;
+    }
+    a.active {
+      color: $light-green;
+    }
+    a:hover {
+      color: $light-green;
+    }
+  }
+  .indicator {
+    background-color: $light-green;
   }
 }
 

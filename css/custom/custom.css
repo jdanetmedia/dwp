@@ -1,7 +1,7 @@
 /* Variables */
 /* Mixins */
 /* Base styling */
-.container {
+.product-container {
   margin-top: 60px; }
 
 /* Nav styling */
@@ -21,10 +21,14 @@ h1.product-title {
   .reviews-top .review-top-txt {
     margin-bottom: 20px; }
 
+.tabs .tab a {
+  color: #009688; }
+.tabs .tab a.active {
+  color: #009688; }
+.tabs .tab a:hover {
+  color: #009688; }
 .tabs .indicator {
-  background-color: #f1c40f; }
-  .tabs .indicator a {
-    color: #f1c40f; }
+  background-color: #009688; }
 
 /* Products page styling*/
 #price-slider {
