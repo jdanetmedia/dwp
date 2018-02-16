@@ -40,7 +40,7 @@
               <p>Here you can read about other peoples opinion about this product. Contribute by writing your review.</p>
             </div>
             <!-- Modal Trigger -->
-            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add review</a>
+            <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
             <!-- Modal Structure -->
             <div id="modal1" class="modal">
               <div class="modal-content">
