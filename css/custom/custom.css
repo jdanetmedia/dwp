@@ -1,6 +1,9 @@
 /* Variables */
 /* Mixins */
 /* Base styling */
+body {
+  position: relative; }
+
 .product-container {
   margin-top: 60px; }
 
@@ -25,6 +28,91 @@ h1.product-title {
   .reviews-top .review-top-txt {
     margin-bottom: 20px; }
 
+.rating {
+  display: inline-block;
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  font-size: 50px; }
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer; }
+
+.rating label:last-child {
+  position: static; }
+
+.rating label:nth-child(1) {
+  z-index: 5; }
+
+.rating label:nth-child(2) {
+  z-index: 4; }
+
+.rating label:nth-child(3) {
+  z-index: 3; }
+
+.rating label:nth-child(4) {
+  z-index: 2; }
+
+.rating label:nth-child(5) {
+  z-index: 1; }
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0; }
+
+.rating label .rated {
+  float: left;
+  color: transparent; }
+
+.rating label:last-child .rated {
+  color: #000; }
+
+.rating:not(:hover) label input:checked ~ .rated,
+.rating:hover label:hover input ~ .rated {
+  color: #09f; }
+
+.rating label input:focus:not(:checked) ~ .rated:last-child {
+  color: #000;
+  text-shadow: 0 0 5px #09f; }
+
+img.full {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  -moz-transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 800px;
+  height: auto;
+  z-index: 1000; }
+
+.responsive-img {
+  cursor: pointer; }
+
+.overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 999; }
+
+.show {
+  display: block; }
+
 .tabs .tab a {
   color: #009688; }
 .tabs .tab a.active {
@@ -33,6 +121,9 @@ h1.product-title {
   color: #009688; }
 .tabs .indicator {
   background-color: #009688; }
+
+.cart-btt {
+  margin-left: 20px; }
 
 /* Products page styling*/
 #price-slider {
