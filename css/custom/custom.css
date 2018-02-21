@@ -135,6 +135,7 @@ img.full {
   margin-right: 24px;
   -webkit-transition: color .3s ease;
   transition: color .3s ease;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  margin: 0 24px 0 0; }
 
 /*# sourceMappingURL=custom.css.map */
