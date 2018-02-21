@@ -4,6 +4,9 @@
       <div class="col s12 m5 product-img">
         <div class="productimage-cnt">
           <img class="responsive-img" src="https://pull01.munchkin.com/media/catalog/product/3/1/31001_1_1.jpg" alt="">
+          <div class="productimage-overlay">
+            <i class="material-icons medium zoom-icon">zoom_in</i>
+          </div>
         </div>
       </div>
       <div class="col s12 m7">
