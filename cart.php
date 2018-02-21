@@ -10,16 +10,45 @@
         </div>
         <div class="card-stacked">
           <div class="card-content">
-            <h5>Product item card.</h5>
-            <p>Product info.</p>
+            <div class="left">
+              <h5>Product item card.</h5>
+              <p>Product info.</p>
+            </div>
+            <div class="right">
+              <div class="input-field inline">
+                <input id="quantity" type="number" value="1">
+                <label for="quantity">Quantity</label>
+              </div>
+              <div class="right">
+                <a class="btn-floating btn-small waves-effect waves-light teal"><i class="material-icons">expand_less</i></a>
+                <div class="clear"></div>
+                <a class="btn-floating btn-small waves-effect waves-light teal"><i class="material-icons">expand_more</i></a>
+              </div>
+            </div>
           </div>
           <div class="card-action">
+            <a class="remove">Remove from cart</a>
             <p class="price right">$99.95</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <div class="row">
+        <div class="col s12 m12">
+          <div class="card">
+            <div class="card-content">
+              <span class="card-title">Card Title</span>
+              <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Go to Checkout</a>
+              <p class="price right">Total price: $99.95</p>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>
 
 <?php require_once('includes/footer.php') ?>
