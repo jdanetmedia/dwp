@@ -1,4 +1,3 @@
-
 <?php require_once('includes/header.php') ?>
 <div class="container">
   <div class="row">
@@ -24,150 +23,38 @@
     </div>
   </div>
   <div class="row">
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
+
+    <?php
+
+    function output() {
+      echo "<div class='col s12 m3'>
+        <div class='card'>
+          <div class='card-image'>
+            <img src='http://via.placeholder.com/400x400'>
+            <span class='card-title'>Card Title</span>
+          </div>
+          <div class='card-action'>
+            <a href='#'>$99.95</a>
+            <div class='stars right'>
+              <i class='material-icons tiny rated'>star</i>
+              <i class='material-icons tiny rated'>star</i>
+              <i class='material-icons tiny rated'>star</i>
+              <i class='material-icons tiny rated'>star</i>
+              <i class='material-icons tiny'>star_border</i>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col s12 m3">
-      <div class="card">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/400x400">
-          <span class="card-title">Card Title</span>
-        </div>
-        <div class="card-action">
-          <a href="#">$99.95</a>
-          <div class="stars right">
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny rated">star</i>
-            <i class="material-icons tiny">star_border</i>
-          </div>
-        </div>
-      </div>
-    </div>
+      </div>";
+    }
+
+    $i = 1;
+    while ($i <= 12) {
+      output();
+      $i++;
+    }
+
+    ?>
+
   </div>
   <div class="row">
     <div class="col s12 m12">
