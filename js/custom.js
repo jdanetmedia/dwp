@@ -21,6 +21,10 @@ $(document).ready(function() {
     $('.responsive-img').removeClass('full');
     $('.overlay').removeClass('show');
   });
+  $('.close-btn').click(function() {
+    $('.responsive-img').removeClass('full');
+    $('.overlay').removeClass('show');
+  });
 });
 // Triggerns when ESC button is pressed
 $(document).on('keyup',function(evt) {
