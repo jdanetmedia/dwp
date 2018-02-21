@@ -34,7 +34,7 @@
             <span class='card-title'>Card Title</span>
           </div>
           <div class='card-action'>
-            <a href='#'>$99.95</a>
+            <p class='price'>$99.95</p>
             <div class='stars right'>
               <i class='material-icons tiny rated'>star</i>
               <i class='material-icons tiny rated'>star</i>
