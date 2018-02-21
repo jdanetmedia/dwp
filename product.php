@@ -2,7 +2,7 @@
   <div class="container product-container">
     <div class="row">
       <div class="col s12 m5 product-img">
-        <img class="responsive-img" src="http://via.placeholder.com/800x800" alt="">
+        <img class="responsive-img" src="https://pull01.munchkin.com/media/catalog/product/3/1/31001_1_1.jpg" alt="">
       </div>
       <div class="col s12 m7">
         <h1 class="product-title">Rubber duck</h1>
