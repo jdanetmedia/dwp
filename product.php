@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col s12">
             <div class="input-field inline cart_quantity">
-              <input id="quantity" type="number">
+              <input id="quantity" type="number" value="1">
               <label for="quantity">Quantity</label>
             </div>
             <a class="waves-effect waves-light btn cart-btt"><i class="material-icons right">add_shopping_cart</i>Add to cart</a>

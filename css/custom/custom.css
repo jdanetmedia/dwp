@@ -129,4 +129,12 @@ img.full {
 #price-slider {
   margin-top: 40px; }
 
+/* Cart styling */
+.price {
+  color: #ffab40;
+  margin-right: 24px;
+  -webkit-transition: color .3s ease;
+  transition: color .3s ease;
+  text-transform: uppercase; }
+
 /*# sourceMappingURL=custom.css.map */
