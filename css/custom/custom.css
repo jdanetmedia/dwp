@@ -82,6 +82,11 @@ h1.product-title {
   text-shadow: 0 0 5px #09f; }
 
 img.full {
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
   position: absolute;
   top: 40px;
   left: 50%;
@@ -109,6 +114,73 @@ img.full {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.9);
   z-index: 999; }
+  .overlay .close-btn {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    cursor: pointer; }
+    .overlay .close-btn .line {
+      width: 40px;
+      height: 4px;
+      background: #fff;
+      position: absolute;
+      top: 18px; }
+    .overlay .close-btn .line1 {
+      -moz-transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      -webkit-transition: all 0.2s ease-in;
+      -moz-transition: all 0.2s ease-in;
+      -ms-transition: all 0.2s ease-in;
+      -o-transition: all 0.2s ease-in;
+      transition: all 0.2s ease-in; }
+    .overlay .close-btn .close-txt {
+      margin-left: 40px;
+      display: block;
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 40px;
+      text-align: center;
+      text-transform: uppercase;
+      -webkit-transition: all 0.2s ease-in;
+      -moz-transition: all 0.2s ease-in;
+      -ms-transition: all 0.2s ease-in;
+      -o-transition: all 0.2s ease-in;
+      transition: all 0.2s ease-in;
+      opacity: 0; }
+    .overlay .close-btn .line2 {
+      -moz-transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      -webkit-transition: all 0.2s ease-in;
+      -moz-transition: all 0.2s ease-in;
+      -ms-transition: all 0.2s ease-in;
+      -o-transition: all 0.2s ease-in;
+      transition: all 0.2s ease-in; }
+    .overlay .close-btn:hover .line1 {
+      top: 1px;
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      transform: rotate(0deg); }
+    .overlay .close-btn:hover .line2 {
+      top: 36px;
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      transform: rotate(0deg); }
+    .overlay .close-btn:hover .close-txt {
+      opacity: 1;
+      margin-left: 0; }
 
 .show {
   display: block; }
