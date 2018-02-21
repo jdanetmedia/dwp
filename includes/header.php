@@ -20,16 +20,14 @@
           <ul class="right hide-on-med-and-down">
             <li><a href="products.php">Producks</a></li>
             <li><a href="product.php">Jespers side</a></li>
-            <li><a href="#">Ducking cart</a></li>
+            <li><a href="cart.php">Ducking cart</a></li>
             <li><a href="contact.php">Quack at us</a></li>
-            <li><a href="cart.php">Cart</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
               <li><a href="products.php">Producks</a></li>
               <li><a href="product.php">Jespers side</a></li>
-              <li><a href="#">Ducking cart</a></li>
+              <li><a href="cart.php">Ducking cart</a></li>
               <li><a href="contact.php">Quack at us</a></li>
-              <li><a href="cart.php">Cart</a></li>
           </ul>
         </div>
       </nav>
