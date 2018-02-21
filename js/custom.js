@@ -7,6 +7,27 @@ $(document).ready(function() {
 
   // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
   $('.modal').modal();
+
+  // Star rating
+  $(':radio').change(function() {
+    console.log('New star rating: ' + this.value);
+  });
+  // Wiew productimage in full size
+  $('.product-img').click(function() {
+    $('.responsive-img').addClass('full');
+    $('.overlay').addClass('show');
+  });
+  $('.overlay').click(function() {
+    $('.responsive-img').removeClass('full');
+    $('.overlay').removeClass('show');
+  });
+});
+// Triggerns when ESC button is pressed
+$(document).on('keyup',function(evt) {
+    if (evt.keyCode == 27) {
+      $('.responsive-img').removeClass('full');
+      $('.overlay').removeClass('show');
+    }
 });
 
 // initialize slider
