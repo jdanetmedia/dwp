@@ -2,7 +2,12 @@
   <div class="container product-container">
     <div class="row">
       <div class="col s12 m5 product-img">
-        <img class="responsive-img" src="https://pull01.munchkin.com/media/catalog/product/3/1/31001_1_1.jpg" alt="">
+        <div class="productimage-cnt">
+          <img class="responsive-img" src="https://pull01.munchkin.com/media/catalog/product/3/1/31001_1_1.jpg" alt="">
+          <div class="productimage-overlay">
+            <i class="material-icons medium zoom-icon">zoom_in</i>
+          </div>
+        </div>
       </div>
       <div class="col s12 m7">
         <h1 class="product-title">Rubber duck</h1>
@@ -167,5 +172,13 @@
       </div>
     </div>
   </div>
-  <div class="overlay"></div>
+  <div class="overlay">
+    <div class="close-btn">
+      <div class="line1 line"></div>
+      <div class="close-txt">
+        Close
+      </div>
+      <div class="line2 line"></div>
+    </div>
+  </div>
 <?php require_once("includes/footer.php") ?>
