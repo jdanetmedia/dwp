@@ -3,6 +3,13 @@ $(".button-collapse").sideNav();
 
 //initialize select function
 $(document).ready(function() {
+  $('.carousel').carousel({
+              dist:0,
+              shift:0,
+              padding:20,
+
+        });
+
   $('select').material_select();
 
   // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered

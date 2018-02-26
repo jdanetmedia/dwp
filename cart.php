@@ -19,15 +19,15 @@
                 <input id="quantity" type="number" value="1">
                 <label for="quantity">Quantity</label>
               </div>
-              <div class="right">
+              <div class="right edit_amount_margin">
                 <a class="btn-floating btn-small waves-effect waves-light teal"><i class="material-icons">expand_less</i></a>
-                <div class="clear"></div>
+                <div class="clear padding-round-buttons"></div>
                 <a class="btn-floating btn-small waves-effect waves-light teal"><i class="material-icons">expand_more</i></a>
               </div>
             </div>
           </div>
           <div class="card-action">
-            <a class="remove">Remove from cart</a>
+            <a href="#" class="remove_from_cart">Remove from cart</a>
             <p class="price right">$99.95</p>
           </div>
         </div>

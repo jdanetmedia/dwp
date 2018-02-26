@@ -27,7 +27,9 @@
     <?php
 
     function output() {
-      echo "<div class='col s12 m3'>
+      echo "
+      <a href='#'>
+      <div class='col s12 m3'>
         <div class='card'>
           <div class='card-image'>
             <img src='http://via.placeholder.com/400x400'>
@@ -44,7 +46,8 @@
             </div>
           </div>
         </div>
-      </div>";
+      </div>
+      </a>";
     }
 
     $i = 1;
