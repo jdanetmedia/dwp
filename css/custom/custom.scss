@@ -316,6 +316,8 @@ img.full {
 
 /* Front page styling */
 
-.carousel {
-  margin-top: -100px; // remove white space between slider title and slider items
+.product-slider {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
