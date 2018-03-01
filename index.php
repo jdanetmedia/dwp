@@ -1,6 +1,29 @@
 
 <?php require_once('includes/header.php') ?>
 <div class="container">
+  <div class="carousel carousel-slider center" data-indicators="true">
+    <div class="carousel-item white-text" href="" style="background-image: URL('http://via.placeholder.com/800x400');">
+      <h2>First Panel</h2>
+      <p class="white-text">This is your first panel</p>
+      <div class="carousel-fixed-item center">
+        <a class="btn waves-effect white grey-text darken-text-2" href="contact.php">button</a>
+      </div>
+    </div>
+    <div class="carousel-item white-text" href="" style="background-image: URL('http://via.placeholder.com/800x400');">
+      <h2>First Panel</h2>
+      <p class="white-text">This is your first panel</p>
+      <div class="carousel-fixed-item center">
+        <a class="btn waves-effect white grey-text darken-text-2" href="contact.php">button</a>
+      </div>
+    </div>
+    <div class="carousel-item white-text" href="" style="background-image: URL('http://via.placeholder.com/800x400');">
+      <h2>First Panel</h2>
+      <p class="white-text">This is your first panel</p>
+      <div class="carousel-fixed-item center">
+        <a class="btn waves-effect white grey-text darken-text-2" href="contact.php">button</a>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <h4>New producks!</h4>
     <div class="carousel">

@@ -43,7 +43,7 @@
               I am convenient because I require little markup to use effectively.</p>
             </div>
             <div class="card-action">
-              <a href="#">Go to Checkout</a>
+              <a href="#">Go to Duckout</a>
               <p class="price right">Total price: $99.95</p>
             </div>
           </div>

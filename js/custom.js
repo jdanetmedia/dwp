@@ -19,6 +19,10 @@ $(document).ready(function() {
   $(':radio').change(function() {
     console.log('New star rating: ' + this.value);
   });
+
+  // slider
+  $('.carousel.carousel-slider').carousel({fullWidth: true});
+
   // Wiew productimage in full size
   $('.product-img').click(function() {
     $('.productimage-overlay').css('display', 'none');
