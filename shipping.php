@@ -1,6 +1,4 @@
-<?php require_once('includes/header.php');
-// check if customer is logged in, if logged in, redirect to checkout page
-?>
+<?php require_once('includes/header.php'); ?>
 <div class="container">
   <div class="row">
     <form class="col s12 m12" action="shipping.php">
@@ -30,6 +28,10 @@
             <label for="last_name">City</label>
           </div>
         </div>
+        <p>
+          <input type="checkbox" class="filled-in" id="filled-in-box" />
+          <label for="filled-in-box">Set this address as your new address?</label>
+        </p>
       </div>
 
       <div class="row col s6 m6">
