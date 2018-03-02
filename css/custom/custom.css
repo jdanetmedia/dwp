@@ -4,6 +4,9 @@
 body {
   position: relative; }
 
+p {
+  margin-bottom: 20px; }
+
 nav .brand-logo {
   display: inline-block;
   padding-left: 20px; }
@@ -18,7 +21,7 @@ nav .brand-logo {
 
 /* Footer styling */
 footer {
-  margin-top: 60px; }
+  margin: 0; }
 
 /* Product page styling */
 h1.product-title {
@@ -254,9 +257,29 @@ img.full {
   padding-top: 5px; }
 
 /* Front page styling */
+.slider-image {
+  background-size: cover;
+  background-position: center center; }
+
 .product-slider {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto; }
+
+.outer {
+  width: 100%;
+  margin: 0;
+  padding: 40px 0 60px 0; }
+
+.gray {
+  background-color: #ebebeb; }
+
+/* Blogpost styling */
+.post-container {
+  margin-top: 40px;
+  max-width: 800px; }
+  .post-container i {
+    display: block;
+    margin-bottom: 15px; }
 
 /*# sourceMappingURL=custom.css.map */

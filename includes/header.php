@@ -21,14 +21,14 @@
             <li><a href="products.php">Producks</a></li>
             <li><a href="product.php">Jespers Duck</a></li>
             <li><a href="contact.php">Quack at us</a></li>
-            <li><a href="#">Bluck</a></li>
+            <li><a href="blog.php">Bluck</a></li>
             <li><a href="cart.php">Ducking cart<i class="material-icons right">shopping_cart</i></a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
               <li><a href="products.php">Producks</a></li>
               <li><a href="product.php">Jespers Duck</a></li>
               <li><a href="contact.php">Quack at us</a></li>
-              <li><a href="#">Bluck</a></li>
+              <li><a href="blog.php">Bluck</a></li>
               <li><a href="cart.php">Ducking cart<i class="material-icons right">shopping_cart</i></a></li>
           </ul>
         </div>
