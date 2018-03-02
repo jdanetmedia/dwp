@@ -1,7 +1,7 @@
 <?php require_once('includes/header.php'); ?>
 <div class="container">
   <div class="row">
-    <form class="col s12 m12" action="shipping.php">
+    <form class="col s12 m12" action="payment.php">
       <h5>Shipping information</h5>
       <div class="row col s12 m6">
         <div class="row col s12 m12">
@@ -10,12 +10,8 @@
             <label for="first_name">Streetname</label>
           </div>
           <div class="input-field col s6">
-            <input id="last_name" type="number" class="validate">
+            <input id="last_name" type="text" class="validate">
             <label for="last_name">Housenumber</label>
-          </div>
-          <div class="input-field col s6">
-            <input id="last_name" type="number" class="validate">
-            <label for="last_name">Apartmentnumber</label>
           </div>
         </div>
         <div class="row col s12 m12">
@@ -34,7 +30,7 @@
         </p>
       </div>
 
-      <div class="row col s6 m6">
+      <div class="row col s12 m6">
         <div class="col s12 m12">
           <div class="card">
             <div class="card-content">
