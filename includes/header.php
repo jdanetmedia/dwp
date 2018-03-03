@@ -1,3 +1,6 @@
+<?php
+require_once("includes/connection.php");
+?>
 <!DOCTYPE html>
   <html>
     <html lang="da-DK">
