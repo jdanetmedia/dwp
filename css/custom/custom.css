@@ -292,4 +292,17 @@ img.full {
     display: block;
     margin-bottom: 15px; }
 
+/* Admin area */
+.admin-area {
+  background-color: #EBEBEB;
+  /* Dashboard */ }
+  .admin-area nav.admin-topnav {
+    margin-bottom: 40px; }
+  .admin-area input.select-dropdown {
+    margin: 0; }
+  .admin-area .select-dropdown {
+    margin-bottom: 0; }
+  .admin-area .input-field {
+    margin-top: 0; }
+
 /*# sourceMappingURL=custom.css.map */

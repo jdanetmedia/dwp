@@ -362,3 +362,21 @@ img.full {
     margin-bottom: 15px;
   }
 }
+
+/* Admin area */
+.admin-area {
+  background-color: #EBEBEB;
+  nav.admin-topnav {
+    margin-bottom: 40px;
+  }
+  /* Dashboard */
+  input.select-dropdown {
+    margin: 0;
+  }
+  .select-dropdown {
+    margin-bottom: 0;
+  }
+  .input-field {
+    margin-top: 0;
+  }
+}
