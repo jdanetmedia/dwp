@@ -247,8 +247,152 @@ CREATE TABLE OrderDetails (
 );
 
 -- Add test data below
-INSERT INTO ProductCategory (ProductCategoryID, CategoryName, Description, SeoTitel, MetaDescription)
-VALUES (NULL, "Category number 1", "This is the first description", "SeoTitel for Cat1", "This is the Metadescription for category 1");
 
+-- Insert Product Categories
+INSERT INTO ProductCategory
+VALUES (NULL, "Normal Ducks", "This is the first description", "SeoTitel for Cat1", "This is the Metadescription for category 1");
+
+INSERT INTO ProductCategory
+VALUES (NULL, "SuperHero Ducks", "This is the Second description", "SeoTitel for Cat2", "This is the Metadescription for category 2");
+
+INSERT INTO ProductCategory
+VALUES (NULL, "Sport Ducks", "This is the Third description", "SeoTitel for Cat3", "This is the Metadescription for category 3");
+
+-- Insert Users
 INSERT INTO User (UserEmail, Password)
 VALUES ("rasmus.andreas96@gmail.com", "admin");
+
+-- Insert Products
+INSERT INTO Product
+VALUES ("1111", "Green Duck", 1000, "Short Description of Green Duck", "Longer Description Green Duck",
+10, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 1);
+
+INSERT INTO Product
+VALUES ("1112", "Red Duck", 1000, "Short Description of Red Duck", "Longer Description Red Duck",
+18, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 1);
+
+INSERT INTO Product
+VALUES ("1113", "Yellow Duck", 1000, "Short Description of Yellow Duck", "Longer Description Yellow Duck",
+8, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 1);
+
+INSERT INTO Product
+VALUES ("2221", "Batman Duck", 1000, "Short Description of Batman Duck", "Longer Description Batman Duck",
+10, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 2);
+
+INSERT INTO Product
+VALUES ("2222", "Deadpool Duck", 1000, "Short Description of Deadpool Duck", "Longer Description Deadpool Duck",
+12, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 2);
+
+INSERT INTO Product
+VALUES ("3331", "EfB Duck", 1000, "Short Description of EfB Duck", "Longer Description EfB Duck",
+15, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+
+INSERT INTO Product
+VALUES ("3332", "Chelsea Duck", 1000, "Short Description of Chelsea Duck", "Longer Description Chelsea Duck",
+20, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+
+INSERT INTO Product
+VALUES ("3333", "United Duck", 1000, "Short Description of United Duck", "Longer Description United Duck",
+25, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+
+INSERT INTO Product
+VALUES ("3334", "Arsenal Duck", 1000, "Short Description of Arsenal Duck", "Longer Description Arsenal Duck",
+25, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+
+INSERT INTO Product
+VALUES ("3335", "Liverpool Duck", 1000, "Short Description of Liverpool Duck", "Longer Description Liverpool Duck",
+22, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+
+-- Insert Reviews
+INSERT INTO Review
+VALUES (NULL, "11.02.18", 3, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+
+INSERT INTO Review
+VALUES (NULL, "13.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+
+INSERT INTO Review
+VALUES (NULL, "13.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+
+INSERT INTO Review
+VALUES (NULL, "13.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+
+INSERT INTO Review
+VALUES (NULL, "13.02.18", 3, "ReviewTitle", "ReviewersName", "This is the review content", "1112");
+
+INSERT INTO Review
+VALUES (NULL, "13.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1113");
+
+INSERT INTO Review
+VALUES (NULL, "15.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "2221");
+
+INSERT INTO Review
+VALUES (NULL, "17.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "2222");
+
+INSERT INTO Review
+VALUES (NULL, "17.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "3331");
+
+INSERT INTO Review
+VALUES (NULL, "17.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "3332");
+
+INSERT INTO Review
+VALUES (NULL, "17.02.18", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3333");
+
+INSERT INTO Review
+VALUES (NULL, "17.02.18", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3334");
+
+INSERT INTO Review
+VALUES (NULL, "17.02.18", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3335");
+
+-- Insert ImgGallery
+INSERT INTO ImgGallery
+VALUES (NULL, "http://via.placeholder.com/200x200", true);
+
+INSERT INTO ImgGallery
+VALUES (NULL, "http://via.placeholder.com/400x400", true);
+
+INSERT INTO ImgGallery
+VALUES (NULL, "http://via.placeholder.com/600x600", true);
+
+INSERT INTO ImgGallery
+VALUES (NULL, "http://via.placeholder.com/800x800", true);
+
+-- Insert ProductImg
+INSERT INTO ProductImg
+VALUES ("1111", 1);
+
+INSERT INTO ProductImg
+VALUES ("1112", 2);
+
+INSERT INTO ProductImg
+VALUES ("1113", 3);
+
+INSERT INTO ProductImg
+VALUES ("2221", 4);
+
+INSERT INTO ProductImg
+VALUES ("2222", 2);
+
+INSERT INTO ProductImg
+VALUES ("3331", 2);
+
+INSERT INTO ProductImg
+VALUES ("3332", 2);
+
+INSERT INTO ProductImg
+VALUES ("3333", 2);
+
+INSERT INTO ProductImg
+VALUES ("3334", 2);
+
+INSERT INTO ProductImg
+VALUES ("3335", 2);
+
+-- Insert ProductImg
+INSERT INTO DeliveryMethod
+VALUES (NULL, "Shipping to postoffice", "This is the description for the shipping to postoffice", 5);
+
+INSERT INTO DeliveryMethod
+VALUES (NULL, "Shipping to home address", "This is the description for the shipping to home address", 8);
+
+INSERT INTO DeliveryMethod
+VALUES (NULL, "Express shipping", "This is the description for the Express shipping", 15);
