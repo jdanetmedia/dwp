@@ -247,3 +247,8 @@ CREATE TABLE OrderDetails (
 );
 
 -- Add test data below
+INSERT INTO ProductCategory (ProductCategoryID, CategoryName, Description, SeoTitel, MetaDescription)
+VALUES (NULL, "Category number 1", "This is the first description", "SeoTitel for Cat1", "This is the Metadescription for category 1");
+
+INSERT INTO User (UserEmail, Password)
+VALUES ("rasmus.andreas96@gmail.com", "admin");

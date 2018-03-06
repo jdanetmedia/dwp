@@ -23,41 +23,34 @@
     </div>
   </div>
   <div class="row">
-
     <?php
-
-    function output() {
-      echo "
-      <a href='#'>
-      <div class='col s12 m3'>
-        <div class='card'>
-          <div class='card-image'>
-            <img src='http://via.placeholder.com/400x400'>
-            <span class='card-title'>Card Title</span>
+    $i = 1;
+    while ($i <= 12) {
+    ?>
+    <a href="#">
+      <div class="col s12 m3">
+        <div class="card">
+          <div class="card-image">
+            <img src="http://via.placeholder.com/400x400">
+            <span class="card-title">Card Title</span>
           </div>
-          <div class='card-action'>
-            <p class='price'>$99.95</p>
-            <div class='stars right'>
-              <i class='material-icons tiny rated'>star</i>
-              <i class='material-icons tiny rated'>star</i>
-              <i class='material-icons tiny rated'>star</i>
-              <i class='material-icons tiny rated'>star</i>
-              <i class='material-icons tiny'>star_border</i>
+          <div class="card-action">
+            <p class="price">$99.95</p>
+            <div class="stars right">
+              <i class="material-icons tiny rated">star</i>
+              <i class="material-icons tiny rated">star</i>
+              <i class="material-icons tiny rated">star</i>
+              <i class="material-icons tiny rated">star</i>
+              <i class="material-icons tiny">star_border</i>
             </div>
           </div>
         </div>
       </div>
-      </a>";
-    }
-
-    $i = 1;
-    while ($i <= 12) {
-      output();
+    </a>
+    <?php
       $i++;
     }
-
     ?>
-
   </div>
   <div class="row">
     <div class="col s12 m12">
