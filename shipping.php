@@ -1,4 +1,6 @@
-<?php require_once('includes/header.php'); ?>
+<?php require_once('includes/header.php');
+  $deliveryResult = mysqli_query($connection, "SELECT * FROM `DeliveryMethod`");
+?>
 <div class="container">
   <div class="row">
     <form class="col s12 m12" action="payment.php">
@@ -31,39 +33,23 @@
       </div>
 
       <div class="row col s12 m6">
+        <?php
+          while ($row = mysqli_fetch_array($deliveryResult)) {
+        ?>
         <div class="col s12 m12">
           <div class="card">
             <div class="card-content">
               <span class="card-title">
                 <input name="group1" type="radio" id="test1" />
-                <label for="test1">Shipping to postoffice</label>
+                <label for="test1"><?php echo $row["Method"]; ?> + $<?php echo $row["DeliveryPrice"]; ?></label>
               </span>
-              <p>Description of shipping option 1</p>
+              <p><?php echo $row["MethodDescription"]; ?></p>
             </div>
           </div>
         </div>
-        <div class="col s12 m12">
-          <div class="card">
-            <div class="card-content">
-              <span class="card-title">
-                <input name="group1" type="radio" id="test2" />
-                <label for="test2">Shipping to home address + 5$</label>
-              </span>
-              <p>Description of shipping option 2</p>
-            </div>
-          </div>
-        </div>
-        <div class="col s12 m12">
-          <div class="card">
-            <div class="card-content">
-              <span class="card-title">
-                <input name="group1" type="radio" id="test3" />
-                <label for="test3">Express shipping + 10$</label>
-              </span>
-              <p>Description of shipping option 3</p>
-            </div>
-          </div>
-        </div>
+        <?php
+          }
+        ?>
       </div>
       <div class="clear"></div>
       <input class="waves-effect waves-light btn" type="submit" name="create" value="Go to payment">

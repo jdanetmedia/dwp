@@ -1,66 +1,146 @@
-<?php require_once('includes/header.php') ?>
+<?php require_once('includes/header.php');
+$prodCatResult = mysqli_query($connection, "SELECT * FROM `ProductCategory`");
+$url = $_SERVER['REQUEST_URI'];
+echo $url;
+$query = "SELECT * FROM `Product`";
+if (isset($_GET["cat"])) {
+  if ($_GET["cat"] != "0") {
+    $cat = $_GET["cat"];
+    $query = "SELECT * FROM `Product` WHERE `ProductCategoryID` = $cat ";
+    $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
+  }
+}
+if (isset($_GET["order"])) {
+  if ($_GET["order"] != "none") {
+    $order = $_GET["order"];
+    $query .= "ORDER BY `Price` $order";
+  }
+}
+//echo $query;
+$prodResult = mysqli_query($connection, $query);
+?>
+<script type="text/javascript">
+  if(window.location.href.indexOf("?") > -1) {
+
+  } else {
+  window.location.search += '?';
+  }
+</script>
 <div class="container">
   <div class="row">
     <div class="input-field col s12 m3">
-      <select>
-        <option value="" disabled selected>Categories</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
+      <select id="select_id" onchange="val()">
+        <option value="0" selected>All Categories</option>
+        <?php
+        while ($row = mysqli_fetch_array($prodCatResult)) {
+        ?>
+        <option value='<?php echo $row["ProductCategoryID"] ?>'><?php echo $row["CategoryName"]; ?></option>
+        <?php
+        }
+        ?>
       </select>
     </div>
     <div class="col s12 m6">
       <div id="price-slider"></div>
     </div>
     <div class="input-field col s12 m3">
-      <select>
-        <option value="" disabled selected>Sort by</option>
-        <option value="1">Desc. Price</option>
-        <option value="2">Asc. Price</option>
-        <option value="3">Reviews</option>
-        <option value="3">Popularity</option>
+      <select id="select_id2" onchange="val2()">
+        <option value="none" selected>Sort by</option>
+        <option value="DESC">Desc. Price</option>
+        <option value="ASC">Asc. Price</option>
+        <option value="REV">***Reviews</option>
+        <option value="POP">***Popularity</option>
       </select>
     </div>
+    <script type="text/javascript">
+      function val() {
+        d = document.getElementById("select_id").value;
+        href = window.location.href;
+        if(!~href.indexOf('cat'))
+            window.location.href = href + 'cat=' + d + "&";
+        else
+            // Regular expression searches for cat=, one or more numbers, and one character
+            window.location.href = href.replace(/(cat=)\d+\D/, '$1' + d + "&");
+      }
+
+      function val2() {
+        d = document.getElementById("select_id2").value;
+        href = window.location.href;
+        if(!~href.indexOf('order'))
+            window.location.href = href + 'order=' + d + "&";
+        else
+            // Regular expression searches for order=, and one or more characters + & at the end
+            window.location.href = href.replace(/(order=)\D+(&)/, '$1' + d + "&");
+      }
+    </script>
   </div>
   <div class="row">
     <?php
-    $i = 1;
-    while ($i <= 12) {
+    while ($row = mysqli_fetch_array($prodResult)) {
+      $itemNumber = $row["ItemNumber"];
     ?>
-    <a href="#">
+    <a href="product.php?item=<?php echo $itemNumber; ?>">
       <div class="col s12 m3">
         <div class="card">
           <div class="card-image">
-            <img src="http://via.placeholder.com/400x400">
-            <span class="card-title">Card Title</span>
+            <?php
+              $imgResult = mysqli_query($connection, "SELECT `ImgID` FROM `ProductImg` WHERE ItemNumber = $itemNumber");
+              while ($imgrow = mysqli_fetch_array($imgResult)) {
+                $imgID = $imgrow["ImgID"];
+                $imgResult2 = mysqli_query($connection, "SELECT `URL` FROM `ImgGallery` WHERE ImgID = $imgID AND IsPrimary = true");
+                while ($imgrow2 = mysqli_fetch_array($imgResult2)) {
+            ?>
+            <img src="<?php echo $imgrow2["URL"]; ?>">
+            <?php
+                }
+              }
+            ?>
+            <span class="card-title"><?php echo $row["ProductName"]; ?></span>
           </div>
           <div class="card-action">
-            <p class="price">$99.95</p>
+            <p class="price">$<?php echo $row["Price"]; ?></p>
             <div class="stars right">
-              <i class="material-icons tiny rated">star</i>
-              <i class="material-icons tiny rated">star</i>
-              <i class="material-icons tiny rated">star</i>
-              <i class="material-icons tiny rated">star</i>
-              <i class="material-icons tiny">star_border</i>
+              <?php
+                $ratingResult = mysqli_query($connection, "SELECT `Rating` FROM `Review` WHERE ItemNumber = $itemNumber");
+                $rated = 0;
+                $divide = 0;
+                while ($ratingrow = mysqli_fetch_array($ratingResult)) {
+                  $rating = $ratingrow["Rating"];
+                  $rated = $rated + $rating;
+                  $divide = $divide + count($ratingResult);
+                }
+                $rated = $rated / $divide;
+                echo $rated;
+                $i = 1;
+                while ($i <= $rated) {
+                  ?>
+                  <i class="material-icons tiny rated">star</i>
+                  <?php
+                  $i++;
+                }
+              ?>
             </div>
           </div>
         </div>
       </div>
     </a>
     <?php
-      $i++;
     }
     ?>
   </div>
+  <?php
+  if(isset($catResult)) {
+    while ($row = mysqli_fetch_array($catResult)) {
+  ?>
   <div class="row">
     <div class="col s12 m12">
-      <h3>Category text</h3>
-      <p>
-        The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ in their grammar, their pronunciation and their most common words. Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators. To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words.If several languages coalesce, the grammar of the resulting language is more simple and regular than that of the individual languages.The new common language will be more simple and regular than the existing European languages. It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is.
-        <br>
-        The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ in their grammar, their pronunciation and their most common words.Everyone realizes why a new common language would be desirable: one could refuse to pay expensive translators.To achieve this, it would be necessary to have uniform grammar, pronunciation and more common words.
-      </p>
+      <h3><?php echo $row["CategoryName"]; ?></h3>
+      <p><?php echo $row["Description"]; ?></p>
     </div>
   </div>
+  <?php
+    }
+  }
+  ?>
 </div>
-<?php require_once('includes/footer.php') ?>
+<?php require_once('includes/footer.php'); ?>
