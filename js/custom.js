@@ -23,6 +23,15 @@ $(document).ready(function() {
   // slider
   $('.carousel.carousel-slider').carousel({fullWidth: true});
 
+  // Product collapsible
+  $('.collapsible').collapsible();
+
+  // Input counter
+  $('input#input_text, textarea#textarea1').characterCounter();
+
+  // Image zoom (not product frontend view)
+  $('.materialboxed').materialbox();
+
   // Wiew productimage in full size
   $('.product-img').click(function() {
     $('.productimage-overlay').css('display', 'none');

@@ -4,7 +4,12 @@
     <div class="col s12">
       <div class="card">
         <div class="card-content">
-          <span class="card-title">Products</span>
+          <div class="input-field col s4 right">
+            <i class="material-icons prefix">search</i>
+            <input id="icon_telephone" type="tel" class="validate">
+            <label for="icon_telephone">Search products</label>
+          </div>
+          <span class="card-title">Products<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-product.php">Add new</a></span>
           <table class="responsive-table">
             <thead>
               <tr>
@@ -13,6 +18,7 @@
                   <th>Price</th>
                   <th>Sale price</th>
                   <th>Created</th>
+                  <th>Reviews</th>
                   <th>Status</th>
               </tr>
             </thead>
@@ -30,6 +36,7 @@
                       <td>99.00 DKK</td>
                       <td>-</td>
                       <td>March 6th 2018 @ 11.30.24</td>
+                      <td>1</td>
                       <td>
                         <div class="input-field">
                           <select>
@@ -45,6 +52,7 @@
                       <td>119.00 DKK</td>
                       <td>99.00</td>
                       <td>March 6th 2018 @ 11.30.24</td>
+                      <td>4</td>
                       <td>
                         <div class="input-field">
                           <select>
@@ -60,6 +68,7 @@
                       <td>119.00 DKK</td>
                       <td>99.00</td>
                       <td>March 6th 2018 @ 11.30.24</td>
+                      <td>0</td>
                       <td>
                         <div class="input-field">
                           <select>
