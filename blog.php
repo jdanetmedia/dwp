@@ -1,7 +1,7 @@
 <?php require_once('includes/header.php') ?>
   <div class="container">
     <div class="row">
-      <h1>Latest posts</h1>
+      <h1>Latest Quackposts</h1>
       <?php $i = 1; ?>
 
       <?php while($i <= 12) { ?>
@@ -9,7 +9,7 @@
           <div class="card">
             <div class="card-image">
               <img src="http://via.placeholder.com/1920x1080">
-              <span class="card-title">Card Title</span>
+              <span class="card-title">Post Title</span>
             </div>
             <div class="card-content">
               <p>I am a very simple card. I am good at containing small bits of information.

@@ -275,6 +275,16 @@ img.full {
   background-color: #ebebeb; }
 
 /* Blogpost styling */
+.breadcrumb-nav {
+  background: none;
+  border: none;
+  box-shadow: none; }
+  .breadcrumb-nav .breadcrumb {
+    color: #333; }
+
+.breadcrumb::before {
+  color: #333; }
+
 .post-container {
   margin-top: 40px;
   max-width: 800px; }
