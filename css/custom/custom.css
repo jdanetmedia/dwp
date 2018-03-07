@@ -295,7 +295,8 @@ img.full {
 /* Admin area */
 .admin-area {
   background-color: #EBEBEB;
-  /* Dashboard */ }
+  /* Dashboard */
+  /* New product styling */ }
   .admin-area nav.admin-topnav {
     margin-bottom: 40px; }
   .admin-area input.select-dropdown {
@@ -304,5 +305,9 @@ img.full {
     margin-bottom: 0; }
   .admin-area .input-field {
     margin-top: 0; }
+  .admin-area .new-prod-btn {
+    margin-left: 35px; }
+  .admin-area .new-prod-btn {
+    margin-left: 15px; }
 
 /*# sourceMappingURL=custom.css.map */
