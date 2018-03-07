@@ -1,5 +1,5 @@
 <?php
-require_once('includes/connection.php');
+require_once('connection.php');
 
 $query = "SELECT * FROM `Product`";
 if (isset($_GET["cat"])) {

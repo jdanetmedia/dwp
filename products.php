@@ -1,5 +1,5 @@
 <?php require_once('includes/header.php');
-require_once('productsfunc.php');
+require_once('includes/productsDAO.php');
 $url = $_SERVER['REQUEST_URI'];
 echo $url;
 ?>
