@@ -1,4 +1,11 @@
-<?php require_once("includes/header.php") ?>
+<?php
+require_once("includes/header.php");
+require_once("includes/productDAO.php");
+
+// Store information on the current product item
+$currentItem = getCurrentProduct($_GET["item"]);
+
+?>
   <div class="container product-container">
     <div class="row">
       <div class="col s12 m5 product-img">
@@ -10,11 +17,17 @@
         </div>
       </div>
       <div class="col s12 m7">
-        <h1 class="product-title">Rubber duck</h1>
+        <h1 class="product-title"><?php echo $currentItem->ProductName; ?></h1>
         <div class="short-desc">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <?php echo $currentItem->ShortDescription; ?>
         </div>
         <div class="row">
+          <div class="col s6">
+            <p>Your price:</p>
+          </div>
+          <div class="col s6 right">
+            <p><b>99.00</b></p>
+          </div>
           <div class="col s12">
             <div class="input-field inline cart_quantity">
               <input id="quantity" type="number" value="1">
@@ -36,8 +49,7 @@
         <div id="description">
           <div class="row">
             <div class="col s12 m8">
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <?php echo $currentItem->LongDescription; ?>
             </div>
             <div class="col s12 m4">
               <p><b>Shipping:</b><br>
