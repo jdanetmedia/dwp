@@ -1,27 +1,10 @@
 <?php require_once('includes/header.php');
-$prodCatResult = mysqli_query($connection, "SELECT * FROM `ProductCategory`");
+require_once('productsfunc.php');
 $url = $_SERVER['REQUEST_URI'];
 echo $url;
-$query = "SELECT * FROM `Product`";
-if (isset($_GET["cat"])) {
-  if ($_GET["cat"] != "0") {
-    $cat = $_GET["cat"];
-    $query = "SELECT * FROM `Product` WHERE `ProductCategoryID` = $cat ";
-    $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
-  }
-}
-if (isset($_GET["order"])) {
-  if ($_GET["order"] != "none") {
-    $order = $_GET["order"];
-    $query .= "ORDER BY `Price` $order";
-  }
-}
-//echo $query;
-$prodResult = mysqli_query($connection, $query);
 ?>
 <script type="text/javascript">
   if(window.location.href.indexOf("?") > -1) {
-
   } else {
   window.location.search += '?';
   }
@@ -32,7 +15,8 @@ $prodResult = mysqli_query($connection, $query);
       <select id="select_id" onchange="val()">
         <option value="0" selected>All Categories</option>
         <?php
-        while ($row = mysqli_fetch_array($prodCatResult)) {
+        $categories = getCategories();
+        while ($row = mysqli_fetch_array($categories)) {
         ?>
         <option value='<?php echo $row["ProductCategoryID"] ?>'><?php echo $row["CategoryName"]; ?></option>
         <?php
@@ -76,6 +60,7 @@ $prodResult = mysqli_query($connection, $query);
   </div>
   <div class="row">
     <?php
+    $prodResult = getProducts();
     while ($row = mysqli_fetch_array($prodResult)) {
       $itemNumber = $row["ItemNumber"];
     ?>
@@ -83,34 +68,14 @@ $prodResult = mysqli_query($connection, $query);
       <div class="col s12 m3">
         <div class="card">
           <div class="card-image">
-            <?php
-              $imgResult = mysqli_query($connection, "SELECT `ImgID` FROM `ProductImg` WHERE ItemNumber = $itemNumber");
-              while ($imgrow = mysqli_fetch_array($imgResult)) {
-                $imgID = $imgrow["ImgID"];
-                $imgResult2 = mysqli_query($connection, "SELECT `URL` FROM `ImgGallery` WHERE ImgID = $imgID AND IsPrimary = true");
-                while ($imgrow2 = mysqli_fetch_array($imgResult2)) {
-            ?>
-            <img src="<?php echo $imgrow2["URL"]; ?>">
-            <?php
-                }
-              }
-            ?>
+            <img src="<?php getImg($itemNumber) ?>">
             <span class="card-title"><?php echo $row["ProductName"]; ?></span>
           </div>
           <div class="card-action">
             <p class="price">$<?php echo $row["Price"]; ?></p>
             <div class="stars right">
               <?php
-                $ratingResult = mysqli_query($connection, "SELECT `Rating` FROM `Review` WHERE ItemNumber = $itemNumber");
-                $rated = 0;
-                $divide = 0;
-                while ($ratingrow = mysqli_fetch_array($ratingResult)) {
-                  $rating = $ratingrow["Rating"];
-                  $rated = $rated + $rating;
-                  $divide = $divide + count($ratingResult);
-                }
-                $rated = $rated / $divide;
-                echo $rated;
+                $rated = getReviewForProduct($itemNumber);
                 $i = 1;
                 while ($i <= $rated) {
                   ?>
@@ -125,7 +90,7 @@ $prodResult = mysqli_query($connection, $query);
       </div>
     </a>
     <?php
-    }
+  }
     ?>
   </div>
   <?php
