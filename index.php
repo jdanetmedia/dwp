@@ -45,7 +45,7 @@
 			<?php
 			function output() {
 			echo "
-			<a class='carousel-item' href='#one!'>
+			<a class='carousel-item' href='product.php'>
 			    <div class='card'>
 			      <div class='card-image'>
 			        <img src='http://via.placeholder.com/400x400'>
