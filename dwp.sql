@@ -426,7 +426,7 @@ VALUES (6700, "Esbjerg");
 
 -- Insert BasicPageInfo
 INSERT INTO BasicPageInfo
-VALUES (11223344, "/uploads/rubberducklogo.png", "Rubber Duck", 25, "This is the about us text.", "contact@somemail.com", 11223344, "Kongensgade", "58C", 6700);
+VALUES (11223344, "uploads/rubberducklogo.png", "Rubber Duck", 25, "This is the about us text.", "contact@somemail.com", 11223344, "Kongensgade", "58C", 6700);
 
 -- Insert Frontslides
 INSERT INTO FrontSlider
