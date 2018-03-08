@@ -117,7 +117,6 @@ CREATE TABLE BlogPost (
   MetaDescription varchar(255) NULL,
   BlogContent varchar(255) NOT NULL,
   BlogDate varchar(255) NOT NULL,
-  ShortDescription varchar(255) NULL,
   UserEmail varchar(255) NOT NULL, -- Foreign Key, set later
   BlogCategoryID int(20) NOT NULL -- Foreign Key, set later
 );
@@ -356,6 +355,9 @@ VALUES (NULL, "http://via.placeholder.com/600x600", true);
 INSERT INTO ImgGallery
 VALUES (NULL, "http://via.placeholder.com/800x800", true);
 
+INSERT INTO ImgGallery
+VALUES (NULL, "http://via.placeholder.com/1920x1080", false);
+
 -- Insert ProductImg
 INSERT INTO ProductImg
 VALUES ("1111", 1);
@@ -387,7 +389,7 @@ VALUES ("3334", 2);
 INSERT INTO ProductImg
 VALUES ("3335", 2);
 
--- Insert ProductImg
+-- Insert DeliveryMethods
 INSERT INTO DeliveryMethod
 VALUES (NULL, "Shipping to postoffice", "This is the description for the shipping to postoffice", 5);
 
@@ -396,3 +398,42 @@ VALUES (NULL, "Shipping to home address", "This is the description for the shipp
 
 INSERT INTO DeliveryMethod
 VALUES (NULL, "Express shipping", "This is the description for the Express shipping", 15);
+
+-- Insert BlogCategories
+INSERT INTO BlogCategory
+VALUES (NULL, "Company News", "Here you will find some of our company news.", "SeoTitel", "MetaDescription");
+
+INSERT INTO BlogCategory
+VALUES (NULL, "Top 10s", "Here you will find top 10s lists", "SeoTitel", "MetaDescription");
+
+-- Insert BlogPosts
+INSERT INTO BlogPost
+VALUES (NULL, "New employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "20-02-18", "rasmus.andreas96@gmail.com", 1);
+
+INSERT INTO BlogPost
+VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2);
+
+-- Insert BlogImg
+INSERT INTO BlogImg
+VALUES (1,5);
+
+INSERT INTO BlogImg
+VALUES (2,5);
+
+-- insert zipcodes and cities
+INSERT INTO ZipCode
+VALUES (6700, "Esbjerg");
+
+-- Insert BasicPageInfo
+INSERT INTO BasicPageInfo
+VALUES (11223344, "/uploads/rubberducklogo.png", "Rubber Duck", 25, "This is the about us text.", "contact@somemail.com", 11223344, "Kongensgade", "58C", 6700);
+
+-- Insert Frontslides
+INSERT INTO FrontSlider
+VALUES (NULL, "Save 50% on all sports related ducks!", "Sports sale!", "Go to products", "products.php?cat=3", "http://via.placeholder.com/1920x1080", "rasmus.andreas96@gmail.com");
+
+INSERT INTO FrontSlider
+VALUES (NULL, "Save 25% on all superhero related ducks!", "Hero sale!", "Go to products", "products.php?cat=2", "http://via.placeholder.com/1920x1080", "rasmus.andreas96@gmail.com");
+
+INSERT INTO FrontSlider
+VALUES (NULL, "Save 75% on the yellow ducks!", "Yellow duck sale!", "Go to product", "product.php?item=1113", "http://via.placeholder.com/1920x1080", "rasmus.andreas96@gmail.com");

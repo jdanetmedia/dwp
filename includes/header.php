@@ -18,7 +18,7 @@ require_once("includes/connection.php");
     <body>
       <nav class="teal">
         <div class="nav-wrapper">
-          <a href="index.php" class="brand-logo">RUBBER DUCK SHOP</a>
+          <a href="index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="uploads/rubberducklogo.png"></a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><a href="products.php">Producks</a></li>
