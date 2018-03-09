@@ -303,6 +303,17 @@ img.full {
   text-align: right;
   margin-top: 10px;
 }
+.avr-review {
+  margin-top: 20px;
+  .review-text {
+    display: block;
+    height: 32px;
+    line-height: 32px;
+    margin-right: 10px;
+    float: left;
+    font-style: italic;
+  }
+}
 
 /* Cart styling */
 .price {
