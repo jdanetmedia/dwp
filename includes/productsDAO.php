@@ -1,6 +1,5 @@
 <?php
 require_once('connection.php');
-
 $query = "SELECT * FROM `Product`";
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
@@ -9,7 +8,7 @@ if (isset($_GET["cat"])) {
     $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
   }
 }
-
+// TODO: check if set
 if ($_GET["minPrice"] != "" && $_GET["cat"] != 0) {
   if ($_GET["minPrice"] != "") {
     $minPrice = $_GET["minPrice"];
