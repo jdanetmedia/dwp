@@ -18,3 +18,13 @@ function getCurrentProduct($itemNumber) {
 		print($ex->getMessage());
 	}
 }
+
+// Get reviews for current product
+function getReviews($itemNumber) {
+  global $connection;
+
+  $query = "SELECT * FROM Review WHERE ItemNumber = $itemNumber";
+
+  $result = mysqli_query($connection, $query);
+  return $result;
+}
