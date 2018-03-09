@@ -49,8 +49,7 @@ function getReviewForProduct($itemNumber) {
     $divide = $divide + count($ratingResult);
   }
   $rated = $rated / $divide;
-  echo $rated;
-  return $rated;
+  return array($rated, $divide);
 }
 
 function getCategories() {

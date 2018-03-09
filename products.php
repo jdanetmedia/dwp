@@ -77,7 +77,7 @@ echo $url;
               <?php
                 $rated = getReviewForProduct($itemNumber);
                 $i = 1;
-                while ($i <= $rated) {
+                while ($i <= $rated[0]) {
                   ?>
                   <i class="material-icons tiny rated">star</i>
                   <?php

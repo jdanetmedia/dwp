@@ -1,6 +1,7 @@
 <?php
 require_once("includes/header.php");
 require_once("includes/productDAO.php");
+require_once('includes/productsDAO.php');
 
 // Store information on the current product item
 $currentItem = getCurrentProduct($_GET["item"]);
@@ -34,6 +35,19 @@ $currentItem = getCurrentProduct($_GET["item"]);
               <label for="quantity">Quantity</label>
             </div>
             <a class="waves-effect waves-light btn cart-btt"><i class="material-icons right">add_shopping_cart</i>Add to cart</a>
+          </div>
+          <div class="col s12">
+            <?php
+              $rated = getReviewForProduct($_GET["item"]);
+              $i = 1;
+              while ($i <= $rated[0]) {
+                ?>
+                <i class="material-icons tiny rated">star</i>
+                <?php
+                $i++;
+              }
+              echo $rated[1] . " Reviews";
+            ?>
           </div>
         </div>
       </div>
