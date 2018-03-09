@@ -38,7 +38,7 @@ echo $url;
       <div class="input-field col s12 m3">
         <select name="order" id="select_id2">
           <option value="none">Sort by</option>
-          <option value="DESC"id="none">Desc. Price</option>
+          <option value="DESC">Desc. Price</option>
           <option value="ASC">Asc. Price</option>
           <option value="REV">***Reviews</option>
           <option value="POP">***Popularity</option>

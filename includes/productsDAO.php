@@ -22,7 +22,7 @@ if (isset($_GET["cat"]) && $_GET["cat"] != 0) {
 }
 
 if (isset($_GET["cat"]) && $_GET["cat"] != 0) {
-  if ($_GET["maxPrice"] != "") {
+  if (isset($_GET["maxPrice"]) && $_GET["maxPrice"] != "") {
     $maxPrice = $_GET["maxPrice"];
     $query .= " AND `Price` <= $maxPrice";
   }
