@@ -36,27 +36,6 @@ echo $url;
         <option value="POP">***Popularity</option>
       </select>
     </div>
-    <script type="text/javascript">
-      function val() {
-        d = document.getElementById("select_id").value;
-        href = window.location.href;
-        if(!~href.indexOf('cat'))
-            window.location.href = href + 'cat=' + d + "&";
-        else
-            // Regular expression searches for cat=, one or more numbers, and one character
-            window.location.href = href.replace(/(cat=)\d+\D/, '$1' + d + "&");
-      }
-
-      function val2() {
-        d = document.getElementById("select_id2").value;
-        href = window.location.href;
-        if(!~href.indexOf('order'))
-            window.location.href = href + 'order=' + d + "&";
-        else
-            // Regular expression searches for order=, and one or more characters + & at the end
-            window.location.href = href.replace(/(order=)\D+(&)/, '$1' + d + "&");
-      }
-    </script>
   </div>
   <div class="row">
     <?php

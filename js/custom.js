@@ -1,15 +1,34 @@
 // Mobile navigation toggle
 $(".button-collapse").sideNav();
 
-//initialize select function
 $(document).ready(function() {
+  $( "#select_id" ).change(function() {
+    var selected = document.getElementById("select_id").value;
+    href = window.location.href;
+    if(!~href.indexOf('cat'))
+        window.location.href = href + 'cat=' + selected + "&";
+    else
+        // Regular expression searches for cat=, one or more numbers, and one character
+        window.location.href = href.replace(/(cat=)\d+\D/, '$1' + selected + "&");
+  });
+
+  $( "#select_id2" ).change(function() {
+    var selected = document.getElementById("select_id2").value;
+    href = window.location.href;
+    if(!~href.indexOf('order'))
+        window.location.href = href + 'order=' + selected + "&";
+    else
+        // Regular expression searches for order=, and one or more characters + & at the end
+        window.location.href = href.replace(/(order=)\D+(&)/, '$1' + selected + "&");
+  });
+
   $('.carousel').carousel({
               dist:0,
               shift:0,
               padding:20,
 
         });
-
+  //initialize select function
   $('select').material_select();
 
   // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered

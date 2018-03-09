@@ -21,15 +21,15 @@ require_once("includes/connection.php");
           <a href="index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="uploads/rubberducklogo.png"></a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
+            <li><a href="index.php">Home</a></li>
             <li><a href="products.php">Producks</a></li>
-            <li><a href="product.php">Jespers Duck</a></li>
             <li><a href="contact.php">Quack at us</a></li>
             <li><a href="blog.php">Bluck</a></li>
             <li><a href="cart.php">Ducking cart<i class="material-icons right">shopping_cart</i></a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
+              <li><a href="index.php">Home</a></li>
               <li><a href="products.php">Producks</a></li>
-              <li><a href="product.php">Jespers Duck</a></li>
               <li><a href="contact.php">Quack at us</a></li>
               <li><a href="blog.php">Bluck</a></li>
               <li><a href="cart.php">Ducking cart<i class="material-icons right">shopping_cart</i></a></li>
