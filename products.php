@@ -66,11 +66,19 @@ echo $url;
               <?php
                 $rated = getReviewForProduct($itemNumber);
                 $i = 1;
+                $ratedRemaining = 5 - $rated[0];
+                $i2 = 1;
                 while ($i <= $rated[0]) {
                   ?>
                   <i class="material-icons tiny rated">star</i>
                   <?php
                   $i++;
+                }
+                while($i2 <= $ratedRemaining) {
+                  ?>
+                    <i class="material-icons tiny">star_border</i>
+                  <?php
+                  $i2++;
                 }
               ?>
             </div>
