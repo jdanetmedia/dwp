@@ -40,13 +40,21 @@ $reviews = getReviews($_GET["item"]);
             <?php
               $rated = getReviewForProduct($_GET["item"]);
               $i = 1;
+              $ratedRemaining = 5 % $rated[0];
+              $i2 = 1;
               while ($i <= $rated[0]) {
                 ?>
-                <i class="material-icons tiny rated">star</i>
+                <i class="material-icons small rated">star</i>
                 <?php
                 $i++;
               }
-              echo $rated[1] . " Reviews";
+              while($i2 <= $ratedRemaining) {
+                ?>
+                  <i class="material-icons small">star_border</i>
+                <?php
+                $i2++;
+              }
+              echo "Based on " . $rated[1] . " reviews";
             ?>
           </div>
         </div>
@@ -147,26 +155,32 @@ $reviews = getReviews($_GET["item"]);
                 <div class="col s12 m6">
                   <div class="card">
                     <div class="card-content">
-                      <span class="card-title"><?php echo $row["ReviewName"]; ?></span>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                      <span class="card-title"><?php echo $row["ReviewTitel"]; ?></span>
+                      <p><?php echo $row["ReviewContent"] ?></p>
+                      <span class="review-meta"><?php echo "Posted by <b>" . $row["ReviewName"] . "</b> on <b>" . $row["ReviewDate"] . "</b>"; ?></span>
                     </div>
                     <div class="card-action">
                       <div class="stars">
                         <?php
 
                           $rating = $row["Rating"];
-                          $i = 0;
-
-                          while($i <= $rating) {
+                          $items = 1;
+                          $items2 = 1;
+                          $notRated = 5 % $rating;
+                          while($items <= $rating) {
 
                             ?>
                               <i class="material-icons small rated">star</i>
                             <?php
-                            $i++;
+                            $items++;
                           }
-                          
+                          while($items2 <= $notRated) {
+                            ?>
+                              <i class="material-icons small">star_border</i>
+                            <?php
+                            $items2++;
+                          }
                         ?>
-                        <i class="material-icons small">star_border</i>
                       </div>
                     </div>
                   </div>
