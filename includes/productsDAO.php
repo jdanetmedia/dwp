@@ -1,6 +1,5 @@
 <?php
 require_once('connection.php');
-
 $query = "SELECT * FROM `Product`";
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
