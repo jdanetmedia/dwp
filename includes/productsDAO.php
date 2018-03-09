@@ -9,10 +9,38 @@ if (isset($_GET["cat"])) {
     $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
   }
 }
+
+if ($_GET["minPrice"] != "" && $_GET["cat"] != 0) {
+  if ($_GET["minPrice"] != "") {
+    $minPrice = $_GET["minPrice"];
+    $query .= " AND `Price` >= $minPrice";
+  }
+} else {
+  if ($_GET["minPrice"] != "") {
+    $minPrice = $_GET["minPrice"];
+    $query .= " WHERE `Price` >= $minPrice";
+  }
+}
+
+if ($_GET["maxPrice"] != "" && $_GET["cat"] != 0) {
+  if ($_GET["maxPrice"] != "") {
+    $maxPrice = $_GET["maxPrice"];
+    $query .= " AND `Price` <= $maxPrice";
+  }
+} elseif ($_GET["maxPrice"] != "" && isset($_GET["minPrice"])) {
+  $maxPrice = $_GET["maxPrice"];
+  $query .= " AND `Price` <= $maxPrice";
+} else {
+  if ($_GET["maxPrice"] != "") {
+    $maxPrice = $_GET["maxPrice"];
+    $query .= " WHERE `Price` <= $maxPrice";
+  }
+}
+
 if (isset($_GET["order"])) {
   if ($_GET["order"] != "none") {
     $order = $_GET["order"];
-    $query .= "ORDER BY `Price` $order";
+    $query .= " ORDER BY `Price` $order";
   }
 }
 //echo $query;
