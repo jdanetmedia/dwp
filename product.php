@@ -6,6 +6,7 @@ require_once('includes/productsDAO.php');
 // Store information on the current product item
 $currentItem = getCurrentProduct($_GET["item"]);
 $reviews = getReviews($_GET["item"]);
+$related = getRelatedProducts($currentItem["ProductCategoryID"]);
 ?>
   <div class="container product-container">
     <div class="row">
@@ -18,16 +19,16 @@ $reviews = getReviews($_GET["item"]);
         </div>
       </div>
       <div class="col s12 m7">
-        <h1 class="product-title"><?php echo $currentItem->ProductName; ?></h1>
+        <h1 class="product-title"><?php echo $currentItem["ProductName"]; ?></h1>
         <div class="short-desc">
-          <?php echo $currentItem->ShortDescription; ?>
+          <?php echo $currentItem["ShortDescription"]; ?>
         </div>
         <div class="row">
           <div class="col s6">
             <p>Your price:</p>
           </div>
           <div class="col s6 right">
-            <p><b>99.00</b></p>
+            <p><b>$<?php echo $currentItem["Price"]; ?></b></p>
           </div>
           <div class="col s12">
             <div class="input-field inline cart_quantity">
@@ -36,7 +37,7 @@ $reviews = getReviews($_GET["item"]);
             </div>
             <a class="waves-effect waves-light btn cart-btt"><i class="material-icons right">add_shopping_cart</i>Add to cart</a>
           </div>
-          <div class="col s12">
+          <div class="col s12 avr-review">
             <?php
               $rated = getReviewForProduct($_GET["item"]);
               $i = 1;
@@ -54,7 +55,7 @@ $reviews = getReviews($_GET["item"]);
                 <?php
                 $i2++;
               }
-              echo "Based on " . $rated[1] . " reviews";
+              echo "<span class='review-text'>Based on " . $rated[1] . " reviews: </span>";
             ?>
           </div>
         </div>
@@ -71,7 +72,7 @@ $reviews = getReviews($_GET["item"]);
         <div id="description">
           <div class="row">
             <div class="col s12 m8">
-              <?php echo $currentItem->LongDescription; ?>
+              <?php echo $currentItem["LongDescription"]; ?>
             </div>
             <div class="col s12 m4">
               <p><b>Shipping:</b><br>
@@ -193,36 +194,30 @@ $reviews = getReviews($_GET["item"]);
     </div>
     <div class="carousel product-slider">
 			<h4>Related producks!</h4>
-			<?php
-			function output() {
-			echo "
-			<a class='carousel-item' href='product.php'>
-			    <div class='card'>
-			      <div class='card-image'>
-			        <img src='http://via.placeholder.com/400x400'>
-			        <span class='card-title'>Card Title</span>
-			      </div>
-			      <div class='card-action'>
-			        <p class='price'>$99.95</p>
-			        <div class='stars right'>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny'>star_border</i>
-			        </div>
-			      </div>
-			    </div>
-			</a>
-			";
-			}
-
-			$i = 1;
-			while ($i <= 7) {
-			output();
-			$i++;
-			}
-			?>
+      <?php
+        while($row = mysqli_fetch_array($related)) {
+          ?>
+            <a class='carousel-item' href='product.php?item=<?php echo $row["ItemNumber"]; ?>'>
+                <div class='card'>
+                  <div class='card-image'>
+                    <img src='http://via.placeholder.com/400x400'>
+                    <span class='card-title'><?php echo $row["ProductName"]; ?></span>
+                  </div>
+                  <div class='card-action'>
+                    <p class='price'>$<?php echo $row["Price"]; ?></p>
+                    <div class='stars right'>
+                      <i class='material-icons tiny rated'>star</i>
+                      <i class='material-icons tiny rated'>star</i>
+                      <i class='material-icons tiny rated'>star</i>
+                      <i class='material-icons tiny rated'>star</i>
+                      <i class='material-icons tiny'>star_border</i>
+                    </div>
+                  </div>
+                </div>
+            </a>
+          <?php
+        }
+      ?>
     </div>
   </div>
   <div class="overlay">

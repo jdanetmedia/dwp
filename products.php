@@ -12,7 +12,7 @@ echo $url;
 <div class="container">
   <div class="row">
     <div class="input-field col s12 m3">
-      <select id="select_id" onchange="val()">
+      <select id="select_id">
         <option value="0" selected>All Categories</option>
         <?php
         $categories = getCategories();
@@ -28,7 +28,7 @@ echo $url;
       <div id="price-slider"></div>
     </div>
     <div class="input-field col s12 m3">
-      <select id="select_id2" onchange="val2()">
+      <select id="select_id2">
         <option value="none" selected>Sort by</option>
         <option value="DESC">Desc. Price</option>
         <option value="ASC">Asc. Price</option>
