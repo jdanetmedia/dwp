@@ -1,11 +1,15 @@
-<?php require_once('includes/header.php') ?>
+<?php require_once('includes/header.php');
+require_once("includes/blogDAO.php");
+$post = $_GET["post"];
+$postData = getPost($post);
+?>
   <div class="container post-container">
       <nav class="breadcrumb-nav">
         <div class="nav-wrapper">
           <div class="col s12">
             <a href="#!" class="breadcrumb">Bluck</a>
             <a href="#!" class="breadcrumb">Some category</a>
-            <a href="#!" class="breadcrumb">Post title</a>
+            <a href="#!" class="breadcrumb"><?php echo $postData["Titel"]; ?></a>
           </div>
         </div>
       </nav>
@@ -14,13 +18,11 @@
           <div class="card">
             <div class="card-image">
               <img src="http://via.placeholder.com/1920x1080">
-              <span class="card-title">Post title</span>
+              <span class="card-title"><?php echo $postData["Titel"]; ?></span>
             </div>
             <div class="card-content">
-              <i>Posted on <b>18/2 2018</b> by <b>Jesper</b> in <b>Some category</b></i>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. lorem</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <i>Posted on <b><?php echo $postData["BlogDate"]; ?></b> by <b>Jesper</b> in <b>Some category</b></i>
+              <p><?php echo $postData["BlogContent"]; ?></p>
             </div>
           </div>
         </div>

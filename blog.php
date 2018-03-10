@@ -5,7 +5,7 @@ require_once("includes/blogDAO.php");
     <div class="row">
       <h1>Latest Quackposts</h1>
       <?php
-      $blogResult = getPosts();
+      $blogResult = getAllPosts();
       while($row = mysqli_fetch_array($blogResult)) {
         ?>
         <div class="col s12 m6">
