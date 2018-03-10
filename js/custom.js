@@ -14,16 +14,17 @@ $(document).ready(function() {
   // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
   $('.modal').modal();
 
-  // Star rating
-  $(':radio').change(function() {
-    console.log('New star rating: ' + this.value);
-  });
-
   // slider
   $('.carousel.carousel-slider').carousel({fullWidth: true});
 
   // Product collapsible
   $('.collapsible').collapsible();
+  $('.content').richText({
+    //Uploads
+    imageUpload: false,
+    fileUpload: false,
+    videoUpload: false
+  });
 
   // Input counter
   $('input#input_text, textarea#textarea1').characterCounter();

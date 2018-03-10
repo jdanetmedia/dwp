@@ -29,8 +29,8 @@
                     <label for="shortDescription">Short description (max. 150 characters)</label>
                   </div>
                   <div class="input-field col s12">
-                    <textarea id="longDescription" class="materialize-textarea"></textarea>
-                    <label for="longDescription">Long description</label>
+                    <p>Long description</p>
+                    <textarea id="longDescription" class="content" name="longDescription"></textarea>
                   </div>
                 </div>
               </form>

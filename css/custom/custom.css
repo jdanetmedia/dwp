@@ -326,5 +326,9 @@ img.full {
     margin-left: 35px; }
   .admin-area .new-prod-btn {
     margin-left: 15px; }
+  .admin-area .collapsible-body {
+    background-color: #fff; }
+  .admin-area .richText .richText-toolbar ul li a {
+    color: #212121; }
 
 /*# sourceMappingURL=custom.css.map */
