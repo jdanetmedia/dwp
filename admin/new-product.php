@@ -18,7 +18,14 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="input-field col s6">
+                  <div class="input-field col s4">
+                    <select>
+                      <option value="0" selected>Active</option>
+                      <option value="1">Inactive</option>
+                    </select>
+                    <label>Status</label>
+                  </div>
+                  <div class="input-field col s8">
                     <input id="itemNumber" type="text" class="validate">
                     <label for="itemNumber">Item number</label>
                   </div>
