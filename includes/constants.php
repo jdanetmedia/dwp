@@ -1,8 +1,8 @@
 <?php
 
-define("DB_SERVER", "localhost");
-define("DB_USER", "dwp");
-define("DB_PASS", "dwp");
-define("DB_NAME", "dwp");
+define("DB_SERVER", "mysql5.unoeuro.com");
+define("DB_USER", "rasmusandre_dk");
+define("DB_PASS", "rasm8468");
+define("DB_NAME", "rasmusandreas_dk_db3");
 
 ?>

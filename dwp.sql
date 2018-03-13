@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS dwp;
-CREATE DATABASE dwp;
-USE dwp;
+DROP DATABASE IF EXISTS rasmusandreas_dk_db3;
+CREATE DATABASE rasmusandreas_dk_db3;
+USE rasmusandreas_dk_db3;
 
 -- Create tables
 CREATE TABLE ZipCode (
