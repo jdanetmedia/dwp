@@ -76,7 +76,18 @@ function getReviewForProduct($itemNumber) {
     $divide = $divide + count($ratingResult);
   }
   $rated = $rated / $divide;
-  return array($rated, $divide);
+
+  $i = 1;
+  $ratedRemaining = 5 - $rated;
+  $i2 = 1;
+  while ($i <= $rated) {
+    echo "<i class='material-icons tiny rated'>star</i>";
+    $i++;
+  }
+  while($i2 <= $ratedRemaining) {
+      echo "<i class='material-icons tiny'>star_border</i>";
+    $i2++;
+  }
 }
 
 function getCategories() {

@@ -39,23 +39,8 @@ $related = getRelatedProducts($currentItem["ProductCategoryID"]);
           </div>
           <div class="col s12 avr-review">
             <?php
-              $rated = getReviewForProduct($_GET["item"]);
-              $i = 1;
-              $ratedRemaining = 5 % $rated[0];
-              $i2 = 1;
-              while ($i <= $rated[0]) {
-                ?>
-                <i class="material-icons small rated">star</i>
-                <?php
-                $i++;
-              }
-              while($i2 <= $ratedRemaining) {
-                ?>
-                  <i class="material-icons small">star_border</i>
-                <?php
-                $i2++;
-              }
-              echo "<span class='review-text'>Based on " . $rated[1] . " reviews: </span>";
+              echo getReviewForProduct($_GET["item"]);
+              //echo "<span class='review-text'>Based on " . $rated . " reviews: </span>";
             ?>
           </div>
         </div>

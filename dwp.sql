@@ -72,7 +72,9 @@ CREATE TABLE Product (
 
 CREATE TABLE User (
   UserEmail varchar(255) NOT NULL PRIMARY KEY,
-  Password varchar(255) NOT NULL
+  Password varchar(255) NOT NULL,
+  FirstName varchar(255) NOT NULL,
+  LastName varchar(255) NOT NULL
 );
 
 CREATE TABLE Review (
@@ -258,8 +260,8 @@ INSERT INTO ProductCategory
 VALUES (NULL, "Sport Ducks", "This is the Third description", "SeoTitel for Cat3", "This is the Metadescription for category 3");
 
 -- Insert Users
-INSERT INTO User (UserEmail, Password)
-VALUES ("rasmus.andreas96@gmail.com", "admin");
+INSERT INTO User
+VALUES ("rasmus.andreas96@gmail.com", "admin", "Rasmus Andreas", "Nielsen");
 
 -- Insert Products
 INSERT INTO Product
