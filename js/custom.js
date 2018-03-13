@@ -2,6 +2,7 @@
 $(".button-collapse").sideNav();
 
 $(document).ready(function() {
+
   $('.carousel').carousel({
               dist:0,
               shift:0,
