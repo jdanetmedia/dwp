@@ -1,5 +1,7 @@
 <?php
 require_once("includes/connection.php");
+require_once ("contactDAO.php");
+$pageInfo = getPageInfo();
 ?>
 <!DOCTYPE html>
   <html>
@@ -18,7 +20,7 @@ require_once("includes/connection.php");
     <body>
       <nav class="teal">
         <div class="nav-wrapper">
-          <a href="index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="uploads/rubberducklogo.png"></a>
+          <a href="index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="<?php echo $pageInfo["LogoURL"]; ?>"></a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><a href="index.php">Home</a></li>
