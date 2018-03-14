@@ -1,5 +1,11 @@
 <?php
 require_once('connection.php');
+if (isset($_GET["cat"])) {
+  if ($_GET["cat"] != "0") {
+    $cat = $_GET["cat"];
+    $catResult = mysqli_query($connection, "SELECT * FROM `BlogCategory` WHERE `BlogCategoryID` = $cat");
+  }
+}
 
 function getAllPosts() {
   global $connection;

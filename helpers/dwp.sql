@@ -121,7 +121,8 @@ CREATE TABLE BlogPost (
   BlogContent varchar(255) NOT NULL,
   BlogDate varchar(255) NOT NULL,
   UserEmail varchar(255) NOT NULL, -- Foreign Key, set later
-  BlogCategoryID int(20) NOT NULL -- Foreign Key, set later
+  BlogCategoryID int(20) NOT NULL, -- Foreign Key, set later
+  RelatedProducts int NULL -- Foreign Key, set later
 );
 
 CREATE TABLE BlogCategory (
@@ -195,6 +196,9 @@ ADD FOREIGN KEY (UserEmail) REFERENCES User (UserEmail);
 
 ALTER TABLE BlogPost
 ADD FOREIGN KEY (BlogCategoryID) REFERENCES BlogCategory (BlogCategoryID);
+
+ALTER TABLE BlogPost
+ADD FOREIGN KEY (RelatedProducts) REFERENCES ProductCategory (ProductCategoryID);
 
 ALTER TABLE CustomerOrder
 ADD FOREIGN KEY (ZipCode) REFERENCES ZipCode (ZipCode);
@@ -417,10 +421,10 @@ VALUES (NULL, "Top 10s", "Here you will find top 10s lists", "SeoTitel", "MetaDe
 
 -- Insert BlogPosts
 INSERT INTO BlogPost
-VALUES (NULL, "New employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "20-02-18", "rasmus.andreas96@gmail.com", 1);
+VALUES (NULL, "New employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "20-02-18", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2);
+VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2, 3);
 
 -- Insert BlogImg
 INSERT INTO BlogImg
@@ -435,7 +439,7 @@ VALUES (6700, "Esbjerg");
 
 -- Insert BasicPageInfo
 INSERT INTO BasicPageInfo
-VALUES (11223344, "uploads/rubberducklogo.png", "Rubber Duck", 25, "This is the about us text.", "contact@somemail.com", 11223344, "Kongensgade", "58C", 6700);
+VALUES (11223344, "uploads/rubberducklogo.png", "Rubber Duck", 25, "This is the about us text.", "r@rasmusandreas.dk", 11223344, "Kongensgade", "58C", 6700);
 
 -- Insert Frontslides
 INSERT INTO FrontSlider

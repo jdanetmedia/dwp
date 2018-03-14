@@ -65,5 +65,19 @@ require_once("includes/blogDAO.php");
       }
       ?>
     </div>
+    <?php
+    if(isset($catResult)) {
+      while ($row = mysqli_fetch_array($catResult)) {
+    ?>
+    <div class="row">
+      <div class="col s12 m12">
+        <h3><?php echo $row["CategoryName"]; ?></h3>
+        <p><?php echo $row["Description"]; ?></p>
+      </div>
+    </div>
+    <?php
+      }
+    }
+    ?>
   </div>
 <?php require_once('includes/footer.php') ?>
