@@ -23,7 +23,7 @@ echo $url;
       <div class="col s12 m3">
         <div class="card">
           <div class="card-image">
-            <img src="<?php getImg($itemNumber) ?>">
+            <img src="<?php echo $row["URL"]; ?>">
             <span class="card-title"><?php echo $row["ProductName"]; ?></span>
           </div>
           <div class="card-action">

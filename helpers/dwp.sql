@@ -361,9 +361,15 @@ VALUES (NULL, "http://via.placeholder.com/800x800", true);
 INSERT INTO ImgGallery
 VALUES (NULL, "http://via.placeholder.com/1920x1080", false);
 
+INSERT INTO ImgGallery
+VALUES (NULL, "http://via.placeholder.com/800x800", false);
+
 -- Insert ProductImg
 INSERT INTO ProductImg
 VALUES ("1111", 1);
+
+INSERT INTO ProductImg
+VALUES ("1111", 6);
 
 INSERT INTO ProductImg
 VALUES ("1112", 2);
