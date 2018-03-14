@@ -42,26 +42,15 @@ if (isset($_GET["order"])) {
     $query .= " ORDER BY `Price` $order";
   }
 }
-//echo $query;
+$query .= " INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber
+          INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = true;";
+echo $query;
 
 function getProducts() {
     global $connection, $query;
 
 		$prodResult = mysqli_query($connection, $query);
     return $prodResult;
-}
-
-function getImg($itemNumber) {
-  global $connection;
-
-  $imgResult = mysqli_query($connection, "SELECT `ImgID` FROM `ProductImg` WHERE ItemNumber = $itemNumber");
-  while ($imgrow = mysqli_fetch_array($imgResult)) {
-    $imgID = $imgrow["ImgID"];
-    $imgResult2 = mysqli_query($connection, "SELECT `URL` FROM `ImgGallery` WHERE ImgID = $imgID AND IsPrimary = true");
-    while ($imgrow2 = mysqli_fetch_array($imgResult2)) {
-      echo $imgrow2["URL"];
-    }
-  }
 }
 
 function getReviewForProduct($itemNumber) {
