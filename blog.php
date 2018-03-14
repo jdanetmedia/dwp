@@ -1,9 +1,47 @@
 <?php require_once('includes/header.php');
 require_once("includes/blogDAO.php");
 ?>
+<script type="text/javascript">
+  if(window.location.href.indexOf("?") > -1) {
+  } else {
+  window.location.search += '?';
+  }
+</script>
   <div class="container">
     <div class="row">
-      <h1>Latest Quackposts</h1>
+      <h1 class="left">Latest Quackposts</h1>
+      <div class="input-field col s12 m3 right">
+        <select onchange="val()" id="select_id">
+          <option value="0" selected>All Categories</option>
+          <?php
+          $categories = getBlogCategories();
+          while ($row = mysqli_fetch_array($categories)) {
+            if ($_GET["cat"] == $row["BlogCategoryID"]) {
+              ?>
+              <option selected value='<?php echo $row["BlogCategoryID"] ?>'><?php echo $row["CategoryName"]; ?></option>
+              <?php
+            } else {
+          ?>
+          <option value='<?php echo $row["BlogCategoryID"] ?>'><?php echo $row["CategoryName"]; ?></option>
+          <?php
+            }
+          }
+          ?>
+        </select>
+        <script>
+          function val() {
+            var selected = document.getElementById("select_id").value;
+            href = window.location.href;
+            if(!~href.indexOf('cat'))
+                window.location.href = href + 'cat=' + selected;
+            else
+                // Regular expression searches for cat=, one or more numbers, and one character
+                window.location.href = href.replace(/(cat=)\d+/, '$1' + selected);
+          }
+        </script>
+      </div>
+    </div>
+    <div class="row">
       <?php
       $blogResult = getAllPosts();
       while($row = mysqli_fetch_array($blogResult)) {

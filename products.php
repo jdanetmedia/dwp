@@ -10,43 +10,9 @@ echo $url;
   }
 </script>
 <div class="container">
-  <div class="row">
-    <form action="products.php" method="get">
-      <div class="input-field col s12 m3">
-        <select name="cat" id="select_id">
-          <option value="0" selected>All Categories</option>
-          <?php
-          $categories = getCategories();
-          while ($row = mysqli_fetch_array($categories)) {
-          ?>
-          <option value='<?php echo $row["ProductCategoryID"] ?>'><?php echo $row["CategoryName"]; ?></option>
-          <?php
-          }
-          ?>
-        </select>
-      </div>
-      <div class="col s12 m4">
-        <div class="input-field col s6">
-          <input name="minPrice" id="minPrice" type="text" class="validate">
-          <label class="active" for="minPrice2">Min. Price</label>
-        </div>
-        <div class="input-field col s6">
-          <input name="maxPrice" id="maxPrice" type="text" class="validate">
-          <label class="active" for="maxPrice2">Max Price</label>
-        </div>
-      </div>
-      <div class="input-field col s12 m3">
-        <select name="order" id="select_id2">
-          <option value="none">Sort by</option>
-          <option value="DESC">Desc. Price</option>
-          <option value="ASC">Asc. Price</option>
-          <option value="REV">***Reviews</option>
-          <option value="POP">***Popularity</option>
-        </select>
-      </div>
-      <input type="submit" class="waves-effect waves-light btn" value="Filter">
-    </form>
-  </div>
+  <?php
+  require_once('includes/filter.php');
+  ?>
   <div class="row">
     <?php
     $prodResult = getProducts();

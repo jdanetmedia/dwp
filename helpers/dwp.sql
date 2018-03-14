@@ -66,6 +66,7 @@ CREATE TABLE Product (
   OfferPrice int NULL,
   SeoTitel varchar(255) NULL,
   MetaDescription varchar(255) NULL,
+  ProductStatus boolean NOT NULL,
   UserEmail varchar(255) NOT NULL, -- Foreign Key, set later
   ProductCategoryID int NOT NULL -- Foreign Key, set later
 );
@@ -266,43 +267,43 @@ VALUES ("rasmus.andreas96@gmail.com", "admin", "Rasmus Andreas", "Nielsen");
 -- Insert Products
 INSERT INTO Product
 VALUES ("1111", "Green Duck", 1000, "Short Description of Green Duck", "Longer Description Green Duck",
-10, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 1);
+10, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
 VALUES ("1112", "Red Duck", 1000, "Short Description of Red Duck", "Longer Description Red Duck",
-18, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 1);
+18, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
 VALUES ("1113", "Yellow Duck", 1000, "Short Description of Yellow Duck", "Longer Description Yellow Duck",
-8, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 1);
+8, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
 VALUES ("2221", "Batman Duck", 1000, "Short Description of Batman Duck", "Longer Description Batman Duck",
-10, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 2);
+10, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 2);
 
 INSERT INTO Product
 VALUES ("2222", "Deadpool Duck", 1000, "Short Description of Deadpool Duck", "Longer Description Deadpool Duck",
-12, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 2);
+12, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 2);
 
 INSERT INTO Product
 VALUES ("3331", "EfB Duck", 1000, "Short Description of EfB Duck", "Longer Description EfB Duck",
-15, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+15, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3332", "Chelsea Duck", 1000, "Short Description of Chelsea Duck", "Longer Description Chelsea Duck",
-20, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+20, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3333", "United Duck", 1000, "Short Description of United Duck", "Longer Description United Duck",
-25, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+25, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3334", "Arsenal Duck", 1000, "Short Description of Arsenal Duck", "Longer Description Arsenal Duck",
-25, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+25, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3335", "Liverpool Duck", 1000, "Short Description of Liverpool Duck", "Longer Description Liverpool Duck",
-22, NULL, NULL, NULL, "rasmus.andreas96@gmail.com", 3);
+22, NULL, NULL, NULL, false, "rasmus.andreas96@gmail.com", 3);
 
 -- Insert Reviews
 INSERT INTO Review
