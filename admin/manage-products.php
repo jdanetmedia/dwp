@@ -1,4 +1,8 @@
-<?php require_once("../admin/includes/header.php"); ?>
+<?php
+require_once("../admin/includes/header.php");
+require_once("includes/productDAO.php");
+$allProducts = getAllProducts();
+?>
 <div class="container">
   <div class="row">
     <div class="col s12">
@@ -17,69 +21,68 @@
                   <th>Itemnumber</th>
                   <th>Price</th>
                   <th>Sale price</th>
-                  <th>Created</th>
-                  <th>Reviews</th>
+                  <th>Short Description</th>
                   <th>Status</th>
+                  <th>Edit</th>
               </tr>
             </thead>
             <?php // TODO: Ændre farve på select felter ?>
             <tbody>
               <?php
-
-                $i = 1;
-
-                while($i <= 5) {
+                foreach ($allProducts as $product) {
                     ?>
                     <tr>
-                      <td>Yellow Duck Ranger</td>
-                      <td>y1187</td>
-                      <td>99.00 DKK</td>
-                      <td>-</td>
-                      <td>March 6th 2018 @ 11.30.24</td>
-                      <td>1</td>
+                      <td><?php echo $product["ProductName"]; ?></td>
+                      <td><?php echo $product["ItemNumber"]; ?></td>
+                      <td><?php echo $product["Price"]; ?> DKK</td>
+                      <td>
+                        <?php
+                          if(isset($product["OfferPrice"])) {
+                            echo $product("OfferPrice");
+                          } else {
+                            echo "-";
+                          }
+                        ?>
+                      </td>
+                      <td class="ShortDescription">
+                        <?php
+                          $text = $product["ShortDescription"];
+                          if(strlen($text) >= 30) {
+                            echo substr($text, 0, 30) . "...";
+                          } else {
+                            echo $text;
+                          }
+
+                          // if (isset($product["ShortDescription"])) {
+                          //   $showText = strlen($product["ShortDescription"]) > 30 ? substr($product["ShortDescription"], 0, 30) . "..." : $product["ShortDescription"];
+                          //   echo $showText;
+                          // } else {
+                          //   echo "-";
+                          // }
+                        ?>
+                      </td>
                       <td>
                         <div class="input-field">
                           <select>
-                            <option value="1">Active</option>
-                            <option value="2">Inactive</option>
+                            <?php
+                              if($product["ProductStatus"] == true) {
+                                  ?>
+                                    <option value="1" selected>Active</option>
+                                    <option value="2">Inactive</option>
+                                  <?php
+                              } else {
+                                ?>
+                                  <option value="1">Active</option>
+                                  <option value="2" selected>Inactive</option>
+                                <?php
+                              }
+                            ?>
                           </select>
                         </div>
                       </td>
-                    </tr>
-                    <tr>
-                      <td>Big Black Duck</td>
-                      <td>bbd12</td>
-                      <td>119.00 DKK</td>
-                      <td>99.00</td>
-                      <td>March 6th 2018 @ 11.30.24</td>
-                      <td>4</td>
-                      <td>
-                        <div class="input-field">
-                          <select>
-                            <option value="1">Active</option>
-                            <option value="2">Inactive</option>
-                          </select>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>SuperDuck</td>
-                      <td>sd1234</td>
-                      <td>119.00 DKK</td>
-                      <td>99.00</td>
-                      <td>March 6th 2018 @ 11.30.24</td>
-                      <td>0</td>
-                      <td>
-                        <div class="input-field">
-                          <select>
-                            <option value="1">Active</option>
-                            <option value="2">Inactive</option>
-                          </select>
-                        </div>
-                      </td>
+                      <td><a href="edit-product.php?item=<?php echo $product["ItemNumber"]; ?>">Edit</a></td>
                     </tr>
                     <?php
-                    $i++;
                 }
               ?>
             </tbody>

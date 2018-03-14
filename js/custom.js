@@ -17,15 +17,6 @@ $(document).ready(function() {
   // slider
   $('.carousel.carousel-slider').carousel({fullWidth: true});
 
-  // Product collapsible
-  $('.collapsible').collapsible();
-  $('.content').richText({
-    //Uploads
-    imageUpload: false,
-    fileUpload: false,
-    videoUpload: false
-  });
-
   // Input counter
   $('input#input_text, textarea#textarea1').characterCounter();
 

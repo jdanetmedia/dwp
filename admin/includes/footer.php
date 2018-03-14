@@ -4,6 +4,6 @@
   <script type="text/javascript" src="richtext/jquery.richtext.min.js"></script>
   <script type="text/javascript" src="../nouislider/nouislider.js"></script>
   <script type="text/javascript" src="../nouislider/wNumb.js"></script>
-  <script type="text/javascript" src="../js/custom.js"></script>
+  <script type="text/javascript" src="js/admin.js"></script>
   </body>
 </html>
