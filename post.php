@@ -4,13 +4,15 @@ require_once("includes/productDAO.php");
 $post = $_GET["post"];
 $postData = getPost($post);
 $related = getRelatedProducts($postData["RelatedProducts"]);
+$breadcrumbCat = getBlogCategory($postData["BlogCategoryID"]);
+$author = getAuthor($postData["UserEmail"]);
 ?>
   <div class="container post-container">
       <nav class="breadcrumb-nav">
         <div class="nav-wrapper">
           <div class="col s12">
-            <a href="#!" class="breadcrumb">Bluck</a>
-            <a href="#!" class="breadcrumb">Some category</a>
+            <a href="blog.php" class="breadcrumb">Bluck</a>
+            <a href="blog.php?cat=<?php echo $postData["BlogCategoryID"]; ?>" class="breadcrumb"><?php echo $breadcrumbCat["CategoryName"]; ?></a>
             <a href="#!" class="breadcrumb"><?php echo $postData["Titel"]; ?></a>
           </div>
         </div>
@@ -23,7 +25,7 @@ $related = getRelatedProducts($postData["RelatedProducts"]);
               <span class="card-title"><?php echo $postData["Titel"]; ?></span>
             </div>
             <div class="card-content">
-              <i>Posted on <b><?php echo $postData["BlogDate"]; ?></b> by <b>Jesper</b> in <b>Some category</b></i>
+              <i>Posted on <b><?php echo $postData["BlogDate"]; ?></b> by <b><?php echo $author["FirstName"]; ?></b> in <b><?php echo $breadcrumbCat["CategoryName"]; ?></b></i>
               <p><?php echo $postData["BlogContent"]; ?></p>
             </div>
           </div>
@@ -61,7 +63,7 @@ $related = getRelatedProducts($postData["RelatedProducts"]);
         <?php } ?>
         <h4>Related Bluckposts!</h4>
         <?php
-          $blogResult = getAllPosts();
+          $blogResult = getAllRelatedPosts($postData["BlogCategoryID"], $post);
           while($row = mysqli_fetch_array($blogResult)) {
             ?>
             <div class="col s12 m6">

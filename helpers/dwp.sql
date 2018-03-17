@@ -110,7 +110,7 @@ CREATE TABLE Customer (
   Phone int null,
   FirstName varchar(255) NOT NULL,
   LastName varchar(255) NOT NULL,
-  ZipCode int(20) NOT NULL -- Foreign Key, set later
+  ZipCode int(20) NULL -- Foreign Key, set later
 );
 
 CREATE TABLE BlogPost (
@@ -135,7 +135,6 @@ CREATE TABLE BlogCategory (
 
 CREATE TABLE CustomerOrder (
   OrderNumber int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  TotalPrice int NOT NULL,
   Comment varchar(255) NULL,
   OrderDate varchar(255) NOT NULL,
   ShippingStreet varchar(255) NOT NULL,
@@ -144,7 +143,7 @@ CREATE TABLE CustomerOrder (
   CustomerEmail varchar(255) NOT NULL, -- Foreign Key, set later
   DeliveryMethodID int NOT NULL, -- Foreign Key, set later
   OrderStatusID int NOT NULL, -- Foreign Key, set later
-  PromoCode varchar(255) NOT NULL -- Foreign Key, set later
+  PromoCode varchar(255) NULL -- Foreign Key, set later
 );
 
 CREATE TABLE OrderMessage (
@@ -246,7 +245,7 @@ CREATE TABLE BlogImg (
 CREATE TABLE OrderDetails (
   OrderNumber int NOT NULL,
   ItemNumber varchar(255) NOT NULL,
-  Hours int NOT NULL,
+  Amount int NOT NULL,
   CONSTRAINT PK_ProductOnOrder PRIMARY KEY (OrderNumber, ItemNumber),
   FOREIGN KEY (OrderNumber) REFERENCES CustomerOrder (OrderNumber),
   FOREIGN KEY (ItemNumber) REFERENCES Product (ItemNumber)
@@ -424,7 +423,13 @@ INSERT INTO BlogPost
 VALUES (NULL, "New employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "20-02-18", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2, 3);
+VALUES (NULL, "Top 10 sports rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 sports rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2, 3);
+
+INSERT INTO BlogPost
+VALUES (NULL, "Another new employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "20-02-18", "rasmus.andreas96@gmail.com", 1, NULL);
+
+INSERT INTO BlogPost
+VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2, 1);
 
 -- Insert BlogImg
 INSERT INTO BlogImg
@@ -450,3 +455,52 @@ VALUES (NULL, "Save 25% on all superhero related ducks!", "Hero sale!", "Go to p
 
 INSERT INTO FrontSlider
 VALUES (NULL, "Save 75% on the yellow ducks!", "Yellow duck sale!", "Go to product", "product.php?item=1113", "http://via.placeholder.com/1920x1080", "rasmus.andreas96@gmail.com");
+
+-- Insert Customer
+INSERT INTO Customer
+VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", NULL, NULL, NULL, "Rasmus Andreas", "Nielsen", NULL);
+
+-- Insert orderstatus
+INSERT INTO OrderStatus
+VALUES (NULL, "Awaiting");
+
+INSERT INTO OrderStatus
+VALUES (NULL, "In progress");
+
+INSERT INTO OrderStatus
+VALUES (NULL, "Sent");
+
+INSERT INTO OrderStatus
+VALUES (NULL, "Delivered");
+
+-- Insert orders
+INSERT INTO CustomerOrder
+VALUES (NULL, "This is a order comment", "10-03-2018", "Spangsbjerg Kirkevej", "99B, 16", 6700, "rasmus.andreas96@gmail.com", 1, 2, NULL);
+
+INSERT INTO CustomerOrder
+VALUES (NULL, "This is a order comment", "12-03-2018", "Nørregade", "30", 6700, "rasmus.andreas96@gmail.com", 3, 1, NULL);
+
+-- Insert orderdetails
+INSERT INTO OrderDetails
+VALUES (1, "1111", 1);
+
+INSERT INTO OrderDetails
+VALUES (1, "3331", 3);
+
+INSERT INTO OrderDetails
+VALUES (1, "3332", 3);
+
+INSERT INTO OrderDetails
+VALUES (1, "2221", 1);
+
+INSERT INTO OrderDetails
+VALUES (1, "2222", 2);
+
+INSERT INTO OrderDetails
+VALUES (2, "1111", 1);
+
+INSERT INTO OrderDetails
+VALUES (2, "3331", 4);
+
+INSERT INTO OrderDetails
+VALUES (2, "3332", 1);
