@@ -1,7 +1,7 @@
 <?php require_once('includes/header.php');
 require_once('includes/productsDAO.php');
 $url = $_SERVER['REQUEST_URI'];
-echo "<br>". $url;
+//echo "<br>". $url;
 ?>
 <script type="text/javascript">
   if(window.location.href.indexOf("?") > -1) {

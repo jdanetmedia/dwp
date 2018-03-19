@@ -1,5 +1,13 @@
 <?php require_once('includes/header.php');
   $deliveryResult = mysqli_query($connection, "SELECT * FROM `DeliveryMethod`");
+	if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php?goto=shipping';
+</script>
+<?php
+	//redirect_to("index.php");
+	}
 ?>
 <div class="container">
   <div class="row">

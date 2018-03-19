@@ -43,7 +43,7 @@ if (isset($_GET["order"])) {
     $query .= " ORDER BY `Price` $order";
   }
 }
-echo $query;
+//echo $query;
 
 function getProducts() {
     global $connection, $query;
