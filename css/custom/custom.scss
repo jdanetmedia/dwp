@@ -115,155 +115,16 @@ h1.product-title {
   text-shadow: 0 0 5px #09f;
 }
 
-.productimage-cnt {
-  position: relative;
-  .productimage-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0,0,0,0.5);
-    opacity: 0;
-    -webkit-transition: all 0.2s ease-in;
-    -moz-transition: all 0.2s ease-in;
-    -ms-transition: all 0.2s ease-in;
-    -o-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
-    cursor: pointer;
-    .zoom-icon {
-      color: #fff;
-      display: inline-block;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -moz-transform: translateX(-50%) translateY(-50%);
-      -webkit-transform: translateX(-50%) translateY(-50%);
-      -o-transform: translateX(-50%) translateY(-50%);
-      -ms-transform: translateX(-50%) translateY(-50%);
-      transform: translateX(-50%) translateY(-50%);
-      opacity: 0.5;
-      cursor: pointer;
-    }
-  }
-  &:hover {
-    .productimage-overlay {
-      opacity: 1;
-    }
-  }
-}
-
-img.full {
-  position: absolute;
-  top: 40px;
-  left: 50%;
-  -moz-transform: translateX(-50%);
-  -webkit-transform: translateX(-50%);
-  -o-transform: translateX(-50%);
-  -ms-transform: translateX(-50%);
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 800px;
-  height: auto;
-  z-index: 1000;
-}
-
-.static {
-  position: static;
-}
-
-.responsive-img {
-  cursor: pointer;
-}
-
-.overlay {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+.primary-img {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.9);
-  z-index: 999;
-  .close-btn {
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    cursor: pointer;
-    .line {
-      width: 40px;
-      height: 4px;
-      background: #fff;
-      position: absolute;
-      top: 18px;
-    }
-    .line1 {
-      -moz-transform: rotate(45deg);
-      -webkit-transform: rotate(45deg);
-      -o-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-      transform: rotate(45deg);
-      -webkit-transition: all 0.2s ease-in;
-      -moz-transition: all 0.2s ease-in;
-      -ms-transition: all 0.2s ease-in;
-      -o-transition: all 0.2s ease-in;
-      transition: all 0.2s ease-in;
-    }
-    .close-txt {
-      margin-left: 40px;
-      display: block;
-      color: #fff;
-      font-size: 12px;
-      font-weight: bold;
-      line-height: 40px;
-      text-align: center;
-      text-transform: uppercase;
-      -webkit-transition: all 0.2s ease-in;
-      -moz-transition: all 0.2s ease-in;
-      -ms-transition: all 0.2s ease-in;
-      -o-transition: all 0.2s ease-in;
-      transition: all 0.2s ease-in;
-      opacity: 0;
-    }
-    .line2 {
-      -moz-transform: rotate(-45deg);
-      -webkit-transform: rotate(-45deg);
-      -o-transform: rotate(-45deg);
-      -ms-transform: rotate(-45deg);
-      transform: rotate(-45deg);
-      -webkit-transition: all 0.2s ease-in;
-      -moz-transition: all 0.2s ease-in;
-      -ms-transition: all 0.2s ease-in;
-      -o-transition: all 0.2s ease-in;
-      transition: all 0.2s ease-in;
-    }
-    &:hover {
-      .line1 {
-        top: 1px;
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-      }
-      .line2 {
-        top: 36px;
-        -moz-transform: rotate(0deg);
-        -webkit-transform: rotate(0deg);
-        -o-transform: rotate(0deg);
-        -ms-transform: rotate(0deg);
-        transform: rotate(0deg);
-      }
-      .close-txt {
-        opacity: 1;
-        margin-left: 0;
-      }
-    }
-  }
+}
+
+.gallery-img {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  float: left;
+  margin: 5px 5px 0 0;
 }
 
 .show {

@@ -4,18 +4,28 @@ require_once("includes/productDAO.php");
 require_once('includes/productsDAO.php');
 
 // Store information on the current product item
-$currentItem = getCurrentProduct($_GET["item"]);
 $reviews = getReviews($_GET["item"]);
+$productImgs = getCurrentProduct($_GET["item"]);
+$currentItem = mysqli_fetch_assoc($productImgs);
 $related = getRelatedProducts($currentItem["ProductCategoryID"]);
 ?>
   <div class="container product-container">
     <div class="row">
       <div class="col s12 m5 product-img">
         <div class="productimage-cnt">
-          <img class="responsive-img" src="https://pull01.munchkin.com/media/catalog/product/3/1/31001_1_1.jpg" alt="">
-          <div class="productimage-overlay">
-            <i class="material-icons medium zoom-icon">zoom_in</i>
-          </div>
+            <?php foreach ($productImgs as $img) {
+                if($img["IsPrimary"] == 1) { ?>
+                    <img class="responsive-img materialboxed primary-img" src="<?php echo $img["URL"]; ?>" alt="<?php echo $currentItem["ProductName"]; ?>">
+                <?php }
+              } ?>
+        </div>
+        <div class="more-imgs">
+            <?php foreach ($productImgs as $img) {
+                if($img["IsPrimary"] != 1) { ?>
+                  <div class="gallery-img">
+                      <img class="responsive-img materialboxed" src="<?php echo $img["URL"]; ?>" alt="">
+                  </div> <?php }
+                } ?>
         </div>
       </div>
       <div class="col s12 m7">
@@ -203,15 +213,6 @@ $related = getRelatedProducts($currentItem["ProductCategoryID"]);
           <?php
         }
       ?>
-    </div>
-  </div>
-  <div class="overlay">
-    <div class="close-btn">
-      <div class="line1 line"></div>
-      <div class="close-txt">
-        Close
-      </div>
-      <div class="line2 line"></div>
     </div>
   </div>
 <?php require_once("includes/footer.php") ?>
