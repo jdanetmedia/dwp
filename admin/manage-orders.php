@@ -26,7 +26,7 @@
                     <td>March 6th 2018 @ 11.30.24</td>
                     <td>Donald Duck</td>
                     <td>Duckroad 1, Ducktown</td>
-                    <td>99.00 DKK</td>
+                    <td>$99.00</td>
                     <td>
                       <a href="#">View details</a>
                     </td>
@@ -44,7 +44,7 @@
                     <td>March 6th 2018 @ 11.30.24</td>
                     <td>Duckling Duck</td>
                     <td>Duckstreet 3456, Ducktown</td>
-                    <td>120.00 DKK</td>
+                    <td>$120.00</td>
                     <td>
                       <a href="#">View details</a>
                     </td>
@@ -62,7 +62,7 @@
                     <td>March 6th 2018 @ 11.30.24</td>
                     <td>Duckwin Duck</td>
                     <td>Docktown mainstreet 12, Ducktown Center</td>
-                    <td>989.00 DKK</td>
+                    <td>$989.00</td>
                     <td>
                       <a href="#">View details</a>
                     </td>

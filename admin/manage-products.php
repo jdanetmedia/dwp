@@ -1,18 +1,27 @@
 <?php
 require_once("../admin/includes/header.php");
 require_once("includes/productDAO.php");
-$allProducts = getAllProducts();
+if(isset($_GET["search"])) {
+    $allProducts = searchResult($_GET["search"]);
+    $searchString = $_GET["search"];
+} else {
+    $allProducts = getAllProducts();
+}
 ?>
 <div class="container">
   <div class="row">
     <div class="col s12">
       <div class="card">
         <div class="card-content">
-          <div class="input-field col s4 right">
-            <i class="material-icons prefix">search</i>
-            <input id="icon_telephone" type="tel" class="validate">
-            <label for="icon_telephone">Search products</label>
-          </div>
+          <form class="" action="" method="get">
+            <div class="input-field col s4 right">
+              <input id="search" type="text" name="search" <?php if(isset($searchString)) { echo "value='" . $searchString . "'"; } ?>>
+              <label for="search">Search products</label>
+            </div>
+            <div class="col s2 right">
+              <input class="waves-effect waves-light btn grey darken-4 new-prod-btn" type="submit" name="submit" value="Search">
+            </div>
+          </form>
           <span class="card-title">Products<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-product.php">Add new</a></span>
           <table class="responsive-table">
             <thead>
@@ -34,11 +43,11 @@ $allProducts = getAllProducts();
                     <tr>
                       <td><?php echo $product["ProductName"]; ?></td>
                       <td><?php echo $product["ItemNumber"]; ?></td>
-                      <td><?php echo $product["Price"]; ?> DKK</td>
+                      <td>$<?php echo $product["Price"]; ?></td>
                       <td>
                         <?php
                           if(isset($product["OfferPrice"])) {
-                            echo $product("OfferPrice");
+                            echo "$" . $product["OfferPrice"];
                           } else {
                             echo "-";
                           }
@@ -52,18 +61,11 @@ $allProducts = getAllProducts();
                           } else {
                             echo $text;
                           }
-
-                          // if (isset($product["ShortDescription"])) {
-                          //   $showText = strlen($product["ShortDescription"]) > 30 ? substr($product["ShortDescription"], 0, 30) . "..." : $product["ShortDescription"];
-                          //   echo $showText;
-                          // } else {
-                          //   echo "-";
-                          // }
                         ?>
                       </td>
                       <td>
                         <div class="input-field">
-                          <select>
+                          <select name="ProductStatus">
                             <?php
                               if($product["ProductStatus"] == true) {
                                   ?>
