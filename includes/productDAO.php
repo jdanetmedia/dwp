@@ -24,7 +24,7 @@ function getReviews($itemNumber) {
 function getRelatedProducts($productCat) {
   global $connection;
 
-  $query = "SELECT * FROM Product WHERE ProductCategoryID = $productCat LIMIT 5";
+  $query = "SELECT * FROM Product WHERE ProductCategoryID = $productCat AND ProductStatus = 1 LIMIT 5";
   $result = mysqli_query($connection, $query);
   return $result;
 }
