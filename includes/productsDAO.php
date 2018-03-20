@@ -48,7 +48,7 @@ if (isset($_GET["order"])) {
 function getProducts() {
     global $connection, $query;
 
-		$prodResult = mysqli_query($connection, $query);
+    $prodResult = mysqli_query($connection, $query);
     return $prodResult;
 }
 

@@ -21,7 +21,7 @@ $(document).ready(function() {
   // Input counter
   $('input#input_text, textarea#textarea1').characterCounter();
 
-  // Image zoom (not product frontend view)
+  // Image zoom
   $('.materialboxed').materialbox();
 
   // Wiew productimage in full size

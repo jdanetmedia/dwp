@@ -6,10 +6,10 @@ require_once("connection.php");
 function getCurrentProduct($itemNumber) {
   global $connection;
 
-  $query = "SELECT * FROM Product WHERE ItemNumber = $itemNumber";
+  $query = "SELECT Product.*, ImgGallery.URL, ImgGallery.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber";
+  // $query = "SELECT * FROM Product WHERE ItemNumber = $itemNumber";
   $result = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($result);
-  return $row;
+  return $result;
 }
 
 // Get reviews for current product
