@@ -1,11 +1,18 @@
-    <footer class="page-footer teal">
+<?php require_once ('contactDAO.php');
+$pageInfo = getPageInfo();
+
+?>
+
+<footer class="page-footer teal">
       <div class="container">
         <div class="row">
           <div class="col s12 m4">
-            <h5 class="white-text">Footer Content</h5>
+            <h5 class="white-text"><?php echo $pageInfo["ShopName"];?> </h5>
             <p class="grey-text text-lighten-4">
-              You can use rows and columns here to organize your footer content.
+                <?php echo $pageInfo["Street"] . " " . $pageInfo["HouseNumber"] . ", " . $pageInfo["ZipCode"] . " " . $pageInfo["City"]; ?>
             </p>
+              <p><?php echo $pageInfo["Phone"] ?></p>
+              <p><?php echo $pageInfo["Email"] ?></p>
           </div>
           <div class="col s12 m3 offset-m2">
             <h5 class="white-text">Links</h5>

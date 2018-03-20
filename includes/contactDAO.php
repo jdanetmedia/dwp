@@ -1,11 +1,14 @@
 <?php
+require_once ('connection.php');
+
 if (isset($_POST["email"])) {
     mailCheck();
 }
 
     function mailCheck()
     {
-        $email_to = "sebastiankbuch@hotmail.com";
+        $ourEmail = getPageInfo();
+        $email_to = $ourEmail["Email"];
         $subject = "Email from online mail form";
 
         function error($error)
@@ -64,4 +67,11 @@ if (isset($_POST["email"])) {
         echo "Thank you for your message, $name. Your message was '$message' and was sent from $email";
         echo "<br>";
         echo "<a href='../contact.php'>Go back</a>";
+}
+
+    function getPageInfo() {
+    global $connection;
+        $pageInfo = mysqli_query($connection, "SELECT * FROM `BasicPageInfo`, `ZipCode`");
+        $row = mysqli_fetch_assoc($pageInfo);
+        return $row;
     }

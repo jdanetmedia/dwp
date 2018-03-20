@@ -1,10 +1,11 @@
 <?php
 require_once('connection.php');
-$query = "SELECT * FROM `Product`";
+$query = "SELECT * FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber
+          INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = true";
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
     $cat = $_GET["cat"];
-    $query = "SELECT * FROM `Product` WHERE `ProductCategoryID` = $cat ";
+    $query .= " AND `ProductCategoryID` = $cat ";
     $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
   }
 }
@@ -17,7 +18,7 @@ if (isset($_GET["cat"]) && $_GET["cat"] != 0) {
 } else {
   if (isset($_GET["minPrice"]) && $_GET["minPrice"] != "") {
     $minPrice = $_GET["minPrice"];
-    $query .= " WHERE `Price` >= $minPrice";
+    $query .= " AND `Price` >= $minPrice";
   }
 }
 
@@ -32,7 +33,7 @@ if (isset($_GET["cat"]) && $_GET["cat"] != 0) {
 } else {
   if (isset($_GET["maxPrice"]) && $_GET["maxPrice"] != "") {
     $maxPrice = $_GET["maxPrice"];
-    $query .= " WHERE `Price` <= $maxPrice";
+    $query .= " AND `Price` <= $maxPrice";
   }
 }
 
@@ -49,19 +50,6 @@ function getProducts() {
 
 		$prodResult = mysqli_query($connection, $query);
     return $prodResult;
-}
-
-function getImg($itemNumber) {
-  global $connection;
-
-  $imgResult = mysqli_query($connection, "SELECT `ImgID` FROM `ProductImg` WHERE ItemNumber = $itemNumber");
-  while ($imgrow = mysqli_fetch_array($imgResult)) {
-    $imgID = $imgrow["ImgID"];
-    $imgResult2 = mysqli_query($connection, "SELECT `URL` FROM `ImgGallery` WHERE ImgID = $imgID AND IsPrimary = true");
-    while ($imgrow2 = mysqli_fetch_array($imgResult2)) {
-      echo $imgrow2["URL"];
-    }
-  }
 }
 
 function getReviewForProduct($itemNumber) {

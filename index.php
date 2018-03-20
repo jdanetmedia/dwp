@@ -40,7 +40,7 @@ require_once("includes/indexDAO.php");
 			<?php
 			function output() {
 			echo "
-			<a class='carousel-item' href='product.php'>
+			<a class='carousel-item' href='product.php?item=1111'>
 			    <div class='card'>
 			      <div class='card-image'>
 			        <img src='http://via.placeholder.com/400x400'>

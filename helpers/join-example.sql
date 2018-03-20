@@ -21,3 +21,4 @@ SELECT Country.Name, CountryLanguage.Language
 FROM Country
 INNER JOIN CountryLanguage
 	ON CountryLanguage.CountryCode = Country.Code
+1

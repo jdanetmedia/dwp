@@ -1,7 +1,7 @@
 <?php require_once('includes/header.php');
 require_once('includes/productsDAO.php');
 $url = $_SERVER['REQUEST_URI'];
-echo $url;
+//echo "<br>". $url;
 ?>
 <script type="text/javascript">
   if(window.location.href.indexOf("?") > -1) {
@@ -23,7 +23,7 @@ echo $url;
       <div class="col s12 m3">
         <div class="card">
           <div class="card-image">
-            <img src="<?php getImg($itemNumber) ?>">
+            <img src="<?php echo $row["URL"]; ?>">
             <span class="card-title"><?php echo $row["ProductName"]; ?></span>
           </div>
           <div class="card-action">
