@@ -31,14 +31,40 @@
 	// TODO: Validate more input, and insert all data to DB, and check if input fields are set.
 	if (isset($_POST['submitcreateuser'])) { // Form has been submitted.
 		$errors = array();
+		$message = "";
+		$vali = true;
+		if($_POST['firstName'] == "") {
+			$message .= "You need to enter a first name. <br>";
+			$vali = false;
+		}
+		if($_POST['lastName'] == "") {
+			$message .= "You need to enter a last name. <br>";
+			$vali = false;
+		}
+		if($_POST['CustomerEmail'] == "") {
+			$message .= "You need to enter an email. <br>";
+			$vali = false;
+		}
+		if($_POST['pass'] == "") {
+			$message .= "You need to enter a password. <br>";
+			$vali = false;
+		}
+		if($_POST['passvali'] == "") {
+			$message .= "You need to repeat your password. <br>";
+			$vali = false;
+		}
 
 		// perform validations on the form data
-		$email = trim(mysqli_real_escape_string($connection, $_POST['CustomerEmail']));
 		$password = trim(mysqli_real_escape_string($connection, $_POST['pass']));
+		$passwordvali = trim(mysqli_real_escape_string($connection, $_POST['passvali']));
+		if ($password == $passwordvali && $vali == true) {
+			$firstName = mysqli_real_escape_string($connection, $_POST['firstName']);
+			$lastName = mysqli_real_escape_string($connection, $_POST['lastName']);
+			$email = trim(mysqli_real_escape_string($connection, $_POST['CustomerEmail']));
 	    $iterations = ['cost' => 10];
 	    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
 
-		$query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode) VALUES ('{$email}', '{$hashed_password}', 'SomeRandomStreet', '191', 11223344, 'Jesper', 'Dalsgaard', 6700)";
+		$query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode) VALUES ('{$email}', '{$hashed_password}', NULL, NULL, NULL, '{$firstName}', '{$lastName}', NULL)";
 		$result = mysqli_query($connection, $query);
 			if ($result) {
 				$message = "User Created.";
@@ -47,6 +73,9 @@
 				$message = "User could not be created.";
 				//$message .= "<br />" . mysql_error();
 			}
+		} else {
+			$message .= "The passwords has to be the same!";
+		}
 	}
 
 ?>
