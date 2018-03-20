@@ -21,13 +21,11 @@ if (!logged_in()) {
         <div class="col s12">
           <div class="card">
             <div class="card-content">
-              <span class="card-title"><?php echo $row["OrderNumber"]; ?> Ordernumber</span>
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <span class="card-title">Ordernumber: #<?php echo $row["OrderNumber"]; ?></span>
+              <p>Date: <?php echo $row["OrderDate"]; ?></p>
             </div>
             <div class="card-action">
-              <a href="#">This is a link</a>
-              <a href="#">This is a link</a>
+              <a href="order.php?order=<?php echo $row["OrderNumber"]; ?>">View order</a>
             </div>
           </div>
         </div>
