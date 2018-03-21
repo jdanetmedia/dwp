@@ -14,6 +14,10 @@ require_once("../includes/connection.php");
     <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
     <!--Import Editor styling-->
     <link rel="stylesheet" href="richtext/richtext.min.css">
+    <!-- Import styling for fileupload, dropzone -->
+    <script type="text/javascript" src="js/vendor/dropzone.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/dropzone.css" />
+    <link type="text/css" rel="stylesheet" href="css/basic.css" />
     <!--Import custom styling-->
     <link type="text/css" rel="stylesheet" href="../css/custom/custom.css" />
     <!--Let browser know website is optimized for mobile-->
