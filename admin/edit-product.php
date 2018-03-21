@@ -4,13 +4,16 @@ require_once("../admin/includes/productDAO.php");
 
 if(isset($_POST["submit"])) {
   updateProduct($_GET["item"]);
+  if(isset($_FILES)) {
+      uploadImages($_FILES);
+  }
 }
 
 $productImgs = getProductDetails($_GET["item"]);
 $product = mysqli_fetch_assoc($productImgs);
 ?>
   <div class="container">
-    <form action="edit-product.php?item=<?php echo $_GET["item"]; ?>" method="post">
+    <form action="edit-product.php?item=<?php echo $_GET["item"]; ?>" method="post" enctype="multipart/form-data">
       <div class="row">
         <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="submit" value="Save">
         <a class="waves-effect waves-light btn grey darken-1 right new-prod-btn">Delete</a>
@@ -126,25 +129,25 @@ $product = mysqli_fetch_assoc($productImgs);
           <li>
             <div class="collapsible-header"><i class="material-icons">collections</i>Images</div>
             <div class="collapsible-body">
-              <div class="row">
+                <div class="row">
                 <?php foreach ($productImgs as $img): ?>
                   <div class="col s6 m3">
                     <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
                     <a href="#">Remove</a>
                   </div>
                 <?php  endforeach; ?>
-              </div>
-              <form action="#">
-                <div class="file-field input-field">
+                </div>
+                Select image to upload:
+                <input type="file" name="fileToUpload" id="fileToUpload">
+                <!--<div class="file-field input-field">
                   <div class="btn">
                     <span>File</span>
-                    <input type="file">
+                    <input type="file" name="newImage" multiple>
                   </div>
                   <div class="file-path-wrapper">
                     <input class="file-path validate" type="text" placeholder="Images should be between 800x800 - 1200 x 1200 pixels">
                   </div>
-                </div>
-              </form>
+                </div>-->
             </div>
           </li>
           <li>
