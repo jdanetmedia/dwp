@@ -460,6 +460,12 @@ VALUES (NULL, "Save 75% on the yellow ducks!", "Yellow duck sale!", "Go to produ
 INSERT INTO Customer
 VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", NULL, NULL, NULL, "Rasmus Andreas", "Nielsen", NULL);
 
+INSERT INTO Customer
+VALUES ("sebastiankbuch@hotmail.com", "$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO", NULL, NULL, NULL, "Sebastian", "Buch", NULL);
+
+INSERT INTO Customer
+VALUES ("post@jdanet.dk", "$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO", NULL, NULL, NULL, "Jesper", "Dalsgaard", NULL);
+
 -- Insert orderstatus
 INSERT INTO OrderStatus
 VALUES (NULL, "Awaiting");
@@ -479,6 +485,18 @@ VALUES (NULL, "This is a order comment", "10-03-2018", "Spangsbjerg Kirkevej", "
 
 INSERT INTO CustomerOrder
 VALUES (NULL, "This is a order comment", "12-03-2018", "Nørregade", "30", 6700, "rasmus.andreas96@gmail.com", 3, 1, NULL);
+
+INSERT INTO CustomerOrder
+VALUES (NULL, "This is a order comment", "10-03-2018", "Spangsbjerg Kirkevej", "99B, 16", 6700, "sebastiankbuch@hotmail.com", 1, 2, NULL);
+
+INSERT INTO CustomerOrder
+VALUES (NULL, "This is a order comment", "12-03-2018", "Nørregade", "30", 6700, "sebastiankbuch@hotmail.com", 3, 1, NULL);
+
+INSERT INTO CustomerOrder
+VALUES (NULL, "This is a order comment", "10-03-2018", "Spangsbjerg Kirkevej", "99B, 16", 6700, "post@jdanet.dk", 1, 2, NULL);
+
+INSERT INTO CustomerOrder
+VALUES (NULL, "This is a order comment", "12-03-2018", "Nørregade", "30", 6700, "post@jdanet.dk", 3, 1, NULL);
 
 -- Insert orderdetails
 INSERT INTO OrderDetails
@@ -504,3 +522,58 @@ VALUES (2, "3331", 4);
 
 INSERT INTO OrderDetails
 VALUES (2, "3332", 1);
+
+INSERT INTO OrderDetails
+VALUES (3, "1111", 1);
+
+INSERT INTO OrderDetails
+VALUES (3, "3331", 3);
+
+INSERT INTO OrderDetails
+VALUES (3, "3332", 3);
+
+INSERT INTO OrderDetails
+VALUES (3, "2221", 1);
+
+INSERT INTO OrderDetails
+VALUES (3, "2222", 2);
+
+INSERT INTO OrderDetails
+VALUES (4, "1111", 1);
+
+INSERT INTO OrderDetails
+VALUES (4, "3331", 4);
+
+INSERT INTO OrderDetails
+VALUES (4, "3332", 1);
+
+INSERT INTO OrderDetails
+VALUES (5, "1111", 1);
+
+INSERT INTO OrderDetails
+VALUES (5, "3331", 3);
+
+INSERT INTO OrderDetails
+VALUES (5, "3332", 3);
+
+INSERT INTO OrderDetails
+VALUES (5, "2221", 1);
+
+INSERT INTO OrderDetails
+VALUES (5, "2222", 2);
+
+INSERT INTO OrderDetails
+VALUES (6, "1111", 1);
+
+INSERT INTO OrderDetails
+VALUES (6, "3331", 4);
+
+INSERT INTO OrderDetails
+VALUES (6, "3332", 1);
+
+/*DELIMITER $$
+CREATE DEFINER=`rasmusandre_dk`@`mysql5.unoeuro.com` PROCEDURE `proc_get_all_products`()
+  BEGIN
+    SELECT * From Product;
+  END$$
+DELIMITER ;*/
