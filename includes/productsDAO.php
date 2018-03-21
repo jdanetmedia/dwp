@@ -1,7 +1,7 @@
 <?php
 require_once('connection.php');
 $query = "SELECT * FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber
-          INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = true";
+          INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = true AND Product.ProductStatus = 1";
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
     $cat = $_GET["cat"];
