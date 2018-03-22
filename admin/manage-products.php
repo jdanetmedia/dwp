@@ -41,13 +41,13 @@ if(isset($_GET["search"])) {
                 foreach ($allProducts as $product) {
                     ?>
                     <tr>
-                      <td><?php echo $product["ProductName"]; ?></td>
-                      <td><?php echo $product["ItemNumber"]; ?></td>
-                      <td>$<?php echo $product["Price"]; ?></td>
+                      <td><?php echo $product->ProductName; ?></td>
+                      <td><?php echo $product->ItemNumber; ?></td>
+                      <td><?php echo $product->Price; ?></td>
                       <td>
                         <?php
-                          if(isset($product["OfferPrice"])) {
-                            echo "$" . $product["OfferPrice"];
+                          if(isset($product->OfferPrice)) {
+                            echo "$" . $product->OfferPrice;
                           } else {
                             echo "-";
                           }
@@ -55,7 +55,7 @@ if(isset($_GET["search"])) {
                       </td>
                       <td class="ShortDescription">
                         <?php
-                          $text = $product["ShortDescription"];
+                          $text = $product->ShortDescription;
                           if(strlen($text) >= 30) {
                             echo substr($text, 0, 30) . "...";
                           } else {
@@ -67,7 +67,7 @@ if(isset($_GET["search"])) {
                         <div class="input-field">
                           <select name="ProductStatus">
                             <?php
-                              if($product["ProductStatus"] == true) {
+                              if($product->ProductStatus == true) {
                                   ?>
                                     <option value="1" selected>Active</option>
                                     <option value="2">Inactive</option>
@@ -82,7 +82,7 @@ if(isset($_GET["search"])) {
                           </select>
                         </div>
                       </td>
-                      <td><a href="edit-product.php?item=<?php echo $product["ItemNumber"]; ?>">Edit</a></td>
+                      <td><a href="edit-product.php?item=<?php echo $product->ItemNumber; ?>">Edit</a></td>
                     </tr>
                     <?php
                 }
