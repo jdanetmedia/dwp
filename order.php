@@ -20,6 +20,8 @@ if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
   </div>
   <?php
 } else {
+	$totalPrice = 0;
+	$totalPrice = $totalPrice + $orderinfo["DeliveryPrice"];
 ?>
 <div class="container">
   <div class="row">
@@ -41,7 +43,7 @@ if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
         <p><?php echo $orderinfo["ShippingStreet"] . " " .$orderinfo["ShippingHouseNumber"]; ?></p>
         <p><?php echo $orderinfo["ZipCode"] . " " . $orderinfo["City"]; ?></p>
         <br>
-        <p>Delivery Method:</p>
+        <p><b>Delivery Method:</b></p>
         <p><?php echo $orderinfo["Method"]; ?></p>
         <p>Delivery cost: $<?php echo $orderinfo["DeliveryPrice"]; ?></p>
       </div>
@@ -65,8 +67,14 @@ if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
       </div>
     </div>
     <?php
+		$totalPrice = $totalPrice + $row["Price"] * $row["Amount"];
     }
     ?>
+		<div class="card col s12">
+      <div class="card-content">
+        <span class="card-title left">Total price:</span><span class="card-title right">$<?php echo $totalPrice; ?></span>
+			</div>
+		</div>
   </div>
 </div>
 <?php

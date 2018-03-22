@@ -13,8 +13,9 @@ $pageInfo = getPageInfo();
 ?>
 <!DOCTYPE html>
   <html>
-    <html lang="da-DK">
+    <html lang="en">
     <head>
+      <meta charset="UTF-8">
       <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->

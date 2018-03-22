@@ -2,12 +2,15 @@
 require_once("includes/header.php");
 require_once("includes/productDAO.php");
 require_once('includes/productsDAO.php');
+require_once('includes/cartDAO.php');
 
 // Store information on the current product item
 $reviews = getReviews($_GET["item"]);
 $productImgs = getCurrentProduct($_GET["item"]);
 $currentItem = mysqli_fetch_assoc($productImgs);
 $related = getRelatedProducts($currentItem["ProductCategoryID"]);
+$usercart = $_SESSION["cart"];
+//print_r($usercart);
 ?>
   <div class="container product-container">
     <div class="row">
@@ -35,17 +38,19 @@ $related = getRelatedProducts($currentItem["ProductCategoryID"]);
         </div>
         <div class="row">
           <div class="col s6">
-            <p>Your price:</p>
+            <p>Price:</p>
           </div>
           <div class="col s6 right">
             <p><b>$<?php echo $currentItem["Price"]; ?></b></p>
           </div>
           <div class="col s12">
-            <div class="input-field inline cart_quantity">
-              <input id="quantity" type="number" value="1">
-              <label for="quantity">Quantity</label>
-            </div>
-            <a class="waves-effect waves-light btn cart-btt"><i class="material-icons right">add_shopping_cart</i>Add to cart</a>
+            <form class="" action="includes/cartDAO.php?item=<?php echo $_GET["item"]; ?>" method="post">
+              <div class="input-field inline cart_quantity">
+                <input name="amount" id="quantity" type="number" value="1">
+                <label for="quantity">Quantity</label>
+              </div>
+              <a class="waves-effect waves-light btn cart-btt"><input type="submit" name="submitcart" value="Add to cart"><i class="material-icons right">add_shopping_cart</i></a>
+            </form>
           </div>
           <div class="col s12 avr-review">
             <?php
