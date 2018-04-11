@@ -1,6 +1,6 @@
-<?php require_once('includes/header.php');
-require_once("includes/blogDAO.php");
-require_once("includes/productDAO.php");
+<?php require_once('../includes/header.php');
+require_once("../model/blogDAO.php");
+require_once("../model/productDAO.php");
 $post = $_GET["post"];
 $postData = getPost($post);
 $related = getRelatedProducts($postData["RelatedProducts"]);
@@ -86,4 +86,4 @@ $author = getAuthor($postData["UserEmail"]);
         ?>
       </div>
   </div>
-<?php require_once('includes/footer.php') ?>
+<?php require_once('../includes/footer.php') ?>

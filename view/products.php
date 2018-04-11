@@ -1,5 +1,5 @@
-<?php require_once('includes/header.php');
-require_once('includes/productsDAO.php');
+<?php require_once('../includes/header.php');
+require_once('../model/productsDAO.php');
 $url = $_SERVER['REQUEST_URI'];
 //echo "<br>". $url;
 ?>
@@ -11,7 +11,7 @@ $url = $_SERVER['REQUEST_URI'];
 </script>
 <div class="container">
   <?php
-  require_once('includes/filter.php');
+  require_once('../includes/filter.php');
   ?>
   <div class="row">
     <?php
@@ -56,4 +56,4 @@ $url = $_SERVER['REQUEST_URI'];
   }
   ?>
 </div>
-<?php require_once('includes/footer.php'); ?>
+<?php require_once('../includes/footer.php'); ?>

@@ -1,6 +1,6 @@
 <?php
 // DB Connection
-require_once("connection.php");
+require_once("../includes/connection.php");
 
 // Function to get the current item on single productpage
 function getCurrentProduct($itemNumber) {

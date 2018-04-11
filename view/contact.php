@@ -1,5 +1,5 @@
-<?php require_once('includes/header.php');
- require_once ('includes/contactDAO.php');
+<?php require_once('../includes/header.php');
+ require_once ('../model/contactDAO.php');
  $pageInfo = getPageInfo();
 ?>
 <div class="container">
@@ -44,4 +44,4 @@
     </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsBQrVNZcWuvUcNlOkr2IqYPLqDwtGtgs&callback=myMap"></script>
-<?php require_once('includes/footer.php') ?>
+<?php require_once('../includes/footer.php') ?>

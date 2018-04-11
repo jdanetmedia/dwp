@@ -14,7 +14,7 @@
                 if(password_verify($password, $found_user['Password'])){
 				    $_SESSION['CustomerEmail'] = $found_user['CustomerEmail'];
 				    $_SESSION['FirstName'] = $found_user['FirstName'];
-				    redirect_to("index.php");
+				    redirect_to("../index.php");
 			} else {
 				// username/password combo was not found in the database
 				$message = "Username/password combination incorrect.<br />

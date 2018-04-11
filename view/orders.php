@@ -1,6 +1,6 @@
 <?php
-require_once("includes/header.php");
-require_once("includes/ordersDAO.php");
+require_once("../includes/header.php");
+require_once("../model/ordersDAO.php");
 $orders = getAllOrders($_SESSION["CustomerEmail"]);
 
 if (!logged_in()) {
@@ -35,5 +35,5 @@ if (!logged_in()) {
   ?>
 </div>
 <?php
-require_once("includes/footer.php");
+require_once("../includes/footer.php");
 ?>

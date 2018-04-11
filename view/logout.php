@@ -1,4 +1,4 @@
-<?php require_once("includes/loginCustomer/functions.php"); ?>
+<?php require_once("../includes/loginCustomer/functions.php"); ?>
 <?php
 		// Four steps to closing a session
 		// (i.e. logging out)

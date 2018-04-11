@@ -1,6 +1,6 @@
 <?php
-require_once("includes/header.php");
-require_once("includes/ordersDAO.php");
+require_once("../includes/header.php");
+require_once("../model/ordersDAO.php");
 $orderNumber = $_GET["order"];
 $orderinfo = getOrder($orderNumber);
 $orderProducts = getOrderProducts($orderNumber);
@@ -79,5 +79,5 @@ if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
 </div>
 <?php
 }
-require_once("includes/footer.php");
+require_once("../includes/footer.php");
 ?>
