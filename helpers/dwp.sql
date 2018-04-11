@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS rasmusandreas_dk_db3;
+﻿DROP DATABASE IF EXISTS rasmusandreas_dk_db3;
 CREATE DATABASE rasmusandreas_dk_db3;
 USE rasmusandreas_dk_db3;
 
