@@ -1,5 +1,5 @@
 <?php
-require_once('connection.php');
+require_once('../includes/connection.php');
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
     $cat = $_GET["cat"];

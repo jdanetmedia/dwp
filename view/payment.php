@@ -1,4 +1,4 @@
-<?php require_once('includes/header.php'); ?>
+<?php require_once('../includes/header.php'); ?>
 <div class="container">
   <div class="row">
     <form class="col s12 m12" action="">
@@ -45,4 +45,4 @@
     </form>
   </div>
 </div>
-<?php require_once('includes/footer.php'); ?>
+<?php require_once('../includes/footer.php'); ?>

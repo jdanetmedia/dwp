@@ -1,14 +1,14 @@
 <?php
 // DB connection
-require_once("includes/connection.php");
+require_once("../includes/connection.php");
 
 // Customer login functions and session
-require_once("includes/loginCustomer/session.php");
-require_once("includes/loginCustomer/functions.php");
-require_once("includes/customerDAO.php");
+require_once("../includes/loginCustomer/session.php");
+require_once("../includes/loginCustomer/functions.php");
+require_once("../model/customerDAO.php");
 
 // Getting basic page info from DB
-require_once("contactDAO.php");
+require_once("../model/contactDAO.php");
 $pageInfo = getPageInfo();
 ?>
 <!DOCTYPE html>
@@ -19,15 +19,15 @@ $pageInfo = getPageInfo();
       <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="css/custom/custom.css" />
+      <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+      <link type="text/css" rel="stylesheet" href="../css/custom/custom.css" />
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
       <nav class="teal">
         <div class="nav-wrapper">
-          <a href="index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="<?php echo $pageInfo["LogoURL"]; ?>"></a>
+          <a href="../index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="../<?php echo $pageInfo["LogoURL"]; ?>"></a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <!-- Dropdown Structure -->
           <ul id="dropdown1" class="dropdown-content">
@@ -38,7 +38,7 @@ $pageInfo = getPageInfo();
           </ul>
           <!-- Normal menu -->
           <ul class="right hide-on-med-and-down">
-            <li><a href="index.php">Home</a></li>
+            <li><a href="../index.php">Home</a></li>
             <li><a href="products.php">Producks</a></li>
             <li><a href="contact.php">Quack at us</a></li>
             <li><a href="blog.php">Bluck</a></li>
@@ -64,7 +64,7 @@ $pageInfo = getPageInfo();
           </ul>
           <!-- Mobile menu-->
           <ul class="side-nav" id="mobile-demo">
-              <li><a href="index.php">Home</a></li>
+              <li><a href="../index.php">Home</a></li>
               <li><a href="products.php">Producks</a></li>
               <li><a href="contact.php">Quack at us</a></li>
               <li><a href="blog.php">Bluck</a></li>

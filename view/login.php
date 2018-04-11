@@ -1,4 +1,4 @@
-<?php require_once("includes/header.php"); ?>
+<?php require_once("../includes/header.php"); ?>
 <?php
 	if (logged_in()) {
 ?>
@@ -38,6 +38,5 @@
   </div>
 </div>
 <?php
-if (isset($connection)){mysqli_close($connection);}
-require_once("includes/footer.php");
+require_once("../includes/footer.php");
 ?>

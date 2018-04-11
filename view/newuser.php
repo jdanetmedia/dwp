@@ -1,4 +1,4 @@
-<?php require_once("includes/header.php");
+<?php require_once("../includes/header.php");
 if (!empty($message)) {echo "<p>" . $message . "</p>";}
 ?>
 <div class="container">
@@ -44,4 +44,4 @@ if (!empty($message)) {echo "<p>" . $message . "</p>";}
 <?php
 if (isset($connection)){mysqli_close($connection);}
 ?>
-<?php require_once("includes/footer.php");
+<?php require_once("../includes/footer.php");

@@ -1,5 +1,5 @@
-<?php require_once('includes/header.php');
-require_once("includes/blogDAO.php");
+<?php require_once('../includes/header.php');
+require_once("../model/blogDAO.php");
 ?>
 <script type="text/javascript">
   if(window.location.href.indexOf("?") > -1) {
@@ -80,4 +80,4 @@ require_once("includes/blogDAO.php");
     }
     ?>
   </div>
-<?php require_once('includes/footer.php') ?>
+<?php require_once('../includes/footer.php') ?>

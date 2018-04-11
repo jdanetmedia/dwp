@@ -1,8 +1,8 @@
 <?php
-require_once("includes/header.php");
-require_once("includes/productDAO.php");
-require_once('includes/productsDAO.php');
-require_once('includes/cartDAO.php');
+require_once("../includes/header.php");
+require_once("../model/productDAO.php");
+require_once('../model/productsDAO.php');
+require_once('../model/cartDAO.php');
 
 // Store information on the current product item
 $reviews = getReviews($_GET["item"]);
@@ -220,4 +220,4 @@ $usercart = $_SESSION["cart"];
       ?>
     </div>
   </div>
-<?php require_once("includes/footer.php") ?>
+<?php require_once("../includes/footer.php") ?>
