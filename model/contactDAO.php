@@ -27,7 +27,7 @@ if (isset($_POST["email"])) {
         $name = $_POST["name"];
         $email = $_POST["email"];
         $message = $_POST["message"];
-
+        echo $email;
         $error_message = "";
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -66,7 +66,7 @@ if (isset($_POST["email"])) {
 
         echo "Thank you for your message, $name. Your message was '$message' and was sent from $email";
         echo "<br>";
-        echo "<a href='../contact.php'>Go back</a>";
+        echo "<a href='../view/contact.php'>Go back</a>";
 }
 
     function getPageInfo() {

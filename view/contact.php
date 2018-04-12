@@ -8,7 +8,7 @@
             <h4>About us</h4>
             <p class="col s12 m12"><?php echo $pageInfo["AboutUsText"]; ?></p>
         </div>
-        <form class="col s12 m6" name="contact" method="post" action="includes/contactDAO.php">
+        <form class="col s12 m6" name="contact" method="post" action="../model/contactDAO.php">
             <div class="row">
                 <h4>Quack at us</h4>
                 <div class="input-field col s12 m12">
