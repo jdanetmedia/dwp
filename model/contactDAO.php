@@ -27,7 +27,7 @@ if (isset($_POST["email"])) {
         $name = $_POST["name"];
         $email = $_POST["email"];
         $message = $_POST["message"];
-
+        echo $email;
         $error_message = "";
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

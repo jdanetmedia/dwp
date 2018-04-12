@@ -44,7 +44,7 @@ $usercart = $_SESSION["cart"];
             <p><b>$<?php echo $currentItem["Price"]; ?></b></p>
           </div>
           <div class="col s12">
-            <form class="" action="includes/cartDAO.php?item=<?php echo $_GET["item"]; ?>" method="post">
+            <form class="" action="../view/product.php?item=<?php echo $_GET["item"]; ?>&action=add" method="get">
               <div class="input-field inline cart_quantity">
                 <input name="amount" id="quantity" type="number" value="1">
                 <label for="quantity">Quantity</label>
