@@ -28,7 +28,7 @@ require_once("../includes/connection.php");
       <div class="nav-wrapper">
         <a href="index.php" class="brand-logo">Admin area</a>
         <ul class="right hide-on-med-and-down">
-          <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Dahsboard"><a href="index.php"><i class="material-icons">home</i></a></li>
+          <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Dashboard"><a href="index.php"><i class="material-icons">home</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage orders"><a href="manage-orders.php"><i class="material-icons">shopping_cart</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage products"><a href="manage-products.php"><i class="material-icons">view_list</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage blog"><a href="manage-blog.php"><i class="material-icons">subject</i></a></li>

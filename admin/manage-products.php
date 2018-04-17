@@ -1,11 +1,16 @@
 <?php
 require_once("../admin/includes/header.php");
-require_once("includes/productDAO.php");
+// require_once("includes/productDAO.php");
+spl_autoload_register(function($class) {
+  include "class/" . $class . ".php";
+});
+
+$products = new Product();
 if(isset($_GET["search"])) {
-    $allProducts = searchResult($_GET["search"]);
+    $allProducts = $products->searchResult($_GET["search"]);
     $searchString = $_GET["search"];
 } else {
-    $allProducts = getAllProducts();
+    $allProducts = $products->getAllProducts();
 }
 ?>
 <div class="container">

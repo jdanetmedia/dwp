@@ -9,6 +9,13 @@ $(document).ready(function() {
               padding:20,
 
         });
+
+  autoplay();
+  function autoplay() {
+      $('.carousel-slider').carousel('next');
+      setTimeout(autoplay, 3000);
+  }
+
   //initialize select function
   $('select').material_select();
 
