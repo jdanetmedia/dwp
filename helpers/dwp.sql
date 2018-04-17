@@ -21,8 +21,8 @@ CREATE TABLE FrontSlider (
 CREATE TABLE PromoCode (
   PromoCode varchar(255) NOT NULL PRIMARY KEY,
   DiscoutAmount int(2) NOT NULL,
-  StartDate varchar(255) NULL,
-  EndDate varchar(255) NULL,
+  StartDate TIMESTAMP NULL,
+  EndDate TIMESTAMP NULL,
   NumberOfUses int NULL,
   UserEmail varchar(255) NOT NULL -- Foreign Key, set later
 );
@@ -67,6 +67,7 @@ CREATE TABLE Product (
   SeoTitel varchar(255) NULL,
   MetaDescription varchar(255) NULL,
   ProductStatus boolean NOT NULL,
+  CreationDate DATE NOT NULL,
   UserEmail varchar(255) NOT NULL, -- Foreign Key, set later
   ProductCategoryID int NOT NULL -- Foreign Key, set later
 );
@@ -80,7 +81,7 @@ CREATE TABLE User (
 
 CREATE TABLE Review (
   ReviewID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  ReviewDate varchar(255) NOT NULL,
+  ReviewDate TIMESTAMP NOT NULL,
   Rating int(1) NOT NULL,
   ReviewTitel varchar(255) NOT NULL,
   ReviewName varchar(255) NULL,
@@ -119,7 +120,7 @@ CREATE TABLE BlogPost (
   SeoTitel varchar(255) NULL,
   MetaDescription varchar(255) NULL,
   BlogContent varchar(255) NOT NULL,
-  BlogDate varchar(255) NOT NULL,
+  BlogDate TIMESTAMP NOT NULL,
   UserEmail varchar(255) NOT NULL, -- Foreign Key, set later
   BlogCategoryID int(20) NOT NULL, -- Foreign Key, set later
   RelatedProducts int NULL -- Foreign Key, set later
@@ -136,7 +137,7 @@ CREATE TABLE BlogCategory (
 CREATE TABLE CustomerOrder (
   OrderNumber int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   Comment varchar(255) NULL,
-  OrderDate varchar(255) NOT NULL,
+  OrderDate TIMESTAMP NOT NULL,
   ShippingStreet varchar(255) NOT NULL,
   ShippingHouseNumber varchar(255) NOT NULL,
   ZipCode int(20) NOT NULL, -- Foreign Key, set later
@@ -149,7 +150,7 @@ CREATE TABLE CustomerOrder (
 CREATE TABLE OrderMessage (
   OrderMessageID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   OrderMessage varchar(255) NOT NULL,
-  OrderMessageDate varchar(255) NOT NULL,
+  OrderMessageDate TIMESTAMP NOT NULL,
   OrderNumber int NOT NULL -- Foreign Key, set later
 );
 
@@ -270,83 +271,83 @@ VALUES ("rasmus.andreas96@gmail.com", "admin", "Rasmus Andreas", "Nielsen");
 -- Insert Products
 INSERT INTO Product
 VALUES ("1111", "Green Duck", 1000, "Short Description of Green Duck", "Longer Description Green Duck",
-10, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 1);
+10, NULL, NULL, NULL, true, "2018-4-1", "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
 VALUES ("1112", "Red Duck", 1000, "Short Description of Red Duck", "Longer Description Red Duck",
-18, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 1);
+18, NULL, NULL, NULL, true, "2018-4-2", "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
 VALUES ("1113", "Yellow Duck", 1000, "Short Description of Yellow Duck", "Longer Description Yellow Duck",
-8, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 1);
+8, NULL, NULL, NULL, true, "2017-4-3", "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
 VALUES ("2221", "Batman Duck", 1000, "Short Description of Batman Duck", "Longer Description Batman Duck",
-10, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 2);
+10, NULL, NULL, NULL, true, "2016-4-4", "rasmus.andreas96@gmail.com", 2);
 
 INSERT INTO Product
 VALUES ("2222", "Deadpool Duck", 1000, "Short Description of Deadpool Duck", "Longer Description Deadpool Duck",
-12, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 2);
+12, NULL, NULL, NULL, true, "2018-11-5", "rasmus.andreas96@gmail.com", 2);
 
 INSERT INTO Product
 VALUES ("3331", "EfB Duck", 1000, "Short Description of EfB Duck", "Longer Description EfB Duck",
-15, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
+15, NULL, NULL, NULL, true, "2012-12-24", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3332", "Chelsea Duck", 1000, "Short Description of Chelsea Duck", "Longer Description Chelsea Duck",
-20, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
+20, NULL, NULL, NULL, true, "2018-1-15", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3333", "United Duck", 1000, "Short Description of United Duck", "Longer Description United Duck",
-25, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
+25, NULL, NULL, NULL, true, "2014-9-20", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3334", "Arsenal Duck", 1000, "Short Description of Arsenal Duck", "Longer Description Arsenal Duck",
-25, NULL, NULL, NULL, true, "rasmus.andreas96@gmail.com", 3);
+25, NULL, NULL, NULL, true, "2018-4-10", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3335", "Liverpool Duck", 1000, "Short Description of Liverpool Duck", "Longer Description Liverpool Duck",
-22, NULL, NULL, NULL, false, "rasmus.andreas96@gmail.com", 3);
+22, NULL, NULL, NULL, false, "2008-5-20", "rasmus.andreas96@gmail.com", 3);
 
 -- Insert Reviews
 INSERT INTO Review
-VALUES (NULL, "11.02.18", 3, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+VALUES (NULL, "2008-11-11 13:23:44", 3, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
 
 INSERT INTO Review
-VALUES (NULL, "13.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+VALUES (NULL, "2008-11-11 13:23:44", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
 
 INSERT INTO Review
-VALUES (NULL, "13.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+VALUES (NULL, "2008-11-11 13:23:44", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
 
 INSERT INTO Review
-VALUES (NULL, "13.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
+VALUES (NULL, "2008-11-11 13:23:44", 5, "ReviewTitle", "ReviewersName", "This is the review content", "1111");
 
 INSERT INTO Review
-VALUES (NULL, "13.02.18", 3, "ReviewTitle", "ReviewersName", "This is the review content", "1112");
+VALUES (NULL, "2008-11-11 13:23:44", 3, "ReviewTitle", "ReviewersName", "This is the review content", "1112");
 
 INSERT INTO Review
-VALUES (NULL, "13.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1113");
+VALUES (NULL, "2008-11-11 13:23:44", 4, "ReviewTitle", "ReviewersName", "This is the review content", "1113");
 
 INSERT INTO Review
-VALUES (NULL, "15.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "2221");
+VALUES (NULL, "2008-11-11 13:23:44", 5, "ReviewTitle", "ReviewersName", "This is the review content", "2221");
 
 INSERT INTO Review
-VALUES (NULL, "17.02.18", 4, "ReviewTitle", "ReviewersName", "This is the review content", "2222");
+VALUES (NULL, "2008-11-11 13:23:44", 4, "ReviewTitle", "ReviewersName", "This is the review content", "2222");
 
 INSERT INTO Review
-VALUES (NULL, "17.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "3331");
+VALUES (NULL, "2008-11-11 13:23:44", 5, "ReviewTitle", "ReviewersName", "This is the review content", "3331");
 
 INSERT INTO Review
-VALUES (NULL, "17.02.18", 5, "ReviewTitle", "ReviewersName", "This is the review content", "3332");
+VALUES (NULL, "2008-11-11 13:23:44", 5, "ReviewTitle", "ReviewersName", "This is the review content", "3332");
 
 INSERT INTO Review
-VALUES (NULL, "17.02.18", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3333");
+VALUES (NULL, "2008-11-11 13:23:44", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3333");
 
 INSERT INTO Review
-VALUES (NULL, "17.02.18", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3334");
+VALUES (NULL, "2008-11-11 13:23:44", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3334");
 
 INSERT INTO Review
-VALUES (NULL, "17.02.18", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3335");
+VALUES (NULL, "2008-11-11 13:23:44", 1, "ReviewTitle", "ReviewersName", "This is the review content", "3335");
 
 -- Insert ImgGallery
 INSERT INTO ImgGallery
@@ -420,16 +421,16 @@ VALUES (NULL, "Top 10s", "Here you will find top 10s lists", "SeoTitel", "MetaDe
 
 -- Insert BlogPosts
 INSERT INTO BlogPost
-VALUES (NULL, "New employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "20-02-18", "rasmus.andreas96@gmail.com", 1, NULL);
+VALUES (NULL, "New employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 sports rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 sports rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2, 3);
+VALUES (NULL, "Top 10 sports rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 sports rubber ducks", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 2, 3);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Another new employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "20-02-18", "rasmus.andreas96@gmail.com", 1, NULL);
+VALUES (NULL, "Another new employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "21-02-18", "rasmus.andreas96@gmail.com", 2, 1);
+VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 2, 1);
 
 -- Insert BlogImg
 INSERT INTO BlogImg
@@ -481,22 +482,22 @@ VALUES (NULL, "Delivered");
 
 -- Insert orders
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "10-03-2018", "Spangsbjerg Kirkevej", "99B, 16", 6700, "rasmus.andreas96@gmail.com", 1, 2, NULL);
+VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "rasmus.andreas96@gmail.com", 1, 2, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "12-03-2018", "Nørregade", "30", 6700, "rasmus.andreas96@gmail.com", 3, 1, NULL);
+VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Nørregade", "30", 6700, "rasmus.andreas96@gmail.com", 3, 1, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "10-03-2018", "Spangsbjerg Kirkevej", "99B, 16", 6700, "sebastiankbuch@hotmail.com", 1, 2, NULL);
+VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "sebastiankbuch@hotmail.com", 1, 2, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "12-03-2018", "Nørregade", "30", 6700, "sebastiankbuch@hotmail.com", 3, 1, NULL);
+VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Nørregade", "30", 6700, "sebastiankbuch@hotmail.com", 3, 1, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "10-03-2018", "Spangsbjerg Kirkevej", "99B, 16", 6700, "post@jdanet.dk", 1, 2, NULL);
+VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "post@jdanet.dk", 1, 2, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "12-03-2018", "Nørregade", "30", 6700, "post@jdanet.dk", 3, 1, NULL);
+VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Nørregade", "30", 6700, "post@jdanet.dk", 3, 1, NULL);
 
 -- Insert orderdetails
 INSERT INTO OrderDetails
