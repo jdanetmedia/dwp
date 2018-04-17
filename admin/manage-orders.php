@@ -1,4 +1,10 @@
-<?php require_once("../admin/includes/header.php"); ?>
+<?php require_once("../admin/includes/header.php");
+spl_autoload_register(function($class) {
+  include "class/".$class.".php";
+});
+$orders = new Order();
+$allorders = $allorders->getAllOrders();
+?>
 <div class="container">
   <div class="row">
     <div class="col s12">
@@ -19,8 +25,7 @@
             <?php // TODO: Ændre farve på select felter ?>
             <tbody>
               <?php
-                $i = 1;
-                while($i <= 5) {
+                while ($row = mysqli_fetch_array($orders)) {
                   ?>
                   <tr>
                     <td>March 6th 2018 @ 11.30.24</td>
@@ -40,44 +45,7 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <td>March 6th 2018 @ 11.30.24</td>
-                    <td>Duckling Duck</td>
-                    <td>Duckstreet 3456, Ducktown</td>
-                    <td>$120.00</td>
-                    <td>
-                      <a href="#">View details</a>
-                    </td>
-                    <td>
-                      <div class="input-field">
-                        <select>
-                          <option value="1">Awaiting</option>
-                          <option value="2">In progress</option>
-                          <option value="3">Sent</option>
-                        </select>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>March 6th 2018 @ 11.30.24</td>
-                    <td>Duckwin Duck</td>
-                    <td>Docktown mainstreet 12, Ducktown Center</td>
-                    <td>$989.00</td>
-                    <td>
-                      <a href="#">View details</a>
-                    </td>
-                    <td>
-                      <div class="input-field">
-                        <select>
-                          <option value="1">Awaiting</option>
-                          <option value="2">In progress</option>
-                          <option value="3">Sent</option>
-                        </select>
-                      </div>
-                    </td>
-                  </tr>
                   <?php
-                  $i++;
                 }
               ?>
             </tbody>
