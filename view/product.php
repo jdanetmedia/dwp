@@ -196,8 +196,9 @@ $usercart = $_SESSION["cart"];
 			<h4>Related producks!</h4>
       <?php
         while($row = mysqli_fetch_array($related)) {
+            $itemNumber = $row["ItemNumber"];
           ?>
-            <a class='carousel-item' href='product.php?item=<?php echo $row["ItemNumber"]; ?>'>
+            <a class='carousel-item' href='product.php?item=<?php echo $itemNumber; ?>'>
                 <div class='card'>
                   <div class='card-image'>
                     <img src='http://via.placeholder.com/400x400'>
@@ -206,11 +207,9 @@ $usercart = $_SESSION["cart"];
                   <div class='card-action'>
                     <p class='price'>$<?php echo $row["Price"]; ?></p>
                     <div class='stars right'>
-                      <i class='material-icons tiny rated'>star</i>
-                      <i class='material-icons tiny rated'>star</i>
-                      <i class='material-icons tiny rated'>star</i>
-                      <i class='material-icons tiny rated'>star</i>
-                      <i class='material-icons tiny'>star_border</i>
+                        <?php
+                        echo getReviewForProduct($itemNumber);
+                        ?>
                     </div>
                   </div>
                 </div>
