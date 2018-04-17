@@ -3,7 +3,7 @@ spl_autoload_register(function($class) {
   include "class/".$class.".php";
 });
 $orders = new Order();
-$allorders = $allorders->getAllOrders();
+$allorders = $orders->getAllOrders();
 ?>
 <div class="container">
   <div class="row">
@@ -25,15 +25,18 @@ $allorders = $allorders->getAllOrders();
             <?php // TODO: Ændre farve på select felter ?>
             <tbody>
               <?php
-                while ($row = mysqli_fetch_array($orders)) {
+                foreach ($allorders as $order) {
+                  $price = $orders->getSum($order->OrderNumber);
                   ?>
                   <tr>
-                    <td>March 6th 2018 @ 11.30.24</td>
-                    <td>Donald Duck</td>
-                    <td>Duckroad 1, Ducktown</td>
-                    <td>$99.00</td>
+                    <td><?php echo $order->OrderDate; ?></td>
+                    <td><?php echo $order->FirstName; ?></td>
+                    <td><?php echo $order->ShippingStreet . " " . $order->ShippingHouseNumber . ", " . $order->ZipCode . " " . $order->City; ?></td>
+                    <?php foreach ($price as $totalprice) { ?>
+                    <td>$<?php echo $totalprice->totalprice; ?></td>
+                    <?php } ?>
                     <td>
-                      <a href="#">View details</a>
+                      <a href="manage-order.php?order=<?php echo $order->OrderNumber; ?>">View details</a>
                     </td>
                     <td>
                       <div class="input-field">
