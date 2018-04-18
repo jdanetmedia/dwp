@@ -15,7 +15,9 @@
 		}
 
 		// 4. Destroy the session
-		session_destroy();
+		unset($_SESSION["CustomerEmail"]);
+		unset($_SESSION["FirstName"]);
+		//session_destroy();
 
 		redirect_to("login.php?logout=1");
 ?>
