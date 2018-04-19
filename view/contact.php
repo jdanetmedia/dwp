@@ -2,7 +2,7 @@
  require_once ('../model/contactDAO.php');
  $pageInfo = getPageInfo();
 ?>
-<div class="container">
+<div class="container" style="filter: blur(1px);">
     <div class="row">
         <div class="col s12 m6">
             <h4>About us</h4>
@@ -28,20 +28,10 @@
         </form>
     </div>
     <div class="row">
-        <div class="col s12 m12" id="googleMap" style="width:100%;height:350px;"></div>
+        <iframe style="width:100%;height:350px;" frameborder="0" style="border:0"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA414Nqm3BnCRdpETHYt6ySV3DRjvEQ1ec&q=<?php echo $pageInfo["Street"]; ?>+<?php echo $pageInfo["HouseNumber"]; ?>,<?php echo $pageInfo["ZipCode"]; ?>" allowfullscreen>
+      </iframe>
     </div>
-
 </div>
 
-    <script>
-        function myMap() {
-            var mapProp= {
-                center:new google.maps.LatLng(55.4878244,8.446970499999999),
-                zoom:15,
-            };
-            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-        }
-    </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsBQrVNZcWuvUcNlOkr2IqYPLqDwtGtgs&callback=myMap"></script>
 <?php require_once('../includes/footer.php') ?>

@@ -1,5 +1,6 @@
 <?php require_once('../includes/header.php');
 require_once("../model/indexDAO.php");
+
 ?>
 <div class="container">
   <div class="carousel carousel-slider center" data-indicators="true">
@@ -23,13 +24,31 @@ require_once("../model/indexDAO.php");
   <div class="container">
     <div class="carousel">
       <h4>Recommended</h4>
-      <?php
-      $i2 = 1;
-      while ($i2 <= 7) {
-        output();
-        $i2++;
-      }
-      ?>
+        <?php
+        //Gets recently added products
+        $highestRatedProducts = getHighestRatedProducts();
+        while($row = mysqli_fetch_array($highestRatedProducts)) {
+            $itemNumber = $row["ItemNumber"];
+            ?>
+            <a class='carousel-item' href='product.php?item=<?php echo $itemNumber; ?>'>
+                <div class='card'>
+                    <div class='card-image'>
+                        <img src='http://via.placeholder.com/400x400'>
+                        <span class='card-title'><?php echo $row["ProductName"]; ?></span>
+                    </div>
+                    <div class='card-action'>
+                        <p class='price'>$<?php echo $row["Price"]; ?></p>
+                        <div class='stars right'>
+                            <?php
+                                echo getReviewForProduct($itemNumber);
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <?php
+        }
+        ?>
     </div>
   </div>
 </div>
@@ -37,36 +56,31 @@ require_once("../model/indexDAO.php");
 	<div class="container">
 		<div class="carousel product-slider">
 			<h4>New producks!</h4>
-			<?php
-			function output() {
-			echo "
-			<a class='carousel-item' href='product.php?item=1111'>
-			    <div class='card'>
-			      <div class='card-image'>
-			        <img src='http://via.placeholder.com/400x400'>
-			        <span class='card-title'>Card Title</span>
-			      </div>
-			      <div class='card-action'>
-			        <p class='price'>$99.95</p>
-			        <div class='stars right'>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny rated'>star</i>
-			          <i class='material-icons tiny'>star_border</i>
-			        </div>
-			      </div>
-			    </div>
-			</a>
-			";
-			}
-
-			$i = 1;
-			while ($i <= 7) {
-			output();
-			$i++;
-			}
-			?>
+            <?php
+            //Gets recently added products
+            $newestProducts = getNewestProducts();
+            while($row = mysqli_fetch_array($newestProducts)) {
+                $itemNumber = $row["ItemNumber"];
+                ?>
+                <a class='carousel-item' href='product.php?item=<?php echo $itemNumber; ?>'>
+                    <div class='card'>
+                        <div class='card-image'>
+                            <img src='http://via.placeholder.com/400x400'>
+                            <span class='card-title'><?php echo $row["ProductName"]; ?></span>
+                        </div>
+                        <div class='card-action'>
+                            <p class='price'>$<?php echo $row["Price"]; ?></p>
+                            <div class='stars right'>
+                                <?php
+                                echo getReviewForProduct($itemNumber);
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <?php
+            }
+            ?>
     </div>
 	</div>
 </div>
