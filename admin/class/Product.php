@@ -1,6 +1,6 @@
 <?php
 
-class Product extends DBConnect {
+class Product {
   private $itemNumber;
 
   function getAllProducts() {
@@ -41,13 +41,13 @@ class Product extends DBConnect {
     try {
       $conn = connectToDB();
 
-      $handle = $conn->prepare("SELECT Product.*, ImgGallery.URL FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber");
+      $handle = $conn->prepare("SELECT Product.*, ImgGallery.URL, ImgGallery.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber");
       $handle->execute();
 
-      $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result;
 
-      $conn = null;
+      // $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -103,7 +103,7 @@ class Product extends DBConnect {
       $updateProd = mysqli_query($connection, $query);
   }
 
-  function uploadImages($img) {
+  function uploadImages($img, $item) {
     $target_dir = "productimgs/";
     $target_file = $target_dir . basename($img["fileToUpload"]["name"]);
     $uploadOk = 1;
@@ -123,7 +123,7 @@ class Product extends DBConnect {
       $uploadOk = 0;
     }
     // Check file size
-    if ($img["fileToUpload"]["size"] > 500000) {
+    if ($img["fileToUpload"]["size"] > 5000000) {
       echo "Sorry, your file is too large.";
       $uploadOk = 0;
     }
@@ -143,6 +143,27 @@ class Product extends DBConnect {
       } else {
         echo "Sorry, there was an error uploading your file.";
       }
+    }
+    // Save to database
+    try {
+      $conn = connectToDB();
+      $path = $_SERVER["DOCUMENT_ROOT"] . getcwd();
+      $cleanedPath = str_replace('/Applications/MAMP/htdocs/Applications/MAMP/htdocs', 'http://localhost:8888', $path);
+      $filepath = $cleanedPath . "/" . $target_file;
+
+      // $handle = $conn->prepare("
+      //   INSERT INTO ImgGallery ('URL') VALUES ('$filename');
+      //   SET @last_id = LAST_INSERT_ID();
+      //   INSERT INTO ProductImg ('ItemNumber', 'ImgID') VALUES ('$item', @last_id);
+      // ");
+      $primary = $_GET["makePrimary"];
+      $handle = $conn->prepare("INSERT INTO ImgGallery (URL, IsPrimary) VALUES ('$filepath', '$primary'); SET @last_id = LAST_INSERT_ID(); INSERT INTO ProductImg (ItemNumber, ImgID) VALUES ('$item', @last_id)");
+      $handle->execute();
+
+      $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
     }
   }
 }
