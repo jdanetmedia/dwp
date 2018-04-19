@@ -41,7 +41,7 @@ class Product {
     try {
       $conn = connectToDB();
 
-      $handle = $conn->prepare("SELECT Product.*, ImgGallery.URL, ImgGallery.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber");
+      $handle = $conn->prepare("SELECT Product.*, ImgGallery.ImgID, ImgGallery.URL, ProductImg.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber");
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
@@ -156,8 +156,7 @@ class Product {
       //   SET @last_id = LAST_INSERT_ID();
       //   INSERT INTO ProductImg ('ItemNumber', 'ImgID') VALUES ('$item', @last_id);
       // ");
-      $primary = $_GET["makePrimary"];
-      $handle = $conn->prepare("INSERT INTO ImgGallery (URL, IsPrimary) VALUES ('$filepath', '$primary'); SET @last_id = LAST_INSERT_ID(); INSERT INTO ProductImg (ItemNumber, ImgID) VALUES ('$item', @last_id)");
+      $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES ('$filepath'); SET @last_id = LAST_INSERT_ID(); INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', @last_id, false)");
       $handle->execute();
 
       $conn = null;
@@ -165,5 +164,16 @@ class Product {
     catch(\PDOException $ex) {
       print($ex->getMessage());
     }
+  }
+  function updatePrimary($item, $id) {
+	  $conn = connectToDB();
+
+	  $handle = $conn->prepare("
+	  	UPDATE ProductImg SET IsPrimary = false WHERE ItemNumber = '{$item}';
+      UPDATE ProductImg SET IsPrimary = true WHERE ImgID = '{$id}';
+	  ");
+    $handle->execute();
+
+    $conn = null;
   }
 }

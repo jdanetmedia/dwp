@@ -10,6 +10,11 @@ if(isset($_POST["submit"])) {
     echo "Else is triggered";
     $products->updateProduct($_GET["item"]);
   }
+  if( isset($_POST["changeImg"]) ) {
+    $item = $_GET["item"];
+    $id = $_POST["changeImg"];
+    $products->updatePrimary($item, $id);
+  }
 }
 $product = $products->getProductDetails($_GET["item"]);
 //
@@ -132,6 +137,9 @@ $product = $products->getProductDetails($_GET["item"]);
             <div class="collapsible-header"><i class="material-icons">collections</i>Images</div>
             <div class="collapsible-body">
                 <div class="row">
+                <?php
+                  $imgcount = 1;
+                ?>
                 <?php foreach ($product as $img): ?>
                   <div class="col s6 m3 admin-product-img">
                     <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
@@ -142,11 +150,12 @@ $product = $products->getProductDetails($_GET["item"]);
                         echo '<a class="primary-label" href="#">Secondary</a><br>';
                       }
                     ?>
-                    <a class="make-primary"href="#">Make primary</a><br>
-                    <input class="primary-input" type="hidden" name="makePrimary">
+                    <a id="<?php echo $img["ImgID"]; ?>" class="make-primary" href="#">Make primary</a><br>
                     <a href="#">Remove</a>
                   </div>
+                  <?php $imgcount++; ?>
                 <?php  endforeach; ?>
+                <input class="change-img" type="hidden" name="changeImg">
                 </div>
                 Select image to upload:
                 <input type="file" name="fileToUpload" id="fileToUpload">
