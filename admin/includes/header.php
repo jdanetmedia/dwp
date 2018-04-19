@@ -1,5 +1,8 @@
 <?php
 require_once("../includes/connection.php");
+spl_autoload_register(function($class) {
+  include "class/" . $class . ".php";
+});
 ?>
 <!DOCTYPE html>
 <html lang="en">

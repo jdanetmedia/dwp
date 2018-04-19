@@ -1,9 +1,6 @@
 <?php
 require_once("../admin/includes/header.php");
 // require_once("includes/productDAO.php");
-spl_autoload_register(function($class) {
-  include "class/" . $class . ".php";
-});
 
 $products = new Product();
 if(isset($_GET["search"])) {

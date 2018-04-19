@@ -273,4 +273,24 @@ h1.product-title {
   .richText .richText-toolbar ul li a {
     color: $text-color;
   }
+
+  .admin-product-img {
+    position: relative;
+    .primary-label {
+      background-color: gray;
+      padding: 5px;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      display: block;
+      font-size: 10px;
+      position: absolute;
+      top: 5px;
+      left: 5px;
+    }
+    .is-primary {
+      background-color: $light-green;
+      display: block;
+    }
+  }
 }

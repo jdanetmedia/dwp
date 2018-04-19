@@ -209,5 +209,21 @@ h1.product-title {
     background-color: #fff; }
   .admin-area .richText .richText-toolbar ul li a {
     color: #212121; }
+  .admin-area .admin-product-img {
+    position: relative; }
+    .admin-area .admin-product-img .primary-label {
+      background-color: gray;
+      padding: 5px;
+      color: white;
+      font-weight: bold;
+      text-transform: uppercase;
+      display: block;
+      font-size: 10px;
+      position: absolute;
+      top: 5px;
+      left: 5px; }
+    .admin-area .admin-product-img .is-primary {
+      background-color: #009688;
+      display: block; }
 
 /*# sourceMappingURL=custom.css.map */

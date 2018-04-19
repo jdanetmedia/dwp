@@ -1,18 +1,18 @@
 <?php
 require_once("../admin/includes/header.php");
 require_once("../admin/includes/productDAO.php");
-
+$products = new Product();
 if(isset($_POST["submit"])) {
-  if($_FILES['fileToUpload']['size'] > 0) {
-    updateProduct($_GET["item"]);
-    uploadImages($_FILES);
+  if($_FILES && $_FILES['fileToUpload']['size'] > 0) {
+    $products->updateProduct($_GET["item"]);
+    $products->uploadImages($_FILES, $_GET["item"]);
   } else {
     echo "Else is triggered";
-    updateProduct($_GET["item"]);
+    $products->updateProduct($_GET["item"]);
   }
 }
-
-$product = getProductDetails($_GET["item"]);
+$product = $products->getProductDetails($_GET["item"]);
+//
 ?>
   <div class="container">
     <form action="edit-product.php?item=<?php echo $_GET["item"]; ?>" method="post" enctype="multipart/form-data">
@@ -29,7 +29,7 @@ $product = getProductDetails($_GET["item"]);
                 <div class="col s12">
                   <div class="row">
                     <div class="input-field col s12">
-                      <input id="productName" type="text" class="validate" name="ProductName" value="<?php echo $product[0]->ProductName; ?>">
+                      <input id="productName" type="text" class="validate" name="ProductName" value="<?php echo $product[0]["ProductName"]; ?>">
                       <label for="productName">Product Name</label>
                     </div>
                   </div>
@@ -37,9 +37,9 @@ $product = getProductDetails($_GET["item"]);
                     <div class="input-field col s12 m4">
                       <select name="ProductCategoryID">
                         <?php
-                          $cats = getCategories();
+                          $cats = $products->getCategories();
                           foreach ($cats as $cat) {
-                            if($product[0]->ProductCategoryID == $cat->ProductCategoryID) {
+                            if($product[0]["ProductCategoryID"] == $cat->ProductCategoryID) {
                               ?>
                               <option value="<?php echo $cat->ProductCategoryID; ?>" selected><?php echo $cat->CategoryName; ?></option>
                               <?php
@@ -56,7 +56,7 @@ $product = getProductDetails($_GET["item"]);
                     <div class="input-field col s12 m4">
                       <select name="ProductStatus">
                         <?php
-                          $status = $product[0]->ProductStatus;
+                          $status = $product[0]["ProductStatus"];
                           if($status == "1") {
                               ?>
                                 <option value="1" selected>Active</option>
@@ -73,15 +73,15 @@ $product = getProductDetails($_GET["item"]);
                       <label>Status</label>
                     </div>
                     <div class="input-field col s12 m4">
-                      <input id="itemNumber" type="text" disabled class="validate" value="<?php echo $product[0]->ItemNumber; ?>">
+                      <input id="itemNumber" type="text" disabled class="validate" value="<?php echo $product[0]["ItemNumber"]; ?>">
                       <label for="itemNumber">Item number</label>
                     </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
                       <textarea id="shortDescription" class="materialize-textarea" name="ShortDescription" data-length="150"><?php
-                        if(isset($product[0]->ShortDescription)) {
-                          echo $product[0]->ShortDescription;
+                        if(isset($product[0]["ShortDescription"])) {
+                          echo $product[0]["ShortDescription"];
                         }
                       ?></textarea>
                       <label for="shortDescription">Short description (max. 150 characters)</label>
@@ -89,8 +89,8 @@ $product = getProductDetails($_GET["item"]);
                     <div class="input-field col s12">
                       <p>Long description</p>
                       <textarea id="longDescription" class="content" name="LongDescription"><?php
-                        if(isset($product[0]->LongDescription)) {
-                          echo $product[0]->LongDescription;
+                        if(isset($product[0]["LongDescription"])) {
+                          echo $product[0]["LongDescription"];
                         }
                       ?></textarea>
                     </div>
@@ -104,13 +104,13 @@ $product = getProductDetails($_GET["item"]);
             <div class="collapsible-body">
               <div class="row">
                 <div class="input-field col s12 m4">
-                  <input id="price" type="number" class="validate" name="Price" value="<?php echo $product[0]->Price; ?>">
+                  <input id="price" type="number" class="validate" name="Price" value="<?php echo $product[0]["Price"]; ?>">
                   <label for="price">Price</label>
                 </div>
                 <div class="input-field col s12 m4">
                   <?php
-                    if(isset($product[0]->OfferPrice) || $product[0]->Offerprice != "") {
-                      $discount = $product[0]->OfferPrice;
+                    if(isset($product[0]["OfferPrice"])) {
+                      $discount = $product[0]["OfferPrice"];
                     }
                   ?>
                   <input id="offerPrice" type="number" name="OfferPrice" <?php if(isset($discount)) { echo "value='" . $discount . "'"; } ?> class="validate">
@@ -118,8 +118,8 @@ $product = getProductDetails($_GET["item"]);
                 </div>
                 <div class="input-field col s12 m4">
                   <?php
-                    if(isset($product[0]->StockStatus)) {
-                      $stock = $product[0]->StockStatus;
+                    if(isset($product[0]["StockStatus"])) {
+                      $stock = $product[0]["StockStatus"];
                     }
                   ?>
                   <input id="stock" type="number" class="validate" name="StockStatus" value="<?php if(isset($stock)) { echo $stock; } ?>">
@@ -133,8 +133,17 @@ $product = getProductDetails($_GET["item"]);
             <div class="collapsible-body">
                 <div class="row">
                 <?php foreach ($product as $img): ?>
-                  <div class="col s6 m3">
-                    <img class="materialboxed responsive-img" width="650" src="<?php echo $img->URL; ?>">
+                  <div class="col s6 m3 admin-product-img">
+                    <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
+                    <?php
+                      if($img["IsPrimary"] == true) {
+                        echo '<a class="primary-label is-primary" href="#">Primary</a><br>';
+                      } else {
+                        echo '<a class="primary-label" href="#">Secondary</a><br>';
+                      }
+                    ?>
+                    <a class="make-primary"href="#">Make primary</a><br>
+                    <input class="primary-input" type="hidden" name="makePrimary">
                     <a href="#">Remove</a>
                   </div>
                 <?php  endforeach; ?>
@@ -185,4 +194,4 @@ $product = getProductDetails($_GET["item"]);
       </div>
     </form>
   </div>
-<?php require_once("../admin/includes/footer.php"); ?>
+<?php require_once("includes/footer.php"); ?>
