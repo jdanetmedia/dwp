@@ -1,4 +1,10 @@
-<?php require_once("../admin/includes/header.php"); ?>
+<?php require_once("../admin/includes/header.php");
+spl_autoload_register(function($class) {
+  include "class/".$class.".php";
+});
+$orders = new Order();
+$latestorders = $orders->getLatestOrders();
+?>
   <div class="container">
     <div class="row">
       <div class="col s12">
@@ -23,70 +29,40 @@
             <table class="responsive-table">
               <thead>
                 <tr>
+                    <th>Order #</th>
                     <th>Order date</th>
                     <th>Name</th>
                     <th>Address</th>
-                    <th>Order amount</th>
                     <th>Details</th>
                     <th>Change order status</th>
                 </tr>
               </thead>
               <?php // TODO: Ændre farve på select felter ?>
               <tbody>
-                <tr>
-                  <td>March 6th 2018 @ 11.30.24</td>
-                  <td>Donald Duck</td>
-                  <td>Duckroad 1, Ducktown</td>
-                  <td>$99.00</td>
-                  <td>
-                    <a href="#">View details</a>
-                  </td>
-                  <td>
-                    <div class="input-field">
-                      <select>
-                        <option value="1">Awaiting</option>
-                        <option value="2">In progress</option>
-                        <option value="3">Sent</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>March 6th 2018 @ 11.30.24</td>
-                  <td>Duckling Duck</td>
-                  <td>Duckstreet 3456, Ducktown</td>
-                  <td>$120.00</td>
-                  <td>
-                    <a href="#">View details</a>
-                  </td>
-                  <td>
-                    <div class="input-field">
-                      <select>
-                        <option value="1">Awaiting</option>
-                        <option value="2">In progress</option>
-                        <option value="3">Sent</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>March 6th 2018 @ 11.30.24</td>
-                  <td>Duckwin Duck</td>
-                  <td>Docktown mainstreet 12, Ducktown Center</td>
-                  <td>$989.00</td>
-                  <td>
-                    <a href="#">View details</a>
-                  </td>
-                  <td>
-                    <div class="input-field">
-                      <select>
-                        <option value="1">Awaiting</option>
-                        <option value="2">In progress</option>
-                        <option value="3">Sent</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
+                <?php
+                  foreach ($latestorders as $order) {
+                    ?>
+                    <tr>
+                      <td>#<?php echo $order->OrderNumber; ?></td>
+                      <td><?php echo $order->OrderDate; ?></td>
+                      <td><?php echo $order->FirstName; ?></td>
+                      <td><?php echo $order->ShippingStreet . " " . $order->ShippingHouseNumber . ", " . $order->ZipCode . " " . $order->City; ?></td>
+                      <td>
+                        <a href="manage-order.php?order=<?php echo $order->OrderNumber; ?>">View details</a>
+                      </td>
+                      <td>
+                        <div class="input-field">
+                          <select>
+                            <option value="1">Awaiting</option>
+                            <option value="2">In progress</option>
+                            <option value="3">Sent</option>
+                          </select>
+                        </div>
+                      </td>
+                    </tr>
+                    <?php
+                  }
+                ?>
               </tbody>
             </table>
           </div>

@@ -1,4 +1,4 @@
-﻿DROP DATABASE IF EXISTS rasmusandreas_dk_db3;
+DROP DATABASE IF EXISTS rasmusandreas_dk_db3;
 CREATE DATABASE rasmusandreas_dk_db3;
 USE rasmusandreas_dk_db3;
 
@@ -99,8 +99,7 @@ CREATE TABLE ProductCategory (
 
 CREATE TABLE ImgGallery (
   ImgID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  URL varchar(255) NOT NULL,
-  IsPrimary boolean NULL
+  URL varchar(255) NOT NULL
 );
 
 CREATE TABLE Customer (
@@ -222,6 +221,7 @@ ADD FOREIGN KEY (OrderNumber) REFERENCES CustomerOrder (OrderNumber);
 CREATE TABLE PageImg (
     PageID int NOT NULL,
     ImgID int NOT NULL,
+    IsPrimary boolean NULL,
     CONSTRAINT PK_DisplaysOnPage PRIMARY KEY (PageID, ImgID),
     FOREIGN KEY (PageID) REFERENCES Page (PageID),
     FOREIGN KEY (ImgID) REFERENCES ImgGallery (ImgID)
@@ -230,6 +230,7 @@ CREATE TABLE PageImg (
 CREATE TABLE ProductImg (
   ItemNumber varchar(255) NOT NULL,
   ImgID int NOT NULL,
+  IsPrimary boolean NULL,
   CONSTRAINT PK_DisplaysOnProduct PRIMARY KEY (ItemNumber, ImgID),
   FOREIGN KEY (ItemNumber) REFERENCES Product (ItemNumber),
   FOREIGN KEY (ImgID) REFERENCES ImgGallery (ImgID)
@@ -238,6 +239,7 @@ CREATE TABLE ProductImg (
 CREATE TABLE BlogImg (
   BlogPostID int NOT NULL,
   ImgID int NOT NULL,
+  IsPrimary boolean NULL,
   CONSTRAINT PK_DisplaysOnBlog PRIMARY KEY (BlogPostID, ImgID),
   FOREIGN KEY (BlogPostID) REFERENCES BlogPost (BlogPostID),
   FOREIGN KEY (ImgID) REFERENCES ImgGallery (ImgID)
@@ -351,56 +353,56 @@ VALUES (NULL, "2008-11-11 13:23:44", 1, "ReviewTitle", "ReviewersName", "This is
 
 -- Insert ImgGallery
 INSERT INTO ImgGallery
-VALUES (NULL, "http://via.placeholder.com/200x200", true);
+VALUES (NULL, "http://via.placeholder.com/200x200");
 
 INSERT INTO ImgGallery
-VALUES (NULL, "http://via.placeholder.com/400x400", true);
+VALUES (NULL, "http://via.placeholder.com/400x400");
 
 INSERT INTO ImgGallery
-VALUES (NULL, "http://via.placeholder.com/600x600", true);
+VALUES (NULL, "http://via.placeholder.com/600x600");
 
 INSERT INTO ImgGallery
-VALUES (NULL, "http://via.placeholder.com/800x800", true);
+VALUES (NULL, "http://via.placeholder.com/800x800");
 
 INSERT INTO ImgGallery
-VALUES (NULL, "http://via.placeholder.com/1920x1080", false);
+VALUES (NULL, "http://via.placeholder.com/1920x1080");
 
 INSERT INTO ImgGallery
-VALUES (NULL, "http://via.placeholder.com/800x800", false);
+VALUES (NULL, "http://via.placeholder.com/800x800");
 
 -- Insert ProductImg
 INSERT INTO ProductImg
-VALUES ("1111", 1);
+VALUES ("1111", 1, true);
 
 INSERT INTO ProductImg
-VALUES ("1111", 6);
+VALUES ("1111", 6, false);
 
 INSERT INTO ProductImg
-VALUES ("1112", 2);
+VALUES ("1112", 2, true);
 
 INSERT INTO ProductImg
-VALUES ("1113", 3);
+VALUES ("1113", 3, true);
 
 INSERT INTO ProductImg
-VALUES ("2221", 4);
+VALUES ("2221", 4, true);
 
 INSERT INTO ProductImg
-VALUES ("2222", 2);
+VALUES ("2222", 2, true);
 
 INSERT INTO ProductImg
-VALUES ("3331", 2);
+VALUES ("3331", 2, true);
 
 INSERT INTO ProductImg
-VALUES ("3332", 2);
+VALUES ("3332", 2, true);
 
 INSERT INTO ProductImg
-VALUES ("3333", 2);
+VALUES ("3333", 2, true);
 
 INSERT INTO ProductImg
-VALUES ("3334", 2);
+VALUES ("3334", 2, true);
 
 INSERT INTO ProductImg
-VALUES ("3335", 2);
+VALUES ("3335", 2, true);
 
 -- Insert DeliveryMethods
 INSERT INTO DeliveryMethod
@@ -434,10 +436,10 @@ VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blo
 
 -- Insert BlogImg
 INSERT INTO BlogImg
-VALUES (1,5);
+VALUES (1,5, true);
 
 INSERT INTO BlogImg
-VALUES (2,5);
+VALUES (2,5, true);
 
 -- insert zipcodes and cities
 INSERT INTO ZipCode

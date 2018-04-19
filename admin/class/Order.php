@@ -1,5 +1,22 @@
 <?php
 class Order {
+  function getLatestOrders() {
+    try {
+      $conn = connectToDB();
+
+      $handle = $conn->prepare("SELECT * FROM CustomerOrder INNER JOIN Customer ON CustomerOrder.CustomerEmail = Customer.CustomerEmail INNER JOIN ZipCode ON CustomerOrder.ZipCode = ZipCode.ZipCode ORDER BY OrderNumber DESC LIMIT 3");
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+      return $result;
+
+      $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
   function getAllOrders() {
     try {
       $conn = connectToDB();
