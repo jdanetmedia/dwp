@@ -16,5 +16,6 @@ $(document).ready(function() {
     $('.primary-input').val(false);
     $(this).siblings('.primary-label').addClass('is-primary').text('Primary');
     $('.change-img').val($(this).attr('id'));
+    $('.save-message').css('display', 'block');
   });
 });
