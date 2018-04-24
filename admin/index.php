@@ -70,6 +70,34 @@ $latestorders = $orders->getLatestOrders();
             <a href="manage-orders.php">All orders</a>
           </div>
         </div>
+        <div class="row">
+          <div class="col s12">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title">Low stock!</span>
+                <table class="responsive-table">
+                  <thead>
+                    <tr>
+                        <th>Item Number</th>
+                        <th>Product Name</th>
+                        <th>Amount</th>
+                        <th>Add stock to the system</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1111</td>
+                      <td>Green Duck</td>
+                      <td>Some low number</td>
+                      <td>
+                        <a href="edit-product.php?item=1111">Add stock</a>
+                      </td>
+                    </tr>
+                  </tbody>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
