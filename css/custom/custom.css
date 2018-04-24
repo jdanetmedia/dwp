@@ -192,7 +192,8 @@ h1.product-title {
 .admin-area {
   background-color: #EBEBEB;
   /* Dashboard */
-  /* New product styling */ }
+  /* New product styling */
+  /* Image gallery */ }
   .admin-area nav.admin-topnav {
     margin-bottom: 40px; }
   .admin-area input.select-dropdown {
@@ -254,5 +255,26 @@ h1.product-title {
     .admin-area .save-message p {
       margin: 0;
       padding: 0; }
+  .admin-area .gallery-cnt .gallery-item {
+    height: 268px;
+    position: relative;
+    width: 20%;
+    float: left;
+    overflow: hidden; }
+    .admin-area .gallery-cnt .gallery-item .img-bg {
+      background: red;
+      width: 100%;
+      padding: 0 5px; }
+      .admin-area .gallery-cnt .gallery-item .img-bg img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        -o-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%); }
 
 /*# sourceMappingURL=custom.css.map */

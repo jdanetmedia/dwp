@@ -327,4 +327,31 @@ h1.product-title {
       padding: 0;
     }
   }
+  /* Image gallery */
+  .gallery-cnt {
+    .gallery-item {
+      height: 268px;
+      position: relative;
+      width: 20%;
+      float: left;
+      overflow: hidden;
+      .img-bg {
+        background: red;
+        width: 100%;
+        padding: 0 5px;
+        img {
+          width: 100%;
+          height: auto;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -moz-transform: translateX(-50%) translateY(-50%);
+          -webkit-transform: translateX(-50%) translateY(-50%);
+          -o-transform: translateX(-50%) translateY(-50%);
+          -ms-transform: translateX(-50%) translateY(-50%);
+          transform: translateX(-50%) translateY(-50%);
+        }
+      }
+    }
+  }
 }

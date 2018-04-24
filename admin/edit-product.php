@@ -15,6 +15,12 @@ if(isset($_POST["submit"])) {
     $products->updatePrimary($item, $id);
   }
 }
+elseif (isset($_POST["toGallery"])) {
+  $products->updateProduct($_GET["item"]);
+  ?>
+    <script type="text/javascript">location.href = 'gallery.php?item=<?php echo $_GET["item"]; ?>';</script>
+  <?php
+}
 $product = $products->getProductDetails($_GET["item"]);
 //
 ?>
@@ -169,6 +175,7 @@ $product = $products->getProductDetails($_GET["item"]);
                 </div>
                 Select image to upload:
                 <input type="file" name="fileToUpload" id="fileToUpload">
+                <input type="submit" name="toGallery" value="Add image">
             </div>
           </li>
           <li>
