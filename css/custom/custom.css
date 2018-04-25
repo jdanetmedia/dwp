@@ -192,7 +192,8 @@ h1.product-title {
 .admin-area {
   background-color: #EBEBEB;
   /* Dashboard */
-  /* New product styling */ }
+  /* New product styling */
+  /* Image gallery */ }
   .admin-area nav.admin-topnav {
     margin-bottom: 40px; }
   .admin-area input.select-dropdown {
@@ -210,7 +211,28 @@ h1.product-title {
   .admin-area .richText .richText-toolbar ul li a {
     color: #212121; }
   .admin-area .admin-product-img {
-    position: relative; }
+    position: relative;
+    margin-bottom: 20px; }
+    .admin-area .admin-product-img .material-placeholder {
+      height: 268px;
+      overflow: hidden;
+      position: relative; }
+      .admin-area .admin-product-img .material-placeholder img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        -o-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        max-width: none;
+        width: auto;
+        height: 100%;
+        margin: 0 auto; }
+      .admin-area .admin-product-img .material-placeholder a {
+        display: block;
+        width: 100%; }
     .admin-area .admin-product-img .primary-label {
       background-color: gray;
       padding: 5px;
@@ -225,5 +247,37 @@ h1.product-title {
     .admin-area .admin-product-img .is-primary {
       background-color: #009688;
       display: block; }
+  .admin-area .save-message {
+    margin-bottom: 30px;
+    font-weight: bold;
+    color: red;
+    display: none; }
+    .admin-area .save-message p {
+      margin: 0;
+      padding: 0; }
+  .admin-area .gallery-cnt .gallery-item {
+    height: 268px;
+    position: relative;
+    width: 20%;
+    float: left;
+    overflow: hidden; }
+    .admin-area .gallery-cnt .gallery-item .img-bg {
+      background: red;
+      width: 100%;
+      padding: 0 5px; }
+      .admin-area .gallery-cnt .gallery-item .img-bg img {
+        width: 100%;
+        height: auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        -o-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%); }
+      .admin-area .gallery-cnt .gallery-item .img-bg .selected {
+        border: 3px solid #212121;
+        border-radius: 3px; }
 
 /*# sourceMappingURL=custom.css.map */

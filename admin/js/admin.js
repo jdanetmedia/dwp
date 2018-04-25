@@ -8,7 +8,7 @@ $(document).ready(function() {
     fileUpload: false,
     videoUpload: false
   });
-  // Dropdown select
+  // Dropdown selectal
   $('select').material_select();
 
   $('.make-primary').click(function() {
@@ -16,5 +16,19 @@ $(document).ready(function() {
     $('.primary-input').val(false);
     $(this).siblings('.primary-label').addClass('is-primary').text('Primary');
     $('.change-img').val($(this).attr('id'));
+    $('.save-message').css('display', 'block');
+  });
+
+  // Gallery image selection
+  $('.img-item').click(function() {
+    $('.sendId').val($(this).attr('id'));
+    $('.img-item').removeClass('selected');
+    $(this).addClass('selected');
+  });
+
+  // Remove image from product
+  $('.remove-img').click(function() {
+    $('.delete-image').val($(this).attr('id'));
+    $(this).addClass('opaque');
   });
 });
