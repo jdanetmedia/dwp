@@ -1,6 +1,16 @@
 <?php
 require_once("../admin/includes/header.php");
 require_once("../admin/includes/productDAO.php");
+
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php';
+</script>
+<?php
+	//redirect_to("login.php");
+}
+
 $products = new Product();
 if(isset($_POST["submit"])) {
   if($_FILES && $_FILES['fileToUpload']['size'] > 0) {

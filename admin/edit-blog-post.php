@@ -2,6 +2,16 @@
 spl_autoload_register(function($class) {
     include "class/".$class.".php";
 });
+
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php';
+</script>
+<?php
+	//redirect_to("login.php");
+}
+
 $blogPosts = new BlogPosts();
 $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
 ?>

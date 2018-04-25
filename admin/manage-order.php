@@ -2,7 +2,22 @@
 spl_autoload_register(function($class) {
   include "class/".$class.".php";
 });
-$order = new Order($connection, $_GET["order"]);
+
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php';
+</script>
+<?php
+	//redirect_to("login.php");
+}
+
+$order = new Order();
+
+if (isset($_POST["ordermessage"])) {
+    $order->mailCheck($connection, $_GET["order"]);
+}
+
 $orderdetails = $order->getOrder($_GET["order"]);
 $ordermessage = $order->getMessage($_GET["order"]);
 $orderproducts = $order->getProducts($_GET["order"]);

@@ -1,4 +1,15 @@
-<?php require_once("../admin/includes/header.php"); ?>
+<?php require_once("../admin/includes/header.php");
+
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php';
+</script>
+<?php
+	//redirect_to("login.php");
+}
+
+?>
   <div class="container">
     <div class="row">
       <a class="waves-effect waves-light btn grey darken-4 right new-prod-btn"><i class="material-icons left">save</i>Save</a>
