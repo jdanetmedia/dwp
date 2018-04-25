@@ -29,8 +29,8 @@ CREATE TABLE PromoCode (
 
 CREATE TABLE Page (
   PageID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  Titel varchar(255) NOT NULL,
-  SeoTitel varchar(255) NULL,
+  Title varchar(255) NOT NULL,
+  SeoTitle varchar(255) NULL,
   Metadescription varchar(255) NULL,
   PageContent varchar(255) NOT NULL,
   UserEmail varchar(255) NOT NULL -- Foreign Key, set later
@@ -64,7 +64,7 @@ CREATE TABLE Product (
   LongDescription varchar(255) NOT NULL,
   Price int NOT NULL,
   OfferPrice int NULL,
-  SeoTitel varchar(255) NULL,
+  SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL,
   ProductStatus boolean NOT NULL,
   CreationDate DATE NOT NULL,
@@ -83,7 +83,7 @@ CREATE TABLE Review (
   ReviewID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   ReviewDate TIMESTAMP NOT NULL,
   Rating int(1) NOT NULL,
-  ReviewTitel varchar(255) NOT NULL,
+  ReviewTitle varchar(255) NOT NULL,
   ReviewName varchar(255) NULL,
   ReviewContent varchar(255) NULL,
   ItemNumber varchar(255) NOT NULL -- Foreign Key, set later
@@ -93,7 +93,7 @@ CREATE TABLE ProductCategory (
   ProductCategoryID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   CategoryName varchar(255) NOT NULL,
   Description varchar(255) NULL,
-  SeoTitel varchar(255) NULL,
+  SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL
 );
 
@@ -115,8 +115,8 @@ CREATE TABLE Customer (
 
 CREATE TABLE BlogPost (
   BlogPostID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  Titel varchar(255) NOT NULL,
-  SeoTitel varchar(255) NULL,
+  Title varchar(255) NOT NULL,
+  SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL,
   BlogContent varchar(255) NOT NULL,
   BlogDate TIMESTAMP NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE BlogCategory (
   BlogCategoryID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   CategoryName varchar(255) NOT NULL,
   Description varchar(255) NULL,
-  SeoTitel varchar(255) NULL,
+  SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL
 );
 
@@ -258,17 +258,17 @@ CREATE TABLE OrderDetails (
 
 -- Insert Product Categories
 INSERT INTO ProductCategory
-VALUES (NULL, "Normal Ducks", "This is the first description", "SeoTitel for Cat1", "This is the Metadescription for category 1");
+VALUES (NULL, "Normal Ducks", "This is the first description", "SeoTitle for Cat1", "This is the Metadescription for category 1");
 
 INSERT INTO ProductCategory
-VALUES (NULL, "SuperHero Ducks", "This is the Second description", "SeoTitel for Cat2", "This is the Metadescription for category 2");
+VALUES (NULL, "SuperHero Ducks", "This is the Second description", "SeoTitle for Cat2", "This is the Metadescription for category 2");
 
 INSERT INTO ProductCategory
-VALUES (NULL, "Sport Ducks", "This is the Third description", "SeoTitel for Cat3", "This is the Metadescription for category 3");
+VALUES (NULL, "Sport Ducks", "This is the Third description", "SeoTitle for Cat3", "This is the Metadescription for category 3");
 
 -- Insert Users
 INSERT INTO User
-VALUES ("rasmus.andreas96@gmail.com", "admin", "Rasmus Andreas", "Nielsen");
+VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Rasmus Andreas", "Nielsen");
 
 -- Insert Products
 INSERT INTO Product
@@ -284,11 +284,11 @@ VALUES ("1113", "Yellow Duck", 1000, "Short Description of Yellow Duck", "Longer
 8, NULL, NULL, NULL, true, "2017-4-3", "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
-VALUES ("2221", "Batman Duck", 1000, "Short Description of Batman Duck", "Longer Description Batman Duck",
+VALUES ("2221", "Batman Duck", 50, "Short Description of Batman Duck", "Longer Description Batman Duck",
 10, NULL, NULL, NULL, true, "2016-4-4", "rasmus.andreas96@gmail.com", 2);
 
 INSERT INTO Product
-VALUES ("2222", "Deadpool Duck", 1000, "Short Description of Deadpool Duck", "Longer Description Deadpool Duck",
+VALUES ("2222", "Deadpool Duck", 49, "Short Description of Deadpool Duck", "Longer Description Deadpool Duck",
 12, NULL, NULL, NULL, true, "2018-11-5", "rasmus.andreas96@gmail.com", 2);
 
 INSERT INTO Product
@@ -296,7 +296,7 @@ VALUES ("3331", "EfB Duck", 1000, "Short Description of EfB Duck", "Longer Descr
 15, NULL, NULL, NULL, true, "2012-12-24", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
-VALUES ("3332", "Chelsea Duck", 1000, "Short Description of Chelsea Duck", "Longer Description Chelsea Duck",
+VALUES ("3332", "Chelsea Duck", 2, "Short Description of Chelsea Duck", "Longer Description Chelsea Duck",
 20, NULL, NULL, NULL, true, "2018-1-15", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
@@ -308,7 +308,7 @@ VALUES ("3334", "Arsenal Duck", 1000, "Short Description of Arsenal Duck", "Long
 25, NULL, NULL, NULL, true, "2018-4-10", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
-VALUES ("3335", "Liverpool Duck", 1000, "Short Description of Liverpool Duck", "Longer Description Liverpool Duck",
+VALUES ("3335", "Liverpool Duck", 10, "Short Description of Liverpool Duck", "Longer Description Liverpool Duck",
 22, NULL, NULL, NULL, false, "2008-5-20", "rasmus.andreas96@gmail.com", 3);
 
 -- Insert Reviews
@@ -416,23 +416,23 @@ VALUES (NULL, "Express shipping", "This is the description for the Express shipp
 
 -- Insert BlogCategories
 INSERT INTO BlogCategory
-VALUES (NULL, "Company News", "Here you will find some of our company news.", "SeoTitel", "MetaDescription");
+VALUES (NULL, "Company News", "Here you will find some of our company news.", "SeoTitle", "MetaDescription");
 
 INSERT INTO BlogCategory
-VALUES (NULL, "Top 10s", "Here you will find top 10s lists", "SeoTitel", "MetaDescription");
+VALUES (NULL, "Top 10s", "Here you will find top 10s lists", "SeoTitle", "MetaDescription");
 
 -- Insert BlogPosts
 INSERT INTO BlogPost
-VALUES (NULL, "New employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
+VALUES (NULL, "New employee", "SeoTitle", "MetaDescription", "This is blogcontent for the post new employee", "2008-12-12 15:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 sports rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 sports rubber ducks", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 2, 3);
+VALUES (NULL, "Top 10 sports rubber ducks", "SeoTitle", "MetaDescription", "This is blogcontent for the post Top 10 sports rubber ducks", "2008-10-10 09:23:44", "rasmus.andreas96@gmail.com", 2, 3);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Another new employee", "SeoTitel", "MetaDescription", "This is blogcontent for the post new employee", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
+VALUES (NULL, "Another new employee", "SeoTitle", "MetaDescription", "This is blogcontent for the post new employee", "2008-11-11 10:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 rubber ducks", "SeoTitel", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "2008-11-11 13:23:44", "rasmus.andreas96@gmail.com", 2, 1);
+VALUES (NULL, "Top 10 rubber ducks", "SeoTitle", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "2008-01-26 22:23:44", "rasmus.andreas96@gmail.com", 2, 1);
 
 -- Insert BlogImg
 INSERT INTO BlogImg
@@ -484,22 +484,22 @@ VALUES (NULL, "Delivered");
 
 -- Insert orders
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "rasmus.andreas96@gmail.com", 1, 2, NULL);
+VALUES (NULL, "This is a order comment", "2009-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "rasmus.andreas96@gmail.com", 1, 2, NULL);
 
 INSERT INTO CustomerOrder
 VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Nørregade", "30", 6700, "rasmus.andreas96@gmail.com", 3, 1, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "sebastiankbuch@hotmail.com", 1, 2, NULL);
+VALUES (NULL, "This is a order comment", "2010-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "sebastiankbuch@hotmail.com", 1, 2, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Nørregade", "30", 6700, "sebastiankbuch@hotmail.com", 3, 1, NULL);
+VALUES (NULL, "This is a order comment", "2005-11-11 13:23:44", "Nørregade", "30", 6700, "sebastiankbuch@hotmail.com", 3, 1, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "post@jdanet.dk", 1, 2, NULL);
+VALUES (NULL, "This is a order comment", "2012-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "post@jdanet.dk", 1, 2, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "2008-11-11 13:23:44", "Nørregade", "30", 6700, "post@jdanet.dk", 3, 1, NULL);
+VALUES (NULL, "This is a order comment", "2017-11-11 13:23:44", "Nørregade", "30", 6700, "post@jdanet.dk", 3, 1, NULL);
 
 -- Insert orderdetails
 INSERT INTO OrderDetails
@@ -574,9 +574,11 @@ VALUES (6, "3331", 4);
 INSERT INTO OrderDetails
 VALUES (6, "3332", 1);
 
-/*DELIMITER $$
-CREATE DEFINER=`rasmusandre_dk`@`mysql5.unoeuro.com` PROCEDURE `proc_get_all_products`()
-  BEGIN
-    SELECT * From Product;
-  END$$
-DELIMITER ;*/
+INSERT INTO OrderMessage
+VALUES (NULL, "Some dumb message", "2009-11-11 15:23:44", 1);
+
+INSERT INTO OrderMessage
+VALUES (NULL, "Another dumb message", "2009-11-11 17:23:44", 1);
+
+INSERT INTO OrderMessage
+VALUES (NULL, "Another dumb message", "2009-11-11 17:23:44", 2);

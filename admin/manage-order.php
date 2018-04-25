@@ -2,8 +2,9 @@
 spl_autoload_register(function($class) {
   include "class/".$class.".php";
 });
-$order = new Order();
+$order = new Order($connection, $_GET["order"]);
 $orderdetails = $order->getOrder($_GET["order"]);
+$ordermessage = $order->getMessage($_GET["order"]);
 $orderproducts = $order->getProducts($_GET["order"]);
 $price = $order->getSum($_GET["order"]);
 ?>
@@ -71,8 +72,33 @@ $price = $order->getSum($_GET["order"]);
           </table>
           <?php
           foreach ($price as $totalprice) { ?>
-          <h4 >Total: <p class="right">$<?php echo $totalprice->totalprice; ?></p></h4>
+          <h4>Total: <p class="right">$<?php echo $totalprice->totalprice; ?></p></h4>
           <?php } ?>
+        </div>
+      </div>
+      <h5>Messages</h5>
+      <?php
+      foreach ($ordermessage as $message) {
+      ?>
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title"><?php echo $message->OrderMessageDate; ?></span>
+          <p><?php echo $message->OrderMessage; ?></p>
+        </div>
+      </div>
+      <?php
+      }
+      ?>
+      <div class="card small">
+        <div class="card-content">
+          <span class="card-title">Write a message</span>
+          <form class="col s12" name="contact" method="post" action="">
+            <div class="input-field col s12">
+              <textarea id="textarea" class="materialize-textarea" name="ordermessage"></textarea>
+              <label for="textarea">Message</label>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" name="SendOrderMessage">Send</button>
+          </form>
         </div>
       </div>
     </div>
