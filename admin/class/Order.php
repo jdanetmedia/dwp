@@ -136,7 +136,6 @@ class Order {
         INNER JOIN ZipCode ON CustomerOrder.ZipCode = ZipCode.ZipCode
         INNER JOIN DeliveryMethod ON CustomerOrder.DeliveryMethodID = DeliveryMethod.DeliveryMethodID
         INNER JOIN OrderStatus ON CustomerOrder.OrderStatusID = OrderStatus.OrderStatusID
-        INNER JOIN OrderMessage ON CustomerOrder.OrderNumber = OrderMessage.OrderNumber
         WHERE CustomerOrder.OrderNumber = $ordernumber");
       $handle->execute();
 
