@@ -41,7 +41,7 @@ class Product {
     try {
       $conn = connectToDB();
 
-      $handle = $conn->prepare("SELECT Product.*, ImgGallery.ImgID, ImgGallery.URL, ProductImg.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber ORDER BY ProductImg.IsPrimary DESC, ProductImg.ImgID ASC");
+      $handle = $conn->prepare("SELECT Product.*, ImgGallery.ImgID, ImgGallery.URL, ProductImg.IsPrimary FROM Product LEFT JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber LEFT JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber ORDER BY ProductImg.IsPrimary DESC, ProductImg.ImgID ASC");
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
@@ -175,5 +175,73 @@ class Product {
     $handle->execute();
 
     $conn = null;
+  }
+
+  function removeImg($id) {
+    $conn = connectToDB();
+
+    $handle = $conn->prepare("DELETE FROM ProductImg WHERE ImgID = '{$id}'");
+    $handle->execute();
+  }
+
+  function exportJSON() {
+    try {
+      $conn = connectToDB();
+
+      $handle = $conn->prepare("SELECT * FROM Product");
+      $handle->execute();
+      $json_final_data = array();
+
+      foreach ($handle as $row) {
+        $json_temp_array['ItemNumber'] = $row['ItemNumber'];
+        $json_temp_array['ProductName'] = $row['ProductName'];
+        $json_temp_array['StockStatus'] = $row['StockStatus'];
+        $json_temp_array['ShortDescription'] = $row['ShortDescription'];
+        $json_temp_array['LongDescription'] = $row['LongDescription'];
+        $json_temp_array['ProductName'] = $row['ProductName'];
+        $json_temp_array['Price'] = $row['Price'];
+        $json_temp_array['OfferPrice'] = $row['OfferPrice'];
+        $json_temp_array['SeoTitel'] = $row['SeoTitel'];
+        $json_temp_array['MetaDescription'] = $row['MetaDescription'];
+        $json_temp_array['ProductStatus'] = $row['ProductStatus'];
+        $json_temp_array['CreationDate'] = $row['CreationDate'];
+        $json_temp_array['UserEmail'] = $row['UserEmail'];
+        $json_temp_array['ProductCategoryID'] = $row['ProductCategoryID'];
+        array_push($json_final_data, $json_temp_array); //add this row ($json_temp_array) to the end of the array
+      }
+      return json_encode($json_final_data);
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+  function importJSON($file) {
+    try {
+      $conn = connectToDB();
+      $json_data = file_get_contents($file);
+      $data = json_decode($json_data,true); //decode the json file and return as array
+      $stmt = $conn->prepare('INSERT INTO Product (ItemNumber, ProductName, StockStatus, ShortDescription, LongDescription, Price, OfferPrice, SeoTitel, MetaDescription, ProductStatus, CreationDate, UserEmail, ProductCategoryID) VALUES (:ItemNumber, :ProductName, :StockStatus, :ShortDescription, :LongDescription, :Price, :OfferPrice, :SeoTitel, :MetaDescription, :ProductStatus, :CreationDate, :UserEmail, :ProductCategoryID)');
+      foreach ($data as $row) //iterate through each row/object in the json file
+      {
+        $stmt->bindParam(':ItemNumber', $row['ItemNumber']);
+        $stmt->bindParam(':ProductName', $row['ProductName']);
+        $stmt->bindParam(':StockStatus', $row['StockStatus']);
+        $stmt->bindParam(':ShortDescription', $row['ShortDescription']);
+        $stmt->bindParam(':LongDescription', $row['LongDescription']);
+        $stmt->bindParam(':Price', $row['Price']);
+        $stmt->bindParam(':OfferPrice', $row['OfferPrice']);
+        $stmt->bindParam(':SeoTitel', $row['SeoTitel']);
+        $stmt->bindParam(':MetaDescription', $row['MetaDescription']);
+        $stmt->bindParam(':ProductStatus', $row['ProductStatus']);
+        $stmt->bindParam(':CreationDate', $row['CreationDate']);
+        $stmt->bindParam(':UserEmail', $row['UserEmail']);
+        $stmt->bindParam(':ProductCategoryID', $row['ProductCategoryID']);
+        $stmt->execute();
+      }
+    }
+    catch(\PDOException $ex)
+    {
+      print($ex->getMessage());
+    }
   }
 }

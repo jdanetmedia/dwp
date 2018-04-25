@@ -1,0 +1,17 @@
+[
+  {
+    "ItemNumber": "2111",
+    "ProductName": "Super Awesome Duck",
+    "StockStatus": "1000",
+    "ShortDescription": "Short Description of Super Awesome duck",
+    "LongDescription": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "Price": "30",
+    "OfferPrice": null,
+    "SeoTitel": "Very cheap but awesome duck",
+    "MetaDescription": "Yeah... Sure...",
+    "ProductStatus": "1",
+    "CreationDate": "2018-04-25",
+    "UserEmail": "rasmus.andreas96@gmail.com",
+    "ProductCategoryID": "1"
+  }
+]
