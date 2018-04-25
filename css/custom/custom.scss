@@ -351,6 +351,10 @@ h1.product-title {
           -ms-transform: translateX(-50%) translateY(-50%);
           transform: translateX(-50%) translateY(-50%);
         }
+        .selected {
+          border: 3px solid $text-color;
+          border-radius: 3px;
+        }
       }
     }
   }

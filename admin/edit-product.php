@@ -13,6 +13,10 @@ if(isset($_POST["submit"])) {
     $item = $_GET["item"];
     $id = $_POST["changeImg"];
     $products->updatePrimary($item, $id);
+    $_GET["select"] = "images";
+  }
+  if(isset($_POST["deleteImg"])) {
+    $products->removeImg($_POST["deleteImg"]);
   }
 }
 elseif (isset($_POST["toGallery"])) {
@@ -33,7 +37,7 @@ $product = $products->getProductDetails($_GET["item"]);
       <div class="row">
         <ul class="collapsible" data-collapsible="accordion">
           <li>
-            <div class="collapsible-header active"><i class="material-icons">assignment</i>General</div>
+            <div class="collapsible-header <?php if(!isset($_GET["select"])) { echo "active"; } ?>"><i class="material-icons">assignment</i>General</div>
             <div class="collapsible-body">
               <div class="row">
                 <div class="col s12">
@@ -110,7 +114,7 @@ $product = $products->getProductDetails($_GET["item"]);
             </div>
           </li>
           <li>
-            <div class="collapsible-header"><i class="material-icons">attach_money</i>Numbers & Prices</div>
+            <div class="collapsible-header <?php if(isset($_GET["select"]) && $_GET["select"] == "numbers") { echo "active"; } ?>"><i class="material-icons">attach_money</i>Numbers & Prices</div>
             <div class="collapsible-body">
               <div class="row">
                 <div class="input-field col s12 m4">
@@ -139,7 +143,7 @@ $product = $products->getProductDetails($_GET["item"]);
             </div>
           </li>
           <li>
-            <div class="collapsible-header"><i class="material-icons">collections</i>Images</div>
+            <div class="collapsible-header <?php if(isset($_GET["select"]) && $_GET["select"] == "images") { echo "active"; } ?>"><i class="material-icons">collections</i>Images</div>
             <div class="collapsible-body">
                 <div class="save-message">
                   <p>Product must be saved for changes to take effect!</p>
@@ -160,7 +164,7 @@ $product = $products->getProductDetails($_GET["item"]);
                     ?>
                     <a id="<?php echo $img["ImgID"]; ?>" class="make-primary" href="#">Make primary</a>
                     <div class="clear"></div>
-                    <a href="#">Remove</a>
+                    <a id="<?php echo $img["ImgID"]; ?>" class="remove-img" href="#">Remove</a>
                   </div>
                   <?php $imgcount++; ?>
                 <?php  endforeach; ?>
@@ -172,6 +176,7 @@ $product = $products->getProductDetails($_GET["item"]);
                   }
                 ?>
                 <input class="change-img" type="hidden" name="changeImg" value="<?php if(isset($primaryImg)) { echo $primaryImg; } ?>">
+                <input class="delete-image" type="hidden" name="deleteImg">
                 </div>
                 Select image to upload:
                 <input type="file" name="fileToUpload" id="fileToUpload">
