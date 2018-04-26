@@ -1,19 +1,12 @@
 <?php
 require_once("../admin/includes/header.php");
-require_once("../admin/includes/productDAO.php");
 $products = new Product();
 if(isset($_POST["submit"])) {
-  if($_FILES && $_FILES['fileToUpload']['size'] > 0) {
-    $products->updateProduct($_GET["item"]);
-    $products->uploadImages($_FILES, $_GET["item"]);
-  } else {
-    $products->updateProduct($_GET["item"]);
-  }
-  if( isset($_POST["changeImg"]) ) {
+  $products->updateProduct($_GET["item"]);
+  if(isset($_POST["changeImg"]) || $_POST["changeImg"] != "") {
     $item = $_GET["item"];
     $id = $_POST["changeImg"];
     $products->updatePrimary($item, $id);
-    $_GET["select"] = "images";
   }
   if(isset($_POST["deleteImg"])) {
     $products->removeImg($_POST["deleteImg"]);
@@ -154,6 +147,9 @@ $product = $products->getProductDetails($_GET["item"]);
                 ?>
                 <?php foreach ($product as $img): ?>
                   <div class="col s6 m3 admin-product-img">
+                    <div class="save-delete">
+                      Save product to remove image
+                    </div>
                     <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
                     <?php
                       if($img["IsPrimary"] == true) {
@@ -178,8 +174,6 @@ $product = $products->getProductDetails($_GET["item"]);
                 <input class="change-img" type="hidden" name="changeImg" value="<?php if(isset($primaryImg)) { echo $primaryImg; } ?>">
                 <input class="delete-image" type="hidden" name="deleteImg">
                 </div>
-                Select image to upload:
-                <input type="file" name="fileToUpload" id="fileToUpload">
                 <input type="submit" name="toGallery" value="Add image">
             </div>
           </li>
@@ -189,13 +183,13 @@ $product = $products->getProductDetails($_GET["item"]);
               <div class="row">
                 <div class="input-field col s12">
                   <?php
-                    if(isset($product[0]->SeoTitel)) {
-                      $titleTag = $product->SeoTitel;
+                    if(isset($product[0]->SeoTitle)) {
+                      $titleTag = $product->SeoTitle;
                     } else {
                       $titleTag = "";
                     }
                   ?>
-                  <input id="seoTitle" type="text" class="validate" name="SeoTitel" data-length="68" value="<?php echo $titleTag; ?>">
+                  <input id="seoTitle" type="text" class="validate" name="SeoTitle" data-length="68" value="<?php echo $titleTag; ?>">
                   <label for="seoTitle">Page title (Max 68 characters)</label>
                 </div>
                 <div class="input-field col s12">

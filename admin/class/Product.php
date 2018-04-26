@@ -71,9 +71,11 @@ class Product {
     }
   }
 
-  function updateProduct($itemNumber) {
-      global $connection;
+  function saveProduct($itemNumber) {
+    try {
+      $conn = connectToDB();
 
+      $itemNumber = $_POST["ItemNumber"];
       $productName = $_POST["ProductName"];
       $productCategoryID = $_POST["ProductCategoryID"];
       $productStatus = $_POST["ProductStatus"];
@@ -82,89 +84,59 @@ class Product {
       $price = $_POST["Price"];
       $offerPrice = $_POST["OfferPrice"];
       $stockStatus = $_POST["StockStatus"];
-      $seoTitel = $_POST["SeoTitel"];
+      $seoTitle = $_POST["SeoTitle"];
       $metaDescription = $_POST["MetaDescription"];
+      $creationDate = date('m/d/Y', time());
+      $userEmail = "rasmus.andreas96@gmail.com";
 
+      $query = "INSERT INTO Product (ItemNumber, ProductName, ProductCategoryID, ProductStatus, ShortDescription, LongDescription, Price, OfferPrice, StockStatus, SeoTitle, MetaDescription, CreationDate, UserEmail)
+                VALUES ('{$itemNumber}', '{$productName}', '{$productCategoryID}', '{$productStatus}', '{$shortDescription}','{$longDescription}', '{$price}', '{$offerPrice}', '{$stockStatus}', '{$seoTitle}', '{$metaDescription}', '{$creationDate}', '{$userEmail}')";
 
-      $query = "
-        UPDATE Product
-        SET ProductName = '{$productName}',
-        ProductCategoryID = '{$productCategoryID}',
-        ProductStatus = '{$productStatus}',
-        ShortDescription = '{$shortDescription}',
-        LongDescription = '{$longDescription}',
-        Price = '{$price}',
-        OfferPrice = '{$offerPrice}',
-        StockStatus = '{$stockStatus}',
-        SeoTitel = '{$seoTitel}',
-        MetaDescription = '{$metaDescription}'
-        WHERE ItemNumber = '{$itemNumber}'";
-
-      $updateProd = mysqli_query($connection, $query);
-  }
-
-  function uploadImages($img, $item) {
-    $target_dir = "productimgs/";
-    $target_file = $target_dir . basename($img["fileToUpload"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    // Check if image file is a actual image or fake image
-    $check = getimagesize($img["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
-      echo "File is an image - " . $check["mime"] . ".";
-      $uploadOk = 1;
-    } else {
-      echo "File is not an image.";
-      $uploadOk = 0;
-    }
-    // Check if file already exists
-    if (file_exists($target_file)) {
-      echo "Sorry, file already exists.";
-      $uploadOk = 0;
-    }
-    // Check file size
-    if ($img["fileToUpload"]["size"] > 5000000) {
-      echo "Sorry, your file is too large.";
-      $uploadOk = 0;
-    }
-    // Allow certain file formats
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-      && $imageFileType != "gif" ) {
-      echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-      $uploadOk = 0;
-    }
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-      echo "Sorry, your file was not uploaded.";
-    // if everything is ok, try to upload file
-    } else {
-      if (move_uploaded_file($img["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $img["fileToUpload"]["name"]). " has been uploaded.";
-      } else {
-        echo "Sorry, there was an error uploading your file.";
-      }
-    }
-    // Save to database
-    try {
-      $conn = connectToDB();
-      $path = $_SERVER["DOCUMENT_ROOT"] . getcwd();
-      $cleanedPath = str_replace('/Applications/MAMP/htdocs/Applications/MAMP/htdocs', 'http://localhost:8888', $path);
-      $filepath = $cleanedPath . "/" . $target_file;
-
-      // $handle = $conn->prepare("
-      //   INSERT INTO ImgGallery ('URL') VALUES ('$filename');
-      //   SET @last_id = LAST_INSERT_ID();
-      //   INSERT INTO ProductImg ('ItemNumber', 'ImgID') VALUES ('$item', @last_id);
-      // ");
-      $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES ('$filepath'); SET @last_id = LAST_INSERT_ID(); INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', @last_id, false)");
+      $handle = $conn->prepare($query);
       $handle->execute();
-
-      $conn = null;
     }
-    catch(\PDOException $ex) {
+    catch(\PDOExeption $ex) {
       print($ex->getMessage());
     }
   }
+
+  function updateProduct($itemNumber) {
+      try {
+        $conn = connectToDB();
+
+        $productName = $_POST["ProductName"];
+        $productCategoryID = $_POST["ProductCategoryID"];
+        $productStatus = $_POST["ProductStatus"];
+        $shortDescription = $_POST["ShortDescription"];
+        $longDescription = $_POST["LongDescription"];
+        $price = $_POST["Price"];
+        $offerPrice = $_POST["OfferPrice"];
+        $stockStatus = $_POST["StockStatus"];
+        $seoTitle = $_POST["SeoTitle"];
+        $metaDescription = $_POST["MetaDescription"];
+
+        $query = "
+          UPDATE Product
+          SET ProductName = '{$productName}',
+          ProductCategoryID = '{$productCategoryID}',
+          ProductStatus = '{$productStatus}',
+          ShortDescription = '{$shortDescription}',
+          LongDescription = '{$longDescription}',
+          Price = '{$price}',
+          OfferPrice = '{$offerPrice}',
+          StockStatus = '{$stockStatus}',
+          SeoTitle = '{$seoTitle}',
+          MetaDescription = '{$metaDescription}'
+          WHERE ItemNumber = '{$itemNumber}'";
+
+        $handle = $conn->prepare($query);
+        $handle->execute();
+      }
+      catch(\PDOException $ex) {
+        print($ex->getMessage());
+      }
+  }
+
   function updatePrimary($item, $id) {
 	  $conn = connectToDB();
 
@@ -201,7 +173,7 @@ class Product {
         $json_temp_array['ProductName'] = $row['ProductName'];
         $json_temp_array['Price'] = $row['Price'];
         $json_temp_array['OfferPrice'] = $row['OfferPrice'];
-        $json_temp_array['SeoTitel'] = $row['SeoTitel'];
+        $json_temp_array['SeoTitle'] = $row['SeoTitle'];
         $json_temp_array['MetaDescription'] = $row['MetaDescription'];
         $json_temp_array['ProductStatus'] = $row['ProductStatus'];
         $json_temp_array['CreationDate'] = $row['CreationDate'];
@@ -220,7 +192,7 @@ class Product {
       $conn = connectToDB();
       $json_data = file_get_contents($file);
       $data = json_decode($json_data,true); //decode the json file and return as array
-      $stmt = $conn->prepare('INSERT INTO Product (ItemNumber, ProductName, StockStatus, ShortDescription, LongDescription, Price, OfferPrice, SeoTitel, MetaDescription, ProductStatus, CreationDate, UserEmail, ProductCategoryID) VALUES (:ItemNumber, :ProductName, :StockStatus, :ShortDescription, :LongDescription, :Price, :OfferPrice, :SeoTitel, :MetaDescription, :ProductStatus, :CreationDate, :UserEmail, :ProductCategoryID)');
+      $stmt = $conn->prepare('INSERT INTO Product (ItemNumber, ProductName, StockStatus, ShortDescription, LongDescription, Price, OfferPrice, SeoTitle, MetaDescription, ProductStatus, CreationDate, UserEmail, ProductCategoryID) VALUES (:ItemNumber, :ProductName, :StockStatus, :ShortDescription, :LongDescription, :Price, :OfferPrice, :SeoTitle, :MetaDescription, :ProductStatus, :CreationDate, :UserEmail, :ProductCategoryID)');
       foreach ($data as $row) //iterate through each row/object in the json file
       {
         $stmt->bindParam(':ItemNumber', $row['ItemNumber']);
@@ -230,7 +202,7 @@ class Product {
         $stmt->bindParam(':LongDescription', $row['LongDescription']);
         $stmt->bindParam(':Price', $row['Price']);
         $stmt->bindParam(':OfferPrice', $row['OfferPrice']);
-        $stmt->bindParam(':SeoTitel', $row['SeoTitel']);
+        $stmt->bindParam(':SeoTitle', $row['SeoTitle']);
         $stmt->bindParam(':MetaDescription', $row['MetaDescription']);
         $stmt->bindParam(':ProductStatus', $row['ProductStatus']);
         $stmt->bindParam(':CreationDate', $row['CreationDate']);

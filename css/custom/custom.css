@@ -212,7 +212,25 @@ h1.product-title {
     color: #212121; }
   .admin-area .admin-product-img {
     position: relative;
-    margin-bottom: 20px; }
+    margin-bottom: 20px;
+    min-height: 1px;
+    overflow: hidden; }
+    .admin-area .admin-product-img .save-delete {
+      text-align: center;
+      text-transform: uppercase;
+      font-style: italic;
+      font-weight: bold;
+      color: red;
+      display: none;
+      position: absolute;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      -o-transform: translateX(-50%) translateY(-50%);
+      -ms-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%); }
     .admin-area .admin-product-img .material-placeholder {
       height: 268px;
       overflow: hidden;
@@ -233,6 +251,8 @@ h1.product-title {
       .admin-area .admin-product-img .material-placeholder a {
         display: block;
         width: 100%; }
+    .admin-area .admin-product-img .opague {
+      opacity: 0.4; }
     .admin-area .admin-product-img .primary-label {
       background-color: gray;
       padding: 5px;
