@@ -56,26 +56,34 @@ function getReviewForProduct($itemNumber) {
   global $connection;
 
   $ratingResult = mysqli_query($connection, "SELECT `Rating` FROM `Review` WHERE ItemNumber = $itemNumber");
-  $rated = 0;
-  $divide = 0;
-  while ($ratingrow = mysqli_fetch_array($ratingResult)) {
-    $rating = $ratingrow["Rating"];
-    $rated = $rated + $rating;
-    $divide = $divide + count($ratingResult);
-  }
-  $rated = $rated / $divide;
+    $rated = 0;
+    $divide = 0;
+    while ($ratingrow = mysqli_fetch_array($ratingResult)) {
+      $rating = $ratingrow["Rating"];
+      $rated = $rated + $rating;
+      $divide = $divide + count($ratingResult);
+    }
+    if ($divide > 0) {
+      $rated = $rated / $divide;
 
-  $i = 1;
-  $ratedRemaining = 5 - $rated;
-  $i2 = 1;
-  while ($i <= $rated) {
-    echo "<i class='material-icons tiny rated'>star</i>";
-    $i++;
-  }
-  while($i2 <= $ratedRemaining) {
-      echo "<i class='material-icons tiny'>star_border</i>";
-    $i2++;
-  }
+      $i = 1;
+      $ratedRemaining = 5 - $rated;
+      $i2 = 1;
+      while ($i <= $rated) {
+        echo "<i class='material-icons tiny rated'>star</i>";
+        $i++;
+      }
+      while($i2 <= $ratedRemaining) {
+          echo "<i class='material-icons tiny rated'>star_border</i>";
+        $i2++;
+      }
+    } else {
+      $i3 = 1;
+      while($i3 <= 5) {
+          echo "<i class='material-icons tiny rated'>star_border</i>";
+        $i3++;
+      }
+    }
 }
 
 function getCategories() {

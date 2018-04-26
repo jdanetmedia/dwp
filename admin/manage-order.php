@@ -18,6 +18,10 @@ if (isset($_POST["ordermessage"])) {
     $order->mailCheck($connection, $_GET["order"]);
 }
 
+if (isset($_POST["status"])) {
+  $order->updateStatus($_GET["order"], $_POST["status"]);
+}
+
 $orderdetails = $order->getOrder($_GET["order"]);
 $ordermessage = $order->getMessage($_GET["order"]);
 $orderproducts = $order->getProducts($_GET["order"]);
@@ -29,37 +33,50 @@ $price = $order->getSum($_GET["order"]);
       <div class="card">
         <div class="card-content">
                 <?php
-                  foreach ($orderdetails as $order) {
+                  foreach ($orderdetails as $orderD) {
                     //$price = $order->getSum($order->OrderNumber);
-                    ?><span class="card-title">Order #<?php echo $order->OrderNumber; ?> <p class="right">Order placed at: <?php echo $order->OrderDate; ?></p></span>
+                    ?><span class="card-title">Order #<?php echo $orderD->OrderNumber; ?> <p class="right">Order placed at: <?php echo $orderD->OrderDate; ?></p></span>
                       <div class="card">
                         <div class="card-content">
                           <span class="card-title">Shipping info</span>
-                          <p>Name: <br><?php echo $order->FirstName; ?> <?php echo $order->LastName; ?></p><br>
-                          <p>Address: <br><?php echo $order->ShippingStreet . " " . $order->ShippingHouseNumber . ", " . $order->ZipCode . " " . $order->City; ?></p><br>
-                          <p>Delivery Method: <br><?php echo $order->Method; ?></p><br>
-                          <p>Delivery Price: <br>$<?php echo $order->DeliveryPrice; ?></p>
+                          <p>Name: <br><?php echo $orderD->FirstName; ?> <?php echo $orderD->LastName; ?></p><br>
+                          <p>Address: <br><?php echo $orderD->ShippingStreet . " " . $orderD->ShippingHouseNumber . ", " . $orderD->ZipCode . " " . $orderD->City; ?></p><br>
+                          <p>Delivery Method: <br><?php echo $orderD->Method; ?></p><br>
+                          <p>Delivery Price: <br>$<?php echo $orderD->DeliveryPrice; ?></p>
                         </div>
                       </div>
                       <div class="card">
                         <div class="card-content">
                           <span class="card-title">Comment</span>
-                          <p><?php echo $order->Comment; ?></p>
+                          <p><?php echo $orderD->Comment; ?></p>
                         </div>
                       </div>
-                      <p><?php echo $order->OrderStatusID; ?></p>
                       <h5 class="left">Status</h5>
-                      <div class="input-field col s12 m3 right">
-                        <select>
-                          <option value="1">Awaiting</option>
-                          <option value="2">In progress</option>
-                          <option value="3">Sent</option>
-                        </select>
-                      </div>
+                      <form action="manage-order.php?order=<?php echo $_GET["order"]; ?>" method="post">
+                        <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn right" type="submit" name="statussubmit" value="Save">
+                        <div class="input-field col s12 m3 right">
+                          <select name="status">
+                            <?php
+                              $allstatus = $order->getStatus();
+                              foreach ($allstatus as $status) {
+                                if($orderD->OrderStatusID == $status->OrderStatusID) {
+                                  ?>
+                                  <option value="<?php echo $status->OrderStatusID; ?>" selected><?php echo $status->Status; ?></option>
+                                  <?php
+                                } else {
+                                  ?>
+                                  <option value="<?php echo $status->OrderStatusID; ?>"><?php echo $status->Status; ?></option>
+                                  <?php
+                                }
+                              }
+                            ?>
+                          </select>
+                        </div>
+                      </form>
                     <?php
                   }
                 ?>
-          <table class="responsive-table">
+          <table class="responsive-table striped">
             <thead>
               <tr>
                   <th>ItemNumber</th>

@@ -17,7 +17,7 @@ $latestorders = $orders->getLatestOrders();
 $lowstock = $orders->CheckStock();
 ?>
   <div class="container">
-    <div class="row">
+    <!--<div class="row">
       <div class="col s12">
         <div class="card">
           <div class="card-content">
@@ -31,7 +31,7 @@ $lowstock = $orders->CheckStock();
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     <div class="row">
       <div class="col s12">
         <div class="card">
@@ -83,13 +83,13 @@ $lowstock = $orders->CheckStock();
             <div class="card">
               <div class="card-content">
                 <span class="card-title">Low stock!</span>
-                <table class="responsive-table">
+                <table class="responsive-table striped">
                   <thead>
                     <tr>
                         <th>Item Number</th>
                         <th>Product Name</th>
                         <th>Amount</th>
-                        <th>Add stock to the system</th>
+                        <th>Add stock</th>
                     </tr>
                   </thead>
                   <tbody>

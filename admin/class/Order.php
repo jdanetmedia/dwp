@@ -203,5 +203,37 @@ class Order {
       print($ex->getMessage());
     }
   }
+
+  function updateStatus($ordernumber, $newstatus) {
+    try {
+      $conn = connectToDB();
+
+      $handle = $conn->prepare("UPDATE CustomerOrder SET OrderStatusID = '{$newstatus}' WHERE OrderNumber = '{$ordernumber}'");
+      $handle->execute();
+      // TODO: if changed to sent send a mail
+      $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  function getStatus(){
+    try {
+      $conn = connectToDB();
+
+      $handle = $conn->prepare("SELECT * FROM OrderStatus");
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+      return $result;
+
+      $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
 }
 ?>

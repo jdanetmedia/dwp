@@ -118,7 +118,7 @@ CREATE TABLE BlogPost (
   Title varchar(255) NOT NULL,
   SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL,
-  BlogContent varchar(255) NOT NULL,
+  BlogContent TEXT NOT NULL,
   BlogDate TIMESTAMP NOT NULL,
   UserEmail varchar(255) NOT NULL, -- Foreign Key, set later
   BlogCategoryID int(20) NOT NULL, -- Foreign Key, set later
@@ -423,16 +423,16 @@ VALUES (NULL, "Top 10s", "Here you will find top 10s lists", "SeoTitle", "MetaDe
 
 -- Insert BlogPosts
 INSERT INTO BlogPost
-VALUES (NULL, "New employee", "SeoTitle", "MetaDescription", "This is blogcontent for the post new employee", "2008-12-12 15:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
+VALUES (NULL, "New employee", "SeoTitle", "MetaDescription", "This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee", "2008-12-12 15:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 sports rubber ducks", "SeoTitle", "MetaDescription", "This is blogcontent for the post Top 10 sports rubber ducks", "2008-10-10 09:23:44", "rasmus.andreas96@gmail.com", 2, 3);
+VALUES (NULL, "Top 10 sports rubber ducks", "SeoTitle", "MetaDescription", "This is blogcontent for the post Top 10 sports rubber ducks This is blogcontent for the post Top 10 sports rubber ducks This is blogcontent for the post Top 10 sports rubber ducksThis is blogcontent for the post Top 10 sports rubber ducks This is blogcontent for the post Top 10 sports rubber ducks This is blogcontent for the post Top 10 sports rubber ducks This is blogcontent for the post Top 10 sports rubber ducks This is blogcontent for the post Top 10 sports rubber ducks This is blogcontent for the post Top 10 sports rubber ducks ", "2008-10-10 09:23:44", "rasmus.andreas96@gmail.com", 2, 3);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Another new employee", "SeoTitle", "MetaDescription", "This is blogcontent for the post new employee", "2008-11-11 10:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
+VALUES (NULL, "Another new employee", "SeoTitle", "MetaDescription", "This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee This is blogcontent for the post new employee", "2008-11-11 10:23:44", "rasmus.andreas96@gmail.com", 1, NULL);
 
 INSERT INTO BlogPost
-VALUES (NULL, "Top 10 rubber ducks", "SeoTitle", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks", "2008-01-26 22:23:44", "rasmus.andreas96@gmail.com", 2, 1);
+VALUES (NULL, "Top 10 rubber ducks", "SeoTitle", "MetaDescription", "This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks This is blogcontent for the post Top 10 rubber ducks", "2008-01-26 22:23:44", "rasmus.andreas96@gmail.com", 2, 1);
 
 -- Insert BlogImg
 INSERT INTO BlogImg
