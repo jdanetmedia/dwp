@@ -29,6 +29,9 @@ $(document).ready(function() {
   // Remove image from product
   $('.remove-img').click(function() {
     $('.delete-image').val($(this).attr('id'));
-    $(this).addClass('opaque');
+    $('.material-placeholder').removeClass('opague');
+    $(this).siblings('.material-placeholder').addClass('opague');
+    $('.save-delete').css('display', 'none');
+    $(this).siblings('.save-delete').css('display', 'block');
   });
 });
