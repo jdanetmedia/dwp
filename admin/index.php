@@ -2,8 +2,19 @@
 spl_autoload_register(function($class) {
   include "class/".$class.".php";
 });
+
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php';
+</script>
+<?php
+	//redirect_to("login.php");
+}
+
 $orders = new Order();
 $latestorders = $orders->getLatestOrders();
+$lowstock = $orders->CheckStock();
 ?>
   <div class="container">
     <div class="row">
@@ -26,38 +37,35 @@ $latestorders = $orders->getLatestOrders();
         <div class="card">
           <div class="card-content">
             <span class="card-title">Latest orders</span>
-            <table class="responsive-table">
+            <table class="responsive-table striped">
               <thead>
                 <tr>
-                    <th>Order #</th>
-                    <th>Order date</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Details</th>
-                    <th>Change order status</th>
+                  <th>Order #</th>
+                  <th>Order date</th>
+                  <th>Name</th>
+                  <th>Order amount</th>
+                  <th>Shipping Method</th>
+                  <th>Status</th>
+                  <th>Details</th>
                 </tr>
               </thead>
               <?php // TODO: Ændre farve på select felter ?>
               <tbody>
                 <?php
                   foreach ($latestorders as $order) {
+                    $price = $orders->getSum($order->OrderNumber);
                     ?>
                     <tr>
-                      <td>#<?php echo $order->OrderNumber; ?></td>
+                      <td><?php echo $order->OrderNumber; ?></td>
                       <td><?php echo $order->OrderDate; ?></td>
-                      <td><?php echo $order->FirstName; ?></td>
-                      <td><?php echo $order->ShippingStreet . " " . $order->ShippingHouseNumber . ", " . $order->ZipCode . " " . $order->City; ?></td>
+                      <td><?php echo $order->FirstName . " " . $order->LastName; ?></td>
+                      <?php foreach ($price as $totalprice) { ?>
+                      <td>$<?php echo $totalprice->totalprice; ?></td>
+                      <?php } ?>
+                      <td><?php echo $order->Method; ?></td>
+                      <td><?php echo $order->Status; ?></td>
                       <td>
                         <a href="manage-order.php?order=<?php echo $order->OrderNumber; ?>">View details</a>
-                      </td>
-                      <td>
-                        <div class="input-field">
-                          <select>
-                            <option value="1">Awaiting</option>
-                            <option value="2">In progress</option>
-                            <option value="3">Sent</option>
-                          </select>
-                        </div>
                       </td>
                     </tr>
                     <?php
@@ -85,14 +93,20 @@ $latestorders = $orders->getLatestOrders();
                     </tr>
                   </thead>
                   <tbody>
+                    <?php
+                      foreach ($lowstock as $low) {
+                    ?>
                     <tr>
-                      <td>1111</td>
-                      <td>Green Duck</td>
-                      <td>Some low number</td>
+                      <td><?php echo $low->ItemNumber; ?></td>
+                      <td><?php echo $low->ProductName; ?></td>
+                      <td><?php echo $low->StockStatus; ?></td>
                       <td>
-                        <a href="edit-product.php?item=1111">Add stock</a>
+                        <a href="edit-product.php?item=<?php echo $low->ItemNumber; ?>&select=numbers">Add stock</a>
                       </td>
                     </tr>
+                    <?php
+                    }
+                    ?>
                   </tbody>
               </div>
             </div>

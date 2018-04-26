@@ -3,6 +3,14 @@ require_once("../includes/connection.php");
 spl_autoload_register(function($class) {
   include "class/" . $class . ".php";
 });
+
+session_start();
+
+// Customer login functions and session
+require_once("includes/loginAdmin/session.php");
+require_once("includes/loginAdmin/functions.php");
+$adminstuff = new Admin($connection);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +38,9 @@ spl_autoload_register(function($class) {
     <nav class="grey darken-4 admin-topnav">
       <div class="nav-wrapper">
         <a href="index.php" class="brand-logo">Admin area</a>
+        <?php
+        if (logged_in()) {
+        ?>
         <ul class="right hide-on-med-and-down">
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Dashboard"><a href="index.php"><i class="material-icons">home</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage orders"><a href="manage-orders.php"><i class="material-icons">shopping_cart</i></a></li>
@@ -37,6 +48,10 @@ spl_autoload_register(function($class) {
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage blog"><a href="manage-blog.php"><i class="material-icons">subject</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Shop settings"><a href="manage-settings.php"><i class="material-icons">settings</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage user"><a href="manage-user.php"><i class="material-icons">person</i></a></li>
+          <li><a href="logout.php">Log out</a></li>
         </ul>
+        <?php
+        }
+        ?>
       </div>
     </nav>

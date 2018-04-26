@@ -2,6 +2,15 @@
 require_once("../admin/includes/header.php");
 // require_once("includes/productDAO.php");
 
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php';
+</script>
+<?php
+	//redirect_to("login.php");
+}
+
 $products = new Product();
 if(isset($_GET["search"])) {
     $allProducts = $products->searchResult($_GET["search"]);

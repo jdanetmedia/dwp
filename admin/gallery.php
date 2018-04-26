@@ -1,5 +1,15 @@
 <?php
   require_once("../admin/includes/header.php");
+
+  if (!logged_in()) {
+  ?>
+  <script type="text/javascript">
+  	window.location.href = 'login.php';
+  </script>
+  <?php
+  	//redirect_to("login.php");
+  }
+
   $gallery = new Gallery();
   $allImages = $gallery->getAllImages();
 

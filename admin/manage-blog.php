@@ -2,15 +2,26 @@
 spl_autoload_register(function($class) {
     include "class/".$class.".php";
 });
+
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php';
+</script>
+<?php
+	//redirect_to("login.php");
+}
+
 $blogPosts = new BlogPosts();
 $allBlogPosts = $blogPosts->getAllBlogPosts();
+$allCategories = $blogPosts->getAllCategories();
 ?>
 <div class="container">
     <div class="row">
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">All Blog Posts</span>
+                    <span class="card-title">All Blog Posts<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-blogpost.php">Add new</a></span>
                     <table class="responsive-table">
                         <thead>
                         <tr>
@@ -29,11 +40,11 @@ $allBlogPosts = $blogPosts->getAllBlogPosts();
                             ?>
                             <tr>
                                 <td><?php echo $aBlogPost->BlogDate; ?></td>
-                                <td><?php echo $aBlogPost->Titel; ?></td>
+                                <td><?php echo $aBlogPost->Title; ?></td>
                                 <td><?php echo $aBlogPost->BlogContent; ?></td>
                                 <td><?php echo $aBlogPost->CategoryName; ?></td>
                                 <td><?php echo $aBlogPost->UserEmail; ?></td>
-                                <td><a href="#">Edit</a></td>
+                                <td><a href="edit-blog-post.php?ID=<?php echo $aBlogPost->BlogPostID; ?>">Edit</a></td>
                             </tr>
                             <?php
                         }
