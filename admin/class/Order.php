@@ -45,7 +45,7 @@ class Order {
           error($error_message);
       }
 
-      $email_message = "Form details below:\n\n";
+      $email_message = "Message:\n\n";
 
       function clean_string($string)
       {
@@ -53,12 +53,15 @@ class Order {
           return str_replace($bad, "", $string);
       }
 
-      $email_message .= "Message: " . clean_string($message) . "\n";
+      $email_message .= clean_string($message) . "\n";
 
       $headers = "FROM: " . $email . "\r\n" . "Reply-To: " . $email . "\r\n" . "X-Mailer: PHP/" . phpversion();
 
+      date_default_timezone_set("Europe/Copenhagen");
+      $time = date("Y-m-d H:i:s");
+
       mail($email_to, $subject, $email_message, $headers);
-      $insertquery = "INSERT INTO OrderMessage VALUES (NULL, '{$message}', '2017-11-11 15:23:44', '{$ordernumber}');";
+      $insertquery = "INSERT INTO OrderMessage VALUES (NULL, '{$message}', '{$time}', '{$ordernumber}');";
       $newmessage = mysqli_query($connection, $insertquery);
 
       echo "Your message was '$message' and was sent from $email";
