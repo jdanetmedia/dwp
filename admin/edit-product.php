@@ -148,42 +148,47 @@ $product = $products->getProductDetails($_GET["item"]);
           <li>
             <div class="collapsible-header <?php if(isset($_GET["select"]) && $_GET["select"] == "images") { echo "active"; } ?>"><i class="material-icons">collections</i>Images</div>
             <div class="collapsible-body">
-                <div class="save-message">
-                  <p>Product must be saved for changes to take effect!</p>
-                </div>
-                <div class="row">
                 <?php
-                  $imgcount = 1;
-                ?>
-                <?php foreach ($product as $img): ?>
-                  <div class="col s6 m3 admin-product-img">
-                    <div class="save-delete">
-                      Save product to remove image
-                    </div>
-                    <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
-                    <?php
-                      if($img["IsPrimary"] == true) {
-                        echo '<a class="primary-label is-primary" href="#">Primary</a>';
-                      } else {
-                        echo '<a class="primary-label" href="#">Secondary</a>';
-                      }
-                    ?>
-                    <a id="<?php echo $img["ImgID"]; ?>" class="make-primary" href="#">Make primary</a>
-                    <div class="clear"></div>
-                    <a id="<?php echo $img["ImgID"]; ?>" class="remove-img" href="#">Remove</a>
-                  </div>
-                  <?php $imgcount++; ?>
-                <?php  endforeach; ?>
-                <?php
-                  foreach($product as $img) {
-                    if($img["IsPrimary"] == true) {
-                      $primaryImg = $img["ImgID"];
-                    }
-                  }
-                ?>
-                <input class="change-img" type="hidden" name="changeImg" value="<?php if(isset($primaryImg)) { echo $primaryImg; } ?>">
-                <input class="delete-image" type="hidden" name="deleteImg">
-                </div>
+									if($product[0]["ImgID"]) { ?>
+										<div class="save-message">
+		                  <p>Product must be saved for changes to take effect!</p>
+		                </div>
+		                <div class="row">
+		                <?php
+		                  $imgcount = 1;
+		                ?>
+		                <?php foreach ($product as $img): ?>
+		                  <div class="col s6 m3 admin-product-img">
+		                    <div class="save-delete">
+		                      Save product to remove image
+		                    </div>
+		                    <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
+		                    <?php
+		                      if($img["IsPrimary"] == true) {
+		                        echo '<a class="primary-label is-primary" href="#">Primary</a>';
+		                      } else {
+		                        echo '<a class="primary-label" href="#">Secondary</a>';
+		                      }
+		                    ?>
+		                    <a id="<?php echo $img["ImgID"]; ?>" class="make-primary" href="#">Make primary</a>
+		                    <div class="clear"></div>
+		                    <a id="<?php echo $img["ImgID"]; ?>" class="remove-img" href="#">Remove</a>
+		                  </div>
+		                  <?php $imgcount++; ?>
+		                <?php  endforeach; ?>
+		                <?php
+		                  foreach($product as $img) {
+		                    if($img["IsPrimary"] == true) {
+		                      $primaryImg = $img["ImgID"];
+		                    }
+		                  }
+		                ?>
+		                <input class="change-img" type="hidden" name="changeImg" value="<?php if(isset($primaryImg)) { echo $primaryImg; } ?>">
+		                <input class="delete-image" type="hidden" name="deleteImg">
+		                </div>
+									<?php }
+
+								?>
                 <input class="waves-effect waves-light btn grey darken-4" type="submit" name="toGallery" value="Add image">
             </div>
           </li>
