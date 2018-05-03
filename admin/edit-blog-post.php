@@ -14,13 +14,25 @@ if (!logged_in()) {
 
 $blogPosts = new BlogPosts();
 $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
+if(isset($_POST["submit"])) {
+    $blogPosts->updateBlogPost($_GET["ID"]);
+    ?>
+    <script type="text/javascript">location.href = 'manage-blog.php';</script>
+    <?php
+} elseif (isset($_POST["submit2"])) {
+    $blogPosts->deleteBlogPost($_GET["ID"]);
+    ?>
+    <script type="text/javascript">location.href = 'manage-blog.php';</script>
+    <?php
+}
 ?>
 
 <div class="container">
     <form action="edit-blog-post.php?ID=<?php echo $_GET["ID"]; ?>" method="post" enctype="multipart/form-data">
         <div class="row">
-            <a class="waves-effect waves-light btn grey darken-4 right new-prod-btn"><i class="material-icons left">save</i>Save</a>
-            <a class="waves-effect waves-light btn grey darken-1 right new-prod-btn"><i class="material-icons left">delete</i>Delete</a>
+            <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="submit" value="Save">
+            <button class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit2" name="submit2"
+                    value="Delete">Delete</button>
         </div>
         <div class="row">
             <ul class="collapsible" data-collapsible="accordion">
@@ -31,29 +43,32 @@ $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
                             <form class="col s12">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="blogPostTitle" type="text" class="validate" name="blogPostTitle" value="<?php echo $blogPost[0]["Title"]; ?>">
+                                        <input id="blogPostTitle" type="text" class="validate" name="blogPostTitle"
+                                               value="<?php echo $blogPost[0]["Title"]; ?>">
                                         <label for="blogPostTitle">Blog Post Title</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s4">
-                                        <select>
-                                            <option value="0" selected>Category</option>
+                                        <select name="categoryID">
                                             <?php
                                             $cats = $blogPosts->getAllCategories();
                                             foreach ($cats as $cat) {
                                                 if($blogPost[0]["BlogCategoryID"] == $cat->BlogCategoryID) {
                                                     ?>
-                                                    <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo $cat->CategoryName; ?></option>
+                                                    <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo
+                                                        $cat->CategoryName; ?></option>
                                                     <?php
                                                 } else {
                                                     ?>
-                                                    <option value="<?php echo $cat->BlogCategoryID; ?>"><?php echo $cat->CategoryName; ?></option>
+                                                    <option value="<?php echo $cat->BlogCategoryID; ?>"><?php echo
+                                                        $cat->CategoryName;?></option>
                                                     <?php
                                                 }
                                             }
                                             ?>
                                         </select>
+                                        <label>Category</label>
                                     </div>
                                     <a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="#">Add new Category</a>
                                 </div>
@@ -95,7 +110,8 @@ $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
                                     <input type="file">
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" placeholder="Images should be between 800x800 - 1200 x 1200 pixels">
+                                    <input class="file-path validate" type="text"
+                                           placeholder="Images should be between 800x800 - 1200 x 1200 pixels">
                                 </div>
                             </div>
                         </form>
@@ -124,7 +140,8 @@ $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
                                     $metaDesc = "";
                                 }
                                 ?>
-                                <textarea id="metaDescription" class="materialize-textarea" data-length="160"><?php echo $metaDesc; ?></textarea>
+                                <textarea id="metaDescription" class="materialize-textarea" data-length="160">
+                                    <?php echo $metaDesc; ?></textarea>
                                 <label for="metaDescription">Meta Description (Max 160 characters)</label>
                             </div>
                         </div>

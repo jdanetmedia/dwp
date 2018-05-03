@@ -52,4 +52,73 @@ class BlogPosts extends DBConnect {
         }
     }
 
+    function saveBlogPost() {
+        try {
+            $conn = connectToDB();
+
+            $statement = "INSERT INTO BlogPost (Title, BlogCategoryID, BlogContent, SeoTitle, MetaDescription, BlogDate, UserEmail) 
+                          VALUES (:BlogPostTitle, :BlogCategoryID, :BlogContent, :SeoTitle, :MetaDescription, :BlogDate, :UserEmail)";
+
+            $handle = $conn->prepare($statement);
+
+            $handle->bindParam(':BlogPostTitle',$_POST["blogPostTitle"]);
+            $handle->bindParam(':BlogCategoryID',$_POST["categoryID"]);
+            $handle->bindParam(':BlogContent',$_POST["blogPostContent"]);
+            $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
+            $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
+            $handle->bindParam(':BlogDate',date('Y/m/d H:i:s', time()));
+            $handle->bindParam(':UserEmail',$_SESSION["UserEmail"]);
+            $handle->execute();
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
+
+    function updateBlogPost($blogPostID) {
+        try {
+            $conn = connectToDB();
+
+            $statement = "UPDATE BlogPost
+                          SET Title = :BlogPostTitle,
+                          BlogCategoryID = :BlogCategoryID,
+                          BlogContent = :BlogContent,
+                          BlogDate = BlogDate,
+                          SeoTitle = :SeoTitle,
+                          MetaDescription = :MetaDescription
+                          WHERE BlogPostID = :BlogPostID";
+
+            $handle = $conn->prepare($statement);
+
+            $handle->bindParam(':BlogPostTitle',$_POST["blogPostTitle"]);
+            $handle->bindParam(':BlogCategoryID',$_POST["categoryID"]);
+            $handle->bindParam(':BlogContent',$_POST["blogPostContent"]);
+            $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
+            $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
+            $handle->bindParam(':BlogPostID',$blogPostID);
+            $handle->execute();
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
+
+    function deleteBlogPost($blogPostID) {
+        try {
+            $conn = connectToDB();
+
+            $statement = "DELETE FROM BlogPost WHERE BlogPostID = '{$blogPostID}'";
+
+            $handle = $conn->prepare($statement);
+
+            $handle->execute();
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
+
 }
