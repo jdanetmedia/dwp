@@ -1,5 +1,4 @@
-<?php require_once("../includes/header.php"); ?>
-<?php
+<?php require_once("../includes/header.php");
 	if (logged_in()) {
 ?>
 <script type="text/javascript">
