@@ -38,7 +38,7 @@ require_once("../model/indexDAO.php");
                     </div>
                     <div class='card-action'>
                         <p class='price'>$<?php echo $row["Price"]; ?></p>
-                        <div class='stars right'>
+                        <div class='stars right rated'>
                             <?php
                                 echo getReviewForProduct($itemNumber);
                             ?>
@@ -70,7 +70,7 @@ require_once("../model/indexDAO.php");
                         </div>
                         <div class='card-action'>
                             <p class='price'>$<?php echo $row["Price"]; ?></p>
-                            <div class='stars right'>
+                            <div class='stars right rated'>
                                 <?php
                                 echo getReviewForProduct($itemNumber);
                                 ?>
