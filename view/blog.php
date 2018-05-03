@@ -53,7 +53,10 @@ require_once("../model/blogDAO.php");
               <span class="card-title"><?php echo $row["Title"]; ?></span>
             </div>
             <div class="card-content">
-              <p><?php echo preg_replace('/\s+?(\S+)?$/', '', substr($row["BlogContent"], 0, 160)) . " ..."; ?></p>
+              <p><?php if (strlen($row["BlogContent"]) > 160) {
+                      echo preg_replace('/\s+?(\S+)?$/', '', substr
+                          ($row["BlogContent"], 0, 160)) . " ...";
+                  } else echo $row["BlogContent"]; ?></p>
             </div>
             <div class="card-action">
               <a href="post.php?post=<?php echo $row["BlogPostID"] ?>">Read more</a>

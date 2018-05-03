@@ -34,7 +34,7 @@ if(isset($_GET["search"])) {
             </div>
           </form>
           <span class="card-title">Products<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-product.php">Add new</a></span>
-          <table class="responsive-table">
+          <table class="responsive-table striped">
             <thead>
               <tr>
                   <th>Name</th>

@@ -43,4 +43,28 @@ function getCartProduct($itemNumber) {
   $row = mysqli_fetch_assoc($result);
   return $row;
 }
+
+// remove from cart
+if(isset($_GET["remove"])) {
+  unset($_SESSION["cart"][$_GET["remove"]]);
+}
+
+if(isset($_POST["updatecart"])) {
+  foreach($_SESSION["cart"] as $key => $value) {
+    array_push_assoc($_SESSION["cart"], $key, $_POST["$key"]);
+  }
+}
+
+// DOOOOO
+if(isset($_POST["submitshipping"])) {
+  $_SESSION["street"] = $_POST["street"];
+  $_SESSION["house"] = $_POST["house"];
+  $_SESSION["zipcode"] = $_POST["zipcode"];
+  $_SESSION["city"] = $_POST["city"];
+  $_SESSION["saveaddress"] = $_POST["saveaddress"];
+  $_SESSION["shippingoption"] = $_POST["shippingoption"];
+  if(isset($_POST["ordermessage"])) {
+    $_SESSION["ordermessage"] = $_POST["ordermessage"];
+  }
+}
 ?>
