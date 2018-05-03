@@ -20,7 +20,6 @@ if($itemCheck == 0) {
 
 $related = getRelatedProducts($currentItem["ProductCategoryID"]);
 $usercart = $_SESSION["cart"];
-print_r($usercart);
 ?>
   <div class="container product-container">
     <div class="row">
@@ -105,16 +104,16 @@ print_r($usercart);
               <div class="modal-content">
                 <h4>Add your review</h4>
                 <div class="row">
-                  <form class="col s12">
+                  <form action="" method="post" class="col s12">
                     <div class="row">
                       <div class="input-field col s12 m6">
-                        <input id="last_name" type="text" class="validate">
+                        <input id="last_name" name="reviewTitle" type="text" class="validate">
                         <label for="last_name">Review title</label>
                       </div>
                     </div>
                     <div class="row">
                       <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <textarea id="textarea1" name="reviewText" class="materialize-textarea"></textarea>
                         <label for="textarea1">Review text</label>
                       </div>
                     </div>
@@ -137,12 +136,10 @@ print_r($usercart);
                             <i class="material-icons small star-icon">star_border</i>
                           </li>
                         </ul>
-                        <form class="rating">
-                          <input type="hidden" name="rating">
-                        </form>
+                        <input class="rating-input" type="hidden" name="rating">
+                        <input class="waves-effect waves-green btn" type="submit" name="submitreview" value="Add review">
                       </div>
                     </div>
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Add review</a>
                   </form>
                 </div>
               </div>
@@ -165,7 +162,7 @@ print_r($usercart);
                           $rating = $row["Rating"];
                           $items = 1;
                           $items2 = 1;
-                          $notRated = 5 % $rating;
+                          $notRated = 5 - $rating;
                           while($items <= $rating) {
 
                             ?>

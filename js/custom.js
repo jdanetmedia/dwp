@@ -50,6 +50,43 @@ $(document).ready(function() {
     $('.overlay').removeClass('show');
     $('.productimage-cnt').removeClass('static');
   });
+
+  // Star rating input
+  $('.star-1').click(function() {
+    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $(this).children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.rating-input').val($(this).attr('id'));
+  });
+  $('.star-2').click(function() {
+    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.rating-input').val($(this).attr('id'));
+  });
+  $('.star-3').click(function() {
+    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-3').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.rating-input').val($(this).attr('id'));
+  });
+  $('.star-4').click(function() {
+    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-3').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-4').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.rating-input').val($(this).attr('id'));
+  });
+  $('.star-5').click(function() {
+    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-3').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-4').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.star-5').children('.star-icon').text('star').css('color', '#f1c40f');
+    $('.rating-input').val($(this).attr('id'));
+  });
 });
 // Triggerns when ESC button is pressed
 $(document).on('keyup',function(evt) {

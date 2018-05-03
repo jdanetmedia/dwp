@@ -30,7 +30,7 @@ class Gallery {
         $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', false)");
         $handle->execute();
       } else {
-        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', false)");
+        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', true)");
         $handle->execute();
       }
 

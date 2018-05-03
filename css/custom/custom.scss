@@ -50,7 +50,13 @@ h1.product-title {
 }
 
 /* Start rating form */
-ul.stars-list {}
+ul.stars-list {
+  list-style: none;
+  li {
+    display: inline-block;
+    cursor: pointer;
+  }
+}
 
 .primary-img {
   width: 100%;

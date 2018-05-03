@@ -36,6 +36,12 @@ h1.product-title {
     margin-bottom: 20px; }
 
 /* Start rating form */
+ul.stars-list {
+  list-style: none; }
+  ul.stars-list li {
+    display: inline-block;
+    cursor: pointer; }
+
 .primary-img {
   width: 100%; }
 
