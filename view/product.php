@@ -10,7 +10,7 @@ $productImgs = getCurrentProduct($_GET["item"]);
 $currentItem = mysqli_fetch_assoc($productImgs);
 $related = getRelatedProducts($currentItem["ProductCategoryID"]);
 $usercart = $_SESSION["cart"];
-//print_r($usercart);
+print_r($usercart);
 ?>
   <div class="container product-container">
     <div class="row">
@@ -44,7 +44,7 @@ $usercart = $_SESSION["cart"];
             <p><b>$<?php echo $currentItem["Price"]; ?></b></p>
           </div>
           <div class="col s12">
-            <form class="" action="../view/product.php?item=<?php echo $_GET["item"]; ?>&action=add" method="get">
+            <form class="" action="" method="post">
               <div class="input-field inline cart_quantity">
                 <input name="amount" id="quantity" type="number" value="1">
                 <label for="quantity">Quantity</label>
