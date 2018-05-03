@@ -184,7 +184,7 @@ $product = $products->getProductDetails($_GET["item"]);
                 <input class="change-img" type="hidden" name="changeImg" value="<?php if(isset($primaryImg)) { echo $primaryImg; } ?>">
                 <input class="delete-image" type="hidden" name="deleteImg">
                 </div>
-                <input type="submit" name="toGallery" value="Add image">
+                <input class="waves-effect waves-light btn grey darken-4" type="submit" name="toGallery" value="Add image">
             </div>
           </li>
           <li>

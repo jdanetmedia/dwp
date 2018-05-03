@@ -87,7 +87,7 @@ class Product {
       $seoTitle = $_POST["SeoTitle"];
       $metaDescription = $_POST["MetaDescription"];
       $creationDate = date('m/d/Y', time());
-      $userEmail = "rasmus.andreas96@gmail.com";
+      $userEmail = $_SESSION["UserEmail"];
 
       $query = "INSERT INTO Product (ItemNumber, ProductName, ProductCategoryID, ProductStatus, ShortDescription, LongDescription, Price, OfferPrice, StockStatus, SeoTitle, MetaDescription, CreationDate, UserEmail)
                 VALUES ('{$itemNumber}', '{$productName}', '{$productCategoryID}', '{$productStatus}', '{$shortDescription}','{$longDescription}', '{$price}', '{$offerPrice}', '{$stockStatus}', '{$seoTitle}', '{$metaDescription}', '{$creationDate}', '{$userEmail}')";

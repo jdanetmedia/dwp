@@ -123,7 +123,7 @@ elseif (isset($_POST["toGallery"])) {
           <li>
             <div class="collapsible-header <?php if(isset($_GET["select"]) && $_GET["select"] == "images") { echo "active"; } ?>"><i class="material-icons">collections</i>Images</div>
             <div class="collapsible-body">
-                <input type="submit" name="toGallery" value="Add image">
+                <input class="waves-effect waves-light btn grey darken-4" type="submit" name="toGallery" value="Add image">
             </div>
           </li>
           <li>
