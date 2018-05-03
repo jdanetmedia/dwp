@@ -1,22 +1,31 @@
-<?php require_once('../includes/header.php') ?>
+<?php
+require_once('../includes/header.php');
+require_once('../model/cartDAO.php');
+?>
 
 <div class="container">
   <h1>Cart</h1>
   <div class="row">
     <div class="col s12 m12">
+      <?php
+      if(isset($_SESSION["cart"])) {
+        print_r($_SESSION["cart"]);
+        foreach($_SESSION["cart"] as $key => $value) {
+          $product = getCartProduct($key);
+      ?>
       <div class="card horizontal">
-        <div class="card-image">
-          <img src="http://via.placeholder.com/200x200">
+        <div class="card-image cart-img">
+          <img src="<?php echo $product["URL"]; ?>">
         </div>
         <div class="card-stacked">
           <div class="card-content">
             <div class="left">
-              <h5>Product item card.</h5>
-              <p>Product info.</p>
+              <h5><?php echo $product["ProductName"]; ?></h5>
+              <p><?php echo $product["ShortDescription"]; ?></p>
             </div>
             <div class="right">
               <div class="input-field inline">
-                <input id="quantity" type="number" value="1">
+                <input id="quantity" type="number" value="<?php echo $value; ?>">
                 <label for="quantity">Quantity</label>
               </div>
               <div class="right edit_amount_margin">
@@ -32,6 +41,10 @@
           </div>
         </div>
       </div>
+      <?php
+        }
+      }
+      ?>
     </div>
   </div>
   <div class="row">

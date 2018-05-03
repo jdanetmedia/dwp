@@ -21,8 +21,18 @@ class Gallery {
     try {
       $conn = connectToDB();
 
-      $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', false)");
-      $handle->execute();
+      $countRows = $conn->prepare("SELECT * FROM ProductImg WHERE ItemNumber = '{$item}'");
+      $countRows->execute();
+      $rows = $countRows->fetchAll( \PDO::FETCH_OBJ );
+      $numberOfRows = count($rows);
+
+      if($numberOfRows > 0) {
+        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', false)");
+        $handle->execute();
+      } else {
+        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', true)");
+        $handle->execute();
+      }
 
       $conn = null;
     }
@@ -90,7 +100,9 @@ class Gallery {
       }
       // end check
       $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES ('{$filepath}')");
-      $handle->execute();
+      if($uploadOk != 0) {
+        $handle->execute();
+      }
 
       $conn = null;
     }

@@ -5,12 +5,21 @@ require_once('../model/productsDAO.php');
 require_once('../model/cartDAO.php');
 
 // Store information on the current product item
-$reviews = getReviews($_GET["item"]);
 $productImgs = getCurrentProduct($_GET["item"]);
+$reviews = getReviews($_GET["item"]);
 $currentItem = mysqli_fetch_assoc($productImgs);
+$itemCheck = count($currentItem);
+
+if($itemCheck == 0) {
+  ?>
+    <script type="text/javascript">
+      window.location.href="404.php";
+    </script>
+  <?php
+}
+
 $related = getRelatedProducts($currentItem["ProductCategoryID"]);
 $usercart = $_SESSION["cart"];
-//print_r($usercart);
 ?>
   <div class="container product-container">
     <div class="row">
@@ -44,7 +53,7 @@ $usercart = $_SESSION["cart"];
             <p><b>$<?php echo $currentItem["Price"]; ?></b></p>
           </div>
           <div class="col s12">
-            <form class="" action="../view/product.php?item=<?php echo $_GET["item"]; ?>&action=add" method="get">
+            <form class="" action="" method="post">
               <div class="input-field inline cart_quantity">
                 <input name="amount" id="quantity" type="number" value="1">
                 <label for="quantity">Quantity</label>
@@ -95,56 +104,42 @@ $usercart = $_SESSION["cart"];
               <div class="modal-content">
                 <h4>Add your review</h4>
                 <div class="row">
-                  <form class="col s12">
+                  <form action="" method="post" class="col s12">
                     <div class="row">
                       <div class="input-field col s12 m6">
-                        <input id="last_name" type="text" class="validate">
+                        <input id="last_name" name="reviewTitle" type="text" class="validate">
                         <label for="last_name">Review title</label>
                       </div>
                     </div>
                     <div class="row">
                       <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea"></textarea>
+                        <textarea id="textarea1" name="reviewText" class="materialize-textarea"></textarea>
                         <label for="textarea1">Review text</label>
                       </div>
                     </div>
                     <div class="row">
                       <div class="col s12 m6">
-                        <form class="rating">
-                          <label>
-                            <input type="radio" name="stars" value="1" />
-                            <i class="material-icons small rated">star</i>
-                          </label>
-                          <label>
-                            <input type="radio" name="stars" value="2" />
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                          </label>
-                          <label>
-                            <input type="radio" name="stars" value="3" />
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                          </label>
-                          <label>
-                            <input type="radio" name="stars" value="4" />
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                          </label>
-                          <label>
-                            <input type="radio" name="stars" value="5" />
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                            <i class="material-icons small rated">star</i>
-                          </label>
-                        </form>
+                        <ul class="stars-list">
+                          <li id="1" class="star star-1">
+                            <i class="material-icons small star-icon">star_border</i>
+                          </li>
+                          <li id="2" class="star star-2">
+                            <i class="material-icons small star-icon">star_border</i>
+                          </li>
+                          <li id="3" class="star star-3">
+                            <i class="material-icons small star-icon">star_border</i>
+                          </li>
+                          <li id="4" class="star star-4">
+                            <i class="material-icons small star-icon">star_border</i>
+                          </li>
+                          <li id="5" class="star star-5">
+                            <i class="material-icons small star-icon">star_border</i>
+                          </li>
+                        </ul>
+                        <input class="rating-input" type="hidden" name="rating">
+                        <input class="waves-effect waves-green btn" type="submit" name="submitreview" value="Add review">
                       </div>
                     </div>
-                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn">Add review</a>
                   </form>
                 </div>
               </div>
@@ -156,7 +151,7 @@ $usercart = $_SESSION["cart"];
                 <div class="col s12 m6">
                   <div class="card">
                     <div class="card-content">
-                      <span class="card-title"><?php echo $row["ReviewTitel"]; ?></span>
+                      <span class="card-title"><?php echo $row["ReviewTitle"]; ?></span>
                       <p><?php echo $row["ReviewContent"] ?></p>
                       <span class="review-meta"><?php echo "Posted by <b>" . $row["ReviewName"] . "</b> on <b>" . $row["ReviewDate"] . "</b>"; ?></span>
                     </div>
@@ -167,7 +162,7 @@ $usercart = $_SESSION["cart"];
                           $rating = $row["Rating"];
                           $items = 1;
                           $items2 = 1;
-                          $notRated = 5 % $rating;
+                          $notRated = 5 - $rating;
                           while($items <= $rating) {
 
                             ?>
