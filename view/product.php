@@ -5,9 +5,19 @@ require_once('../model/productsDAO.php');
 require_once('../model/cartDAO.php');
 
 // Store information on the current product item
-$reviews = getReviews($_GET["item"]);
 $productImgs = getCurrentProduct($_GET["item"]);
+$reviews = getReviews($_GET["item"]);
 $currentItem = mysqli_fetch_assoc($productImgs);
+$itemCheck = count($currentItem);
+
+if($itemCheck == 0) {
+  ?>
+    <script type="text/javascript">
+      window.location.href="404.php";
+    </script>
+  <?php
+}
+
 $related = getRelatedProducts($currentItem["ProductCategoryID"]);
 $usercart = $_SESSION["cart"];
 //print_r($usercart);
