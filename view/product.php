@@ -84,10 +84,9 @@ $usercart = $_SESSION["cart"];
               <?php echo $currentItem["LongDescription"]; ?>
             </div>
             <div class="col s12 m4">
-              <p><b>Shipping:</b><br>
-              49 kr</p>
-              <p><b>Some other fact:</b><br>
-              Duuuuck</p>
+              <p><b>Current stockstatus:</b><br>
+              <?php echo $currentItem["StockStatus"]; ?>
+              </p>
             </div>
           </div>
         </div>
