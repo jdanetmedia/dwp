@@ -198,8 +198,8 @@ $product = $products->getProductDetails($_GET["item"]);
               <div class="row">
                 <div class="input-field col s12">
                   <?php
-                    if(isset($product[0]->SeoTitle)) {
-                      $titleTag = $product->SeoTitle;
+                    if(isset($product[0]["SeoTitle"])) {
+                      $titleTag = $product[0]["SeoTitle"];
                     } else {
                       $titleTag = "";
                     }
@@ -209,8 +209,8 @@ $product = $products->getProductDetails($_GET["item"]);
                 </div>
                 <div class="input-field col s12">
                   <?php
-                    if(isset($product[0]->MetaDescription)) {
-                      $metaDesc = $product[0]->MetaDescription;
+                    if(isset($product[0]["MetaDescription"])) {
+                      $metaDesc = $product[0]["MetaDescription"];
                     } else {
                       $metaDesc = "";
                     }

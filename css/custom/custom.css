@@ -151,7 +151,8 @@ ul.stars-list {
   background-color: #EBEBEB;
   /* Dashboard */
   /* New product styling */
-  /* Image gallery */ }
+  /* Image gallery */
+  /* Settings area */ }
   .admin-area nav.admin-topnav {
     margin-bottom: 40px; }
   .admin-area input.select-dropdown {
@@ -257,5 +258,8 @@ ul.stars-list {
       .admin-area .gallery-cnt .gallery-item .img-bg .selected {
         border: 3px solid #212121;
         border-radius: 3px; }
+  .admin-area .settings-content {
+    background-color: #fff;
+    padding: 30px; }
 
 /*# sourceMappingURL=custom.css.map */
