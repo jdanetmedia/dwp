@@ -1,4 +1,5 @@
 <?php
+require_once("../includes/sessionstart.php");
 require_once("../includes/header.php");
 require_once("../model/ordersDAO.php");
 $orderNumber = $_GET["order"];

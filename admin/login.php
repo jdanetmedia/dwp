@@ -1,4 +1,6 @@
-<?php require_once("includes/header.php"); ?>
+<?php
+require_once("../includes/sessionstart.php");
+require_once("includes/header.php"); ?>
 <?php
 	if (logged_in()) {
 ?>

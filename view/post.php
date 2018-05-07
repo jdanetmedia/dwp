@@ -1,4 +1,6 @@
-<?php require_once('../includes/header.php');
+<?php
+require_once("../includes/sessionstart.php");
+require_once('../includes/header.php');
 require_once("../model/blogDAO.php");
 require_once("../model/productDAO.php");
 $post = $_GET["post"];

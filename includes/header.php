@@ -1,5 +1,4 @@
 <?php
-session_start();
 // DB connection
 require_once("../includes/connection.php");
 
@@ -58,6 +57,7 @@ $pageInfo = getPageInfo();
             <li><a href="cart.php">Ducking cart<i class="material-icons right">shopping_cart</i></a></li>
             <?php
               $amountInCart = count($_SESSION["cart"]);
+              var_dump($_SESSION["cart"]);
               if ($amountInCart > 0) {
             ?>
               <li class="cartamount"><a class="cartamount"><?php echo $amountInCart; ?></a></li>

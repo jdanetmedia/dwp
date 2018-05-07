@@ -1,4 +1,5 @@
 <?php require_once('../includes/header.php');
+require_once("../includes/sessionstart.php");
  require_once ('../model/contactDAO.php');
  $pageInfo = getPageInfo();
 ?>

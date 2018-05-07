@@ -1,4 +1,5 @@
 <?php
+require_once("../includes/sessionstart.php");
 require_once("../admin/includes/header.php");
 
 if (!logged_in()) {

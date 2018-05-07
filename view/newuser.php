@@ -1,4 +1,6 @@
-<?php require_once("../includes/header.php");
+<?php
+require_once("../includes/sessionstart.php");
+require_once("../includes/header.php");
 if (!empty($message)) {echo "<p>" . $message . "</p>";}
 ?>
 <div class="container">
