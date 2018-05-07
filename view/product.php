@@ -58,7 +58,7 @@ $usercart = $_SESSION["cart"];
                 <input name="amount" id="quantity" type="number" value="1">
                 <label for="quantity">Quantity</label>
               </div>
-              <a class="waves-effect waves-light btn cart-btt"><input type="submit" name="submitcart" value="Add to cart"><i class="material-icons right">add_shopping_cart</i></a>
+              <a class="waves-effect waves-light btn cart-btt"><input class="presscart" type="submit" name="submitcart" value="Add to cart"><i class="material-icons right">add_shopping_cart</i></a>
             </form>
           </div>
           <div class="col s12 avr-review">

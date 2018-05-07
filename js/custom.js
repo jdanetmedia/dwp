@@ -3,6 +3,12 @@ $(".button-collapse").sideNav();
 
 $(document).ready(function() {
 
+  // $('.presscart').click(function() {
+  //   var MyDiv1 = parseInt($('.cartamount').text())+1;
+  //   $(".cartamount").text(MyDiv1);
+  //   //alert(MyDiv1);
+  // });
+
   $('.carousel').carousel({
               dist:0,
               shift:0,
