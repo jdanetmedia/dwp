@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_POST["submitcart"])) {
     addtocart($_GET["item"], $_POST["amount"]);
 }

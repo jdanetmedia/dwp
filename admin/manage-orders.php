@@ -1,4 +1,6 @@
-<?php require_once("../admin/includes/header.php");
+<?php
+require_once("../includes/sessionstart.php");
+require_once("../admin/includes/header.php");
 spl_autoload_register(function($class) {
   include "class/".$class.".php";
 });

@@ -1,8 +1,9 @@
 <?php
+require_once("../includes/sessionstart.php");
+require_once('../model/cartDAO.php');
 require_once("../includes/header.php");
 require_once("../model/productDAO.php");
 require_once('../model/productsDAO.php');
-require_once('../model/cartDAO.php');
 
 // Store information on the current product item
 $productImgs = getCurrentProduct($_GET["item"]);
