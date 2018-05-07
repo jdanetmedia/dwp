@@ -1,4 +1,7 @@
-<?php require_once('../includes/header.php');
+<?php
+require_once("../includes/sessionstart.php");
+require_once("../model/customerDAO.php");
+require_once('../includes/header.php');
   $deliveryResult = mysqli_query($connection, "SELECT * FROM `DeliveryMethod`");
 	if (!logged_in()) {
 ?>
@@ -10,41 +13,43 @@
 	}
 ?>
 <div class="container">
-  <form class="col s12 m12" action="payment.php" method="post">
+  <form class="" action="payment.php" method="post">
   <div class="row">
       <h5>Shipping information</h5>
-      <div class="row col s12 m6">
-        <div class="row col s12 m12">
-          <div class="input-field col s12">
-            <input id="first_name" type="text" name="street" class="validate">
-            <label for="first_name">Streetname</label>
+      <div class="card col s12 m6">
+        <div class="card-content">
+          <div class="row col s12">
+            <div class="row col s12">
+              <div class="input-field col s12">
+                <input id="first_name" type="text" name="street" class="validate">
+                <label for="first_name">Streetname</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name" type="text" name="house" class="validate">
+                <label for="last_name">Housenumber</label>
+              </div>
+            </div>
+            <div class="row col s12">
+              <div class="input-field col s6">
+                <input id="first_name" type="number" name="zipcode" class="validate">
+                <label for="first_name">Zipcode</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name" type="text" name="city" class="validate">
+                <label for="last_name">City</label>
+              </div>
+            </div>
           </div>
-          <div class="input-field col s6">
-            <input id="last_name" type="text" name="house" class="validate">
-            <label for="last_name">Housenumber</label>
-          </div>
+          <p>
+            <input type="checkbox" name="saveaddress" value="true" class="filled-in" id="filled-in-box" />
+            <label for="filled-in-box">Set this address as your new address?</label>
+          </p>
         </div>
-        <div class="row col s12 m12">
-          <div class="input-field col s6">
-            <input id="first_name" type="number" name="zipcode" class="validate">
-            <label for="first_name">Zipcode</label>
-          </div>
-          <div class="input-field col s6">
-            <input id="last_name" type="text" name="city" class="validate">
-            <label for="last_name">City</label>
-          </div>
-        </div>
-        <p>
-          <input type="checkbox" name="saveaddress" value="true" class="filled-in" id="filled-in-box" />
-          <label for="filled-in-box">Set this address as your new address?</label>
-        </p>
       </div>
-
       <div class="row col s12 m6">
         <?php
           while ($row = mysqli_fetch_array($deliveryResult)) {
         ?>
-        <div class="col s12 m12">
           <div class="card">
             <div class="card-content">
               <span class="card-title">
@@ -53,7 +58,6 @@
               </span>
               <p><?php echo $row["MethodDescription"]; ?></p>
             </div>
-          </div>
         </div>
         <?php
           }
@@ -62,7 +66,6 @@
       <div class="clear"></div>
   </div>
   <div class="row col s12 m6">
-    <div class="col s12 m12">
       <div class="card">
         <div class="card-content">
           <span class="card-title">Order Message (Optional)</span>
@@ -74,9 +77,8 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
-  <input class="waves-effect waves-light btn" type="submit" name="submitshipping" value="Go to payment">
+  <input class="waves-effect waves-light btn right" type="submit" name="submitshipping" value="Go to payment">
 </form>
 </div>
 <?php require_once('../includes/footer.php'); ?>

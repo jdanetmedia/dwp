@@ -4,8 +4,6 @@ spl_autoload_register(function($class) {
   include "class/" . $class . ".php";
 });
 
-session_start();
-
 // Customer login functions and session
 require_once("includes/loginAdmin/session.php");
 require_once("includes/loginAdmin/functions.php");

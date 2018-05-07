@@ -1,4 +1,6 @@
-<?php require_once('../includes/header.php');
+<?php
+require_once("../includes/sessionstart.php");
+require_once('../includes/header.php');
 require_once('../model/productsDAO.php');
 $url = $_SERVER['REQUEST_URI'];
 //echo "<br>". $url;
