@@ -72,7 +72,52 @@ if(isset($_POST["submit"])) {
                                         </select>
                                         <label>Category</label>
                                     </div>
-                                    <a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="#">Add new Category</a>
+                                    <a class="waves-effect waves-light btn grey darken-4 btn modal-trigger" href="#modal1">Add review</a>
+                                    <!-- Modal Structure -->
+                                    <div id="modal1" class="modal">
+                                        <div class="modal-content">
+                                            <h4>Add your review</h4>
+                                            <div class="row">
+                                                <form action="" method="post" class="col s12">
+                                                    <div class="row">
+                                                        <div class="input-field col s12 m6">
+                                                            <input id="last_name" name="reviewTitle" type="text" class="validate">
+                                                            <label for="last_name">Review title</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="input-field col s12">
+                                                            <textarea id="textarea1" name="reviewText" class="materialize-textarea"></textarea>
+                                                            <label for="textarea1">Review text</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col s12 m6">
+                                                            <ul class="stars-list">
+                                                                <li id="1" class="star star-1">
+                                                                    <i class="material-icons small star-icon">star_border</i>
+                                                                </li>
+                                                                <li id="2" class="star star-2">
+                                                                    <i class="material-icons small star-icon">star_border</i>
+                                                                </li>
+                                                                <li id="3" class="star star-3">
+                                                                    <i class="material-icons small star-icon">star_border</i>
+                                                                </li>
+                                                                <li id="4" class="star star-4">
+                                                                    <i class="material-icons small star-icon">star_border</i>
+                                                                </li>
+                                                                <li id="5" class="star star-5">
+                                                                    <i class="material-icons small star-icon">star_border</i>
+                                                                </li>
+                                                            </ul>
+                                                            <input class="rating-input" type="hidden" name="rating">
+                                                            <input class="waves-effect waves-green btn" type="submit" name="submitreview" value="Add review">
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
@@ -131,7 +176,8 @@ if(isset($_POST["submit"])) {
                                     $titleTag = "";
                                 }
                                 ?>
-                                <input id="seoTitle" type="text" class="validate" data-length="68" value="<?php echo $titleTag; ?>">
+                                <input id="seoTitle" name="seoTitle" type="text" class="validate" data-length="68" value="<?php echo
+                                $titleTag; ?>">
                                 <label for="seoTitle">Page title (Max 68 characters)</label>
                             </div>
                             <div class="input-field col s12">
@@ -142,8 +188,8 @@ if(isset($_POST["submit"])) {
                                     $metaDesc = "";
                                 }
                                 ?>
-                                <textarea id="metaDescription" class="materialize-textarea" data-length="160">
-                                    <?php echo $metaDesc; ?></textarea>
+                                <textarea id="metaDescription" name="metaDescription" class="materialize-textarea"
+                                          data-length="160"><?php echo $metaDesc; ?></textarea>
                                 <label for="metaDescription">Meta Description (Max 160 characters)</label>
                             </div>
                         </div>

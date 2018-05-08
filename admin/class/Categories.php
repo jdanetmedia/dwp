@@ -35,12 +35,84 @@ Class Categories extends DBConnect {
         }
     }
 
-    function updateCategory ($categoryID) {
+    function updateProductCategory ($categoryID) {
+        try {
+            $conn = connectToDB();
 
+            $statement = "UPDATE ProductCategory
+                          SET CategoryName = :CategoryName,
+                          Description = :Description,
+                          SeoTitle = :SeoTitle,
+                          MetaDescription = :MetaDescription
+                          WHERE ProductCategoryID = :ProductCategoryID";
+
+            $handle = $conn->prepare($statement);
+
+            $handle->bindParam(':CategoryName',$_POST["categoryName"]);
+            $handle->bindParam(':Description',$_POST["description"]);
+            $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
+            $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
+            $handle->bindParam(':ProductCategoryID',$categoryID);
+            $handle->execute();
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
     }
 
-    function deleteCategory ($categoryID) {
+    function updateBlogPostCategory ($categoryID) {
+        try {
+            $conn = connectToDB();
 
+            $statement = "UPDATE BlogCategory
+                          SET CategoryName = :CategoryName,
+                          Description = :Description,
+                          SeoTitle = :SeoTitle,
+                          MetaDescription = :MetaDescription
+                          WHERE BlogCategoryID = :BlogCategoryID";
+
+            $handle = $conn->prepare($statement);
+
+            $handle->bindParam(':CategoryName',$_POST["categoryName"]);
+            $handle->bindParam(':Description',$_POST["description"]);
+            $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
+            $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
+            $handle->bindParam(':BlogCategoryID',$categoryID);
+            $handle->execute();
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
+
+    function deleteProductCategory ($categoryID) {
+        try {
+            $conn = connectToDB();
+
+            $statement = "DELETE FROM ProductCategory WHERE ProductCategoryID = :ProductCategoryID";
+
+            $handle = $conn->prepare($statement);
+            $handle->bindParam(':ProductCategoryID',$categoryID);
+        }
+        catch (\PDOException $ex) {
+            print($ex->getMessage());
+        }
+    }
+
+    function deleteBlogPostCategory ($categoryID) {
+        try {
+            $conn = connectToDB();
+
+            $statement = "DELETE FROM BlogCategory WHERE BlogCategoryID = :BlogCategoryID";
+
+            $handle = $conn->prepare($statement);
+            $handle->bindParam(':BlogCategoryID',$categoryID);
+        }
+        catch (\PDOException $ex) {
+            print($ex->getMessage());
+        }
     }
 
     function getProductCategoryDetails($categoryID) {

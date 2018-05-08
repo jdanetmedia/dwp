@@ -14,14 +14,14 @@ if (!logged_in()) {
 $category = new Categories();
 $aCategory = $category->getProductCategoryDetails($_GET["ID"]);
 if(isset($_POST["submit"])) {
-    $category->updateCategory($_GET["ID"]);
+    $category->updateProductCategory($_GET["ID"]);
     ?>
-    <script type="text/javascript">location.href = 'manage-categories.php';</script>
+    <script type="text/javascript">location.href = 'manage-categories.php?select=product';</script>
     <?php
 } elseif (isset($_POST["submit2"])) {
-    $category->deleteCategory($_GET["ID"]);
+    $category->deleteProductCategory($_GET["ID"]);
     ?>
-    <script type="text/javascript">location.href = 'manage-categories.php';</script>
+    <script type="text/javascript">location.href = 'manage-categories.php?select=product';</script>
     <?php
 }
 ?>
@@ -73,7 +73,8 @@ if(isset($_POST["submit"])) {
                                     $titleTag = "";
                                 }
                                 ?>
-                                <input id="seoTitle" type="text" class="validate" data-length="68" value="<?php echo $titleTag; ?>">
+                                <input id="seoTitle" name="seoTitle" type="text" class="validate" data-length="68" value="<?php echo
+                                $titleTag; ?>">
                                 <label for="seoTitle">Page title (Max 68 characters)</label>
                             </div>
                             <div class="input-field col s12">
@@ -84,8 +85,8 @@ if(isset($_POST["submit"])) {
                                     $metaDesc = "";
                                 }
                                 ?>
-                                <textarea id="metaDescription" class="materialize-textarea" data-length="160">
-                                    <?php echo $metaDesc; ?></textarea>
+                                <textarea id="metaDescription" name="metaDescription" class="materialize-textarea"
+                                          data-length="160"><?php echo $metaDesc; ?></textarea>
                                 <label for="metaDescription">Meta Description (Max 160 characters)</label>
                             </div>
                         </div>
