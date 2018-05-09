@@ -16,6 +16,18 @@ if (!logged_in()) {
 $category = new Categories();
 $productCategories = $category->getAllProductCategories();
 $blogPostCategories = $category->getAllBlogPostCategories();
+if(isset($_POST["saveProductCategory"])) {
+    $category->saveProductCategory();
+    ?>
+    <script type="text/javascript">location.href = 'manage-categories.php?select=product';</script>
+    <?php
+}
+else if (isset($_POST["saveBlogPostCategory"])) {
+    $category->saveBlogPostCategory();
+    ?>
+    <script type="text/javascript">location.href = 'manage-categories.php?select=blogPost';</script>
+    <?php
+}
 ?>
 <div class="container">
     <div class="row">
@@ -41,9 +53,10 @@ $blogPostCategories = $category->getAllBlogPostCategories();
                     <div id="modal1" class="modal">
                         <div class="modal-content">
                             <form action="" method="post" enctype="multipart/form-data">
+                                <h4 class="left">New Product Category</h4>
                                 <div class="row">
                                     <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit"
-                                           name="submit" value="Save">
+                                           name="saveProductCategory" value="Save">
                                 </div>
                                 <div class="row">
                                     <ul class="collapsible" data-collapsible="accordion">
@@ -52,7 +65,6 @@ $blogPostCategories = $category->getAllBlogPostCategories();
                                                         class="material-icons">assignment</i>General</div>
                                             <div class="collapsible-body">
                                                 <div class="row">
-                                                    <form class="col s12">
                                                         <div class="row">
                                                             <div class="input-field col s12">
                                                                 <input id="categoryName" type="text" class="validate"
@@ -67,7 +79,6 @@ $blogPostCategories = $category->getAllBlogPostCategories();
                                                                           name="description"></textarea>
                                                             </div>
                                                         </div>
-                                                    </form>
                                                 </div>
                                             </div>
                                         </li>
@@ -134,9 +145,10 @@ $blogPostCategories = $category->getAllBlogPostCategories();
                     <div id="modal2" class="modal">
                         <div class="modal-content">
                             <form action="" method="post" enctype="multipart/form-data">
+                                <h4 class="left">New Blog Post Category</h4>
                                 <div class="row">
                                     <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit"
-                                           name="submit" value="Save">
+                                           name="saveBlogPostCategory" value="Save">
                                 </div>
                                 <div class="row">
                                     <ul class="collapsible" data-collapsible="accordion">
@@ -145,7 +157,6 @@ $blogPostCategories = $category->getAllBlogPostCategories();
                                                         class="material-icons">assignment</i>General</div>
                                             <div class="collapsible-body">
                                                 <div class="row">
-                                                    <form class="col s12">
                                                         <div class="row">
                                                             <div class="input-field col s12">
                                                                 <input id="categoryName" type="text" class="validate"
@@ -156,11 +167,10 @@ $blogPostCategories = $category->getAllBlogPostCategories();
                                                         <div class="row">
                                                             <div class="input-field col s12">
                                                                 <p>Category Description</p>
-                                                                <textarea id="description" class="content"
+                                                                <textarea id="description" class="content1"
                                                                           name="description"></textarea>
                                                             </div>
                                                         </div>
-                                                    </form>
                                                 </div>
                                             </div>
                                         </li>

@@ -35,6 +35,47 @@ Class Categories extends DBConnect {
         }
     }
 
+    function saveProductCategory() {
+        try {
+            $conn = connectToDB();
+
+            $statement = "INSERT INTO ProductCategory (CategoryName, Description, SeoTitle, MetaDescription) VALUES (:CategoryName,                           :Description, :SeoTitle, :MetaDescription)";
+
+            $handle = $conn->prepare($statement);
+
+            $handle->bindParam(':CategoryName', $_POST["categoryName"]);
+            $handle->bindParam(':Description', $_POST["description"]);
+            $handle->bindParam(':SeoTitle', $_POST["seoTitle"]);
+            $handle->bindParam(':MetaDescription', $_POST["metaDescription"]);
+            $handle->execute();
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
+
+    function saveBlogPostCategory() {
+        try {
+            $conn = connectToDB();
+
+            $statement = "INSERT INTO BlogCategory (CategoryName, Description, SeoTitle, MetaDescription) VALUES (:CategoryName, 
+                          :Description, :SeoTitle, :MetaDescription)";
+
+            $handle = $conn->prepare($statement);
+
+            $handle->bindParam(':CategoryName', $_POST["categoryName"]);
+            $handle->bindParam(':Description', $_POST["description"]);
+            $handle->bindParam(':SeoTitle', $_POST["seoTitle"]);
+            $handle->bindParam(':MetaDescription', $_POST["metaDescription"]);
+            $handle->execute();
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
+
     function updateProductCategory ($categoryID) {
         try {
             $conn = connectToDB();
@@ -95,6 +136,7 @@ Class Categories extends DBConnect {
 
             $handle = $conn->prepare($statement);
             $handle->bindParam(':ProductCategoryID',$categoryID);
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
         catch (\PDOException $ex) {
             print($ex->getMessage());
@@ -108,7 +150,10 @@ Class Categories extends DBConnect {
             $statement = "DELETE FROM BlogCategory WHERE BlogCategoryID = :BlogCategoryID";
 
             $handle = $conn->prepare($statement);
+
             $handle->bindParam(':BlogCategoryID',$categoryID);
+
+            $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
         catch (\PDOException $ex) {
             print($ex->getMessage());
@@ -119,7 +164,10 @@ Class Categories extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $handle = $conn->prepare("SELECT * FROM ProductCategory WHERE ProductCategoryID = $categoryID");
+            $statement = "SELECT * FROM ProductCategory WHERE ProductCategoryID = :ProductCategoryID";
+
+            $handle = $conn->prepare($statement);
+            $handle->bindParam("ProductCategoryID",$categoryID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
@@ -136,7 +184,10 @@ Class Categories extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $handle = $conn->prepare("SELECT * FROM BlogCategory WHERE BlogCategoryID = $categoryID");
+            $statement = "SELECT * FROM BlogCategory WHERE BlogCategoryID = :BlogCategoryID";
+
+            $handle = $conn->prepare($statement);
+            $handle->bindParam("BlogCategoryID",$categoryID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
