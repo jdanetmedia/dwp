@@ -71,7 +71,7 @@ if (isset($_POST["email"])) {
 
     function getPageInfo() {
     global $connection;
-        $pageInfo = mysqli_query($connection, "SELECT * FROM `BasicPageInfo`, `ZipCode`");
+        $pageInfo = mysqli_query($connection, "SELECT BasicPageInfo.* , ZipCode.City FROM `BasicPageInfo` INNER JOIN ZipCode ON ZipCode.ZipCode = BasicPageInfo.ZipCode");
         $row = mysqli_fetch_assoc($pageInfo);
         return $row;
     }

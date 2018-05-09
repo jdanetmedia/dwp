@@ -16,7 +16,7 @@ if (!logged_in()) {
 
 $blogPosts = new BlogPosts();
 $allCategories = $blogPosts->getAllCategories();
-if(isset($_POST["submit"])) {
+if(isset($_POST["saveBlogPost"])) {
     $blogPosts->saveBlogPost();
     ?>
     <script type="text/javascript">location.href = 'manage-blog.php';</script>
@@ -26,7 +26,7 @@ if(isset($_POST["submit"])) {
 <div class="container">
     <form action="" method="post" enctype="multipart/form-data">
         <div class="row">
-            <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="submit" value="Save">
+            <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="saveBlogPost" value="Save">
         </div>
         <div class="row">
             <ul class="collapsible" data-collapsible="accordion">

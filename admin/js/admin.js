@@ -9,7 +9,14 @@ $(document).ready(function() {
     fileUpload: false,
     videoUpload: false
   });
-  // Dropdown selectal
+    $('.content1').richText({
+        //Uploads
+        imageUpload: false,
+        fileUpload: false,
+        videoUpload: false
+    });
+
+    // Dropdown selectal
   $('select').material_select();
 
   $('.make-primary').click(function() {
