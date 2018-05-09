@@ -1,4 +1,6 @@
-<?php require_once("../admin/includes/header.php");
+<?php
+require_once("../includes/sessionstart.php");
+require_once("../admin/includes/header.php");
 spl_autoload_register(function($class) {
     include "class/".$class.".php";
 });
@@ -11,9 +13,9 @@ if (!logged_in()) {
     <?php
     //redirect_to("login.php");
 }
-$blogPosts = new BlogPosts();
-$allBlogPosts = $blogPosts->getAllBlogPosts();
-$allCategories = $blogPosts->getAllCategories();
+$category = new Categories();
+$productCategories = $category->getAllProductCategories();
+$blogPostCategories = $category->getAllBlogPostCategories();
 ?>
 <div class="container">
     <div class="row">
@@ -24,42 +26,99 @@ $allCategories = $blogPosts->getAllCategories();
         </div>
         <div class="card-tabs">
             <ul class="tabs tabs-fixed-width">
-                <li class="tab"><a href="#productCategories">Manage product categories</a></li>
-                <li class="tab"><a href="#blogPostCategories">Manage blog post categories</a></li>
+                <li class="tab"><a class="<?php if(isset($_GET["select"]) && $_GET["select"] == "product") { echo "active"; } ?>"
+                                   href="#productCategories">Manage product categories</a></li>
+                <li class="tab"><a class="<?php if(isset($_GET["select"]) && $_GET["select"] == "blogPost") { echo "active"; } ?>"
+                                   href="#blogPostCategories">Manage blog post categories</a></li>
             </ul>
         </div>
-        <div class="card-content grey lighten-4">
+        <div class="card-content">
             <div class="row" id="productCategories">
                 <div class="col s12">
-                    <div class="card">
-                        <div class="card-content">
-                            <span class="card-title">Product Categories<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-blogpost.php">Add new</a></span>
+                            <span class="card-title">Product Categories<a class="waves-effect waves-light btn grey darken-4
+                            new-prod-btn btn modal-trigger" href="#modal1">Add new</a></span>
+                    <!-- Modal Structure -->
+                    <div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit"
+                                           name="submit" value="Save">
+                                </div>
+                                <div class="row">
+                                    <ul class="collapsible" data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header active"><i
+                                                        class="material-icons">assignment</i>General</div>
+                                            <div class="collapsible-body">
+                                                <div class="row">
+                                                    <form class="col s12">
+                                                        <div class="row">
+                                                            <div class="input-field col s12">
+                                                                <input id="categoryName" type="text" class="validate"
+                                                                       name="categoryName">
+                                                                <label for="categoryName">Category Name</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="input-field col s12">
+                                                                <p>Category Description</p>
+                                                                <textarea id="description" class="content"
+                                                                          name="description"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">trending_up</i>SEO</div>
+                                            <div class="collapsible-body">
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <input id="seoTitle" name="seoTitle" type="text" class="validate"
+                                                               data-length="68">
+                                                        <label for="seoTitle">Page title (Max 68 characters)</label>
+                                                    </div>
+                                                    <div class="input-field col s12">
+                                                        <textarea id="metaDescription" name="metaDescription"
+                                                                  class="materialize-textarea"
+                                                                  data-length="160"></textarea>
+                                                        <label for="metaDescription">Meta Description (Max 160 characters)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                             <table class="responsive-table striped">
                                 <thead>
                                 <tr>
-                                    <th>Post date</th>
-                                    <th>Title</th>
-                                    <th>Blog content</th>
-                                    <th>Category</th>
-                                    <th>Author</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Seo Title</th>
+                                    <th>Meta Description</th>
                                     <th>Edit</th>
                                 </tr>
                                 </thead>
                                 <?php // TODO: Ændre farve på select felter ?>
                                 <tbody>
                                 <?php
-                                foreach ($allBlogPosts as $aBlogPost) {
+                                foreach ($productCategories as $aProductCategory) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $aBlogPost->BlogDate; ?></td>
-                                        <td><?php echo $aBlogPost->Title; ?></td>
-                                        <td><?php if (strlen($aBlogPost->BlogContent) > 100) {
+                                        <td><?php echo $aProductCategory->CategoryName; ?></td>
+                                        <td><?php if (strlen($aProductCategory->Description) > 100) {
                                                 echo preg_replace('/\s+?(\S+)?$/', '', substr
-                                                    ($aBlogPost->BlogContent, 0, 100)) . " ...";
-                                            } else echo $aBlogPost->BlogContent; ?></td>
-                                        <td><?php echo $aBlogPost->CategoryName; ?></td>
-                                        <td><?php echo $aBlogPost->UserEmail; ?></td>
-                                        <td><a href="edit-blog-post.php?ID=<?php echo $aBlogPost->BlogPostID; ?>">Edit</a></td>
+                                                    ($aProductCategory->Description, 0, 100)) . " ...";
+                                            } else echo $aProductCategory->Description; ?></td>
+                                        <td><?php echo $aProductCategory->SeoTitle; ?></td>
+                                        <td><?php echo $aProductCategory->MetaDescription; ?></td>
+                                        <td><a href="edit-product-category.php?ID=<?php echo $aProductCategory->ProductCategoryID;
+                                        ?>">Edit</a></td>
                                     </tr>
                                     <?php
                                 }
@@ -67,40 +126,92 @@ $allCategories = $blogPosts->getAllCategories();
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
             </div>
             <div class="row" id="blogPostCategories">
                 <div class="col s12">
-                    <div class="card">
-                        <div class="card-content">
-                            <span class="card-title">Blog Post Categories<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-blogpost.php">Add new</a></span>
+                            <span class="card-title">Blog Post Categories<a class="waves-effect waves-light btn grey darken-4
+                            new-prod-btn btn modal-trigger" href="#modal2">Add new</a></span>
+                    <div id="modal2" class="modal">
+                        <div class="modal-content">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit"
+                                           name="submit" value="Save">
+                                </div>
+                                <div class="row">
+                                    <ul class="collapsible" data-collapsible="accordion">
+                                        <li>
+                                            <div class="collapsible-header active"><i
+                                                        class="material-icons">assignment</i>General</div>
+                                            <div class="collapsible-body">
+                                                <div class="row">
+                                                    <form class="col s12">
+                                                        <div class="row">
+                                                            <div class="input-field col s12">
+                                                                <input id="categoryName" type="text" class="validate"
+                                                                       name="categoryName">
+                                                                <label for="categoryName">Category Name</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="input-field col s12">
+                                                                <p>Category Description</p>
+                                                                <textarea id="description" class="content"
+                                                                          name="description"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="collapsible-header"><i class="material-icons">trending_up</i>SEO</div>
+                                            <div class="collapsible-body">
+                                                <div class="row">
+                                                    <div class="input-field col s12">
+                                                        <input id="seoTitle" name="seoTitle" type="text" class="validate"
+                                                               data-length="68">
+                                                        <label for="seoTitle">Page title (Max 68 characters)</label>
+                                                    </div>
+                                                    <div class="input-field col s12">
+                                                        <textarea id="metaDescription" name="metaDescription"
+                                                                  class="materialize-textarea"
+                                                                  data-length="160"></textarea>
+                                                        <label for="metaDescription">Meta Description (Max 160 characters)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                             <table class="responsive-table striped">
                                 <thead>
                                 <tr>
-                                    <th>Post date</th>
-                                    <th>Title</th>
-                                    <th>Blog content</th>
-                                    <th>Category</th>
-                                    <th>Author</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Seo Title</th>
+                                    <th>Meta Description</th>
                                     <th>Edit</th>
                                 </tr>
                                 </thead>
                                 <?php // TODO: Ændre farve på select felter ?>
                                 <tbody>
                                 <?php
-                                foreach ($allBlogPosts as $aBlogPost) {
+                                foreach ($blogPostCategories as $aBlogPostCategory) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $aBlogPost->BlogDate; ?></td>
-                                        <td><?php echo $aBlogPost->Title; ?></td>
-                                        <td><?php if (strlen($aBlogPost->BlogContent) > 100) {
+                                        <td><?php echo $aBlogPostCategory->CategoryName; ?></td>
+                                        <td><?php if (strlen($aBlogPostCategory->Description) > 100) {
                                                 echo preg_replace('/\s+?(\S+)?$/', '', substr
-                                                    ($aBlogPost->BlogContent, 0, 100)) . " ...";
-                                            } else echo $aBlogPost->BlogContent; ?></td>
-                                        <td><?php echo $aBlogPost->CategoryName; ?></td>
-                                        <td><?php echo $aBlogPost->UserEmail; ?></td>
-                                        <td><a href="edit-blog-post.php?ID=<?php echo $aBlogPost->BlogPostID; ?>">Edit</a></td>
+                                                    ($aBlogPostCategory->Description, 0, 100)) . " ...";
+                                            } else echo $aBlogPostCategory->Description; ?></td>
+                                        <td><?php echo $aBlogPostCategory->SeoTitle; ?></td>
+                                        <td><?php echo $aBlogPostCategory->MetaDescription; ?></td>
+                                        <td><a href="edit-blog-post-category.php?ID=<?php echo $aBlogPostCategory->BlogCategoryID;
+                                        ?>">Edit</a></td>
                                     </tr>
                                     <?php
                                 }
@@ -108,8 +219,6 @@ $allCategories = $blogPosts->getAllCategories();
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
