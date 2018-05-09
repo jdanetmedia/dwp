@@ -48,9 +48,11 @@ require_once('../includes/header.php');
     </div>
   </div>
   <div class="row">
-    <h5 class="left">Total price: $<?php echo $total; ?></h5>
+    <h5 class="left">Total price: $<?php echo $total;?></h5>
     <a class="waves-effect waves-light btn right" href="shipping.php">Go to Duckout</a>
   </div>
 </div>
 
-<?php require_once('../includes/footer.php') ?>
+<?php
+$_SESSION["total"] = $total;
+require_once('../includes/footer.php'); ?>

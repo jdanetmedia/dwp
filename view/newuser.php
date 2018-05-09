@@ -43,7 +43,4 @@ if (!empty($message)) {echo "<p>" . $message . "</p>";}
     </div>
   </div>
 </div>
-<?php
-if (isset($connection)){mysqli_close($connection);}
-?>
 <?php require_once("../includes/footer.php");
