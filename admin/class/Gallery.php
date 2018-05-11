@@ -1,5 +1,7 @@
 <?php
 
+// TODO: Image Resize & crop https://gist.github.com/miguelxt/908143
+
 class Gallery {
   function getAllImages() {
     try {
