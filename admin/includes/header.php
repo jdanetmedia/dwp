@@ -44,6 +44,7 @@ $adminstuff = new Admin($connection);
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage orders"><a href="manage-orders.php"><i class="material-icons">shopping_cart</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage products"><a href="manage-products.php"><i class="material-icons">view_list</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage blog"><a href="manage-blog.php"><i class="material-icons">subject</i></a></li>
+            <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage Categories"><a href="manage-categories.php"><i class="material-icons">subject</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Shop settings"><a href="manage-settings.php"><i class="material-icons">settings</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage user"><a href="manage-user.php"><i class="material-icons">person</i></a></li>
           <li><a href="logout.php">Log out</a></li>

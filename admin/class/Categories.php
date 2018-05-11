@@ -135,7 +135,9 @@ Class Categories extends DBConnect {
             $statement = "DELETE FROM ProductCategory WHERE ProductCategoryID = :ProductCategoryID";
 
             $handle = $conn->prepare($statement);
+
             $handle->bindParam(':ProductCategoryID',$categoryID);
+            $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
         catch (\PDOException $ex) {
@@ -152,7 +154,7 @@ Class Categories extends DBConnect {
             $handle = $conn->prepare($statement);
 
             $handle->bindParam(':BlogCategoryID',$categoryID);
-
+            $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
         catch (\PDOException $ex) {
