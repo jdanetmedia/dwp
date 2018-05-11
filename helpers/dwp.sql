@@ -20,7 +20,7 @@ CREATE TABLE FrontSlider (
 
 CREATE TABLE PromoCode (
   PromoCode varchar(255) NOT NULL PRIMARY KEY,
-  DiscoutAmount int(2) NOT NULL,
+  DiscountAmount int(2) NOT NULL,
   StartDate TIMESTAMP NULL,
   EndDate TIMESTAMP NULL,
   NumberOfUses int NULL,
@@ -135,8 +135,8 @@ CREATE TABLE BlogCategory (
 
 CREATE TABLE CustomerOrder (
   OrderNumber int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  StripeChargeID varchar(255) NOT NULL,
   Comment varchar(255) NULL,
+  StripeChargeID varchar(255) NOT NULL,
   OrderDate TIMESTAMP NOT NULL,
   ShippingStreet varchar(255) NOT NULL,
   ShippingHouseNumber varchar(255) NOT NULL,
@@ -1829,6 +1829,22 @@ VALUES (NULL, "Sent");
 
 INSERT INTO OrderStatus
 VALUES (NULL, "Delivered");
+
+-- Insert PromoCode
+INSERT INTO PromoCode
+VALUES ("virker", 50, "2009-11-11 13:23:44", "2020-11-11 13:23:44", 100, "rasmus.andreas96@gmail.com");
+
+INSERT INTO PromoCode
+VALUES ("gammel", 50, "2009-11-11 13:23:44", "2009-12-11 13:23:44", 100, "rasmus.andreas96@gmail.com");
+
+INSERT INTO PromoCode
+VALUES ("ny", 50, "2020-11-11 13:23:44", "2020-12-11 13:23:44", 100, "rasmus.andreas96@gmail.com");
+
+INSERT INTO PromoCode
+VALUES ("ingendato", 50, NULL, NULL, 100, "rasmus.andreas96@gmail.com");
+
+INSERT INTO PromoCode
+VALUES ("intetantal", 50, "2009-11-11 13:23:44", "2020-11-11 13:23:44", NULL, "rasmus.andreas96@gmail.com");
 
 -- Insert orders
 INSERT INTO CustomerOrder

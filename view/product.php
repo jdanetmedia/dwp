@@ -51,7 +51,17 @@ $usercart = $_SESSION["cart"];
             <p>Price:</p>
           </div>
           <div class="col s6 right">
+            <?php
+            if ($currentItem["OfferPrice"] != NULL || $currentItem["OfferPrice"] != 0) {
+            ?>
+            <p><strike>$<?php echo $currentItem["Price"]; ?></strike><b> $<?php echo $currentItem["OfferPrice"]; ?></b></p>
+            <?php
+            } else {
+            ?>
             <p><b>$<?php echo $currentItem["Price"]; ?></b></p>
+            <?php
+            }
+            ?>
           </div>
           <div class="col s12">
             <form class="" action="" method="post">

@@ -6,6 +6,14 @@ require_once('../includes/header.php');
 
 <div class="container">
   <h1>Cart</h1>
+  <?php
+  if(isset($_SESSION["promocode"]) && $_SESSION["promocode"] != NULL) {
+    echo "Active promocode: " . $_SESSION["promocode"];
+    if (isset($_SESSION["DiscountAmount"])) {
+      echo "<br>Discount: " . $_SESSION["DiscountAmount"] . "%";
+    }
+  }
+  ?>
   <div class="row">
     <div class="col s12 m12">
       <form class="" action="" method="post">
@@ -45,10 +53,35 @@ require_once('../includes/header.php');
       ?>
       <a class="waves-effect waves-light btn cart-btt right"><input type="submit" name="updatecart" value="Update cart"></a>
       </form>
+      <form class="" action="" method="post">
+        <div class="input-field col s6 m3">
+          <input id="promocode" type="text" name="promocode" class="validate">
+          <label for="promocode">Promocode</label>
+        </div>
+        <a class="waves-effect waves-light btn cart-btt"><input type="submit" name="submitpromocode" value="Add promocode"></a>
+      </form>
     </div>
   </div>
   <div class="row">
-    <h5 class="left">Total price: $<?php echo $total;?></h5>
+    <?php
+      if (isset($_SESSION["DiscountAmount"])) {
+        $discounttotal = ($total / 100) * $_SESSION["DiscountAmount"];
+        ?>
+        <div class="row">
+          <h5 class="left"><strike>Total price: $<?php echo $total;?></strike></h5>
+        </div>
+        <div class="row">
+          <h5 class="left">After discount: $<?php echo $discounttotal;?></h5>
+        </div>
+        <?php
+      } else {
+        ?>
+        <div class="row">
+          <h5 class="left">Total price: $<?php echo $total;?></h5>
+        </div>
+        <?php
+      }
+    ?>
     <a class="waves-effect waves-light btn right" href="shipping.php">Go to Duckout</a>
   </div>
 </div>

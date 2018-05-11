@@ -2,6 +2,15 @@
 require_once("../includes/sessionstart.php");
 require_once('../includes/header.php');
 require_once('../model/cartDAO.php');
+$deliveryInfo = getDeliveryInfo($_SESSION["shippingoption"]);
+if (!logged_in()) {
+?>
+<script type="text/javascript">
+	window.location.href = 'login.php?goto=shipping';
+</script>
+<?php
+	//redirect_to("index.php");
+	}
 ?>
 <div class="container">
   <div class="row">
@@ -14,6 +23,14 @@ require_once('../model/cartDAO.php');
       echo $_SESSION["saveaddress"];
       echo $_SESSION["shippingoption"];
       echo $_SESSION["total"];
+      echo $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];;
+
+      if (isset($_SESSION["DiscountAmount"])) {
+        $_SESSION["totalWithShipping"] = ($_SESSION["total"] / 100) * $_SESSION["DiscountAmount"];
+      }
+
+      $_SESSION["totalWithShipping"] = $_SESSION["totalWithShipping"] + $deliveryInfo["DeliveryPrice"];
+
       if(isset($_SESSION["ordermessage"])) {
         echo $_SESSION["ordermessage"];
       }
@@ -22,7 +39,7 @@ require_once('../model/cartDAO.php');
         <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="pk_test_bSzdfxQloxhUY6IUpD0peqhc"
-        data-amount="<?php echo $_SESSION["total"] * 100; ?>"
+        data-amount="<?php echo $_SESSION["totalWithShipping"] * 100; ?>"
         data-name="Demo Site"
         data-description="Example charge"
         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"

@@ -1,6 +1,11 @@
 <?php
 require_once("../includes/connection.php");
 
+if (isset($_SESSION["OrderNumber"])) {
+  echo "<h2>Your order was succssfully placed!</h2>";
+  unset($_SESSION["OrderNumber"]);
+}
+
 function getAllOrders($customerEmail) {
   global $connection;
 
