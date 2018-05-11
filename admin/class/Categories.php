@@ -45,8 +45,8 @@ Class Categories extends DBConnect {
 
             $handle->bindParam(':CategoryName', $_POST["categoryName"]);
             $handle->bindParam(':Description', $_POST["description"]);
-            $handle->bindParam(':SeoTitle', $_POST["seoTitle"]);
-            $handle->bindParam(':MetaDescription', $_POST["metaDescription"]);
+            $handle->bindParam(':SeoTitle', $_POST["seoTitleProduct"]);
+            $handle->bindParam(':MetaDescription', $_POST["metaDescriptionProduct"]);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -66,8 +66,8 @@ Class Categories extends DBConnect {
 
             $handle->bindParam(':CategoryName', $_POST["categoryName"]);
             $handle->bindParam(':Description', $_POST["description"]);
-            $handle->bindParam(':SeoTitle', $_POST["seoTitle"]);
-            $handle->bindParam(':MetaDescription', $_POST["metaDescription"]);
+            $handle->bindParam(':SeoTitle', $_POST["seoTitleCategory"]);
+            $handle->bindParam(':MetaDescription', $_POST["metaDescriptionCategory"]);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -91,8 +91,8 @@ Class Categories extends DBConnect {
 
             $handle->bindParam(':CategoryName',$_POST["categoryName"]);
             $handle->bindParam(':Description',$_POST["description"]);
-            $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
-            $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
+            $handle->bindParam(':SeoTitle',$_POST["seoTitleProduct"]);
+            $handle->bindParam(':MetaDescription',$_POST["metaDescriptionProduct"]);
             $handle->bindParam(':ProductCategoryID',$categoryID);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
@@ -117,8 +117,8 @@ Class Categories extends DBConnect {
 
             $handle->bindParam(':CategoryName',$_POST["categoryName"]);
             $handle->bindParam(':Description',$_POST["description"]);
-            $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
-            $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
+            $handle->bindParam(':SeoTitle',$_POST["seoTitleCategory"]);
+            $handle->bindParam(':MetaDescription',$_POST["metaDescriptionCategory"]);
             $handle->bindParam(':BlogCategoryID',$categoryID);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
@@ -189,7 +189,7 @@ Class Categories extends DBConnect {
             $statement = "SELECT * FROM BlogCategory WHERE BlogCategoryID = :BlogCategoryID";
 
             $handle = $conn->prepare($statement);
-            $handle->bindParam("BlogCategoryID",$categoryID);
+            $handle->bindParam(":BlogCategoryID",$categoryID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
