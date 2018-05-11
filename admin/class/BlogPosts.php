@@ -42,7 +42,7 @@ class BlogPosts extends DBConnect {
             $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL, BlogImg.IsPrimary FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID ORDER BY BlogImg.IsPrimary DESC, BlogImg.ImgID ASC";
 
             $handle = $conn->prepare($statement);
-            $handle->bindParam('BlogPostID',$blogPostID);
+            $handle->bindParam(':BlogPostID',$blogPostID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );

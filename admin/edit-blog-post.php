@@ -14,6 +14,7 @@ if (!logged_in()) {
 	//redirect_to("login.php");
 }
 
+$category = new Categories();
 $blogPosts = new BlogPosts();
 $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
 if(isset($_POST["submit"])) {
@@ -26,6 +27,9 @@ if(isset($_POST["submit"])) {
     ?>
     <script type="text/javascript">location.href = 'manage-blog.php';</script>
     <?php
+}
+if (isset($_POST["saveBlogPostCategory"])) {
+    $category->saveBlogPostCategory();
 }
 ?>
 
@@ -61,6 +65,11 @@ if(isset($_POST["submit"])) {
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo
                                                         $cat->CategoryName; ?></option>
                                                     <?php
+                                                } elseif (isset($_POST["saveBlogPostCategory"])) {
+                                                    ?>
+                                                    <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo
+                                                        $cat->CategoryName; ?></option>
+                                                    <?php
                                                 } else {
                                                     ?>
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>"><?php echo
@@ -72,50 +81,66 @@ if(isset($_POST["submit"])) {
                                         </select>
                                         <label>Category</label>
                                     </div>
-                                    <a class="waves-effect waves-light btn grey darken-4 btn modal-trigger" href="#modal1">Add review</a>
+                                    <a class="waves-effect waves-light btn grey darken-4 btn modal-trigger" href="#modal1">Add New
+                                        Category</a>
                                     <!-- Modal Structure -->
                                     <div id="modal1" class="modal">
                                         <div class="modal-content">
-                                            <h4>Add your review</h4>
-                                            <div class="row">
-                                                <form action="" method="post" class="col s12">
-                                                    <div class="row">
-                                                        <div class="input-field col s12 m6">
-                                                            <input id="last_name" name="reviewTitle" type="text" class="validate">
-                                                            <label for="last_name">Review title</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="input-field col s12">
-                                                            <textarea id="textarea1" name="reviewText" class="materialize-textarea"></textarea>
-                                                            <label for="textarea1">Review text</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col s12 m6">
-                                                            <ul class="stars-list">
-                                                                <li id="1" class="star star-1">
-                                                                    <i class="material-icons small star-icon">star_border</i>
-                                                                </li>
-                                                                <li id="2" class="star star-2">
-                                                                    <i class="material-icons small star-icon">star_border</i>
-                                                                </li>
-                                                                <li id="3" class="star star-3">
-                                                                    <i class="material-icons small star-icon">star_border</i>
-                                                                </li>
-                                                                <li id="4" class="star star-4">
-                                                                    <i class="material-icons small star-icon">star_border</i>
-                                                                </li>
-                                                                <li id="5" class="star star-5">
-                                                                    <i class="material-icons small star-icon">star_border</i>
-                                                                </li>
-                                                            </ul>
-                                                            <input class="rating-input" type="hidden" name="rating">
-                                                            <input class="waves-effect waves-green btn" type="submit" name="submitreview" value="Add review">
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                            <form action="" method="post" enctype="multipart/form-data">
+                                                <h4 class="left">New Blog Post Category</h4>
+                                                <div class="row">
+                                                    <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn"
+                                                           type="submit"
+                                                           name="saveBlogPostCategory" value="Save">
+                                                </div>
+                                                <div class="row">
+                                                    <ul class="collapsible" data-collapsible="accordion">
+                                                        <li>
+                                                            <div class="collapsible-header active"><i
+                                                                        class="material-icons">assignment</i>General</div>
+                                                            <div class="collapsible-body">
+                                                                <div class="row">
+                                                                    <div class="row">
+                                                                        <div class="input-field col s12">
+                                                                            <input id="categoryName" type="text" class="validate"
+                                                                                   name="categoryName">
+                                                                            <label for="categoryName">Category Name</label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="input-field col s12">
+                                                                            <p>Category Description</p>
+                                                                            <textarea id="description" class="content1"
+                                                                                      name="description"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="collapsible-header"><i
+                                                                        class="material-icons">trending_up</i>SEO</div>
+                                                            <div class="collapsible-body">
+                                                                <div class="row">
+                                                                    <div class="input-field col s12">
+                                                                        <input id="seoTitleCategory" name="seoTitleCategory" type="text"
+                                                                               class="validate"
+                                                                               data-length="68">
+                                                                        <label for="seoTitle">Page title (Max 68 characters)</label>
+                                                                    </div>
+                                                                    <div class="input-field col s12">
+                                                        <textarea id="metaDescriptionCategory" name="metaDescriptionCategory"
+                                                                  class="materialize-textarea"
+                                                                  data-length="160"></textarea>
+                                                                        <label for="metaDescription">Meta Description (Max 160 characters)
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

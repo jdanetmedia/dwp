@@ -87,12 +87,12 @@ else if (isset($_POST["saveBlogPostCategory"])) {
                                             <div class="collapsible-body">
                                                 <div class="row">
                                                     <div class="input-field col s12">
-                                                        <input id="seoTitle" name="seoTitle" type="text" class="validate"
+                                                        <input id="seoTitleProduct" name="seoTitleProduct" type="text" class="validate"
                                                                data-length="68">
                                                         <label for="seoTitle">Page title (Max 68 characters)</label>
                                                     </div>
                                                     <div class="input-field col s12">
-                                                        <textarea id="metaDescription" name="metaDescription"
+                                                        <textarea id="metaDescriptionProduct" name="metaDescriptionProduct"
                                                                   class="materialize-textarea"
                                                                   data-length="160"></textarea>
                                                         <label for="metaDescription">Meta Description (Max 160 characters)</label>
@@ -179,12 +179,12 @@ else if (isset($_POST["saveBlogPostCategory"])) {
                                             <div class="collapsible-body">
                                                 <div class="row">
                                                     <div class="input-field col s12">
-                                                        <input id="seoTitle" name="seoTitle" type="text" class="validate"
+                                                        <input id="seoTitleCategory" name="seoTitleCategory" type="text" class="validate"
                                                                data-length="68">
                                                         <label for="seoTitle">Page title (Max 68 characters)</label>
                                                     </div>
                                                     <div class="input-field col s12">
-                                                        <textarea id="metaDescription" name="metaDescription"
+                                                        <textarea id="metaDescriptionCategory" name="metaDescriptionCategory"
                                                                   class="materialize-textarea"
                                                                   data-length="160"></textarea>
                                                         <label for="metaDescription">Meta Description (Max 160 characters)</label>
