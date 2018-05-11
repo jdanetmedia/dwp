@@ -39,13 +39,16 @@ class BlogPosts extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $handle = $conn->prepare("SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL, BlogImg.IsPrimary FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = $blogPostID ORDER BY BlogImg.IsPrimary DESC, BlogImg.ImgID ASC");
+            $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL, BlogImg.IsPrimary FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID ORDER BY BlogImg.IsPrimary DESC, BlogImg.ImgID ASC";
+
+            $handle = $conn->prepare($statement);
+            $handle->bindParam('BlogPostID',$blogPostID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
             return $result;
 
-            // $conn = null;
+            $conn = null;
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -109,9 +112,11 @@ class BlogPosts extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $statement = "DELETE FROM BlogPost WHERE BlogPostID = '{$blogPostID}'";
+            $statement = "DELETE FROM BlogPost WHERE BlogPostID = :BlogPostID";
 
             $handle = $conn->prepare($statement);
+
+            $handle->bindParam(':BlogPostID',$blogPostID);
 
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!

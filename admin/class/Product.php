@@ -24,7 +24,7 @@ class Product {
     try {
       $conn = connectToDB();
 
-      $handle = $conn->prepare("SELECT * FROM Product WHERE ProductName LIKE '%{$search}%' OR ShortDescription LIKE '%{$search}%' OR LongDescription LIKE '%{$search}%'");
+      $handle = $conn->prepare("SELECT * FROM Product WHERE ProductName LIKE '%{$search}%' OR ShortDescription LIKE '%{$search}%' OR LongDescription LIKE '%{$search}%' OR ItemNumber LIKE '%{$search}%'");
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
