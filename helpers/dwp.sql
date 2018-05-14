@@ -47,7 +47,6 @@ CREATE TABLE BasicPageInfo (
   CVR int NOT NULL PRIMARY KEY,
   LogoURL varchar(255) NOT NULL,
   ShopName varchar(255) NOT NULL,
-  MinimumDelivery int NULL,
   AboutUsText varchar(255) NULL,
   Email varchar(255) NULL,
   Phone int NULL,
@@ -110,7 +109,8 @@ CREATE TABLE Customer (
   Phone int null,
   FirstName varchar(255) NOT NULL,
   LastName varchar(255) NOT NULL,
-  ZipCode int(20) NULL -- Foreign Key, set later
+  ZipCode int(20) NULL, -- Foreign Key, set later
+  ResetKey varchar(255) NULL
 );
 
 CREATE TABLE BlogPost (
@@ -240,7 +240,6 @@ CREATE TABLE ProductImg (
 CREATE TABLE BlogImg (
   BlogPostID int NOT NULL,
   ImgID int NOT NULL,
-  IsPrimary boolean NULL,
   CONSTRAINT PK_DisplaysOnBlog PRIMARY KEY (BlogPostID, ImgID),
   FOREIGN KEY (BlogPostID) REFERENCES BlogPost (BlogPostID),
   FOREIGN KEY (ImgID) REFERENCES ImgGallery (ImgID)
@@ -437,10 +436,10 @@ VALUES (NULL, "Top 10 rubber ducks", "SeoTitle", "MetaDescription", "This is blo
 
 -- Insert BlogImg
 INSERT INTO BlogImg
-VALUES (1,5, true);
+VALUES (1,5);
 
 INSERT INTO BlogImg
-VALUES (2,5, true);
+VALUES (2,5);
 
 -- insert zipcodes and cities
 INSERT INTO ZipCode VALUES
@@ -1795,7 +1794,7 @@ INSERT INTO ZipCode VALUES
 
 -- Insert BasicPageInfo
 INSERT INTO BasicPageInfo
-VALUES (11223344, "uploads/rubberducklogo.png", "Rubber Duck", 25, "This is the about us text.", "r@rasmusandreas.dk", 11223344, "Kongensgade", "58C", 6700);
+VALUES (11223344, "uploads/rubberducklogo.png", "Rubber Duck", "This is the about us text.", "r@rasmusandreas.dk", 11223344, "Kongensgade", "58C", 6700);
 
 -- Insert Frontslides
 INSERT INTO FrontSlider
@@ -1809,13 +1808,13 @@ VALUES (NULL, "Save 75% on the yellow ducks!", "Yellow duck sale!", "Go to produ
 
 -- Insert Customer
 INSERT INTO Customer
-VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Spangsbjerg Kirkevej","99B", NULL, "Rasmus Andreas", "Nielsen", "6700");
+VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Spangsbjerg Kirkevej","99B", NULL, "Rasmus Andreas", "Nielsen", "6700", NULL);
 
 INSERT INTO Customer
-VALUES ("sebastiankbuch@hotmail.com", "$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO", NULL, NULL, NULL, "Sebastian", "Buch", NULL);
+VALUES ("sebastiankbuch@hotmail.com", "$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO", NULL, NULL, NULL, "Sebastian", "Buch", NULL, NULL);
 
 INSERT INTO Customer
-VALUES ("post@jdanet.dk", "$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO", NULL, NULL, NULL, "Jesper", "Dalsgaard", NULL);
+VALUES ("post@jdanet.dk", "$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO", NULL, NULL, NULL, "Jesper", "Dalsgaard", NULL, NULL);
 
 -- Insert orderstatus
 INSERT INTO OrderStatus

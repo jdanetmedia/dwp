@@ -2,7 +2,7 @@
 require_once("../includes/connection.php");
 
 if (isset($_SESSION["OrderNumber"])) {
-  echo "<h2>Your order was succssfully placed!</h2>";
+  echo "<h2>Your order was successfully placed!</h2>";
   unset($_SESSION["OrderNumber"]);
 }
 

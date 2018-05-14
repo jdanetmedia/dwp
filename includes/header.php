@@ -1,4 +1,7 @@
 <?php
+if (!file_exists('../includes/constants.php')) {
+  header('Location: ../install/install.php');
+}
 // DB connection
 require_once("../includes/connection.php");
 
@@ -33,7 +36,7 @@ $pageInfo = getPageInfo();
           <!-- Dropdown Structure -->
           <ul id="dropdown1" class="dropdown-content">
             <li><a href="orders.php">Orders</a></li>
-            <li><a href="#!">Profile</a></li>
+            <li><a href="profile.php">Profile</a></li>
             <li class="divider"></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>
@@ -67,7 +70,7 @@ $pageInfo = getPageInfo();
           <!-- Dropdown Structure -->
           <ul id="dropdown2" class="dropdown-content">
             <li><a href="orders.php">Orders</a></li>
-            <li><a href="#!">Profile</a></li>
+            <li><a href="profile.php">Profile</a></li>
             <li class="divider"></li>
             <li><a href="logout.php">Logout</a></li>
           </ul>
@@ -89,6 +92,14 @@ $pageInfo = getPageInfo();
                 }
               ?>
               <li><a href="cart.php">Ducking cart<i class="material-icons right">shopping_cart</i></a></li>
+              <?php
+                $amountInCart = count($_SESSION["cart"]);
+                if ($amountInCart > 0) {
+              ?>
+                <li class="cartamount"><a class="cartamount"><?php echo $amountInCart; ?></a></li>
+              <?php
+                }
+              ?>
           </ul>
         </div>
       </nav>

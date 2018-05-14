@@ -57,7 +57,7 @@ if(isset($_POST["updatecart"])) {
 
 // TODO: make sure the important fields are filled out
 if(isset($_POST["submitshipping"])) {
-  if ($_POST["saveaddress"] == "true") {
+  if (isset($_POST["saveaddress"]) && $_POST["saveaddress"] == "true") {
     updateAddress($_SESSION["CustomerEmail"], $_POST["street"], $_POST["house"], $_POST["zipcode"], $_POST["city"]);
   }
   $time = date("Y-m-d H:i:s");
@@ -74,7 +74,9 @@ if(isset($_POST["submitshipping"])) {
   $_SESSION["house"] = $_POST["house"];
   $_SESSION["zipcode"] = $_POST["zipcode"];
   $_SESSION["city"] = $_POST["city"];
-  $_SESSION["saveaddress"] = $_POST["saveaddress"];
+  if (isset($_POST["saveaddress"])) {
+      $_SESSION["saveaddress"] = $_POST["saveaddress"];
+  }
   $_SESSION["shippingoption"] = $_POST["shippingoption"];
   if(isset($_POST["ordermessage"])) {
     $_SESSION["ordermessage"] = $_POST["ordermessage"];
@@ -143,7 +145,7 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     $_SESSION["cart"];
     $OrderNumber = $conn->lastInsertId();
     $_SESSION["OrderNumber"] = $OrderNumber;
-    echo $OrderNumber;
+    //echo $OrderNumber;
 
     foreach($_SESSION["cart"] as $key => $value) {
       $statement1 = "INSERT INTO OrderDetails VALUES (:OrderNumber, :key, :value)";

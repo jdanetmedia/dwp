@@ -48,11 +48,9 @@
           $sorting = array(
             array("none", "Sort by"),
             array("DESC", "Desc. Price"),
-            array("ASC", "Asc. Price"),
-            array("REV", "***Reviews"),
-            array("POP", "***Popularity")
+            array("ASC", "Asc. Price")
           );
-          for ($row = 0; $row < 5; $row++) {
+          for ($row = 0; $row < 3; $row++) {
             if (isset($_GET["order"])) {
               if ($_GET["order"] == $sorting[$row][0]) {
                 echo "<option selected value=" . $sorting[$row][0] . ">" . $sorting[$row][1] . "</option>";

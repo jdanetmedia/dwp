@@ -52,7 +52,7 @@ $usercart = $_SESSION["cart"];
           </div>
           <div class="col s6 right">
             <?php
-            if ($currentItem["OfferPrice"] != NULL || $currentItem["OfferPrice"] != 0) {
+            if ($currentItem["OfferPrice"] != NULL && $currentItem["OfferPrice"] != 0) {
             ?>
             <p><strike>$<?php echo $currentItem["Price"]; ?></strike><b> $<?php echo $currentItem["OfferPrice"]; ?></b></p>
             <?php
@@ -95,9 +95,19 @@ $usercart = $_SESSION["cart"];
               <?php echo $currentItem["LongDescription"]; ?>
             </div>
             <div class="col s12 m4">
-              <p><b>Current stockstatus:</b><br>
-              <?php echo $currentItem["StockStatus"]; ?>
-              </p>
+              <p><b>Current stockstatus:</b></p>
+              <?php
+              if ($currentItem["StockStatus"] > 50) {
+                // Green
+                echo "<p class='green-text'>On stock</p>";
+              } else if ($currentItem["StockStatus"] > 10) {
+                // Yellow
+                echo "<p class='yellow-text'>Low stock!</p>";
+              } else {
+                // Red
+                echo "<p class='red-text'>Almost out of stock!</p>";
+              }
+              ?>
             </div>
           </div>
         </div>

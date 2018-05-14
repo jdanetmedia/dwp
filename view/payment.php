@@ -26,10 +26,10 @@ if (!logged_in()) {
       echo $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];;
 
       if (isset($_SESSION["DiscountAmount"])) {
-        $_SESSION["totalWithShipping"] = ($_SESSION["total"] / 100) * $_SESSION["DiscountAmount"];
-      }
-
-      $_SESSION["totalWithShipping"] = $_SESSION["totalWithShipping"] + $deliveryInfo["DeliveryPrice"];
+        $_SESSION["totalWithShipping"] = ($_SESSION["total"] / 100) * $_SESSION["DiscountAmount"] + $deliveryInfo["DeliveryPrice"];
+      } else {
+				$_SESSION["totalWithShipping"] = $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];
+			}
 
       if(isset($_SESSION["ordermessage"])) {
         echo $_SESSION["ordermessage"];

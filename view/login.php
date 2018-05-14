@@ -33,6 +33,7 @@ require_once("../includes/header.php");
 						<input class="waves-effect waves-light btn" type="submit" name="submitlogin" value="Login">
 						<a class="waves-effect waves-light btn right" href="newuser.php">Create a new user</a>
 					</form>
+					<a class="teal-text" href="forgot.php">Forgot your password?</a>
         </div>
       </div>
     </div>
