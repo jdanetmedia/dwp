@@ -34,7 +34,7 @@
   // Products page and product categories
   if($basename == "products" && !isset($_GET["item"]) && !isset($_GET["cat"]) || $basename == "products" && $_GET["cat"] == 0) {
     ?>
-      <title><?php echo $basename; ?></title>
+      <title><?php echo ucfirst($basename); ?></title>
     <?php
   } elseif($basename == "products" && !isset($_GET["item"]) && isset($_GET["cat"]) && $_GET["cat"] != 0) {
     include("../admin/class/DBConnect.php");
@@ -55,4 +55,59 @@
     }
   }
 
+  // Blogpost
+  if(isset($_GET["post"])) {
+    include("../admin/class/DBConnect.php");
+    include("../admin/class/BlogPosts.php");
+
+    $blogpost = new BlogPosts();
+    $currentPost = $blogpost->getBlogPostDetails($_GET["post"]);
+    $postInfo = $currentPost[0];
+    // Title tag
+    if(isset($postInfo["SeoTitle"]) && !empty($postInfo["SeoTitle"])) {
+        ?>
+          <title><?php echo $postInfo["SeoTitle"]; ?></title>
+        <?php
+    } else {
+      ?>
+        <title><?php echo $postInfo["Title"]; ?></title>
+      <?php
+    }
+    // Meta description
+    if(isset($postInfo["MetaDescription"]) && !empty($postInfo["MetaDescription"])) {
+      ?>
+    <meta name="description" content="<?php echo $postInfo["MetaDescription"]; ?>">
+      <?php
+    }
+  }
+  // End post
+
+  if($basename == "blog" && !isset($_GET["post"]) && !isset($_GET["cat"]) || $basename == "blog" && $_GET["cat"] == 0) {
+    ?>
+      <title><?php echo $basename; ?></title>
+    <?php
+  } elseif($basename == "blog" && !isset($_GET["post"]) && isset($_GET["cat"]) && $_GET["cat"] != 0) {
+    include("../admin/class/DBConnect.php");
+    include("../admin/class/Categories.php");
+    $categories = new Categories();
+    $currentCat = $categories->getBlogPostCategoryDetails($_GET["cat"]);
+    if(isset($currentCat[0]["SeoTitle"]) && !empty($currentCat[0]["SeoTitle"])) {
+      ?>
+        <title><?php echo $currentCat[0]["SeoTitle"]; ?></title>
+      <?php
+      ?>
+        <meta name="description" content="<?php echo $currentCat[0]["MetaDescription"]; ?>">
+      <?php
+    } else {
+      ?>
+        <title><?php echo $currentCat[0]["CategoryName"]; ?></title>
+      <?php
+    }
+  }
+
+  if($basename != "blog" && $basename != "products" &&  $basename != "product" && $basename != "post" && $basename != "contact" && $basename != "homepage") {
+    ?>
+    <title><?php echo ucfirst($basename); ?></title>
+    <?php
+  }
 ?>
