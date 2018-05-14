@@ -19,6 +19,9 @@ $blogPosts = new BlogPosts();
 $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
 if(isset($_POST["submit"])) {
     $blogPosts->updateBlogPost($_GET["ID"]);
+    if(isset($_POST["deleteImg"])) {
+        $blogPosts->removeImg($_POST["deleteImg"]);
+    }
     ?>
     <script type="text/javascript">location.href = 'manage-blog.php';</script>
     <?php
@@ -26,6 +29,11 @@ if(isset($_POST["submit"])) {
     $blogPosts->deleteBlogPost($_GET["ID"]);
     ?>
     <script type="text/javascript">location.href = 'manage-blog.php';</script>
+    <?php
+} elseif (isset($_POST["toGallery"])) {
+    $blogPosts->updateBlogPost($_GET["ID"]);
+    ?>
+    <script type="text/javascript">location.href = 'galleryBlog.php?ID=<?php echo $_GET["ID"]; ?>';</script>
     <?php
 }
 if (isset($_POST["saveBlogPostCategory"])) {
@@ -161,32 +169,48 @@ if (isset($_POST["saveBlogPostCategory"])) {
                 <li>
                     <div class="collapsible-header"><i class="material-icons">collections</i>Images</div>
                     <div class="collapsible-body">
-                        <div class="row">
-                            <div class="col s6 m3">
-                                <img class="materialboxed responsive-img" width="650" src="http://lorempixel.com/800/800/sports/">
-                                <a href="#">Remove</a>
+                        <?php
+                        if($blogPost[0]["ImgID"]) { ?>
+                            <div class="save-message">
+                                <p>Product must be saved for changes to take effect!</p>
                             </div>
-                            <div class="col s6 m3">
-                                <img class="materialboxed responsive-img" width="650" src="http://lorempixel.com/800/800/animals/">
-                                <a href="#">Remove</a>
+                            <div class="row">
+                                <?php
+                                $imgcount = 1;
+                                ?>
+                                <?php foreach ($blogPost as $img): ?>
+                                    <div class="col s6 m3 admin-product-img">
+                                        <div class="save-delete">
+                                            Save product to remove image
+                                        </div>
+                                        <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
+                                        <?php
+                                        if($img["IsPrimary"] == true) {
+                                            echo '<a class="primary-label is-primary" href="#">Primary</a>';
+                                        } else {
+                                            echo '<a class="primary-label" href="#">Secondary</a>';
+                                        }
+                                        ?>
+                                        <a id="<?php echo $img["ImgID"]; ?>" class="make-primary" href="#">Make primary</a>
+                                        <div class="clear"></div>
+                                        <a id="<?php echo $img["ImgID"]; ?>" class="remove-img" href="#">Remove</a>
+                                    </div>
+                                    <?php $imgcount++; ?>
+                                <?php  endforeach; ?>
+                                <?php
+                                foreach($blogPost as $img) {
+                                    if($img["IsPrimary"] == true) {
+                                        $primaryImg = $img["ImgID"];
+                                    }
+                                }
+                                ?>
+                                <input class="change-img" type="hidden" name="changeImg" value="<?php if(isset($primaryImg)) { echo $primaryImg; } ?>">
+                                <input class="delete-image" type="hidden" name="deleteImg">
                             </div>
-                            <div class="col s6 m3">
-                                <img class="materialboxed responsive-img" width="650" src="http://lorempixel.com/800/800/city/">
-                                <a href="#">Remove</a>
-                            </div>
-                        </div>
-                        <form action="#">
-                            <div class="file-field input-field">
-                                <div class="btn">
-                                    <span>File</span>
-                                    <input type="file">
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text"
-                                           placeholder="Images should be between 800x800 - 1200 x 1200 pixels">
-                                </div>
-                            </div>
-                        </form>
+                        <?php }
+
+                        ?>
+                        <input class="waves-effect waves-light btn grey darken-4" type="submit" name="toGallery" value="Add image">
                     </div>
                 </li>
                 <li>

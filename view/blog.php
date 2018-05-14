@@ -51,17 +51,18 @@ require_once("../model/blogDAO.php");
         <div class="col s12 m6">
           <div class="card">
             <div class="card-image">
-              <img src="http://via.placeholder.com/1920x1080">
+              <img src="<?php if($row["URL"] != "") {
+                  echo $row["URL"];
+              } else echo "http://via.placeholder.com/1920x1080"; ?>">
               <span class="card-title"><?php echo $row["Title"]; ?></span>
             </div>
             <div class="card-content">
               <p><?php if (strlen($row["BlogContent"]) > 160) {
-                      echo preg_replace('/\s+?(\S+)?$/', '', substr
-                          ($row["BlogContent"], 0, 160)) . " ...";
+                      echo preg_replace('/\s+?(\S+)?$/', '', substr($row["BlogContent"], 0, 160)) . " ...";
                   } else echo $row["BlogContent"]; ?></p>
             </div>
             <div class="card-action">
-              <a href="post.php?post=<?php echo $row["BlogPostID"] ?>">Read more</a>
+              <a href="post.php?post=<?php echo $row["BlogPostID"]; ?>">Read more</a>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ if(isset($_POST["saveBlogPost"])) {
 } elseif (isset($_POST["toGallery"])) {
     $blogPosts->saveBlogPost();
     ?>
-    <script type="text/javascript">location.href = 'gallery.php?item=<?php echo $_POST["ID"]; ?>';</script>
+    <script type="text/javascript">location.href = 'galleryBlog.php?ID=<?php echo $_POST["ID"]; ?>';</script>
     <?php
 }
 if (isset($_POST["saveBlogPostCategory"])) {

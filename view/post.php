@@ -24,7 +24,7 @@ $author = getAuthor($postData["UserEmail"]);
           <div class="card">
             <div class="card-image">
               <img src="http://via.placeholder.com/1920x1080">
-              <span class="card-title"><?php echo $postData["Titel"]; ?></span>
+              <span class="card-title"><?php echo $postData["Title"]; ?></span>
             </div>
             <div class="card-content">
               <i>Posted on <b><?php echo $postData["BlogDate"]; ?></b> by <b><?php echo $author["FirstName"]; ?></b> in <b><?php echo $breadcrumbCat["CategoryName"]; ?></b></i>
