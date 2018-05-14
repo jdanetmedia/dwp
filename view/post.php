@@ -15,7 +15,7 @@ $author = getAuthor($postData["UserEmail"]);
           <div class="col s12">
             <a href="blog.php" class="breadcrumb">Bluck</a>
             <a href="blog.php?cat=<?php echo $postData["BlogCategoryID"]; ?>" class="breadcrumb"><?php echo $breadcrumbCat["CategoryName"]; ?></a>
-            <a href="#!" class="breadcrumb"><?php echo $postData["Titel"]; ?></a>
+            <a href="#!" class="breadcrumb"><?php echo $postData["Title"]; ?></a>
           </div>
         </div>
       </nav>
@@ -72,7 +72,7 @@ $author = getAuthor($postData["UserEmail"]);
               <div class="card">
                 <div class="card-image">
                   <img src="http://via.placeholder.com/1920x1080">
-                  <span class="card-title"><?php echo $row["Titel"]; ?></span>
+                  <span class="card-title"><?php echo $row["Title"]; ?></span>
                 </div>
                 <div class="card-content">
                   <p>I am a very simple card. I am good at containing small bits of information.
