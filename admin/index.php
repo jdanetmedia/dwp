@@ -19,7 +19,7 @@ $latestorders = $orders->getLatestOrders();
 $lowstock = $orders->CheckStock();
 ?>
   <div class="container">
-    <!--<div class="row">
+    <div class="row">
       <div class="col s12">
         <div class="card">
           <div class="card-content">
@@ -27,13 +27,9 @@ $lowstock = $orders->CheckStock();
             <p>This is where you manage products, customers, orders, blogpost etc.</p>
             <p>If you are new to the system, you can take a quick tour to get an overview?</p>
           </div>
-          <div class="card-action">
-            <a href="#">Take tour</a>
-            <a href="#">Dismiss for now</a>
-          </div>
         </div>
       </div>
-    </div>-->
+    </div>
     <div class="row">
       <div class="col s12">
         <div class="card">
