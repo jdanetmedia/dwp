@@ -14,7 +14,13 @@ if (!logged_in()) {
 	//redirect_to("login.php");
 }
 
-$promocodes = new Promocode();
+if (isset($_GET["update"])) {
+  $update = $_GET["update"];
+} else {
+  $update = NULL;
+}
+
+$promocodes = new Promocode($update);
 $allPromocodes = $promocodes->getAllPromocodes();
 ?>
 <div class="container">

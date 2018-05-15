@@ -38,13 +38,23 @@ $price = $order->getSum($_GET["order"]);
                   foreach ($orderdetails as $orderD) {
                     //$price = $order->getSum($order->OrderNumber);
                     ?><span class="card-title">Order #<?php echo $orderD->OrderNumber; ?> <p class="right">Order placed at: <?php echo $orderD->OrderDate; ?></p></span>
-                      <div class="card">
+                      <div class="card small">
                         <div class="card-content">
                           <span class="card-title">Shipping info</span>
-                          <p>Name: <br><?php echo $orderD->FirstName; ?> <?php echo $orderD->LastName; ?></p><br>
-                          <p>Address: <br><?php echo $orderD->ShippingStreet . " " . $orderD->ShippingHouseNumber . ", " . $orderD->ZipCode . " " . $orderD->City; ?></p><br>
-                          <p>Delivery Method: <br><?php echo $orderD->Method; ?></p><br>
-                          <p>Delivery Price: <br>$<?php echo $orderD->DeliveryPrice; ?></p>
+                          <div class="col s12 m6">
+                            <p>Name: <br><?php echo $orderD->FirstName; ?> <?php echo $orderD->LastName; ?></p><br>
+                            <p>Address: <br><?php echo $orderD->ShippingStreet . " " . $orderD->ShippingHouseNumber . ", " . $orderD->ZipCode . " " . $orderD->City; ?></p><br>
+                            <p>Stripe Charge ID: <br><?php echo $orderD->StripeChargeID; ?></p><br>
+                          </div>
+                          <div class="col s12 m6">
+                            <p>Delivery Method: <br><?php echo $orderD->Method; ?></p><br>
+                            <p>Delivery Price: <br>$<?php echo $orderD->DeliveryPrice; ?></p>
+                            <?php if (isset($orderD->PromoCode)) {
+                              $discount = $order->getPromoCodeDiscount($orderD->PromoCode);
+                            ?>
+                            <br><p>Promocode: <br><?php echo $orderD->PromoCode; ?></p>
+                            <?php } ?>
+                          </div>
                         </div>
                       </div>
                       <div class="card">
@@ -96,8 +106,8 @@ $price = $order->getSum($_GET["order"]);
                     <td><?php echo $products->ItemNumber; ?></td>
                     <td><?php echo $products->ProductName; ?></td>
                     <td><?php echo $products->Amount; ?></td>
-                    <td><?php echo $products->Price; ?></td>
-                    <td><?php echo $products->Price * $products->Amount; ?></td>
+                    <td><?php echo $products->FinalPrice; ?></td>
+                    <td><?php echo $products->FinalPrice * $products->Amount; ?></td>
                   </tr>
                   <?php
                 }
@@ -105,9 +115,18 @@ $price = $order->getSum($_GET["order"]);
             </tbody>
           </table>
           <?php
-          foreach ($price as $totalprice) { ?>
-          <h4>Total: <p class="right">$<?php echo $totalprice->totalprice; ?></p></h4>
-          <?php } ?>
+          foreach ($price as $totalprice) {
+            if(isset($discount)) {
+              $amount = ($totalprice->totalprice / 100) * $discount[0]["DiscountAmount"];
+              $total = $totalprice->totalprice - $amount;
+            ?>
+            <h4>Total: <p class="right">$<?php echo $total; ?></p></h4>
+            <?php
+            } else {
+              $total = $totalprice->totalprice;
+            ?>
+            <h4>Total: <p class="right">$<?php echo $total; ?></p></h4>
+            <?php }} ?>
         </div>
       </div>
       <h5>Messages</h5>

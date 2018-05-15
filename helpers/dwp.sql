@@ -21,18 +21,9 @@ CREATE TABLE FrontSlider (
 CREATE TABLE PromoCode (
   PromoCode varchar(255) NOT NULL PRIMARY KEY,
   DiscountAmount int(2) NOT NULL,
-  StartDate TIMESTAMP NULL,
-  EndDate TIMESTAMP NULL,
+  StartDate DATE NULL,
+  EndDate DATE NULL,
   NumberOfUses int NULL,
-  UserEmail varchar(255) NOT NULL -- Foreign Key, set later
-);
-
-CREATE TABLE Page (
-  PageID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  Title varchar(255) NOT NULL,
-  SeoTitle varchar(255) NULL,
-  Metadescription varchar(255) NULL,
-  PageContent varchar(255) NOT NULL,
   UserEmail varchar(255) NOT NULL -- Foreign Key, set later
 );
 
@@ -52,6 +43,15 @@ CREATE TABLE BasicPageInfo (
   Phone int NULL,
   Street varchar(255) NULL,
   HouseNumber varchar(255) NULL,
+  StripeToken varchar(255) NULL,
+  ProductsSeoTitle varchar(255) NULL,
+  ProductsMetaDescription varchar(255) NULL,
+  BlogSeoTitle varchar(255) NULL,
+  BlogMetaDescription varchar(255) NULL,
+  ContactSeoTitle varchar(255) NULL,
+  ContactMetaDescription varchar(255) NULL,
+  HomeSeoTitle varchar(255) NULL,
+  HomeMetaDescription varchar(255) NULL,
   ZipCode int(20) NOT NULL -- Foreign Key, set later
 );
 
@@ -61,8 +61,8 @@ CREATE TABLE Product (
   StockStatus int NOT NULL,
   ShortDescription varchar(255) NOT NULL,
   LongDescription varchar(255) NOT NULL,
-  Price int NOT NULL,
-  OfferPrice int NULL,
+  Price FLOAT(2) NOT NULL,
+  OfferPrice FLOAT(2) NULL,
   SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL,
   ProductStatus boolean NOT NULL,
@@ -158,7 +158,7 @@ CREATE TABLE DeliveryMethod (
   DeliveryMethodID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   Method varchar(255) NOT NULL,
   MethodDescription varchar(255) NOT NULL,
-  DeliveryPrice int NOT NULL
+  DeliveryPrice FLOAT(2) NOT NULL
 );
 
 CREATE TABLE OrderStatus (
@@ -171,9 +171,6 @@ ALTER TABLE FrontSlider
 ADD FOREIGN KEY (UserEmail) REFERENCES User (UserEmail);
 
 ALTER TABLE PromoCode
-ADD FOREIGN KEY (UserEmail) REFERENCES User (UserEmail);
-
-ALTER TABLE Page
 ADD FOREIGN KEY (UserEmail) REFERENCES User (UserEmail);
 
 ALTER TABLE BasicPageInfo
@@ -219,14 +216,6 @@ ALTER TABLE OrderMessage
 ADD FOREIGN KEY (OrderNumber) REFERENCES CustomerOrder (OrderNumber);
 
 -- Many-to-many relations
-CREATE TABLE PageImg (
-    PageID int NOT NULL,
-    ImgID int NOT NULL,
-    IsPrimary boolean NULL,
-    CONSTRAINT PK_DisplaysOnPage PRIMARY KEY (PageID, ImgID),
-    FOREIGN KEY (PageID) REFERENCES Page (PageID),
-    FOREIGN KEY (ImgID) REFERENCES ImgGallery (ImgID)
-);
 
 CREATE TABLE ProductImg (
   ItemNumber varchar(255) NOT NULL,
@@ -249,6 +238,7 @@ CREATE TABLE OrderDetails (
   OrderNumber int NOT NULL,
   ItemNumber varchar(255) NOT NULL,
   Amount int NOT NULL,
+  FinalPrice FLOAT(2) NOT NULL,
   CONSTRAINT PK_ProductOnOrder PRIMARY KEY (OrderNumber, ItemNumber),
   FOREIGN KEY (OrderNumber) REFERENCES CustomerOrder (OrderNumber),
   FOREIGN KEY (ItemNumber) REFERENCES Product (ItemNumber)
@@ -1794,7 +1784,7 @@ INSERT INTO ZipCode VALUES
 
 -- Insert BasicPageInfo
 INSERT INTO BasicPageInfo
-VALUES (11223344, "uploads/rubberducklogo.png", "Rubber Duck", "This is the about us text.", "r@rasmusandreas.dk", 11223344, "Kongensgade", "58C", 6700);
+VALUES (11223344, "uploads/rubberducklogo.png", "Rubber Duck", "This is the about us text.", "r@rasmusandreas.dk", 11223344, "Kongensgade", "58C", "sk_test_YZzzQg82HA6EdEV0aEDmlWzS", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 6700);
 
 -- Insert Frontslides
 INSERT INTO FrontSlider
@@ -1831,23 +1821,23 @@ VALUES (NULL, "Delivered");
 
 -- Insert PromoCode
 INSERT INTO PromoCode
-VALUES ("virker", 50, "2009-11-11 13:23:44", "2020-11-11 13:23:44", 100, "rasmus.andreas96@gmail.com");
+VALUES ("virker", 50, "2009-11-11", "2020-11-11", 100, "rasmus.andreas96@gmail.com");
 
 INSERT INTO PromoCode
-VALUES ("gammel", 50, "2009-11-11 13:23:44", "2009-12-11 13:23:44", 100, "rasmus.andreas96@gmail.com");
+VALUES ("gammel", 50, "2009-11-11", "2009-12-11", 100, "rasmus.andreas96@gmail.com");
 
 INSERT INTO PromoCode
-VALUES ("ny", 50, "2020-11-11 13:23:44", "2020-12-11 13:23:44", 100, "rasmus.andreas96@gmail.com");
+VALUES ("ny", 50, "2020-11-11", "2020-12-11", 100, "rasmus.andreas96@gmail.com");
 
 INSERT INTO PromoCode
 VALUES ("ingendato", 50, NULL, NULL, 100, "rasmus.andreas96@gmail.com");
 
 INSERT INTO PromoCode
-VALUES ("intetantal", 50, "2009-11-11 13:23:44", "2020-11-11 13:23:44", NULL, "rasmus.andreas96@gmail.com");
+VALUES ("intetantal", 50, "2009-11-11", "2020-11-11", NULL, "rasmus.andreas96@gmail.com");
 
 -- Insert orders
 INSERT INTO CustomerOrder
-VALUES (NULL, "This is a order comment", "testChargeID", "2009-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "rasmus.andreas96@gmail.com", 1, 2, NULL);
+VALUES (NULL, "This is a order comment", "testChargeID", "2009-11-11 13:23:44", "Spangsbjerg Kirkevej", "99B, 16", 6700, "rasmus.andreas96@gmail.com", 1, 2, "virker");
 
 INSERT INTO CustomerOrder
 VALUES (NULL, "This is a order comment", "testChargeID", "2008-11-11 13:23:44", "Nørregade", "30", 6700, "rasmus.andreas96@gmail.com", 3, 1, NULL);
@@ -1866,76 +1856,76 @@ VALUES (NULL, "This is a order comment", "testChargeID", "2017-11-11 13:23:44", 
 
 -- Insert orderdetails
 INSERT INTO OrderDetails
-VALUES (1, "1111", 1);
+VALUES (1, "1111", 1, 10);
 
 INSERT INTO OrderDetails
-VALUES (1, "3331", 3);
+VALUES (1, "3331", 3, 15);
 
 INSERT INTO OrderDetails
-VALUES (1, "3332", 3);
+VALUES (1, "3332", 3, 17);
 
 INSERT INTO OrderDetails
-VALUES (1, "2221", 1);
+VALUES (1, "2221", 1, 8);
 
 INSERT INTO OrderDetails
-VALUES (1, "2222", 2);
+VALUES (1, "2222", 2, 23);
 
 INSERT INTO OrderDetails
-VALUES (2, "1111", 1);
+VALUES (2, "1111", 1, 7.50);
 
 INSERT INTO OrderDetails
-VALUES (2, "3331", 4);
+VALUES (2, "3331", 4, 9.99);
 
 INSERT INTO OrderDetails
-VALUES (2, "3332", 1);
+VALUES (2, "3332", 1, 12.45);
 
 INSERT INTO OrderDetails
-VALUES (3, "1111", 1);
+VALUES (3, "1111", 1, 13.49);
 
 INSERT INTO OrderDetails
-VALUES (3, "3331", 3);
+VALUES (3, "3331", 3, 11.11);
 
 INSERT INTO OrderDetails
-VALUES (3, "3332", 3);
+VALUES (3, "3332", 3, 12.12);
 
 INSERT INTO OrderDetails
-VALUES (3, "2221", 1);
+VALUES (3, "2221", 1, 10.10);
 
 INSERT INTO OrderDetails
-VALUES (3, "2222", 2);
+VALUES (3, "2222", 2, 10.95);
 
 INSERT INTO OrderDetails
-VALUES (4, "1111", 1);
+VALUES (4, "1111", 1, 5.50);
 
 INSERT INTO OrderDetails
-VALUES (4, "3331", 4);
+VALUES (4, "3331", 4, 10);
 
 INSERT INTO OrderDetails
-VALUES (4, "3332", 1);
+VALUES (4, "3332", 1, 12);
 
 INSERT INTO OrderDetails
-VALUES (5, "1111", 1);
+VALUES (5, "1111", 1, 8.49);
 
 INSERT INTO OrderDetails
-VALUES (5, "3331", 3);
+VALUES (5, "3331", 3, 7.50);
 
 INSERT INTO OrderDetails
-VALUES (5, "3332", 3);
+VALUES (5, "3332", 3, 5);
 
 INSERT INTO OrderDetails
-VALUES (5, "2221", 1);
+VALUES (5, "2221", 1, 10);
 
 INSERT INTO OrderDetails
-VALUES (5, "2222", 2);
+VALUES (5, "2222", 2, 5);
 
 INSERT INTO OrderDetails
-VALUES (6, "1111", 1);
+VALUES (6, "1111", 1, 12.34);
 
 INSERT INTO OrderDetails
-VALUES (6, "3331", 4);
+VALUES (6, "3331", 4, 13.37);
 
 INSERT INTO OrderDetails
-VALUES (6, "3332", 1);
+VALUES (6, "3332", 1, 10);
 
 INSERT INTO OrderMessage
 VALUES (NULL, "Some dumb message", "2009-11-11 15:23:44", 1);

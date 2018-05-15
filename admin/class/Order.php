@@ -113,7 +113,7 @@ class Order {
     try {
       $conn = connectToDB();
 
-      $handle = $conn->prepare("SELECT SUM(Product.Price * OrderDetails.Amount) + DeliveryMethod.DeliveryPrice AS totalprice
+      $handle = $conn->prepare("SELECT SUM(OrderDetails.FinalPrice * OrderDetails.Amount) + DeliveryMethod.DeliveryPrice AS totalprice
       FROM OrderDetails INNER JOIN Product ON OrderDetails.ItemNumber = Product.ItemNumber
       INNER JOIN CustomerOrder ON OrderDetails.OrderNumber = CustomerOrder.OrderNumber
       INNER JOIN DeliveryMethod ON CustomerOrder.DeliveryMethodID = DeliveryMethod.DeliveryMethodID
@@ -226,6 +226,23 @@ class Order {
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+      return $result;
+
+      $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+function getPromoCodeDiscount($promocode) {
+    try {
+      $conn = connectToDB();
+
+      $handle = $conn->prepare("SELECT DiscountAmount FROM PromoCode WHERE PromoCode = :promocode");
+      $handle->bindParam(":promocode", $promocode);
+      $handle->execute();
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result;
 
       $conn = null;
