@@ -52,13 +52,24 @@ $lowstock = $orders->CheckStock();
                 <?php
                   foreach ($latestorders as $order) {
                     $price = $orders->getSum($order->OrderNumber);
+                    if (isset($order->PromoCode)) {
+                      $discount = $orders->getPromoCodeDiscount($order->PromoCode);
+                    }
                     ?>
                     <tr>
                       <td><?php echo $order->OrderNumber; ?></td>
                       <td><?php echo $order->OrderDate; ?></td>
                       <td><?php echo $order->FirstName . " " . $order->LastName; ?></td>
                       <?php foreach ($price as $totalprice) { ?>
-                      <td>$<?php echo $totalprice->totalprice; ?></td>
+                      <td>$<?php
+                      if(isset($discount)) {
+                        $amount = ($totalprice->totalprice / 100) * $discount[0]["DiscountAmount"];
+                        $total = $totalprice->totalprice - $amount;
+                      } else {
+                        $total = $totalprice->totalprice;
+                      }
+                        echo $total;
+                      ?></td>
                       <?php } ?>
                       <td><?php echo $order->Method; ?></td>
                       <td><?php echo $order->Status; ?></td>

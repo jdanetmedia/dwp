@@ -13,15 +13,12 @@ if (!logged_in()) {
 <?php
 	//redirect_to("login.php");
 }
-$promocodes = new Promocode($_GET["promocode"]);
-$promocode = $promocodes->getPromocode($_GET["promocode"]);
 ?>
 
 <div class="container">
-    <form action="manage-promocodes.php?update=<?php echo $_GET["promocode"]; ?>" method="post">
+    <form action="manage-promocodes.php" method="post">
         <div class="row">
-            <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="submitupdatepromo" value="Save">
-            <button class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="submitdeletepromo" value="Delete">Delete</button>
+            <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="submitcreatepromo" value="Save">
         </div>
         <div class="row">
             <ul class="collapsible" data-collapsible="accordion">
@@ -32,25 +29,25 @@ $promocode = $promocodes->getPromocode($_GET["promocode"]);
                             <form class="col s12">
                                 <div class="row">
                                     <div class="input-field col s12 m6">
-                                      <input id="promocode" type="text" class="validate" name="promocode" value="<?php echo $promocode[0]["PromoCode"]; ?>">
+                                      <input id="promocode" type="text" class="validate" name="promocode" value="">
                                       <label for="promocode">Promocode</label>
                                     </div>
                                     <div class="input-field col s12 m3">
-                                      <input id="discount" type="number" name="discount" value="<?php echo $promocode[0]["DiscountAmount"]; ?>">
+                                      <input id="discount" type="number" name="discount" value="">
                                       <label for="discount">Discount in %</label>
                                     </div>
                                     <div class="input-field col s12 m3">
-                                      <input id="uses" type="number" name="uses" value="<?php echo $promocode[0]["NumberOfUses"]; ?>">
+                                      <input id="uses" type="number" name="uses" value="">
                                       <label for="uses">Number of uses</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                   <div class="input-field col s12 m6">
-                                    <input id="startdate" type="text" class="datepicker" name="startdate" value="<?php echo $promocode[0]["StartDate"]; ?>">
+                                    <input id="startdate" type="text" class="datepicker" name="startdate" value="">
                                     <label for="startdate">Startdate</label>
                                   </div>
                                   <div class="input-field col s12 m6">
-                                    <input id="enddate" type="text" class="datepicker" name="enddate" value="<?php echo $promocode[0]["EndDate"]; ?>">
+                                    <input id="enddate" type="text" class="datepicker" name="enddate" value="">
                                     <label for="enddate">Enddate</label>
                                   </div>
                                 </div>

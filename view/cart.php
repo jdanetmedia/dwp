@@ -72,7 +72,7 @@ if (isset($_GET["remove"]) && $_GET["remove"] == "promocode") {
       ?>
       <a class="waves-effect waves-light btn cart-btt right"><input type="submit" name="updatecart" value="Update cart"></a>
       </form>
-      <form class="" action="" method="post">
+      <form class="" action="cart.php?no" method="post">
         <div class="input-field col s6 m3">
           <input id="promocode" type="text" name="promocode" class="validate">
           <label for="promocode">Promocode</label>
@@ -85,6 +85,7 @@ if (isset($_GET["remove"]) && $_GET["remove"] == "promocode") {
     <?php
       if (isset($_SESSION["DiscountAmount"])) {
         $discounttotal = ($total / 100) * $_SESSION["DiscountAmount"];
+        $discounttotal = $total - $discounttotal;
         ?>
         <a class="waves-effect waves-light btn" href="cart.php?remove=promocode">Remove promocode</a>
         <div class="row">

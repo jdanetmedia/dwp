@@ -138,11 +138,24 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     //echo $OrderNumber;
 
     foreach($_SESSION["cart"] as $key => $value) {
-      $statement1 = "INSERT INTO OrderDetails VALUES (:OrderNumber, :key, :value)";
+      $statement2 = "SELECT Price, OfferPrice FROM Product WHERE ItemNumber = :key";
+      $handle = $conn->prepare($statement2);
+      $handle->bindParam(':key', $key);
+      $handle->execute();
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      if(isset($result[0]["OfferPrice"])) {
+        $price = $result[0]["OfferPrice"];
+      } else {
+        $price = $result[0]["Price"];
+      }
+
+
+      $statement1 = "INSERT INTO OrderDetails VALUES (:OrderNumber, :key, :value, :price)";
       $handle = $conn->prepare($statement1);
       $handle->bindParam(':OrderNumber', $OrderNumber);
       $handle->bindParam(':key', $key);
       $handle->bindParam(':value', $value);
+      $handle->bindParam(':price', $price);
       $handle->execute();
 
       $statement2 = "UPDATE Product SET StockStatus = StockStatus - :value WHERE ItemNumber = :key";
@@ -173,10 +186,17 @@ if (isset($_POST["submitpromocode"])) {
     $promocode = checkForPromoCode($_POST["promocode"]);
     $pTime = date("Y-m-d H:i:s");
     if (isset($promocode[0])) {
-      if ($promocode[0]["EndDate"] >= $pTime || $promocode[0]["EndDate"] == NULL) {
-        if ($promocode[0]["StartDate"] <= $pTime || $promocode[0]["StartDate"] == NULL) {
+      if ($promocode[0]["EndDate"] >= $pTime || $promocode[0]["EndDate"] == NULL || $promocode[0]["EndDate"] == "0000-00-00") {
+        if ($promocode[0]["StartDate"] <= $pTime || $promocode[0]["StartDate"] == NULL || $promocode[0]["StartDate"] == "0000-00-00") {
+          if ($promocode[0]["NumberOfUses"] > 0) {
           $_SESSION["promocode"] = $promocode[0]["PromoCode"];
           $_SESSION["DiscountAmount"] = $promocode[0]["DiscountAmount"];
+        } else if ($promocode[0]["NumberOfUses"] = 0) {
+            $_SESSION["promocode"] = NULL;
+            if (isset($_SESSION["DiscountAmount"])) {
+              unset($_SESSION["DiscountAmount"]);
+            }
+          }
         } else {
           $_SESSION["promocode"] = NULL;
           if (isset($_SESSION["DiscountAmount"])) {
