@@ -32,8 +32,7 @@ $('.datepicker').pickadate({
   });
 
 $(document).ready(function() {
-
-    $('.modal').modal();
+  $('.modal').modal();
   // Product collapsible
   $('.collapsible').collapsible();
   // Editor
@@ -75,5 +74,18 @@ $(document).ready(function() {
     $(this).siblings('.material-placeholder').addClass('opague');
     $('.save-delete').css('display', 'none');
     $(this).siblings('.save-delete').css('display', 'block');
+  });
+
+  // Edit shippingmethod Modal
+  $('.edit').click(function() {
+    var itemID = $(this).attr('id');
+    var method = $(this).siblings('.method').text();
+    var desc = $(this).siblings('.description').text();
+    var price = $(this).siblings('.priceRow').text();
+
+    $('.shippingID').val(itemID);
+    $('.Method').val(method);
+    $('.MethodDescription').val(desc);
+    $('.DeliveryPrice').val(price);
   });
 });

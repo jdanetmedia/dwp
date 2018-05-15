@@ -27,7 +27,7 @@ class GalleryBlog {
             $numberOfRows = count($rows);
 
             if($numberOfRows > 0) {
-                $handle = $conn->prepare("INSERT INTO BlogImg (BlogPostID, ImgID) VALUES ('$blogPostID', '$imgID')");
+                $handle = $conn->prepare("UPDATE BlogImg SET ImgID = $imgID WHERE BlogPostID = $blogPostID");
                 $handle->execute();
             } else {
                 $handle = $conn->prepare("INSERT INTO BlogImg (BlogPostID, ImgID) VALUES ('$blogPostID', '$imgID')");

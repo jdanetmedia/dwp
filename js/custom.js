@@ -10,14 +10,14 @@ function showUser(str) {
       // code for IE6, IE5
       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-  xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          $('.txtHint').val(this.responseText);
-      }
-  };
-  xmlhttp.open("GET","../model/findcity.php?q="+str,true);
-  xmlhttp.send();
-}
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            $('.txtHint').val(this.responseText);
+        }
+    };
+    xmlhttp.open("GET","../model/findcity.php?q="+str,true);
+    xmlhttp.send();
+  }
 }
 
 // Mobile navigation toggle

@@ -72,8 +72,6 @@ if (!logged_in()) {
       <div class="card">
         <div class="card-content">
           <span class="card-title">Order Message (Optional)</span>
-          <p>I am a very simple card. I am good at containing small bits of information.
-          I am convenient because I require little markup to use effectively.</p>
           <div class="input-field">
             <textarea id="ordermessage" name="ordermessage" class="materialize-textarea"></textarea>
             <label for="ordermessage">Message</label>
