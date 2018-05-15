@@ -23,7 +23,9 @@ $author = getAuthor($postData["UserEmail"]);
         <div class="col s12">
           <div class="card">
             <div class="card-image">
-              <img src="http://via.placeholder.com/1920x1080">
+                <img src="<?php if($postData["URL"] != "") {
+                    echo $postData["URL"];
+                } else echo "http://via.placeholder.com/1920x1080"; ?>">
               <span class="card-title"><?php echo $postData["Title"]; ?></span>
             </div>
             <div class="card-content">

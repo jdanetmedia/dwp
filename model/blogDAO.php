@@ -34,7 +34,9 @@ function getAllRelatedPosts($categoryID, $postID) {
 function getPost($blogID) {
   global $connection;
 
-  $query = "SELECT * FROM BlogPost WHERE `BlogPostID` = $blogID";
+  $query = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = $blogID ORDER BY BlogImg.ImgID ASC";
+
+  //$query = "SELECT * FROM BlogPost WHERE `BlogPostID` = $blogID";
 
   $result = mysqli_query($connection, $query);
   $row = mysqli_fetch_assoc($result);

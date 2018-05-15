@@ -37,7 +37,7 @@ class BlogPosts extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID DESC, BlogImg.ImgID ASC";
+            $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID ORDER BY BlogImg.ImgID ASC";
 
             $handle = $conn->prepare($statement);
             $handle->bindParam(':BlogPostID',$blogPostID);
@@ -102,6 +102,22 @@ class BlogPosts extends DBConnect {
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
+        }
+    }
+
+    function getRecentBlogPost() {
+        try {
+            $conn = connectToDB();
+
+            $handle = $conn->prepare("SELECT * FROM `BlogPost` ORDER BY BlogDate DESC LIMIT 1");
+            $handle->execute();
+
+            $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+            $conn = null;
+            return $result;
+        }
+        catch(\PDOException $ex) {
+            return print($ex->getMessage());
         }
     }
 

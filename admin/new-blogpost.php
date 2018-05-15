@@ -16,15 +16,23 @@ if (!logged_in()) {
 
 $category = new Categories();
 $blogPosts = new BlogPosts();
+$newestBlog = $blogPosts->getRecentBlogPost();
+
 if(isset($_POST["saveBlogPost"])) {
     $blogPosts->saveBlogPost();
+    if(isset($_POST["deleteImg"])) {
+        $blogPosts->removeImg($_POST["deleteImg"]);
+    }
     ?>
     <script type="text/javascript">location.href = 'manage-blog.php';</script>
     <?php
 } elseif (isset($_POST["toGallery"])) {
     $blogPosts->saveBlogPost();
+    $newestBlog = $blogPosts->getRecentBlogPost();
     ?>
-    <script type="text/javascript">location.href = 'galleryBlog.php?ID=<?php echo $_POST["ID"]; ?>';</script>
+    <script type="text/javascript">location.href = 'galleryBlog.php?ID=<?php foreach ($newestBlog as $aBlogPost) {
+            echo $aBlogPost->BlogPostID;
+        } ?>';</script>
     <?php
 }
 if (isset($_POST["saveBlogPostCategory"])) {
@@ -145,8 +153,31 @@ if (isset($_POST["saveBlogPostCategory"])) {
                     </div>
                 </li>
                 <li>
-                    <div class="collapsible-header"><i class="material-icons">collections</i>Images</div>
+                    <div class="collapsible-header <?php if(isset($_GET["select"]) && $_GET["select"] == "images") { echo "active"; } ?>"><i class="material-icons">collections</i>Images</div>
                     <div class="collapsible-body">
+                        <?php
+                        if($blogPost[0]["ImgID"]) { ?>
+                            <div class="save-message">
+                                <p>Blog post must be saved for changes to take effect!</p>
+                            </div>
+                            <div class="row">
+                                <?php foreach ($blogPost as $img): ?>
+                                    <div class="col s6 m3 admin-product-img">
+                                        <div class="save-delete">
+                                            Save blog post to remove image
+                                        </div>
+                                        <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
+                                        <?php
+                                        echo '<a class="primary-label is-primary" href="#">Header image</a>';
+                                        ?>
+                                        <a id="<?php echo $img["ImgID"]; ?>" class="remove-img" href="#">Remove</a>
+                                    </div>
+                                <?php  endforeach; ?>
+                                <input class="delete-image" type="hidden" name="deleteImg">
+                            </div>
+                        <?php }
+
+                        ?>
                         <input class="waves-effect waves-light btn grey darken-4" type="submit" name="toGallery" value="Add image">
                     </div>
                 </li>

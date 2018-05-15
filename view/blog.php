@@ -47,6 +47,7 @@ require_once("../model/blogDAO.php");
       <?php
       $blogResult = getAllPosts();
       while($row = mysqli_fetch_array($blogResult)) {
+          echo var_dump($row["BlogPostID"]);
         ?>
         <div class="col s12 m6">
           <div class="card">

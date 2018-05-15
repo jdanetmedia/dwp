@@ -167,44 +167,26 @@ if (isset($_POST["saveBlogPostCategory"])) {
                     </div>
                 </li>
                 <li>
-                    <div class="collapsible-header"><i class="material-icons">collections</i>Images</div>
+                    <div class="collapsible-header <?php if(isset($_GET["select"]) && $_GET["select"] == "images") { echo "active"; } ?>"><i class="material-icons">collections</i>Images</div>
                     <div class="collapsible-body">
                         <?php
                         if($blogPost[0]["ImgID"]) { ?>
                             <div class="save-message">
-                                <p>Product must be saved for changes to take effect!</p>
+                                <p>Blog post must be saved for changes to take effect!</p>
                             </div>
                             <div class="row">
-                                <?php
-                                $imgcount = 1;
-                                ?>
                                 <?php foreach ($blogPost as $img): ?>
                                     <div class="col s6 m3 admin-product-img">
                                         <div class="save-delete">
-                                            Save product to remove image
+                                            Save blog post to remove image
                                         </div>
                                         <img class="materialboxed responsive-img" width="650" src="<?php echo $img["URL"]; ?>">
                                         <?php
-                                        if($img["IsPrimary"] == true) {
-                                            echo '<a class="primary-label is-primary" href="#">Primary</a>';
-                                        } else {
-                                            echo '<a class="primary-label" href="#">Secondary</a>';
-                                        }
+                                            echo '<a class="primary-label is-primary" href="#">Header image</a>';
                                         ?>
-                                        <a id="<?php echo $img["ImgID"]; ?>" class="make-primary" href="#">Make primary</a>
-                                        <div class="clear"></div>
                                         <a id="<?php echo $img["ImgID"]; ?>" class="remove-img" href="#">Remove</a>
                                     </div>
-                                    <?php $imgcount++; ?>
                                 <?php  endforeach; ?>
-                                <?php
-                                foreach($blogPost as $img) {
-                                    if($img["IsPrimary"] == true) {
-                                        $primaryImg = $img["ImgID"];
-                                    }
-                                }
-                                ?>
-                                <input class="change-img" type="hidden" name="changeImg" value="<?php if(isset($primaryImg)) { echo $primaryImg; } ?>">
                                 <input class="delete-image" type="hidden" name="deleteImg">
                             </div>
                         <?php }
