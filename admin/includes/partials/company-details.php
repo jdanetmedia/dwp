@@ -42,17 +42,20 @@
     <label for="Street">Street</label>
   </div>
   <div class="input-field col s6">
-    <input id="HouseNumber" type="number" name="HouseNumber" class="validate" <?php if(isset($info["HouseNumber"])) echo "value='" . $info["HouseNumber"] . "'"; ?>>
+    <input id="HouseNumber" type="text" name="HouseNumber" class="validate" <?php if(isset($info["HouseNumber"])) echo "value='" . $info["HouseNumber"] . "'"; ?>>
     <label for="HouseNumber">Housenumber</label>
   </div>
 </div>
 <div class="row">
   <div class="input-field col s6">
-    <input id="ZipCode" type="number" name="ZipCode" class="validate" <?php if(isset($info["ZipCode"])) echo "value='" . $info["ZipCode"] . "'"; ?>>
+    <input id="ZipCode" type="number" name="ZipCode" onchange="getCity(this.value)" class="validate" <?php if(isset($info["ZipCode"])) echo "value='" . $info["ZipCode"] . "'"; ?> onload="getCity(this.value)">
     <label for="ZipCode">Zipcode</label>
   </div>
   <div class="input-field col s6">
-    <input id="City" type="text" name="HouseNumber" class="validate">
+    <?php
+      $city = $BasicPageInfo->getCity($info["ZipCode"]);
+    ?>
+    <input id="City" type="text" name="City" class="validate cityTxt" disabled <?php if(isset($city)) echo "value='" . $city . "'"; ?>>
     <label for="City">City</label>
   </div>
 </div>

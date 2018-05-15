@@ -333,4 +333,11 @@ ul.stars-list {
     background-color: #fff;
     padding: 30px;
   }
+
+  .formContainer {
+    display: block;
+    min-height: 1px;
+    overflow: hidden;
+    padding: 10px;
+  }
 }

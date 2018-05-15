@@ -19,6 +19,18 @@ if(isset($_POST["submit"])) {
 	$BasicPageInfo->saveBasicPageInfo($_POST);
 }
 
+if(isset($_POST["saveNewShipping"])) {
+	$BasicPageInfo->addShippingMethod($_POST);
+}
+
+if(isset($_POST["updateShipping"])) {
+	$BasicPageInfo->updateShippingMethod($_POST, $_POST["shippingID"]);
+}
+
+if(isset($_POST["deleteShipping"])) {
+	$BasicPageInfo->deleteShippingMethod($_POST["shippingID"]);
+}
+
 $infoArray = $BasicPageInfo->getBasicPageInfo();
 $info = $infoArray[0];
 ?>
@@ -41,7 +53,9 @@ $info = $infoArray[0];
 						<?php include("includes/partials/company-details.php"); ?>
 					</div>
 					<div id="payment" class="col s12 settings-content">Test 2</div>
-					<div id="shipping" class="col s12 settings-content">Test 3</div>
+					<div id="shipping" class="col s12 settings-content">
+						<?php include("includes/partials/shipping-methods.php"); ?>
+					</div>
 					<div id="seo" class="col s12 settings-content">Test 4</div>
 					<input class="waves-effect waves-light btn grey darken-4" type="submit" name="submit" value="Update settings">
 	      </div>
