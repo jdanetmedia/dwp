@@ -1,7 +1,7 @@
 <?php
 
 class Settings {
-  function __construct() {
+  function getBasicPageInfo() {
     try {
       $conn = connectToDB();
 
@@ -18,21 +18,32 @@ class Settings {
     }
   }
 
-  function saveBasicPageInfo() {
+  function saveBasicPageInfo($post) {
     try {
       $conn = connectToDB();
 
-      $query = "INSERT INTO BasicPageInfo (CVR, LogoURL, ShopName, MinimumDelivery, AboutUsText, Email, Phone, Street, HouseNumber)
-                VALUES(:CVR, :LogoURL, :ShopName, :MinimumDelivery, :AboutUsText, :Email, :Phone, :Street, :HouseNumber)";
+      $query = "UPDATE BasicPageInfo
+                SET CVR = :CVR,
+                LogoURL = :LogoURL,
+                ShopName = :ShopName,
+                AboutUsText = :AboutUsText,
+                Email = :Email,
+                Phone = :Phone,
+                Street = :Street,
+                HouseNumber = :HouseNumber";
 
-      $handle = $conn->prepare("INSERT INTO BasicPageInfo (CVR, LogoURL, ShopName, MinimumDelivery, AboutUsText, Email, Phone, Street, HouseNumber)
-                                VALUES(:CVR, :LogoURL, :ShopName, :MinimumDelivery, :AboutUsText, :Email, :Phone, :Street, :HouseNumber)");
+      $handle = $conn->prepare($query);
+      $handle->bindParam(":CVR", $post["CVR"]);
+      $handle->bindParam(":LogoURL", $post["LogoURL"]);
+      $handle->bindParam(":ShopName", $post["ShopName"]);
+      $handle->bindParam(":AboutUsText", $post["AboutUsText"]);
+      $handle->bindParam(":Email", $post["Email"]);
+      $handle->bindParam(":Phone", $post["Phone"]);
+      $handle->bindParam(":Street", $post["Street"]);
+      $handle->bindParam(":HouseNumber", $post["HouseNumber"]);
       $handle->execute();
 
-      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-      return $result;
-
-      // $conn = null;
+      $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
