@@ -1,5 +1,27 @@
+function getCity(zip) {
+  if (zip == "") {
+    $('.cityTxt').val("");
+    return;
+  } else {
+    if (window.XMLHttpRequest) {
+      // code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    } else {
+      // code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+          $('.cityTxt').val(this.responseText);
+      }
+  };
+  xmlhttp.open("GET","../model/findcity.php?q="+zip,true);
+  xmlhttp.send();
+  }
+}
+
 $(document).ready(function() {
-    $('.modal').modal();
+  $('.modal').modal();
   // Product collapsible
   $('.collapsible').collapsible();
   // Editor
@@ -41,5 +63,18 @@ $(document).ready(function() {
     $(this).siblings('.material-placeholder').addClass('opague');
     $('.save-delete').css('display', 'none');
     $(this).siblings('.save-delete').css('display', 'block');
+  });
+
+  // Edit shippingmethod Modal
+  $('.edit').click(function() {
+    var itemID = $(this).attr('id');
+    var method = $(this).siblings('.method').text();
+    var desc = $(this).siblings('.description').text();
+    var price = $(this).siblings('.priceRow').text();
+
+    $('.shippingID').val(itemID);
+    $('.Method').val(method);
+    $('.MethodDescription').val(desc);
+    $('.DeliveryPrice').val(price);
   });
 });

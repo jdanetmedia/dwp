@@ -261,5 +261,10 @@ ul.stars-list {
   .admin-area .settings-content {
     background-color: #fff;
     padding: 30px; }
+  .admin-area .formContainer {
+    display: block;
+    min-height: 1px;
+    overflow: hidden;
+    padding: 10px; }
 
 /*# sourceMappingURL=custom.css.map */
