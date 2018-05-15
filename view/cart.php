@@ -2,6 +2,11 @@
 require_once("../includes/sessionstart.php");
 require_once('../model/cartDAO.php');
 require_once('../includes/header.php');
+unset($_SESSION["total"]);
+if (isset($_GET["remove"]) && $_GET["remove"] == "promocode") {
+  unset($_SESSION["promocode"]);
+  unset($_SESSION["DiscountAmount"]);
+}
 ?>
 
 <div class="container">
@@ -22,7 +27,11 @@ require_once('../includes/header.php');
       if(isset($_SESSION["cart"])) {
         foreach($_SESSION["cart"] as $key => $value) {
           $product = getCartProduct($key);
-          $total = $total + $product["Price"] * $value;
+          if ($product["OfferPrice"] != NULL && $product["OfferPrice"] != 0) {
+            $total = $total + $product["OfferPrice"] * $value;
+          } else {
+            $total = $total + $product["Price"] * $value;
+          }
       ?>
       <div class="card horizontal">
         <div class="card-image">
@@ -43,7 +52,17 @@ require_once('../includes/header.php');
           </div>
           <div class="card-action">
             <a href="cart.php?remove=<?php echo $key; ?>" class="remove_from_cart">Remove from cart</a>
+            <?php
+            if ($product["OfferPrice"] != NULL && $product["OfferPrice"] > 0) {
+            ?>
+            <p class="price right"><strike class="black-text">$<?php echo $product["Price"] * $value; ?></strike> $<?php echo $product["OfferPrice"] * $value; ?></p>
+            <?php
+            } else {
+            ?>
             <p class="price right">$<?php echo $product["Price"] * $value; ?></p>
+            <?php
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -67,6 +86,7 @@ require_once('../includes/header.php');
       if (isset($_SESSION["DiscountAmount"])) {
         $discounttotal = ($total / 100) * $_SESSION["DiscountAmount"];
         ?>
+        <a class="waves-effect waves-light btn" href="cart.php?remove=promocode">Remove promocode</a>
         <div class="row">
           <h5 class="left"><strike>Total price: $<?php echo $total;?></strike></h5>
         </div>

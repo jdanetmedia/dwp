@@ -10,7 +10,7 @@ if (isset($_GET["cat"])) {
 function getAllPosts() {
   global $connection;
 
-  $query = "SELECT * FROM `BlogPost`";
+  $query = "SELECT * FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID";
   if (isset($_GET["cat"])) {
     if ($_GET["cat"] != "0") {
       $cat = $_GET["cat"];

@@ -25,11 +25,9 @@ $(".button-collapse").sideNav();
 
 $(document).ready(function() {
 
-  // $('.presscart').click(function() {
-  //   var MyDiv1 = parseInt($('.cartamount').text())+1;
-  //   $(".cartamount").text(MyDiv1);
-  //   //alert(MyDiv1);
-  // });
+  $(".install1").animate({width: '33%'}, "fast");
+  $(".install2").animate({width: '66%'}, "fast");
+  $(".install3").animate({width: '100%'}, "fast");
 
   $('.carousel').carousel({
               dist:0,

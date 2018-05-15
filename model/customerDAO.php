@@ -64,7 +64,7 @@
 	    $iterations = ['cost' => 10];
 	    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
 
-		$query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode) VALUES ('{$email}', '{$hashed_password}', NULL, NULL, NULL, '{$firstName}', '{$lastName}', NULL)";
+		$query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode, ResetKey) VALUES ('{$email}', '{$hashed_password}', NULL, NULL, NULL, '{$firstName}', '{$lastName}', NULL, NULL)";
 		$result = mysqli_query($connection, $query);
 			if ($result) {
 				$message = "User Created.";
@@ -77,5 +77,104 @@
 			$message .= "The passwords has to be the same!";
 		}
 	}
+
+	if (isset($_POST['submitforgot'])) {
+        $subject = "Email from online mail form";
+
+        function error($error)
+        {
+            echo "Error processing your form input<br><br>";
+            echo "<b>The errors are:</b><br> ";
+            echo $error . "<br>";
+            die();
+        }
+
+        //Validation of null fields
+        if (!isset($_POST["emailforgot"])) {
+            error("No input to validate!");
+        }
+				$email = $_POST["emailforgot"];
+				$randomkey = substr(md5(rand()), 0, 20);
+
+				try {
+			      $conn = connectToDB();
+
+			      $statement = "UPDATE Customer SET ResetKey = :randomkey WHERE CustomerEmail = '{$email}'";
+
+			      $handle = $conn->prepare($statement);
+			      $handle->bindParam(':randomkey', $randomkey);
+			      $handle->execute();
+			  }
+			  catch(\PDOException $ex) {
+			      print($ex->getMessage());
+			  }
+
+				$query = "INSERT INTO Customer (ResetKey) VALUES ($randomkey) WHERE CustomerEmail = $email";
+				$result = mysqli_query($connection, $query);
+
+				$domain = $_SERVER['HTTP_HOST'];
+				$resetmessage = "Reset password: <$domain/view/newpass.php?email=$email&key=$randomkey>";
+        echo $email;
+        $error_message = "";
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error_message .= "The email is not OK!<br>";
+        }
+
+        $email_message = "Reset password:\n\n";
+
+        function clean_string($string)
+        {
+            $bad = array("content-type", "bcc:", "to:", "cc:", "href");
+            return str_replace($bad, "", $string);
+        }
+
+        $email_message .= "Email: " . clean_string($email) . "\n\n";
+        $email_message .= "Message: " . $resetmessage . "\n";
+
+        $headers = "FROM: " . $email . "\r\n" . "Reply-To: " . $email . "\r\n" . "X-Mailer: PHP/" . phpversion();
+
+        mail($email, $subject, $email_message, $headers);
+	}
+
+	if (isset($_POST["submitnewpass"])) {
+		if (isset($_GET["email"]) && isset($_GET["key"])) {
+			$errors = array();
+			$message = "";
+			$vali = true;
+
+			if($_POST['pass'] == "") {
+				$message .= "You need to enter a password. <br>";
+				$vali = false;
+			}
+			if($_POST['pass2'] == "") {
+				$message .= "You need to repeat your password. <br>";
+				$vali = false;
+			}
+
+			// perform validations on the form data
+			$password = trim(mysqli_real_escape_string($connection, $_POST['pass']));
+			$password2 = trim(mysqli_real_escape_string($connection, $_POST['pass2']));
+			if ($password == $password2 && $vali == true) {
+		    $iterations = ['cost' => 10];
+		    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+
+				$email = $_GET["email"];
+				$reset = $_GET["key"];
+
+				try {
+			      $conn = connectToDB();
+
+			      $statement = "UPDATE Customer SET Password = :password, ResetKey = NULL WHERE CustomerEmail = '{$email}' AND ResetKey = '{$reset}'";
+			      $handle = $conn->prepare($statement);
+			      $handle->bindParam(':password', $hashed_password);
+			      $handle->execute();
+			  }
+			  catch(\PDOException $ex) {
+			      print($ex->getMessage());
+			  }
+		}
+	}
+}
 
 ?>

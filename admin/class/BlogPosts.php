@@ -9,12 +9,11 @@ class BlogPosts extends DBConnect {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            return $result;
-
             $conn = null;
+            return $result;
         }
         catch(\PDOException $ex) {
-            print($ex->getMessage());
+            return print($ex->getMessage());
         }
     }
 
@@ -26,9 +25,8 @@ class BlogPosts extends DBConnect {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            return $result;
-
             $conn = null;
+            return $result;
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -39,16 +37,15 @@ class BlogPosts extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL, BlogImg.IsPrimary FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID ORDER BY BlogImg.IsPrimary DESC, BlogImg.ImgID ASC";
+            $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID DESC, BlogImg.ImgID ASC";
 
             $handle = $conn->prepare($statement);
             $handle->bindParam(':BlogPostID',$blogPostID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-            return $result;
-
             $conn = null;
+            return $result;
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -126,4 +123,19 @@ class BlogPosts extends DBConnect {
         }
     }
 
+    function removeImg($id) {
+        try {
+            $conn = connectToDB();
+
+            $statement = "DELETE FROM BlogImg WHERE ImgID = :ImgID";
+            $handle = $conn->prepare($statement);
+            $handle->bindParam(":ImgID", $id);
+            $handle->execute();
+
+            $conn = null;
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
 }

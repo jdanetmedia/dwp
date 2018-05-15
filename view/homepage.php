@@ -27,7 +27,7 @@ require_once("../model/indexDAO.php");
     <div class="carousel">
       <h4>Recommended</h4>
         <?php
-        //Gets recently added products
+        //Gets highest rated products
         $highestRatedProducts = getHighestRatedProducts();
         while($row = mysqli_fetch_array($highestRatedProducts)) {
             $itemNumber = $row["ItemNumber"];
