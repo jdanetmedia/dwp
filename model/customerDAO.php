@@ -177,4 +177,133 @@
 	}
 }
 
+function getCustomerInfo($email) {
+	try {
+		$conn = connectToDB();
+
+		$handle = $conn->prepare("SELECT * FROM Customer WHERE CustomerEmail = '{$email}'");
+		$handle->execute();
+
+		$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+		return $result;
+
+		// $conn = null;
+	}
+	catch(\PDOException $ex) {
+		print($ex->getMessage());
+	}
+}
+
+if (isset($_POST["updateprofile"])) {
+	try {
+		$conn = connectToDB();
+
+		$vali = true;
+
+		if (!isset($_POST["street"]) || $_POST["street"] == "") {
+			$street = NULL;
+		} else {
+			$street = $_POST["street"];
+		}
+
+		if (!isset($_POST["housenumber"]) || $_POST["housenumber"] == "") {
+			$housenumber = NULL;
+		} else {
+			$housenumber = $_POST["housenumber"];
+		}
+
+		if (!isset($_POST["phone"]) || $_POST["phone"] == "") {
+			$phone = NULL;
+		} else {
+			$phone = $_POST["phone"];
+		}
+
+		if (!isset($_POST["zipcode"]) || $_POST["zipcode"] == "") {
+			$zipcode = NULL;
+		} else {
+			$zipcode = $_POST["zipcode"];
+		}
+
+		if (!isset($_POST["firstname"]) || $_POST["firstname"] == "") {
+			$firstname = NULL;
+			$vali = false;
+			echo "You need a first name!";
+		} else {
+			$firstname = $_POST["firstname"];
+		}
+
+		if (!isset($_POST["lastname"]) || $_POST["lastname"] == "") {
+			$lastname = NULL;
+			$vali = false;
+			echo "You need a last name!";
+		} else {
+			$lastname = $_POST["lastname"];
+		}
+
+		$email = $_SESSION["CustomerEmail"];
+
+		if ($vali == true) {
+			$statement = "UPDATE Customer SET Street = :street,
+			HouseNumber = :housenumber,
+			Phone = :phone,
+			FirstName = :firstname,
+			LastName = :lastname,
+			ZipCode = :zipcode
+			WHERE CustomerEmail = :email";
+
+			$handle = $conn->prepare($statement);
+			$handle->bindParam(':street', $street);
+			$handle->bindParam(':housenumber', $housenumber);
+			$handle->bindParam(':phone', $phone);
+			$handle->bindParam(':firstname', $firstname);
+			$handle->bindParam(':lastname', $lastname);
+			$handle->bindParam(':zipcode', $zipcode);
+			$handle->bindParam(':email', $email);
+			$handle->execute();
+			$_SESSION["FirstName"] = $_POST["firstname"];
+		}
+		// $conn = null;
+	}
+	catch(\PDOException $ex) {
+		print($ex->getMessage());
+	}
+}
+
+if (isset($_POST["updatepassword"])) {
+	$password = $_POST['new'];
+	$password2 = $_POST['repeatnew'];
+	$oldpassword = $_POST['old'];
+
+	try {
+		$conn = connectToDB();
+		$email = $_SESSION["CustomerEmail"];
+		$statement = "SELECT Password FROM Customer WHERE CustomerEmail = :email LIMIT 1";
+		$handle = $conn->prepare($statement);
+		$handle->bindParam(':email', $email);
+		$handle->execute();
+		$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+		if(password_verify($oldpassword, $result[0]["Password"])){
+			if ($password == $password2) {
+				$iterations = ['cost' => 10];
+				$hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+				try {
+			      $conn = connectToDB();
+
+			      $statement1 = "UPDATE Customer SET Password = :password WHERE CustomerEmail = :email";
+			      $handle = $conn->prepare($statement1);
+			      $handle->bindParam(':password', $hashed_password);
+						$handle->bindParam(':email', $email);
+			      $handle->execute();
+			  }
+			  catch(\PDOException $ex) {
+			      print($ex->getMessage());
+			  }
+			}
+		}
+	}
+	catch(\PDOException $ex) {
+		print($ex->getMessage());
+	}
+}
+
 ?>

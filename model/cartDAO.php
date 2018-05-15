@@ -89,16 +89,6 @@ function updateAddress($CustomerEmail, $Street, $HouseNumber, $ZipCode, $City) {
   mysqli_query($connection, $query);
 }
 
-function getCustomerInfo($CustomerEmail) {
-  global $connection;
-
-  $query = "SELECT * FROM Customer WHERE CustomerEmail = '{$CustomerEmail}'";
-  $result = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($result);
-  return $row;
-
-}
-
 function getCityName($ZipCode) {
   global $connection;
 

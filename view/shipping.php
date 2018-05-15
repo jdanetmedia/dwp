@@ -4,7 +4,7 @@ require_once("../model/customerDAO.php");
 require_once('../includes/header.php');
 require_once('../model/cartDAO.php');
 $CustomerInfo = getCustomerInfo($_SESSION["CustomerEmail"]);
-$city = getCityName($CustomerInfo["ZipCode"]);
+$city = getCityName($CustomerInfo[0]["ZipCode"]);
 $deliveryResult = mysqli_query($connection, "SELECT * FROM `DeliveryMethod`");
 if (!logged_in()) {
 ?>
@@ -24,17 +24,17 @@ if (!logged_in()) {
           <div class="row col s12">
             <div class="row col s12">
               <div class="input-field col s12">
-                <input id="first_name" type="text" name="street" class="validate" value="<?php if(isset($CustomerInfo["Street"])) { echo $CustomerInfo["Street"];} ?>">
+                <input id="first_name" type="text" name="street" class="validate" value="<?php if(isset($CustomerInfo[0]["Street"])) { echo $CustomerInfo[0]["Street"];} ?>">
                 <label for="first_name">Streetname</label>
               </div>
               <div class="input-field col s6">
-                <input id="last_name" type="text" name="house" class="validate" value="<?php if(isset($CustomerInfo["HouseNumber"])) { echo $CustomerInfo["HouseNumber"];} ?>">
+                <input id="last_name" type="text" name="house" class="validate" value="<?php if(isset($CustomerInfo[0]["HouseNumber"])) { echo $CustomerInfo[0]["HouseNumber"];} ?>">
                 <label for="last_name">Housenumber</label>
               </div>
             </div>
             <div class="row col s12">
               <div class="input-field col s6">
-                <input id="first_name" type="number" name="zipcode" class="validate" value="<?php if(isset($CustomerInfo["ZipCode"])) { echo $CustomerInfo["ZipCode"];}  ?>" onchange="showUser(this.value)">
+                <input id="first_name" type="number" name="zipcode" class="validate" value="<?php if(isset($CustomerInfo[0]["ZipCode"])) { echo $CustomerInfo[0]["ZipCode"];}  ?>" onchange="showUser(this.value)">
                 <label for="first_name">Zipcode</label>
               </div>
               <div class="input-field col s6">

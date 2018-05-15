@@ -20,7 +20,9 @@ if($itemCheck == 0) {
 }
 
 $related = getRelatedProducts($currentItem["ProductCategoryID"]);
-$usercart = $_SESSION["cart"];
+if (isset($_SESSION["cart"])) {
+  $usercart = $_SESSION["cart"];
+}
 ?>
   <div class="container product-container">
     <div class="row">
