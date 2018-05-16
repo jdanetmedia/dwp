@@ -19,20 +19,37 @@ if(isset($_POST["submit"])) {
 	$BasicPageInfo->saveBasicPageInfo($_POST);
 }
 
+if(isset($_POST["saveNewHours"])) {
+	$BasicPageInfo->addHours($_POST);
+	$tab = "hours";
+}
+
+if(isset($_POST["updateHours"])) {
+	$BasicPageInfo->updateHours($_POST, $_POST["hoursID"]);
+	$tab = "hours";
+}
+
+if(isset($_POST["deleteHours"])) {
+	$BasicPageInfo->deleteHours($_POST["hoursID"]);
+	$tab = "hours";
+}
+
 if(isset($_POST["saveNewShipping"])) {
 	$BasicPageInfo->addShippingMethod($_POST);
+	$tab = "shipping";
 }
 
 if(isset($_POST["updateShipping"])) {
 	$BasicPageInfo->updateShippingMethod($_POST, $_POST["shippingID"]);
+	$tab = "shipping";
 }
 
 if(isset($_POST["deleteShipping"])) {
 	$BasicPageInfo->deleteShippingMethod($_POST["shippingID"]);
+	$tab = "shipping";
 }
 
-$infoArray = $BasicPageInfo->getBasicPageInfo();
-$info = $infoArray[0];
+$info = $BasicPageInfo->getBasicPageInfo();
 ?>
 
 <div class="container">
@@ -44,19 +61,27 @@ $info = $infoArray[0];
 	          <span class="card-title">Manage settings</span>
 	        </div>
 					<ul class="tabs">
-						<li class="tab col s3"><a class="active" href="#company">Company details</a></li>
-						<li class="tab col s3"><a href="#payment">Payment</a></li>
-						<li class="tab col s3"><a href="#shipping">Shipping</a></li>
-						<li class="tab col s3"><a href="#seo">SEO</a></li>
+						<li class="tab col s2"><a <?php if(!isset($tab)) echo "class='active'"; ?> href="#company">Company details</a></li>
+						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "hours") echo "class='active'"; ?> href="#hours">Hours</a></li>
+						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "payment") echo "class='active'"; ?> href="#payment">Payment</a></li>
+						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "shipping") echo "class='active'"; ?> href="#shipping">Shipping</a></li>
+						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "seo") echo "class='active'"; ?> href="#seo">SEO</a></li>
 					</ul>
 					<div id="company" class="col s12 settings-content">
 						<?php include("includes/partials/company-details.php"); ?>
 					</div>
-					<div id="payment" class="col s12 settings-content">Test 2</div>
+					<div id="hours" class="col s12 settings-content">
+						<?php include("includes/partials/hours-settings.php"); ?>
+					</div>
+					<div id="payment" class="col s12 settings-content">
+						<?php include("includes/partials/payment-settings.php"); ?>
+					</div>
 					<div id="shipping" class="col s12 settings-content">
 						<?php include("includes/partials/shipping-methods.php"); ?>
 					</div>
-					<div id="seo" class="col s12 settings-content">Test 4</div>
+					<div id="seo" class="col s12 settings-content">
+						<?php include("includes/partials/seo-settings.php"); ?>
+					</div>
 					<input class="waves-effect waves-light btn grey darken-4" type="submit" name="submit" value="Update settings">
 	      </div>
       </form>

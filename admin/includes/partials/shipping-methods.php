@@ -1,5 +1,4 @@
 <?php
-
   $settings = New Settings();
   $shippingMethods = $settings->getShippingMethods();
 ?>

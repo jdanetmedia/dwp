@@ -1,4 +1,9 @@
 <?php
+  require_once("../admin/class/Settings.php");
+  $settings = new Settings();
+
+  $info = $settings->getBasicPageInfo();
+
   // Product
   if(isset($_GET["item"])) {
     include("../admin/class/Product.php");
@@ -33,9 +38,17 @@
 
   // Products page and product categories
   if($basename == "products" && !isset($_GET["item"]) && !isset($_GET["cat"]) || $basename == "products" && $_GET["cat"] == 0) {
+    if(isset($info["ProductsSeoTitle"]) && !empty($info["ProductsSeoTitle"])) {
+      echo "<title>" . $info["ProductsSeoTitle"] . "</title>";
+    } else {
+      echo "<title>" . ucfirst($basename) . " | " . $info["ShopName"] . "</title>";
+    }
     ?>
       <title><?php echo ucfirst($basename); ?></title>
     <?php
+    if(isset($info["ProductsMetaDescription"]) && !empty($info["ProductsMetaDescription"])) {
+      echo "<meta name='description' content='" . $info["ProductsMetaDescription"] . "'>";
+    }
   } elseif($basename == "products" && !isset($_GET["item"]) && isset($_GET["cat"]) && $_GET["cat"] != 0) {
     include("../admin/class/DBConnect.php");
     include("../admin/class/Categories.php");
@@ -83,9 +96,14 @@
   // End post
 
   if($basename == "blog" && !isset($_GET["post"]) && !isset($_GET["cat"]) || $basename == "blog" && $_GET["cat"] == 0) {
-    ?>
-      <title><?php echo $basename; ?></title>
-    <?php
+    if(isset($info["BlogSeoTitle"]) && !empty($info["BlogSeoTitle"])) {
+      echo "<title>" . $info["BlogSeoTitle"] . "</title>";
+    } else {
+        echo "<title>" . ucfirst($basename) . " | " . $info["ShopName"] . "</title>";
+    }
+    if(isset($info["BlogMetaDescription"]) && !empty($info["BlogMetaDescription"])) {
+      echo "<meta name='description' content='" . $info["BlogMetaDescription"] . "'>";
+    }
   } elseif($basename == "blog" && !isset($_GET["post"]) && isset($_GET["cat"]) && $_GET["cat"] != 0) {
     include("../admin/class/DBConnect.php");
     include("../admin/class/Categories.php");
@@ -100,14 +118,37 @@
       <?php
     } else {
       ?>
-        <title><?php echo $currentCat[0]["CategoryName"]; ?></title>
+        <title><?php echo $currentCat[0]["CategoryName"] . " | " . $info["ShopName"]; ?></title>
       <?php
+    }
+  }
+  // Homepage
+  if($basename == "homepage") {
+    if(isset($info["HomeSeoTitle"]) && !empty($info["HomeSeoTitle"])) {
+      echo "<title>" . $info["HomeSeoTitle"] . "</title>";
+    } else {
+      echo "<title>" . ucfirst($basename) . " | " . $info["ShopName"] . "</title>";
+    }
+    if(isset($info["HomeMetaDescription"]) && !empty($info["HomeMetaDescription"])) {
+      echo "<meta name='description' content='" . $info["HomeMetaDescription"] . "'>";
+    }
+  }
+
+  // Contactpage
+  if($basename == "contact") {
+    if(isset($info["ContactSeoTitle"]) && !empty($info["ContactSeoTitle"])) {
+      echo "<title>" . $info["ContactSeoTitle"] . "</title>";
+    } else {
+      echo "<title>" . ucfirst($basename) . " | " . $info["ShopName"] . "</title>";
+    }
+    if(isset($info["ContactMetaDescription"]) && !empty($info["ContactMetaDescription"])) {
+      echo "<meta name='description' content='" . $info["ContactMetaDescription"] . "'>";
     }
   }
 
   if($basename != "blog" && $basename != "products" &&  $basename != "product" && $basename != "post" && $basename != "contact" && $basename != "homepage") {
     ?>
-    <title><?php echo ucfirst($basename); ?></title>
+    <title><?php echo ucfirst($basename) . " | " . $info["ShopName"]; ?></title>
     <?php
   }
 ?>

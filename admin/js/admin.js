@@ -88,4 +88,17 @@ $(document).ready(function() {
     $('.MethodDescription').val(desc);
     $('.DeliveryPrice').val(price);
   });
+
+  // Edit opening hours
+  $('.edit-hours').click(function() {
+    var itemID = $(this).attr('id');
+    var day = $(this).siblings('.day').text();
+    var open = $(this).siblings('.open').text();
+    var close = $(this).siblings('.close').text();
+
+    $('.hoursID').val(itemID);
+    $('.Day').val(day);
+    $('.Open').val(open);
+    $('.Close').val(close);
+  });
 });
