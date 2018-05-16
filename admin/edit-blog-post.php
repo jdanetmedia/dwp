@@ -52,7 +52,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
         <div class="row">
             <ul class="collapsible" data-collapsible="accordion">
                 <li>
-                    <div class="collapsible-header active"><i class="material-icons">assignment</i>General</div>
+                    <div class="collapsible-header <?php if(!isset($_GET["select"])) { echo "active"; } ?>"><i class="material-icons">assignment</i>General</div>
                     <div class="collapsible-body">
                         <div class="row">
                             <form class="col s12">
@@ -224,7 +224,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
                     </div>
                 </li>
                 <li>
-                    <div class="collapsible-header"><i class="material-icons">trending_up</i>SEO</div>
+                    <div class="collapsible-header <?php if(isset($_GET["select"]) && $_GET["select"] == "seo") { echo "active"; } ?>"><i class="material-icons">trending_up</i>SEO</div>
                     <div class="collapsible-body">
                         <div class="row">
                             <div class="input-field col s12">
