@@ -64,6 +64,8 @@ class BlogPosts extends DBConnect {
 
             $statement = "INSERT INTO BlogPost (Title, BlogCategoryID, RelatedProducts, BlogContent, SeoTitle, MetaDescription, BlogDate, UserEmail) VALUES (:BlogPostTitle, :BlogCategoryID, :RelatedProducts, :BlogContent, :SeoTitle, :MetaDescription, :BlogDate, :UserEmail)";
 
+
+            $date = date('Y/m/d H:i:s', time());
             $handle = $conn->prepare($statement);
 
             $handle->bindParam(':BlogPostTitle',$_POST["blogPostTitle"]);
@@ -72,7 +74,7 @@ class BlogPosts extends DBConnect {
             $handle->bindParam(':BlogContent',$_POST["blogPostContent"]);
             $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
             $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
-            $handle->bindParam(':BlogDate',date('Y/m/d H:i:s', time()));
+            $handle->bindParam(':BlogDate',$date);
             $handle->bindParam(':UserEmail',$_SESSION["UserEmail"]);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
@@ -152,6 +154,27 @@ class BlogPosts extends DBConnect {
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }
+
+    function searchBlogPost($search) {
+        try {
+            $conn = connectToDB();
+
+            $statement = "SELECT * FROM BlogPost WHERE Title LIKE :Search OR BlogContent LIKE :Search OR Author LIKE :Search";
+
+            $handle = $conn->prepare($statement);
+            $handle->bindParam(':Search',$search);
+
+            $handle->execute();
+
+            $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+            return $result;
+
+            $conn = null;
+        }
+        catch(\PDOException $ex) {
             print($ex->getMessage());
         }
     }
