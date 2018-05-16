@@ -10,11 +10,11 @@ if (isset($_GET["cat"])) {
 function getAllPosts() {
   global $connection;
 
-  $query = "SELECT * FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID";
+  $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID";
   if (isset($_GET["cat"])) {
     if ($_GET["cat"] != "0") {
       $cat = $_GET["cat"];
-      $query = "SELECT * FROM `BlogPost` WHERE `BlogCategoryID` = $cat ";
+      $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = $cat ";
       $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
     }
   }

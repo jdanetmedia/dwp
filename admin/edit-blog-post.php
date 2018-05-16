@@ -17,6 +17,7 @@ if (!logged_in()) {
 $category = new Categories();
 $blogPosts = new BlogPosts();
 $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
+echo $blogPost[0]["BlogCategoryID"];
 if(isset($_POST["submit"])) {
     $blogPosts->updateBlogPost($_GET["ID"]);
     if(isset($_POST["deleteImg"])) {
@@ -63,7 +64,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-field col s4">
+                                    <div class="input-field col s12 m3">
                                         <select name="categoryID">
                                             <?php
                                             $cats = $blogPosts->getAllCategories();
@@ -71,17 +72,17 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                                 if($blogPost[0]["BlogCategoryID"] == $cat->BlogCategoryID) {
                                                     ?>
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo
-                                                        $cat->CategoryName; ?></option>
+                                                        $cat->CategoryName; ?>KORREKT ID</option>
                                                     <?php
                                                 } elseif (isset($_POST["saveBlogPostCategory"])) {
                                                     ?>
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo
-                                                        $cat->CategoryName; ?></option>
+                                                        $cat->CategoryName; ?>CATEGORY</option>
                                                     <?php
                                                 } else {
                                                     ?>
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>"><?php echo
-                                                        $cat->CategoryName;?></option>
+                                                        $cat->CategoryName;?>ELSE</option>
                                                     <?php
                                                 }
                                             }
@@ -89,8 +90,10 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                         </select>
                                         <label>Category</label>
                                     </div>
+                                    <div class="input-field col s12 m3">
                                     <a class="waves-effect waves-light btn grey darken-4 btn modal-trigger" href="#modal1">Add New
                                         Category</a>
+                                    </div>
                                     <!-- Modal Structure -->
                                     <div id="modal1" class="modal">
                                         <div class="modal-content">
@@ -150,6 +153,31 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                                 </div>
                                             </form>
                                         </div>
+                                    </div>
+                                    <div class="input-field col s12 m3">
+                                        <p>Choose related products</p>
+                                    </div>
+                                    <div class="input-field col s12 m3">
+                                        <select name="relatedProducts">
+                                            <option value="0">None</option>
+                                            <?php
+                                            $cats = $category->getAllProductCategories();
+                                            foreach ($cats as $cat) {
+                                                if($blogPost[0]["RelatedProducts"] == $cat->ProductCategoryID) {
+                                                    ?>
+                                                    <option value="<?php echo $cat->ProductCategoryID; ?>" selected><?php echo
+                                                        $cat->CategoryName; ?></option>
+                                                    <?php
+                                                } else {
+                                                    ?>
+                                                    <option value="<?php echo $cat->ProductCategoryID; ?>"><?php echo
+                                                        $cat->CategoryName;?></option>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                        <label>Product Category</label>
                                     </div>
                                 </div>
                                 <div class="row">

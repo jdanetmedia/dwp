@@ -23,7 +23,7 @@ $allCategories = $blogPosts->getAllCategories();
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">All Blog Posts<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-blogpost.php">Add new</a></span>
+                    <span class="card-title">All Blog Posts<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-blog-post.php">Add new</a></span>
                     <table class="responsive-table striped">
                         <thead>
                         <tr>

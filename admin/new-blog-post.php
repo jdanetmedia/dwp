@@ -37,6 +37,13 @@ if(isset($_POST["saveBlogPost"])) {
 }
 if (isset($_POST["saveBlogPostCategory"])) {
     $category->saveBlogPostCategory();
+    $blogPosts->saveBlogPost();
+    $newestBlog = $blogPosts->getRecentBlogPost();
+    ?>
+    <script type="text/javascript">location.href = 'edit-blog-post.php?ID=<?php foreach ($newestBlog as $aBlogPost) {
+            echo $aBlogPost->BlogPostID;
+        } ?>';</script>
+    <?php
 }
 ?>
 <div class="container">
@@ -58,30 +65,25 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="input-field col s4">
+                                    <div class="input-field col s12 m3">
                                         <select name="categoryID">
                                             <?php
                                             $allCategories = $blogPosts->getAllCategories();
                                             foreach($allCategories as $aCategory) {
-                                                if (isset($_POST["saveBlogPostCategory"])) {
-                                                    ?>
-                                                    <option value="<?php echo $aCategory->BlogCategoryID; ?>"
-                                                            selected><?php echo
-                                                        $aCategory->CategoryName; ?></option>
-                                                    <?php
-                                                } else {
                                                     ?>
                                                     <option value="<?php echo $aCategory->BlogCategoryID; ?>"><?php echo
                                                         $aCategory->CategoryName; ?></option>
                                                 <?php
-                                                }
                                             }
                                             ?>
                                         </select>
                                         <label>Category</label>
                                     </div>
-                                    <a class="waves-effect waves-light btn grey darken-4 new-prod-btn modal-trigger" href="#modal1">Add new
+                                    <div class="input-field col s12 m3">
+                                    <a class="waves-effect waves-light btn grey darken-4 btn modal-trigger" href="#modal1">Add new
                                         Category</a>
+                                    </div>
+                                    <!-- Modal Structure -->
                                     <div id="modal1" class="modal">
                                         <div class="modal-content">
                                             <form action="" method="post" enctype="multipart/form-data">
@@ -140,6 +142,24 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                                 </div>
                                             </form>
                                         </div>
+                                    </div>
+                                    <div class="input-field col s12 m3">
+                                        <p>Choose related products</p>
+                                    </div>
+                                    <div class="input-field col s12 m3">
+                                        <select name="relatedProducts">
+                                            <option value="0">None</option>
+                                            <?php
+                                            $cats = $category->getAllProductCategories();
+                                            foreach ($cats as $cat) {
+                                                    ?>
+                                                    <option value="<?php echo $cat->ProductCategoryID; ?>"><?php echo
+                                                        $cat->CategoryName;?></option>
+                                                    <?php
+                                            }
+                                            ?>
+                                        </select>
+                                        <label>Product Category</label>
                                     </div>
                                 </div>
                                 <div class="row">

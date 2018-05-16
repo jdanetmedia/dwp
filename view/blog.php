@@ -47,7 +47,6 @@ require_once("../model/blogDAO.php");
       <?php
       $blogResult = getAllPosts();
       while($row = mysqli_fetch_array($blogResult)) {
-          echo var_dump($row["BlogPostID"]);
         ?>
         <div class="col s12 m6">
           <div class="card">
@@ -59,7 +58,7 @@ require_once("../model/blogDAO.php");
             </div>
             <div class="card-content">
               <p><?php if (strlen($row["BlogContent"]) > 160) {
-                      echo preg_replace('/\s+?(\S+)?$/', '', substr($row["BlogContent"], 0, 160)) . " ...";
+                      echo preg_replace('/\s+?(\S+)?$/', '', htmlspecialchars(substr($row["BlogContent"], 0, 160))) . " ...";
                   } else echo $row["BlogContent"]; ?></p>
             </div>
             <div class="card-action">
