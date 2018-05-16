@@ -17,22 +17,15 @@ require_once("includes/header.php"); ?>
     <div class="col s12 m8 push-m2">
       <div class="card medium">
         <div class="card-content">
-          <span class="card-title">Login</span>
-					<form class="col s12" action="" method="post">
+          <span class="card-title">Forgot password</span>
+					<form class="col s12" action="index.php" method="post">
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="email" type="email" name="email" maxlength="100" value="" class="validate">
+								<input id="email" type="email" name="forgotemail" maxlength="100" value="" class="validate">
 								<label for="first_name">Email</label>
 							</div>
 						</div>
-						<div class="row">
-							<div class="input-field col s12">
-								<input id="password" type="password" name="pass" maxlength="30" value="" class="validate">
-								<label for="password">Password</label>
-							</div>
-						</div>
-						<input class="waves-effect waves-light btn black" type="submit" name="submitadminlogin" value="Login">
-						<a class="waves-effect waves-light btn black right" href="forgotadmin.php">Forgot your password?</a>
+						<input class="waves-effect waves-light btn black" type="submit" name="submitadminforgot" value="Send">
 					</form>
         </div>
       </div>

@@ -43,7 +43,7 @@ if(isset($_GET["search"])) {
                   <th>Price</th>
                   <th>Sale price</th>
                   <th>Short Description</th>
-                  <th>Status</th>
+                  <th>Created on:</th>
                   <th>Edit</th>
               </tr>
             </thead>
@@ -75,25 +75,7 @@ if(isset($_GET["search"])) {
                           }
                         ?>
                       </td>
-                      <td>
-                        <div class="input-field">
-                          <select name="ProductStatus">
-                            <?php
-                              if($product->ProductStatus == true) {
-                                  ?>
-                                    <option value="1" selected>Active</option>
-                                    <option value="2">Inactive</option>
-                                  <?php
-                              } else {
-                                ?>
-                                  <option value="1">Active</option>
-                                  <option value="2" selected>Inactive</option>
-                                <?php
-                              }
-                            ?>
-                          </select>
-                        </div>
-                      </td>
+                      <td><?php echo $product->CreationDate; ?></td>
                       <td><a href="edit-product.php?item=<?php echo $product->ItemNumber; ?>">Edit</a></td>
                     </tr>
                     <?php

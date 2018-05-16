@@ -29,6 +29,113 @@ class Admin {
   			$message = "You are now logged out.";
   		}
   	}
+
+    if (isset($_POST["submitadminforgot"])) {
+      $this->sendemaillink($_POST["forgotemail"]);
+    }
+
+    if (isset($_POST["submitadminnewpass"])) {
+      $this->newpass();
+    }
+  }
+
+  function sendemaillink($email) {
+    $subject = "Email from online mail form";
+
+    function error($error)
+    {
+        echo "Error processing your form input<br><br>";
+        echo "<b>The errors are:</b><br> ";
+        echo $error . "<br>";
+        die();
+    }
+
+    //Validation of null fields
+    if (!isset($_POST["forgotemail"])) {
+        error("No input to validate!");
+    }
+    $email = $_POST["forgotemail"];
+    $randomkey = substr(md5(rand()), 0, 20);
+
+    try {
+        $conn = connectToDB();
+
+        $statement = "UPDATE User SET ResetKey = :randomkey WHERE UserEmail = :email";
+
+        $handle = $conn->prepare($statement);
+        $handle->bindParam(':randomkey', $randomkey);
+        $handle->bindParam(':email', $email);
+        $handle->execute();
+    }
+    catch(\PDOException $ex) {
+        print($ex->getMessage());
+    }
+
+    $domain = $_SERVER['HTTP_HOST'];
+    $resetmessage = "Reset password: <$domain/admin/adminnewpass.php?admin=$email&key=$randomkey>";
+    //echo $email;
+    $error_message = "";
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $error_message .= "The email is not OK!<br>";
+    }
+
+    $email_message = "Reset password:\n\n";
+
+    function clean_string($string)
+    {
+        $bad = array("content-type", "bcc:", "to:", "cc:", "href");
+        return str_replace($bad, "", $string);
+    }
+
+    $email_message .= "Email: " . clean_string($email) . "\n\n";
+    $email_message .= "Message: " . $resetmessage . "\n";
+
+    $headers = "FROM: " . $email . "\r\n" . "Reply-To: " . $email . "\r\n" . "X-Mailer: PHP/" . phpversion();
+
+    mail($email, $subject, $email_message, $headers);
+  }
+
+  function newpass() {
+		if (isset($_GET["admin"]) && isset($_GET["key"])) {
+			$errors = array();
+			$message = "";
+			$vali = true;
+
+			if($_POST['pass'] == "") {
+				$message .= "You need to enter a password. <br>";
+				$vali = false;
+			}
+			if($_POST['pass2'] == "") {
+				$message .= "You need to repeat your password. <br>";
+				$vali = false;
+			}
+
+			// perform validations on the form data
+			$password = trim($_POST['pass']);
+			$password2 = trim($_POST['pass2']);
+			if ($password == $password2 && $vali == true) {
+		    $iterations = ['cost' => 10];
+		    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+
+				$email = $_GET["admin"];
+				$reset = $_GET["key"];
+
+				try {
+			      $conn = connectToDB();
+
+			      $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";
+			      $handle = $conn->prepare($statement);
+			      $handle->bindParam(':password', $hashed_password);
+            $handle->bindParam(':email', $email);
+            $handle->bindParam(':resetkey', $reset);
+			      $handle->execute();
+			  }
+			  catch(\PDOException $ex) {
+			      print($ex->getMessage());
+			  }
+  		}
+  	}
   }
 }
 ?>

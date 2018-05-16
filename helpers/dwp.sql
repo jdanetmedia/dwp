@@ -75,7 +75,8 @@ CREATE TABLE User (
   UserEmail varchar(255) NOT NULL PRIMARY KEY,
   Password varchar(255) NOT NULL,
   FirstName varchar(255) NOT NULL,
-  LastName varchar(255) NOT NULL
+  LastName varchar(255) NOT NULL,
+  ResetKey varchar(255) NULL
 );
 
 CREATE TABLE Review (
@@ -258,7 +259,7 @@ VALUES (NULL, "Sport Ducks", "This is the Third description", "SeoTitle for Cat3
 
 -- Insert Users
 INSERT INTO User
-VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Rasmus Andreas", "Nielsen");
+VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Rasmus Andreas", "Nielsen", NULL);
 
 -- Insert Products
 INSERT INTO Product
