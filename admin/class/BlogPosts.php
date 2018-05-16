@@ -56,13 +56,19 @@ class BlogPosts extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $statement = "INSERT INTO BlogPost (Title, BlogCategoryID, BlogContent, SeoTitle, MetaDescription, BlogDate, UserEmail) 
-                          VALUES (:BlogPostTitle, :BlogCategoryID, :BlogContent, :SeoTitle, :MetaDescription, :BlogDate, :UserEmail)";
+            if ($_POST["relatedProducts"] == 0) {
+                $related = NULL;
+            } else {
+                $related = $_POST["relatedProducts"];
+            }
+
+            $statement = "INSERT INTO BlogPost (Title, BlogCategoryID, RelatedProducts, BlogContent, SeoTitle, MetaDescription, BlogDate, UserEmail) VALUES (:BlogPostTitle, :BlogCategoryID, :RelatedProducts, :BlogContent, :SeoTitle, :MetaDescription, :BlogDate, :UserEmail)";
 
             $handle = $conn->prepare($statement);
 
             $handle->bindParam(':BlogPostTitle',$_POST["blogPostTitle"]);
             $handle->bindParam(':BlogCategoryID',$_POST["categoryID"]);
+            $handle->bindParam(':RelatedProducts',$related);
             $handle->bindParam(':BlogContent',$_POST["blogPostContent"]);
             $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
             $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
@@ -80,9 +86,15 @@ class BlogPosts extends DBConnect {
         try {
             $conn = connectToDB();
 
+            if ($_POST["relatedProducts"] == 0) {
+                $related = NULL;
+            } else {
+                $related = $_POST["relatedProducts"];
+            }
             $statement = "UPDATE BlogPost
                           SET Title = :BlogPostTitle,
                           BlogCategoryID = :BlogCategoryID,
+                          RelatedProducts = :RelatedProducts,
                           BlogContent = :BlogContent,
                           BlogDate = BlogDate,
                           SeoTitle = :SeoTitle,
@@ -93,6 +105,7 @@ class BlogPosts extends DBConnect {
 
             $handle->bindParam(':BlogPostTitle',$_POST["blogPostTitle"]);
             $handle->bindParam(':BlogCategoryID',$_POST["categoryID"]);
+            $handle->bindParam(':RelatedProducts',$related);
             $handle->bindParam(':BlogContent',$_POST["blogPostContent"]);
             $handle->bindParam(':SeoTitle',$_POST["seoTitle"]);
             $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
@@ -125,13 +138,17 @@ class BlogPosts extends DBConnect {
         try {
             $conn = connectToDB();
 
+            $statement2 = "DELETE FROM BlogImg WHERE BlogPostID = :BlogPostID";
+            $handle2 = $conn->prepare($statement2);
+            $handle2->bindParam(':BlogPostID',$blogPostID);
+            $handle2->execute();
+
             $statement = "DELETE FROM BlogPost WHERE BlogPostID = :BlogPostID";
-
             $handle = $conn->prepare($statement);
-
             $handle->bindParam(':BlogPostID',$blogPostID);
-
             $handle->execute();
+
+
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
