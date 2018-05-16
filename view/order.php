@@ -55,10 +55,9 @@ if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
 	?>
 	<div class="card col s12">
 		<div class="card-content">
-		<?php
-			echo $promocodeInfo[0]["PromoCode"];
-			echo $promocodeInfo[0]["DiscountAmount"];
-		?>
+			<span class="card-title">Promocode</span>
+			<p>Promocode used: <?php echo $promocodeInfo[0]["PromoCode"]; ?></p>
+			<p>Discount given: <?php echo $promocodeInfo[0]["DiscountAmount"]; ?>%</p>
 		</div>
 	</div>
 	<?php

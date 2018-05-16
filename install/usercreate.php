@@ -1,3 +1,24 @@
+<?php
+require_once("../includes/connection.php");
+
+try {
+    $conn = connectToDB();
+
+    $statement = "SELECT UserEmail FROM User";
+
+    $handle = $conn->prepare($statement);
+    $handle->execute();
+
+    $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+    if(count($result) > 1) {
+      header('Location: ../index.php');
+      die;
+    }
+}
+catch(\PDOException $ex) {
+    print($ex->getMessage());
+}
+?>
 <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -20,7 +41,7 @@
             <div class="card medium">
               <div class="card-content">
                 <h5>User information</h5>
-                <form class="col s12" action="demodata.php" method="post">
+                <form class="col s12" action="finishup.php" method="post">
                   <div class="row">
                     <div class="input-field col s6">
                       <input value="" name="firstName" id="server" type="text" class="validate">

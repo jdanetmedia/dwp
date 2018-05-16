@@ -1,3 +1,54 @@
+<?php
+require_once("../includes/connection.php");
+// handle user creation
+if (isset($_POST['submitusercreate'])) { // Form has been submitted.
+  $errors = array();
+  $message = "";
+  $vali = true;
+  if($_POST['firstName'] == "") {
+    $message .= "You need to enter a first name. <br>";
+    $vali = false;
+  }
+  if($_POST['lastName'] == "") {
+    $message .= "You need to enter a last name. <br>";
+    $vali = false;
+  }
+  if($_POST['adminemail'] == "") {
+    $message .= "You need to enter an email. <br>";
+    $vali = false;
+  }
+  if($_POST['password'] == "") {
+    $message .= "You need to enter a password. <br>";
+    $vali = false;
+  }
+  if($_POST['password2'] == "") {
+    $message .= "You need to repeat your password. <br>";
+    $vali = false;
+  }
+
+  // perform validations on the form data
+  $password = trim(mysqli_real_escape_string($connection, $_POST['password']));
+  $passwordvali = trim(mysqli_real_escape_string($connection, $_POST['password2']));
+  if ($password == $passwordvali && $vali == true) {
+    $firstName = mysqli_real_escape_string($connection, $_POST['firstName']);
+    $lastName = mysqli_real_escape_string($connection, $_POST['lastName']);
+    $email = trim(mysqli_real_escape_string($connection, $_POST['adminemail']));
+    $iterations = ['cost' => 10];
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+
+  $query = "INSERT INTO `User` (UserEmail, Password, FirstName, LastName) VALUES ('{$email}', '{$hashed_password}', '{$firstName}', '{$lastName}')";
+  $result = mysqli_query($connection, $query);
+    if ($result) {
+      $message = "User Created.";
+    } else {
+      $message = "User could not be created.";
+      //$message .= "<br />" . mysql_error();
+    }
+  } else {
+    $message .= "The passwords has to be the same!";
+  }
+}
+?>
 <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -15,7 +66,7 @@
         <div class="row">
           <div class="col s12 m6 push-m3">
             <div class="progress">
-              <div class="determinate install3" style="width: 66%"></div>
+              <div class="determinate install2" style="width: 66%"></div>
             </div>
             <div class="card medium">
               <div class="card-content">

@@ -17,7 +17,7 @@ require_once("../includes/header.php");
       <div class="card medium">
         <div class="card-content">
           <span class="card-title">Login</span>
-					<form class="col s12" action="" method="post">
+					<form class="col s12" action="login.php?goto=index" method="post">
 						<div class="row">
 							<div class="input-field col s12">
 								<input id="email" type="email" name="email" maxlength="100" value="" class="validate">

@@ -25,8 +25,11 @@ require_once('../includes/header.php');
                     <textarea id="textarea" class="materialize-textarea" name="message"></textarea>
                     <label for="textarea">Message</label>
                 </div>
+                <div class="row">
+                  <div class="g-recaptcha" data-sitekey="6LfRflkUAAAAAKNUJpg6Bfql_ok1VOkdh6-4U8sZ"></div>
+                </div>
             </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Send</button>
+            <button class="btn waves-effect waves-light right" type="submit" name="action">Send</button>
         </form>
     </div>
     <div class="row">

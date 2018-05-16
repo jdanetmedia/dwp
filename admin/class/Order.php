@@ -211,6 +211,7 @@ class Order {
       $handle = $conn->prepare("UPDATE CustomerOrder SET OrderStatusID = '{$newstatus}' WHERE OrderNumber = '{$ordernumber}'");
       $handle->execute();
       // TODO: if changed to sent send a mail
+      $this->sendUpdateMail($ordernumber, $newstatus);
       $conn = null;
     }
     catch(\PDOException $ex) {
@@ -250,6 +251,57 @@ function getPromoCodeDiscount($promocode) {
     catch(\PDOException $ex) {
       print($ex->getMessage());
     }
+  }
+
+  function sendUpdateMail($ordernumber, $newstatus) {
+    try {
+      $conn = connectToDB();
+
+      $handle = $conn->prepare("SELECT CustomerEmail FROM CustomerOrder WHERE OrderNumber = $ordernumber");
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $email = $result[0]["CustomerEmail"];
+
+      $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+    try {
+      $conn = connectToDB();
+
+      $handle = $conn->prepare("SELECT * FROM OrderStatus WHERE OrderStatusID = $newstatus");
+      $handle->execute();
+
+      $resultone = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $status = $resultone[0]["Status"];
+
+      $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+
+    $subject = "Order status changed to: $status";
+    $domain = $_SERVER['HTTP_HOST'];
+    $statusmessage = 'Your order #' . $ordernumber . ' was successfully ' . $status . "\n" . 'You can see your order details here:
+    <' . $domain . '/view/order.php?order=' . $ordernumber . '>';
+    $error_message = "";
+
+    $email_message = "Order update:\n\n";
+
+    function clean_string($string)
+    {
+        $bad = array("content-type", "bcc:", "to:", "cc:", "href");
+        return str_replace($bad, "", $string);
+    }
+
+    $email_message .= "Message: " . $statusmessage . "\n";
+
+    $headers = "FROM: " . "noreply@rasmusandreas.dk" . "\r\n" . "Reply-To: " . $email . "\r\n" . "X-Mailer: PHP/" . phpversion();
+
+    mail($email, $subject, $email_message, $headers);
   }
 
 }

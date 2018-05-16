@@ -61,6 +61,6 @@ if (!file_exists('../includes/constants.php')) {
   </html>
   <?php
 } else {
-  echo "File exists!";
+  header('Location: ../index.php');
 }
 ?>

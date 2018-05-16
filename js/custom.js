@@ -25,9 +25,8 @@ $(".button-collapse").sideNav();
 
 $(document).ready(function() {
 
-  $(".install1").animate({width: '33%'}, "fast");
-  $(".install2").animate({width: '66%'}, "fast");
-  $(".install3").animate({width: '100%'}, "fast");
+  $(".install1").animate({width: '50%'}, "fast");
+  $(".install2").animate({width: '100%'}, "fast");
 
   $('.carousel').carousel({
               dist:0,

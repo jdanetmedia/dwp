@@ -27,15 +27,32 @@ function getReviews($itemNumber) {
 
 // Add review for current product
 function addReview($item) {
-  global $connection;
+  $errMsg = "";
+  if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])){
+    //your site secret key
+    $secret = '6LfRflkUAAAAANg0eaCe2bfDQ4w_khZq5xPDKMy0';
+    //get verify response data
+    $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
+    $responseData = json_decode($verifyResponse);
+    if($responseData->success){
+      global $connection;
 
-  $rating = $_POST["rating"];
-  $reviewTitle = $_POST["reviewTitle"];
-  $reviewText = $_POST["reviewText"];
-  $itemNumber = $item;
+      $rating = $_POST["rating"];
+      $reviewTitle = $_POST["reviewTitle"];
+      $reviewText = $_POST["reviewText"];
+      $itemNumber = $item;
 
-  $query = "INSERT INTO Review VALUES (NULL, NULL, '{$rating}', '{$reviewTitle}', NULL, '{$reviewText}', '{$itemNumber}')";
-  mysqli_query($connection, $query);
+      $query = "INSERT INTO Review VALUES (NULL, NULL, '{$rating}', '{$reviewTitle}', NULL, '{$reviewText}', '{$itemNumber}')";
+      mysqli_query($connection, $query);
+
+      $succMsg = 'Your review have been submitted successfully.';
+      echo $succMsg;
+    } else {
+      $errMsg .= 'Robot verification failed, please try again.';
+    }
+  } else {
+    $errMsg .= 'Please click on the reCAPTCHA box.';
+  }
 }
 
 function getRelatedProducts($productCat) {

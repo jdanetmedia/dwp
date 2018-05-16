@@ -158,6 +158,9 @@ if (isset($_SESSION["cart"])) {
                             <i class="material-icons small star-icon">star_border</i>
                           </li>
                         </ul>
+                        <div class="right">
+                          <div class="g-recaptcha" data-sitekey="6LfRflkUAAAAAKNUJpg6Bfql_ok1VOkdh6-4U8sZ"></div>
+                        </div>
                         <input class="rating-input" type="hidden" name="rating">
                         <input class="waves-effect waves-green btn" type="submit" name="submitreview" value="Add review">
                       </div>

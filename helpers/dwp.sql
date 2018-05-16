@@ -29,8 +29,8 @@ CREATE TABLE PromoCode (
 
 CREATE TABLE Hours (
   HoursID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  Open int NOT NULL,
-  Close int NOT NULL,
+  Open varchar(255) NOT NULL,
+  Close varchar(255) NOT NULL,
   Day varchar(255) NULL
 );
 
@@ -1936,3 +1936,9 @@ VALUES (NULL, "Another dumb message", "2009-11-11 17:23:44", 1);
 
 INSERT INTO OrderMessage
 VALUES (NULL, "Another dumb message", "2009-11-11 17:23:44", 2);
+
+INSERT INTO Hours
+VALUES (NULL, "9:00", "17:00", "Weekdays");
+
+INSERT INTO Hours
+VALUES (NULL, "10:00", "14:00", "Weekends");

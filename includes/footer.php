@@ -1,6 +1,6 @@
 <?php require_once ('../model/contactDAO.php');
 $pageInfo = getPageInfo();
-
+$hours = getHours();
 ?>
 
 <footer class="page-footer teal">
@@ -15,22 +15,19 @@ $pageInfo = getPageInfo();
               <p><?php echo $pageInfo["Email"] ?></p>
           </div>
           <div class="col s12 m3 offset-m2">
-            <h5 class="white-text">Links</h5>
+            <h5 class="white-text">Hours</h5>
             <ul>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+              <?php
+              while ($row = mysqli_fetch_array($hours)) {
+              ?>
+              <li><?php echo $row["Day"] . "<br>" . $row["Open"] . "-" . $row["Close"]; ?></li>
+              <?php
+              }
+              ?>
             </ul>
           </div>
           <div class="col s12 m3">
-            <h5 class="white-text">Links</h5>
-            <ul>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-              <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-            </ul>
+            <img class="responsive-img" src="../<?php echo $pageInfo["LogoURL"]; ?>">
           </div>
         </div>
       </div>
