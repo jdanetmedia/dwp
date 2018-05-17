@@ -1,6 +1,7 @@
 <?php
 
 class Settings {
+  // Basic info
   function getBasicPageInfo() {
     try {
       $conn = connectToDB();
@@ -9,7 +10,7 @@ class Settings {
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-      return $result;
+      return $result[0];
 
       // $conn = null;
     }
@@ -31,7 +32,16 @@ class Settings {
                 Phone = :Phone,
                 Street = :Street,
                 HouseNumber = :HouseNumber,
-                ZipCode = :ZipCode";
+                ZipCode = :ZipCode,
+                StripeToken = :StripeToken,
+                HomeSeoTitle = :HomeSeoTitle,
+                HomeMetaDescription = :HomeMetaDescription,
+                ContactSeoTitle = :ContactSeoTitle,
+                ContactMetaDescription = :ContactMetaDescription,
+                ProductsSeoTitle = :ProductsSeoTitle,
+                ProductsMetaDescription = :ProductsMetaDescription,
+                BlogSeoTitle = :BlogSeoTitle,
+                BlogMetaDescription = :BlogMetaDescription";
 
       $handle = $conn->prepare($query);
       $handle->bindParam(":CVR", $post["CVR"]);
@@ -43,6 +53,15 @@ class Settings {
       $handle->bindParam(":Street", $post["Street"]);
       $handle->bindParam(":HouseNumber", $post["HouseNumber"]);
       $handle->bindParam(":ZipCode", $post["ZipCode"]);
+      $handle->bindParam(":StripeToken", $post["StripeToken"]);
+      $handle->bindParam(":HomeSeoTitle", $post["HomeSeoTitle"]);
+      $handle->bindParam(":HomeMetaDescription", $post["HomeMetaDescription"]);
+      $handle->bindParam(":ContactSeoTitle", $post["ContactSeoTitle"]);
+      $handle->bindParam(":ContactMetaDescription", $post["ContactMetaDescription"]);
+      $handle->bindParam(":ProductsSeoTitle", $post["ProductsSeoTitle"]);
+      $handle->bindParam(":ProductsMetaDescription", $post["ProductsMetaDescription"]);
+      $handle->bindParam(":BlogSeoTitle", $post["BlogSeoTitle"]);
+      $handle->bindParam(":BlogMetaDescription", $post["BlogMetaDescription"]);
       $handle->execute();
 
       $conn = null;
@@ -71,6 +90,86 @@ class Settings {
     }
   }
 
+  // Hours
+  function getHours() {
+    try {
+        $conn = connectToDB();
+
+        $query = "SELECT * FROM Hours";
+        $handle = $conn->prepare($query);
+        $handle->execute();
+
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        return $result;
+
+        $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  function addHours($post) {
+    try {
+        $conn = connectToDB();
+
+        $query = "INSERT INTO Hours (Day, Open, Close) VALUES (:Day, :Open, :Close)";
+
+        $handle = $conn->prepare($query);
+        $handle->bindParam(":Day", $post["Day"]);
+        $handle->bindParam(":Open", $post["Open"]);
+        $handle->bindParam(":Close", $post["Close"]);
+        $handle->execute();
+
+        $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  function updateHours($post, $id) {
+    try {
+        $conn = connectToDB();
+
+        $query = "UPDATE Hours
+                  SET Day = :Day,
+                  Open = :Open,
+                  Close = :Close
+                  WHERE HoursID = :id";
+
+        $handle = $conn->prepare($query);
+        $handle->bindParam(":Day", $post["Day"]);
+        $handle->bindParam(":Open", $post["Open"]);
+        $handle->bindParam(":Close", $post["Close"]);
+        $handle->bindParam(":id", $id);
+        $handle->execute();
+
+        $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  function deleteHours($id) {
+    try {
+        $conn = connectToDB();
+
+        $query = "DELETE FROM Hours WHERE HoursID = :id";
+
+        $handle = $conn->prepare($query);
+        $handle->bindParam(":id", $id);
+        $handle->execute();
+
+        $conn = null;
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  // Shipping
   function getShippingMethods() {
     try {
       $conn = connectToDB();
@@ -81,7 +180,7 @@ class Settings {
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result;
 
-      // $conn = null;
+      $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -89,8 +188,6 @@ class Settings {
   }
 
   function addShippingMethod($post) {
-    $this->saveBasicPageInfo($post);
-
     try {
         $conn = connectToDB();
 
@@ -117,12 +214,13 @@ class Settings {
                   SET Method = :Method,
                   MethodDescription = :MethodDescription,
                   DeliveryPrice = :DeliveryPrice
-                  WHERE DeliveryMethodID = $id";
+                  WHERE DeliveryMethodID = :id";
 
         $handle = $conn->prepare($query);
         $handle->bindParam(":Method", $post["Method"]);
         $handle->bindParam(":MethodDescription", $post["MethodDescription"]);
         $handle->bindParam(":DeliveryPrice", $post["DeliveryPrice"]);
+        $handle->bindParam(":id", $id);
         $handle->execute();
 
         $conn = null;

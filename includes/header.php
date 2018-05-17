@@ -60,11 +60,21 @@ $pageInfo = getPageInfo();
             ?>
             <li><a href="cart.php">Ducking cart<i class="material-icons right">shopping_cart</i></a></li>
             <?php
-              $amountInCart = count($_SESSION["cart"]);
-              if ($amountInCart > 0) {
-            ?>
-              <li class="cartamount"><a class="cartamount"><?php echo $amountInCart; ?></a></li>
-            <?php
+              if(isset($_SESSION["cart"])) {
+                $amountInCart = count($_SESSION["cart"]);
+                if ($amountInCart > 0) {
+                ?>
+                  <li class="cartamount"><a class="cartamount"><?php echo $amountInCart; ?></a></li>
+                <?php
+                } else {
+                  ?>
+                    <li class="cartamount"><a class="cartamount" style="color: transparent;">0</a></li>
+                  <?php
+                }
+              } else {
+                ?>
+                  <li class="cartamount"><a class="cartamount" style="color: transparent;">0</a></li>
+                <?php
               }
             ?>
           </ul>
