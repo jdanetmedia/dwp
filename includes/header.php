@@ -18,7 +18,7 @@ $pageInfo = getPageInfo();
   <html>
     <html lang="en">
     <head>
-      <meta charset="UTF-8">
+      <meta charset="utf-8">
       <?php require_once("../includes/seo.php"); ?>
       <!--Import Google Icon Font-->
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

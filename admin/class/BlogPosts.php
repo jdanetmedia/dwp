@@ -1,5 +1,5 @@
 <?php
-class BlogPosts extends DBConnect {
+class BlogPosts {
 
     function getAllBlogPosts() {
         try {
@@ -35,12 +35,15 @@ class BlogPosts extends DBConnect {
 
     function getBlogPostDetails($blogPostID) {
         try {
+            // Secure input
+            $postID = Security::secureString($blogPostID);
+
             $conn = connectToDB();
 
             $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID ORDER BY BlogImg.ImgID ASC";
 
             $handle = $conn->prepare($statement);
-            $handle->bindParam(':BlogPostID',$blogPostID);
+            $handle->bindParam(':BlogPostID', $postID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );

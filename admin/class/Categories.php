@@ -1,5 +1,5 @@
 <?php
-Class Categories extends DBConnect {
+Class Categories {
 
     function getAllProductCategories() {
         try {
@@ -39,14 +39,20 @@ Class Categories extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $statement = "INSERT INTO ProductCategory (CategoryName, Description, SeoTitle, MetaDescription) VALUES (:CategoryName,                           :Description, :SeoTitle, :MetaDescription)";
+            // Secure inputs
+            $categoryName = Security::secureString($_POST["categoryName"]);
+            $description = Security::secureString($_POST["description"]);
+            $seoTitle = Security::secureString($_POST["seoTitleProduct"]);
+            $metaDescription = Security::secureString($_POST["metaDescriptionProduct"]);
+
+            $statement = "INSERT INTO ProductCategory (CategoryName, Description, SeoTitle, MetaDescription) VALUES (:CategoryName, :Description, :SeoTitle, :MetaDescription)";
 
             $handle = $conn->prepare($statement);
 
-            $handle->bindParam(':CategoryName', $_POST["categoryName"]);
-            $handle->bindParam(':Description', $_POST["description"]);
-            $handle->bindParam(':SeoTitle', $_POST["seoTitleProduct"]);
-            $handle->bindParam(':MetaDescription', $_POST["metaDescriptionProduct"]);
+            $handle->bindParam(':CategoryName', $categoryName);
+            $handle->bindParam(':Description', $description);
+            $handle->bindParam(':SeoTitle', $seoTitle);
+            $handle->bindParam(':MetaDescription', $metaDescription);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -59,8 +65,7 @@ Class Categories extends DBConnect {
         try {
             $conn = connectToDB();
 
-            $statement = "INSERT INTO BlogCategory (CategoryName, Description, SeoTitle, MetaDescription) VALUES (:CategoryName, 
-                          :Description, :SeoTitle, :MetaDescription)";
+            $statement = "INSERT INTO BlogCategory (CategoryName, Description, SeoTitle, MetaDescription) VALUES (:CategoryName, :Description, :SeoTitle, :MetaDescription)";
 
             $handle = $conn->prepare($statement);
 

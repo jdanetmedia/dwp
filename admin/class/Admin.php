@@ -1,5 +1,5 @@
 <?php
-class Admin {
+class Admin extends Security {
 
   function __construct($connection)
   {
@@ -60,11 +60,15 @@ class Admin {
     try {
         $conn = connectToDB();
 
+        // Secure inputs
+        $secKey = Security::secureString($randomkey);
+        $secEmail = Security::secureEmail($email);
+
         $statement = "UPDATE User SET ResetKey = :randomkey WHERE UserEmail = :email";
 
         $handle = $conn->prepare($statement);
-        $handle->bindParam(':randomkey', $randomkey);
-        $handle->bindParam(':email', $email);
+        $handle->bindParam(':randomkey', $secKey);
+        $handle->bindParam(':email', $secEmail);
         $handle->execute();
     }
     catch(\PDOException $ex) {
@@ -124,11 +128,16 @@ class Admin {
 				try {
 			      $conn = connectToDB();
 
+            // Secure inputs
+            $secPass = Security::secureString($hashed_password);
+            $secEmail = Security::secureEmail($email);
+            $secReset = Security::secureString($reset);
+
 			      $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";
 			      $handle = $conn->prepare($statement);
-			      $handle->bindParam(':password', $hashed_password);
-            $handle->bindParam(':email', $email);
-            $handle->bindParam(':resetkey', $reset);
+			      $handle->bindParam(':password', $secPass);
+            $handle->bindParam(':email', $secEmail);
+            $handle->bindParam(':resetkey', $secReset);
 			      $handle->execute();
 			  }
 			  catch(\PDOException $ex) {
