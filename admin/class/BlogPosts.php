@@ -160,12 +160,13 @@ class BlogPosts extends DBConnect {
 
     function searchBlogPost($search) {
         try {
+            $newSearch = "%$search%";
             $conn = connectToDB();
 
-            $statement = "SELECT * FROM BlogPost WHERE Title LIKE :Search OR BlogContent LIKE :Search OR Author LIKE :Search";
+            $statement = "SELECT BlogPost.*, BlogCategory.CategoryName FROM `BlogPost` INNER JOIN BlogCategory ON BlogPost.BlogCategoryID =  BlogCategory.BlogCategoryID WHERE Title LIKE :Search OR BlogContent LIKE :Search OR UserEmail LIKE :Search OR BlogCategory.CategoryName LIKE :Search ORDER BY BlogPost.BlogDate DESC";
 
             $handle = $conn->prepare($statement);
-            $handle->bindParam(':Search',$search);
+            $handle->bindParam(':Search',$newSearch);
 
             $handle->execute();
 

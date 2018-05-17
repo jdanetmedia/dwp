@@ -15,14 +15,29 @@ if (!logged_in()) {
 }
 
 $blogPosts = new BlogPosts();
-$allBlogPosts = $blogPosts->getAllBlogPosts();
 $allCategories = $blogPosts->getAllCategories();
+if(isset($_GET["search"])) {
+    $allBlogPosts = $blogPosts->searchBlogPost($_GET["search"]);
+    $searchString = $_GET["search"];
+} else {
+    $allBlogPosts = $blogPosts->getAllBlogPosts();
+}
 ?>
 <div class="container">
     <div class="row">
         <div class="col s12">
             <div class="card">
                 <div class="card-content">
+                    <form class="" action="" method="get">
+                        <div class="input-field col s4 right">
+                            <input id="search" type="text" name="search" <?php if(isset($searchString)) { echo "value='" . $searchString . "'"; }
+                            ?>>
+                            <label for="search">Search products</label>
+                        </div>
+                        <div class="col s2 right">
+                            <input class="waves-effect waves-light btn grey darken-4 new-prod-btn" type="submit" name="submit" value="Search">
+                        </div>
+                    </form>
                     <span class="card-title">All Blog Posts<a class="waves-effect waves-light btn grey darken-4 new-prod-btn" href="new-blog-post.php">Add new</a></span>
                     <table class="responsive-table striped">
                         <thead>
@@ -44,8 +59,8 @@ $allCategories = $blogPosts->getAllCategories();
                                 <td><?php echo $aBlogPost->BlogDate; ?></td>
                                 <td><?php echo $aBlogPost->Title; ?></td>
                                 <td><?php if (strlen($aBlogPost->BlogContent) > 100) {
-                                        echo preg_replace('/\s+?(\S+)?$/', '', substr
-                                            ($aBlogPost->BlogContent, 0, 100)) . " ...";
+                                        echo preg_replace('/\s+?(\S+)?$/', '', filter_var(substr
+                                            ($aBlogPost->BlogContent, 0, 100), FILTER_SANITIZE_STRING)) . " ...";
                                     } else echo $aBlogPost->BlogContent; ?></td>
                                 <td><?php echo $aBlogPost->CategoryName; ?></td>
                                 <td><?php echo $aBlogPost->UserEmail; ?></td>

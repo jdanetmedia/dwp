@@ -17,7 +17,6 @@ if (!logged_in()) {
 $category = new Categories();
 $blogPosts = new BlogPosts();
 $blogPost = $blogPosts->getBlogPostDetails($_GET["ID"]);
-echo $blogPost[0]["BlogCategoryID"];
 if(isset($_POST["submit"])) {
     $blogPosts->updateBlogPost($_GET["ID"]);
     if(isset($_POST["deleteImg"])) {
@@ -72,17 +71,17 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                                 if($blogPost[0]["BlogCategoryID"] == $cat->BlogCategoryID) {
                                                     ?>
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo
-                                                        $cat->CategoryName; ?>KORREKT ID</option>
+                                                        $cat->CategoryName; ?></option>
                                                     <?php
                                                 } elseif (isset($_POST["saveBlogPostCategory"])) {
                                                     ?>
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>" selected><?php echo
-                                                        $cat->CategoryName; ?>CATEGORY</option>
+                                                        $cat->CategoryName; ?></option>
                                                     <?php
                                                 } else {
                                                     ?>
                                                     <option value="<?php echo $cat->BlogCategoryID; ?>"><?php echo
-                                                        $cat->CategoryName;?>ELSE</option>
+                                                        $cat->CategoryName;?></option>
                                                     <?php
                                                 }
                                             }

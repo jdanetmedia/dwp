@@ -58,7 +58,7 @@ require_once("../model/blogDAO.php");
             </div>
             <div class="card-content">
               <p><?php if (strlen($row["BlogContent"]) > 160) {
-                      echo preg_replace('/\s+?(\S+)?$/', '', htmlspecialchars(substr($row["BlogContent"], 0, 160))) . " ...";
+                      echo preg_replace('/\s+?(\S+)?$/', '', filter_var(substr($row["BlogContent"], 0, 160), FILTER_SANITIZE_STRING)) . " ...";
                   } else echo $row["BlogContent"]; ?></p>
             </div>
             <div class="card-action">
