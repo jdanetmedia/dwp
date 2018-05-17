@@ -65,7 +65,11 @@ $pageInfo = getPageInfo();
             ?>
               <li class="cartamount"><a class="cartamount"><?php echo $amountInCart; ?></a></li>
             <?php
-              }
+          } else {
+            ?>
+              <li class="cartamount"><a class="cartamount" style="color: transparent;">0</a></li>
+            <?php
+          }
             ?>
           </ul>
           <!-- Dropdown Structure -->
