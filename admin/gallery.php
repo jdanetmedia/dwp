@@ -12,13 +12,12 @@
   }
 
   $gallery = new Gallery();
-  $allImages = $gallery->getAllImages();
 
   if(isset($_POST["submit"])) {
     if(isset($_POST["imgId"])) {
       $gallery->attachImage($_GET["item"], $_POST["imgId"]); ?>
       <script type="text/javascript">
-        window.location.href = 'edit-product.php?item=<?php echo $_GET["item"]; ?>&select=images';
+        // window.location.href = 'edit-product.php?item=<?php // echo $_GET["item"]; ?>&select=images';
       </script>
     <?php }
   }
@@ -28,6 +27,7 @@
     }
 
   }
+  $allImages = $gallery->getAllImages();
 ?>
   <div class="container gallery-cnt">
     <div class="row">

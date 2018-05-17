@@ -23,16 +23,21 @@ class Gallery {
     try {
       $conn = connectToDB();
 
-      $countRows = $conn->prepare("SELECT * FROM ProductImg WHERE ItemNumber = '{$item}'");
+      $countRows = $conn->prepare("SELECT * FROM ProductImg WHERE ItemNumber = :item");
+      $countRows->bindParam(":item", $item);
       $countRows->execute();
       $rows = $countRows->fetchAll( \PDO::FETCH_OBJ );
       $numberOfRows = count($rows);
 
       if($numberOfRows > 0) {
-        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', false)");
+        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES (:item, :imgID, false)");
+        $handle->bindParam(":item", $item);
+        $handle->bindParam(":imgID", $imgId);
         $handle->execute();
       } else {
-        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES ('$item', '$imgId', true)");
+        $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES (:item, :imgID, true)");
+        $handle->bindParam(":item", $item);
+        $handle->bindParam(":imgID", $imgId);
         $handle->execute();
       }
 
@@ -40,6 +45,7 @@ class Gallery {
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
+      echo "Nothing selected";
     }
   }
 
@@ -101,8 +107,9 @@ class Gallery {
         $filepath = $path . "/" . $target_file;
       }
       // end check
-      $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES ('{$filepath}')");
+      $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES (:filepath)");
       if($uploadOk != 0) {
+        $handle->bindParam(":filepath", $filepath);
         $handle->execute();
       }
 

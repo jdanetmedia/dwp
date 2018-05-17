@@ -41,7 +41,7 @@ Class Categories {
 
             // Secure inputs
             $categoryName = Security::secureString($_POST["categoryName"]);
-            $description = Security::secureString($_POST["description"]);
+            $description = $_POST["description"];
             $seoTitle = Security::secureString($_POST["seoTitleProduct"]);
             $metaDescription = Security::secureString($_POST["metaDescriptionProduct"]);
 
@@ -65,14 +65,20 @@ Class Categories {
         try {
             $conn = connectToDB();
 
+            // Secure inputs
+            $categoryName = Security::secureString($_POST["categoryName"]);
+            $description = $_POST["description"];
+            $seoTitle = Security::secureString($_POST["seoTitleCategory"]);
+            $metaDescription = Security::secureString($_POST["metaDescriptionCategory"]);
+
             $statement = "INSERT INTO BlogCategory (CategoryName, Description, SeoTitle, MetaDescription) VALUES (:CategoryName, :Description, :SeoTitle, :MetaDescription)";
 
             $handle = $conn->prepare($statement);
 
-            $handle->bindParam(':CategoryName', $_POST["categoryName"]);
-            $handle->bindParam(':Description', $_POST["description"]);
-            $handle->bindParam(':SeoTitle', $_POST["seoTitleCategory"]);
-            $handle->bindParam(':MetaDescription', $_POST["metaDescriptionCategory"]);
+            $handle->bindParam(':CategoryName', $categoryName);
+            $handle->bindParam(':Description', $description);
+            $handle->bindParam(':SeoTitle', $seoTitle);
+            $handle->bindParam(':MetaDescription', $metaDescription);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -85,6 +91,13 @@ Class Categories {
         try {
             $conn = connectToDB();
 
+            // Secure inputs
+            $categoryName = Security::secureString($_POST["categoryName"]);
+            $description = $_POST["description"];
+            $seoTitle = Security::secureString($_POST["seoTitle"]);
+            $metaDescription = Security::secureString($_POST["metaDescription"]);
+            $catID = Security::secureString($categoryID);
+
             $statement = "UPDATE ProductCategory
                           SET CategoryName = :CategoryName,
                           Description = :Description,
@@ -94,11 +107,11 @@ Class Categories {
 
             $handle = $conn->prepare($statement);
 
-            $handle->bindParam(':CategoryName',$_POST["categoryName"]);
-            $handle->bindParam(':Description',$_POST["description"]);
-            $handle->bindParam(':SeoTitle',$_POST["seoTitleProduct"]);
-            $handle->bindParam(':MetaDescription',$_POST["metaDescriptionProduct"]);
-            $handle->bindParam(':ProductCategoryID',$categoryID);
+            $handle->bindParam(':CategoryName', $categoryName);
+            $handle->bindParam(':Description', $description);
+            $handle->bindParam(':SeoTitle', $seoTitle);
+            $handle->bindParam(':MetaDescription', $metaDescription);
+            $handle->bindParam(':ProductCategoryID', $catID);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -111,6 +124,13 @@ Class Categories {
         try {
             $conn = connectToDB();
 
+            // Secure inputs
+            $categoryName = Security::secureString($_POST["categoryName"]);
+            $description = $_POST["description"];
+            $seoTitle = Security::secureString($_POST["seoTitle"]);
+            $metaDescription = Security::secureString($_POST["metaDescription"]);
+            $catID = Security::secureString($categoryID);
+
             $statement = "UPDATE BlogCategory
                           SET CategoryName = :CategoryName,
                           Description = :Description,
@@ -120,11 +140,11 @@ Class Categories {
 
             $handle = $conn->prepare($statement);
 
-            $handle->bindParam(':CategoryName',$_POST["categoryName"]);
-            $handle->bindParam(':Description',$_POST["description"]);
-            $handle->bindParam(':SeoTitle',$_POST["seoTitleCategory"]);
-            $handle->bindParam(':MetaDescription',$_POST["metaDescriptionCategory"]);
-            $handle->bindParam(':BlogCategoryID',$categoryID);
+            $handle->bindParam(':CategoryName', $categoryName);
+            $handle->bindParam(':Description', $description);
+            $handle->bindParam(':SeoTitle', $seoTitle);
+            $handle->bindParam(':MetaDescription', $metaDescription);
+            $handle->bindParam(':BlogCategoryID', $catID);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -137,11 +157,14 @@ Class Categories {
         try {
             $conn = connectToDB();
 
+            // Secure input
+            $catID = Security::secureString($categoryID);
+
             $statement = "DELETE FROM ProductCategory WHERE ProductCategoryID = :ProductCategoryID";
 
             $handle = $conn->prepare($statement);
 
-            $handle->bindParam(':ProductCategoryID',$categoryID);
+            $handle->bindParam(':ProductCategoryID', $catID);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -154,11 +177,14 @@ Class Categories {
         try {
             $conn = connectToDB();
 
+            // Secure input
+            $catID = Security::secureString($categoryID);
+
             $statement = "DELETE FROM BlogCategory WHERE BlogCategoryID = :BlogCategoryID";
 
             $handle = $conn->prepare($statement);
 
-            $handle->bindParam(':BlogCategoryID',$categoryID);
+            $handle->bindParam(':BlogCategoryID', $catID);
             $handle->execute();
             $conn = null; //CLOSE THE CONNECTION BRUH ?!
         }
@@ -174,7 +200,7 @@ Class Categories {
             $statement = "SELECT * FROM ProductCategory WHERE ProductCategoryID = :ProductCategoryID";
 
             $handle = $conn->prepare($statement);
-            $handle->bindParam("ProductCategoryID",$categoryID);
+            $handle->bindParam("ProductCategoryID", $catID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );

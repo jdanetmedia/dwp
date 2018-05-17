@@ -13,6 +13,7 @@ if (!logged_in()) {
 
 $category = new Categories();
 $aCategory = $category->getProductCategoryDetails($_GET["ID"]);
+
 if(isset($_POST["submit"])) {
     $category->updateProductCategory($_GET["ID"]);
     ?>
