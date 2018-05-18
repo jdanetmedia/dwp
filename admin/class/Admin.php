@@ -130,13 +130,12 @@ class Admin extends Security {
 
             // Secure inputs
             $secEmail = Security::secureString($email);
-            $secReset = Security::secureString($reset);
 
 			      $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";
 			      $handle = $conn->prepare($statement);
 			      $handle->bindParam(':password', $hashed_password);
             $handle->bindParam(':email', $secEmail);
-            $handle->bindParam(':resetkey', $secReset);
+            $handle->bindParam(':resetkey', $reset);
 			      $handle->execute();
 			  }
 			  catch(\PDOException $ex) {
