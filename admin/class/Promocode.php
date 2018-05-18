@@ -18,7 +18,7 @@ class Promocode {
       try {
           $conn = connectToDB();
 
-          $handle = $conn->prepare("SELECT *  FROM PromoCode");
+          $handle = $conn->prepare("SELECT * FROM PromoCode");
           $handle->execute();
 
           $result = $handle->fetchAll( \PDO::FETCH_OBJ );
@@ -32,15 +32,20 @@ class Promocode {
 
   function getPromocode($promocode) {
       try {
-          $conn = connectToDB();
+          // Secure input
+          $secPromo = Security::secureString($promocode);
+
+          $conn = DB::connect();
           $statement = "SELECT * FROM PromoCode WHERE PromoCode = :PromoCode";
 
           $handle = $conn->prepare($statement);
-          $handle->bindParam(":PromoCode", $promocode);
+          $handle->bindParam(":PromoCode", $secPromo);
           $handle->execute();
 
           $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
           return $result;
+
+          $conn = DB::close();
       }
       catch(\PDOException $ex) {
           return print($ex->getMessage());
@@ -49,7 +54,17 @@ class Promocode {
 
   function updatePromocode($oldpromocode) {
       try {
-          $conn = connectToDB();
+          $conn = DB::connect();
+
+          // Secure input
+          $promocode = Security::secureString($_POST["promocode"]);
+          $discount = Security::secureString($_POST["discount"]);
+          $startdate = Security::secureString($_POST["startdate"]);
+          $enddate = Security::secureString($_POST["enddate"]);
+          $numberOfUses = Security::secureString($_POST["uses"]);
+          $userEmail = Security::secureString($_SESSION["UserEmail"]);
+          $oldCode = Security::secureString($oldpromocode);
+
           $statement = "UPDATE PromoCode SET
                         PromoCode = :PromoCode,
                         DiscountAmount = :DiscountAmount,
@@ -60,14 +75,16 @@ class Promocode {
                         WHERE PromoCode = :OldPromoCode";
 
           $handle = $conn->prepare($statement);
-          $handle->bindParam(":PromoCode", $_POST["promocode"]);
-          $handle->bindParam(":DiscountAmount", $_POST["discount"]);
-          $handle->bindParam(":StartDate", $_POST["startdate"]);
-          $handle->bindParam(":EndDate", $_POST["enddate"]);
-          $handle->bindParam(":NumberOfUses", $_POST["uses"]);
-          $handle->bindParam(":UserEmail", $_SESSION["UserEmail"]);
-          $handle->bindParam(":OldPromoCode", $oldpromocode);
+          $handle->bindParam(":PromoCode", $promocode);
+          $handle->bindParam(":DiscountAmount", $discount);
+          $handle->bindParam(":StartDate", $startdate);
+          $handle->bindParam(":EndDate", $enddate);
+          $handle->bindParam(":NumberOfUses", $numberOfUses);
+          $handle->bindParam(":UserEmail", $userEmail);
+          $handle->bindParam(":OldPromoCode", $oldCode);
           $handle->execute();
+
+          $conn = DB::close();
       }
       catch(\PDOException $ex) {
           return print($ex->getMessage());
@@ -76,16 +93,18 @@ class Promocode {
 
   function deletePromocode($promocode) {
       try {
-          $conn = connectToDB();
+          $conn = DB::connect();
+
+          // Secure input
+          $secCode = Security::secureString($promocode);
 
           $statement = "DELETE FROM PromoCode WHERE PromoCode = :promocode";
 
           $handle = $conn->prepare($statement);
-
-          $handle->bindParam(':promocode', $promocode);
+          $handle->bindParam(':promocode', $secCode);
 
           $handle->execute();
-          $conn = null; //CLOSE THE CONNECTION BRUH ?!
+          $conn = DB::close(); //CLOSE THE CONNECTION BRUH ?!
       }
       catch(\PDOExeption $ex) {
           print($ex->getMessage());
@@ -94,7 +113,16 @@ class Promocode {
 
   function createPromocode() {
       try {
-          $conn = connectToDB();
+          $conn = DB::connect();
+
+          // Secure input
+          $promocode = Security::secureString($_POST["promocode"]);
+          $discount = Security::secureString($_POST["discount"]);
+          $startdate = Security::secureString($_POST["startdate"]);
+          $enddate = Security::secureString($_POST["enddate"]);
+          $numberOfUses = Security::secureString($_POST["uses"]);
+          $userEmail = Security::secureString($_SESSION["UserEmail"]);
+
           $statement = "INSERT INTO PromoCode VALUES
                         (:PromoCode,
                         :DiscountAmount,
@@ -104,13 +132,15 @@ class Promocode {
                         :UserEmail)";
 
           $handle = $conn->prepare($statement);
-          $handle->bindParam(":PromoCode", $_POST["promocode"]);
-          $handle->bindParam(":DiscountAmount", $_POST["discount"]);
-          $handle->bindParam(":StartDate", $_POST["startdate"]);
-          $handle->bindParam(":EndDate", $_POST["enddate"]);
-          $handle->bindParam(":NumberOfUses", $_POST["uses"]);
-          $handle->bindParam(":UserEmail", $_SESSION["UserEmail"]);
+          $handle->bindParam(":PromoCode", $promocode);
+          $handle->bindParam(":DiscountAmount", $discount);
+          $handle->bindParam(":StartDate", $startdate);
+          $handle->bindParam(":EndDate", $enddate);
+          $handle->bindParam(":NumberOfUses", $numberOfUses);
+          $handle->bindParam(":UserEmail", $userEmail);
           $handle->execute();
+
+          $conn = DB::close();
       }
       catch(\PDOException $ex) {
           return print($ex->getMessage());

@@ -5,6 +5,9 @@ if (!file_exists('../includes/constants.php')) {
 // DB connection
 require_once("../includes/connection.php");
 
+// Security
+require_once("../admin/class/Security.php");
+
 // Customer login functions and session
 require_once("../includes/loginCustomer/session.php");
 require_once("../includes/loginCustomer/functions.php");

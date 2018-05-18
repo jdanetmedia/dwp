@@ -5,7 +5,7 @@
 class Gallery {
   function getAllImages() {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM ImgGallery");
       $handle->execute();
@@ -13,7 +13,7 @@ class Gallery {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -21,7 +21,11 @@ class Gallery {
   }
   function attachImage($item, $imgId) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
+
+      // Secure input
+      $secItem = Security::secureString($item);
+      $secImgId = Security::secureString($imgId);
 
       $countRows = $conn->prepare("SELECT * FROM ProductImg WHERE ItemNumber = :item");
       $countRows->bindParam(":item", $item);
@@ -31,17 +35,17 @@ class Gallery {
 
       if($numberOfRows > 0) {
         $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES (:item, :imgID, false)");
-        $handle->bindParam(":item", $item);
-        $handle->bindParam(":imgID", $imgId);
+        $handle->bindParam(":item", $secItem);
+        $handle->bindParam(":imgID", $secImgId);
         $handle->execute();
       } else {
         $handle = $conn->prepare("INSERT INTO ProductImg (ItemNumber, ImgID, IsPrimary) VALUES (:item, :imgID, true)");
-        $handle->bindParam(":item", $item);
-        $handle->bindParam(":imgID", $imgId);
+        $handle->bindParam(":item", $secItem);
+        $handle->bindParam(":imgID", $secImgId);
         $handle->execute();
       }
 
-      $conn = null;
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -92,7 +96,7 @@ class Gallery {
     }
     // Save to database
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
       $path = $_SERVER["DOCUMENT_ROOT"] . getcwd();
       $cleanedPath = str_replace('/Applications/MAMP/htdocs/Applications/MAMP/htdocs', 'http://localhost:8888', $path);
 
@@ -106,14 +110,18 @@ class Gallery {
       } else {
         $filepath = $path . "/" . $target_file;
       }
+
+      // Secure input
+      $secFilepath = Security::secureString($filepath);
+
       // end check
       $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES (:filepath)");
       if($uploadOk != 0) {
-        $handle->bindParam(":filepath", $filepath);
+        $handle->bindParam(":filepath", $secFilepath);
         $handle->execute();
       }
 
-      $conn = null;
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());

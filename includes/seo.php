@@ -6,6 +6,7 @@
 
   // Product
   if(isset($_GET["item"])) {
+    include("../admin/class/DB.php");
     include("../admin/class/Product.php");
 
     $product = new Product();
@@ -50,7 +51,6 @@
       echo "<meta name='description' content='" . $info["ProductsMetaDescription"] . "'>";
     }
   } elseif($basename == "products" && !isset($_GET["item"]) && isset($_GET["cat"]) && $_GET["cat"] != 0) {
-    include("../admin/class/DBConnect.php");
     include("../admin/class/Categories.php");
     $categories = new Categories();
     $currentCat = $categories->getProductCategoryDetails($_GET["cat"]);
@@ -70,7 +70,6 @@
 
   // Blogpost
   if(isset($_GET["post"])) {
-    include("../admin/class/DBConnect.php");
     include("../admin/class/BlogPosts.php");
 
     $blogpost = new BlogPosts();
@@ -105,7 +104,6 @@
       echo "<meta name='description' content='" . $info["BlogMetaDescription"] . "'>";
     }
   } elseif($basename == "blog" && !isset($_GET["post"]) && isset($_GET["cat"]) && $_GET["cat"] != 0) {
-    include("../admin/class/DBConnect.php");
     include("../admin/class/Categories.php");
     $categories = new Categories();
     $currentCat = $categories->getBlogPostCategoryDetails($_GET["cat"]);

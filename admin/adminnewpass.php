@@ -17,7 +17,7 @@ require_once("includes/header.php");
       <div class="card medium">
         <div class="card-content">
           <span class="card-title">Create your new password</span>
-					<form class="col s12" action="index.php" method="post">
+					<form class="col s12" action="index.php?admin=<?php echo $_GET['admin'] . "&key=" . $_GET['key'];?>" method="post">
             <div class="row">
 							<div class="input-field col s12">
 								<input id="password" type="password" name="pass" maxlength="30" value="" class="validate">
