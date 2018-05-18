@@ -29,7 +29,16 @@ $url = $_SERVER['REQUEST_URI'];
             <span class="card-title"><?php echo $row["ProductName"]; ?></span>
           </div>
           <div class="card-action">
-            <p class="price">$<?php echo $row["Price"]; ?></p>
+            <?php if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+                ?>
+              <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"]; ?></b></p>
+              <?php
+              } else {
+              ?>
+              <p class="price">$<?php echo $row["Price"]; ?></p>
+              <?php
+              }
+              ?>
             <div class="stars right">
               <?php
                 echo getReviewForProduct($itemNumber);

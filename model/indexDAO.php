@@ -18,10 +18,26 @@ function getNewestProducts() {
     return $result;
 }
 
+function getRecentBlogs() {
+    global $connection;
+
+    $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID ORDER BY BlogPost.BlogDate DESC LIMIT 2";
+    $result = mysqli_query($connection, $query);
+    return $result;
+}
+
+function getProductsOnSale() {
+    global $connection;
+
+    $query = "SELECT Product.*, ProductImg.ImgID, ProductImg.IsPrimary, ImgGallery.URL FROM Product LEFT JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber LEFT JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1 AND ProductImg.IsPrimary = 1 AND NOT Product.OfferPrice = 0 LIMIT 5";
+    $result = mysqli_query($connection, $query);
+    return $result;
+}
+
 function getHighestRatedProducts() {
     global $connection;
 
-    $query = "SELECT Review.ItemNumber, Product.ProductName, Product.Price, Product.ProductStatus, AVG(Rating) FROM Review INNER JOIN Product ON Product.ItemNumber = Review.ItemNumber WHERE Product.ProductStatus = 1 GROUP BY ItemNumber ORDER BY AVG(Rating) DESC LIMIT 5";
+    $query = "SELECT AVG(Rating), ImgGallery.*, ProductImg.IsPrimary, Product.* FROM Product INNER JOIN Review ON Review.ItemNumber = Product.ItemNumber LEFT JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber LEFT JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1 AND ProductImg.IsPrimary = 1 GROUP BY ItemNumber ORDER BY AVG(Rating) DESC LIMIT 5";
     $result = mysqli_query($connection, $query);
     return $result;
 }
