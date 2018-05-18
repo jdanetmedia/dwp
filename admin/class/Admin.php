@@ -8,7 +8,7 @@ class Admin extends Security {
   		$email = trim(mysqli_real_escape_string($connection, $_POST['email']));
   		$password = trim(mysqli_real_escape_string($connection,$_POST['pass']));
 
-  		$query = "SELECT UserEmail, Password, FirstName FROM User WHERE UserEmail = '{$email}' LIMIT 1";
+  		$query = "SELECT UserEmail, Password, FirstName, AccessLevel FROM User WHERE UserEmail = '{$email}' LIMIT 1";
   		$result = mysqli_query($connection, $query);
 
   			if (mysqli_num_rows($result) == 1) {
@@ -18,6 +18,7 @@ class Admin extends Security {
                   if(password_verify($password, $found_user['Password'])){
   				    $_SESSION['UserEmail'] = $found_user['UserEmail'];
   				    $_SESSION['AdminFirstName'] = $found_user['FirstName'];
+              $_SESSION['AccessLevel'] = $found_user['AccessLevel'];
   				    redirect_to("index.php");
   			} else {
   				// username/password combo was not found in the database
@@ -36,6 +37,22 @@ class Admin extends Security {
 
     if (isset($_POST["submitadminnewpass"])) {
       $this->newpass();
+    }
+
+    if (isset($_GET["update"])) {
+      $this->updateUserInfo($_GET["update"]);
+    }
+
+    if (isset($_GET["updatepass"])) {
+      $this->updateUserPass($_GET["updatepass"]);
+    }
+
+    if (isset($_GET["newuser"])) {
+      $this->createNewUser();
+    }
+
+    if (isset($_GET["remove"])) {
+      $this->deleteUser($_GET["remove"]);
     }
   }
 
@@ -140,6 +157,76 @@ class Admin extends Security {
         }
       }
     }
+  }
+
+  function GetAllUsers() {
+    try {
+        $conn = connectToDB();
+
+        $handle = $conn->prepare("SELECT * FROM User WHERE NOT AccessLevel = 1");
+        $handle->execute();
+
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $conn = null;
+        return $result;
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
+  }
+
+  function GetUserInfo($email) {
+    try {
+        $conn = DB::connect();
+
+        $email = Security::secureString($email);
+
+        $handle = $conn->prepare("SELECT * FROM User WHERE UserEmail = :UserEmail LIMIT 1");
+        $handle->bindParam(':UserEmail', $email);
+        $handle->execute();
+
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $conn = null;
+        return $result;
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
+  }
+
+  function updateUserInfo($useremail) {
+    $firstname = Security::secureString($_POST["firstname"]);
+    $lastname = Security::secureString($_POST["lastname"]);
+    $newmail = Security::secureString($_POST["email"]);
+    if (isset($_POST["firstname"])) {
+      try {
+          $conn = DB::connect();
+
+          $handle = $conn->prepare("UPDATE User SET FirstName = :firstname, LastName = :lastname, UserEmail = :newmail WHERE UserEmail = :useremail");
+          $handle->bindParam(':useremail', $useremail);
+          $handle->bindParam(':firstname', $firstname);
+          $handle->bindParam(':lastname', $lastname);
+          $handle->bindParam(':newmail', $newmail);
+          $handle->execute();
+
+          $conn = null;
+      }
+      catch(\PDOException $ex) {
+          return print($ex->getMessage());
+      }
+    }
+  }
+
+  function updateUserPass($useremail) {
+    echo "Update user password";
+  }
+
+  function createNewUser() {
+    echo "Create a new user";
+  }
+
+  function deleteUser($useremail) {
+    echo "Delete this one: " . $useremail;
   }
 }
 ?>
