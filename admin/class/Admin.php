@@ -129,13 +129,12 @@ class Admin extends Security {
 			      $conn = connectToDB();
 
             // Secure inputs
-            $secPass = Security::secureString($hashed_password);
             $secEmail = Security::secureString($email);
             $secReset = Security::secureString($reset);
 
 			      $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";
 			      $handle = $conn->prepare($statement);
-			      $handle->bindParam(':password', $secPass);
+			      $handle->bindParam(':password', $hashed_password);
             $handle->bindParam(':email', $secEmail);
             $handle->bindParam(':resetkey', $secReset);
 			      $handle->execute();
