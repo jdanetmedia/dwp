@@ -39,6 +39,7 @@ $allorders = $orders->getAllOrders();
             <tbody>
               <?php
                 foreach ($allorders as $order) {
+                  $orderProductsAndPrice = $orders->getOrderDetails($order->OrderNumber);
                   $price = $orders->getSum($order->OrderNumber);
                   if (isset($order->PromoCode)) {
                     $discount = $orders->getPromoCodeDiscount($order->PromoCode);
@@ -48,15 +49,7 @@ $allorders = $orders->getAllOrders();
                     <td><?php echo $order->OrderDate; ?></td>
                     <td><?php echo $order->FirstName . " " . $order->LastName; ?></td>
                     <?php foreach ($price as $totalprice) { ?>
-                    <td>$<?php
-                    if(isset($discount)) {
-                      $amount = ($totalprice->totalprice / 100) * $discount[0]["DiscountAmount"];
-                      $total = $totalprice->totalprice - $amount;
-                    } else {
-                      $total = $totalprice->totalprice;
-                    }
-                      echo $total;
-                      ?>
+                    <td>$<?php echo $orderProductsAndPrice["Total"] + $orderProductsAndPrice["OrderInfo"]["DeliveryPrice"]; ?>
                     </td>
                     <?php } ?>
                     <td><?php echo $order->Method; ?></td>

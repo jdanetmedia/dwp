@@ -16,14 +16,16 @@ if (!logged_in()) {
 <div class="container">
   <h1>Orders</h1>
   <?php
-  while ($row = mysqli_fetch_array($orders)) {
+  foreach ($orders as $row) {
+		$orderProductsAndPrice = getOrder($row["OrderNumber"]);
   ?>
       <div class="row">
         <div class="col s12">
           <div class="card">
             <div class="card-content">
               <span class="card-title">Ordernumber: #<?php echo $row["OrderNumber"]; ?></span>
-              <p>Date: <?php echo $row["OrderDate"]; ?></p>
+              <p class="left">Date: <?php echo $row["OrderDate"]; ?></p>
+							<p class="right">Total: $<?php echo $orderProductsAndPrice["Total"] + $orderProductsAndPrice["OrderInfo"]["DeliveryPrice"]; ?></p>
             </div>
             <div class="card-action">
               <a href="order.php?order=<?php echo $row["OrderNumber"]; ?>">View order</a>

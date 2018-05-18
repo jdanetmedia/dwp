@@ -4,8 +4,7 @@ require_once("../includes/header.php");
 require_once("../model/ordersDAO.php");
 require_once("../model/cartDAO.php");
 $orderNumber = $_GET["order"];
-$orderinfo = getOrder($orderNumber);
-$orderProducts = getOrderProducts($orderNumber);
+$orderProductsAndPrice = getOrder($orderNumber);
 if (!logged_in()) {
 ?>
 <script type="text/javascript">
@@ -14,7 +13,7 @@ if (!logged_in()) {
 <?php
 	//redirect_to("login.php");
 }
-if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
+if ($orderProductsAndPrice["OrderInfo"]["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
   ?>
   <div class="container">
     <h2>This isn't your order!</h2>
@@ -28,30 +27,30 @@ if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
     <h2>Order info</h2>
     <div class="card col s12 m6">
       <div class="card-content">
-        <span class="card-title">Ordernumber #<?php echo $orderinfo["OrderNumber"]; ?></span>
+        <span class="card-title">Ordernumber #<?php echo $orderProductsAndPrice["OrderInfo"]["OrderNumber"]; ?></span>
         <p>Order comment: </p>
-        <p><?php echo $orderinfo["Comment"]; ?></p>
+        <p><?php echo $orderProductsAndPrice["OrderInfo"]["Comment"]; ?></p>
         <br>
-        <p>Date: <?php echo $orderinfo["OrderDate"]; ?></p>
+        <p>Date: <?php echo $orderProductsAndPrice["OrderInfo"]["OrderDate"]; ?></p>
         <br>
-        <p>Status: <?php echo $orderinfo["Status"]; ?></p>
+        <p>Status: <?php echo $orderProductsAndPrice["OrderInfo"]["Status"]; ?></p>
       </div>
     </div>
     <div class="card col s12 m6">
       <div class="card-content">
         <span class="card-title">Shipping Info</span>
-        <p><?php echo $orderinfo["ShippingStreet"] . " " .$orderinfo["ShippingHouseNumber"]; ?></p>
-        <p><?php echo $orderinfo["ZipCode"] . " " . $orderinfo["City"]; ?></p>
+        <p><?php echo $orderProductsAndPrice["OrderInfo"]["ShippingStreet"] . " " . $orderProductsAndPrice["OrderInfo"]["ShippingHouseNumber"]; ?></p>
+        <p><?php echo $orderProductsAndPrice["OrderInfo"]["ZipCode"] . " " . $orderProductsAndPrice["OrderInfo"]["City"]; ?></p>
         <br>
         <p><b>Delivery Method:</b></p>
-        <p><?php echo $orderinfo["Method"]; ?></p>
-        <p>Delivery cost: $<?php echo $orderinfo["DeliveryPrice"]; ?></p>
+        <p><?php echo $orderProductsAndPrice["OrderInfo"]["Method"]; ?></p>
+        <p>Delivery cost: $<?php echo $orderProductsAndPrice["OrderInfo"]["DeliveryPrice"]; ?></p>
       </div>
     </div>
   </div>
 	<?php
-		if (isset($orderinfo["PromoCode"])) {
-			$promocodeInfo = checkForPromoCode($orderinfo["PromoCode"]);
+		if (isset($orderProductsAndPrice["OrderInfo"]["PromoCode"])) {
+			$promocodeInfo = checkForPromoCode($orderProductsAndPrice["OrderInfo"]["PromoCode"]);
 	?>
 	<div class="card col s12">
 		<div class="card-content">
@@ -66,42 +65,46 @@ if ($orderinfo["CustomerEmail"] != $_SESSION["CustomerEmail"]) {
   <div class="row">
     <h2>Products</h2>
     <?php
-    while ($row = mysqli_fetch_array($orderProducts)) {
-    ?>
-    <div class="card col s12">
-      <div class="card-content">
-        <span class="card-title">Productname: <?php echo $row["ProductName"]; ?></span>
-        <p>Itemnumber: <?php echo $row["ItemNumber"]; ?></p>
-        <p>Amount: <?php echo $row["Amount"]; ?></p>
-        <p>Single Price: $<?php echo $row["Price"]; ?></p>
-        <p>Price: $<?php echo $row["Price"] * $row["Amount"]; ?></p>
-      </div>
-      <div class="card-action">
-        <a href="product.php?item=<?php echo $row["ItemNumber"]; ?>">View product</a>
-      </div>
-    </div>
-    <?php
-		$totalPrice = $totalPrice + $row["Price"] * $row["Amount"];
-    }
+		foreach($orderProductsAndPrice["Products"] as $products) {
+		?>
+		<div class="card col s12">
+			<div class="card-content">
+				<span class="card-title">Productname: <?php echo $products["ProductName"]; ?></span>
+				<p>Itemnumber: <?php echo $products["ItemNumber"]; ?></p>
+				<p>Amount: <?php echo $products["Amount"]; ?></p>
+				<p>Single Price: $<?php echo $products["FinalPrice"]; ?></p>
+				<p>Price: $<?php echo $products["FinalPrice"] * $products["Amount"]; ?></p>
+			</div>
+			<div class="card-action">
+				<a href="product.php?item=<?php echo $row["ItemNumber"]; ?>">View product</a>
+			</div>
+		</div>
+		<?php
+		}
     ?>
 		<div class="card col s12">
       <div class="card-content">
 				<?php
-					if (isset($orderinfo["PromoCode"])) {
-						$totalPriceWithDiscount = ($totalPrice / 100) * $promocodeInfo[0]["DiscountAmount"] + $orderinfo["DeliveryPrice"];
-						$totalPrice = $totalPrice + $orderinfo["DeliveryPrice"];
+					if ($orderProductsAndPrice["BeforeDiscount"] != NULL) {
 				?>
 				<div class="row">
-					<span class="card-title left">Before Discount:</span><span class="card-title right"><strike>$<?php echo $totalPrice; ?></strike></span>
+					<span class="card-title left">Before Discount:</span><span class="card-title right"><strike>$<?php echo $orderProductsAndPrice["BeforeDiscount"]; ?></strike></span>
 				</div>
 				<div class="row">
-					<span class="card-title left">Total price:</span><span class="card-title right">$<?php echo $totalPriceWithDiscount; ?></span>
+					<span class="card-title left">Total price:</span><span class="card-title right">$<?php echo $orderProductsAndPrice["Total"]; ?></span>
+				</div>
+				<div class="row">
+					<span class="card-title left">With shipping:</span><span class="card-title right">$<?php echo $orderProductsAndPrice["Total"] + $orderProductsAndPrice["OrderInfo"]["DeliveryPrice"]; ?></span>
 				</div>
 				<?php
 				} else {
-					$totalPrice = $totalPrice + $orderinfo["DeliveryPrice"];
 				?>
-					<span class="card-title left">Total price:</span><span class="card-title right">$<?php echo $totalPrice; ?></span>
+					<div class="row">
+						<span class="card-title left">Total price:</span><span class="card-title right">$<?php echo $orderProductsAndPrice["Total"]; ?></span>
+					</div>
+					<div class="row">
+						<span class="card-title left">With shipping:</span><span class="card-title right">$<?php echo $orderProductsAndPrice["Total"] + $orderProductsAndPrice["OrderInfo"]["DeliveryPrice"]; ?></span>
+					</div>
 				<?php
 				}
 				?>
