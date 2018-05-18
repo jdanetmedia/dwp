@@ -4,7 +4,7 @@ class Settings {
   // Basic info
   function getBasicPageInfo() {
     try {
-      $conn = DB::connect();
+      $conn = connectToDB();
 
       $handle = $conn->prepare("SELECT * FROM BasicPageInfo");
       $handle->execute();
@@ -12,7 +12,7 @@ class Settings {
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result[0];
 
-      $conn = DB::close();
+      $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -21,7 +21,7 @@ class Settings {
 
   function saveBasicPageInfo($post) {
     try {
-      $conn = DB::connect();
+      $conn = connectToDB();
 
       // Secure input
       $cvr = Security::secureString($post["CVR"]);
@@ -86,7 +86,7 @@ class Settings {
       $handle->bindParam(":BlogMetaDescription", $blogMetaDescription);
       $handle->execute();
 
-      $conn = DB::close();
+      $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -95,7 +95,7 @@ class Settings {
 
   function getCity($zip) {
     try {
-      $conn = DB::connect();
+      $conn = connectToDB();
 
       // Secure input
       $zip = Security::secureString($zip);
@@ -108,7 +108,7 @@ class Settings {
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result[0]["City"];
 
-      $conn = DB::close();
+      $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -118,7 +118,7 @@ class Settings {
   // Hours
   function getHours() {
     try {
-        $conn = DB::connect();
+        $conn = connectToDB();
 
         $query = "SELECT * FROM Hours";
         $handle = $conn->prepare($query);
@@ -127,7 +127,7 @@ class Settings {
         $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
         return $result;
 
-        $conn = DB::close();
+        $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -136,7 +136,7 @@ class Settings {
 
   function addHours($post) {
     try {
-        $conn = DB::connect();
+        $conn = connectToDB();
 
         $post["Day"] = Security::secureString($post["Day"]);
         $post["Open"] = Security::secureString($post["Open"]);
@@ -150,7 +150,7 @@ class Settings {
         $handle->bindParam(":Close", $post["Close"]);
         $handle->execute();
 
-        $conn = DB::close();
+        $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -159,7 +159,7 @@ class Settings {
 
   function updateHours($post, $id) {
     try {
-        $conn = DB::connect();
+        $conn = connectToDB();
 
         $post["Day"] = Security::secureString($post["Day"]);
         $post["Open"] = Security::secureString($post["Open"]);
@@ -179,7 +179,7 @@ class Settings {
         $handle->bindParam(":id", $id);
         $handle->execute();
 
-        $conn = DB::close();
+        $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -188,7 +188,7 @@ class Settings {
 
   function deleteHours($id) {
     try {
-        $conn = DB::connect();
+        $conn = connectToDB();
 
         // Secure input
         $id = Security::secureString($id);
@@ -199,7 +199,7 @@ class Settings {
         $handle->bindParam(":id", $id);
         $handle->execute();
 
-        $conn = DB::close();
+        $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -209,7 +209,7 @@ class Settings {
   // Shipping
   function getShippingMethods() {
     try {
-      $conn = DB::connect();
+      $conn = connectToDB();
 
       $handle = $conn->prepare("SELECT * FROM DeliveryMethod");
       $handle->execute();
@@ -217,7 +217,7 @@ class Settings {
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result;
 
-      $conn = DB::close();
+      $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -226,7 +226,7 @@ class Settings {
 
   function addShippingMethod($post) {
     try {
-        $conn = DB::connect();
+        $conn = connectToDB();
 
         $query = "INSERT INTO DeliveryMethod (Method, MethodDescription, DeliveryPrice) VALUES (:Method, :MethodDescription, :DeliveryPrice)";
 
@@ -236,7 +236,7 @@ class Settings {
         $handle->bindParam(":DeliveryPrice", $post["DeliveryPrice"]);
         $handle->execute();
 
-        $conn = DB::close();
+        $conn = connectToDB();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -245,7 +245,7 @@ class Settings {
 
   function updateShippingMethod($post, $id) {
     try {
-        $conn = DB::connect();
+        $conn = connectToDB();
 
         // Secure input
         $post["Method"] = Security::secureString($post["Method"]);
@@ -264,7 +264,7 @@ class Settings {
         $handle->bindParam(":id", $id);
         $handle->execute();
 
-        $conn = DB::close();
+        $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -273,7 +273,7 @@ class Settings {
 
   function deleteShippingMethod($id) {
     try {
-        $conn = DB::connect();
+        $conn = connectToDB();
 
         // Secure input
         $id = Security::secureString($id);
@@ -284,7 +284,7 @@ class Settings {
         $handle->bindParam(":id", $id);
         $handle->execute();
 
-        $conn = DB::close();
+        $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
