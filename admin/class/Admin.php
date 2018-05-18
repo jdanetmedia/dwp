@@ -62,7 +62,7 @@ class Admin extends Security {
 
         // Secure inputs
         $secKey = Security::secureString($randomkey);
-        $secEmail = Security::secureEmail($email);
+        $secEmail = Security::secureString($email);
 
         $statement = "UPDATE User SET ResetKey = :randomkey WHERE UserEmail = :email";
 
@@ -130,7 +130,7 @@ class Admin extends Security {
 
             // Secure inputs
             $secPass = Security::secureString($hashed_password);
-            $secEmail = Security::secureEmail($email);
+            $secEmail = Security::secureString($email);
             $secReset = Security::secureString($reset);
 
 			      $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";

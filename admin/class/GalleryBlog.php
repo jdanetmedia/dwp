@@ -21,16 +21,25 @@ class GalleryBlog {
         try {
             $conn = connectToDB();
 
-            $countRows = $conn->prepare("SELECT * FROM BlogImg WHERE BlogPostID = '{$blogPostID}'");
+            // Secure input
+            $secPostId = Security::secureString($blogPostID);
+            $secImgId = Security::secureString($imgID);
+
+            $countRows = $conn->prepare("SELECT * FROM BlogImg WHERE BlogPostID = :BlogPostID");
+            $countRows->bindParam(":BlogPostID", $secPostId)
             $countRows->execute();
             $rows = $countRows->fetchAll( \PDO::FETCH_OBJ );
             $numberOfRows = count($rows);
 
             if($numberOfRows > 0) {
-                $handle = $conn->prepare("UPDATE BlogImg SET ImgID = $imgID WHERE BlogPostID = $blogPostID");
+                $handle = $conn->prepare("UPDATE BlogImg SET ImgID = :ImgID WHERE BlogPostID = :BlogPostID");
+                $handle->bindParam(":ImgID", $secImgId);
+                $handle->bindParam(":BlogPostID", $secPostId);
                 $handle->execute();
             } else {
-                $handle = $conn->prepare("INSERT INTO BlogImg (BlogPostID, ImgID) VALUES ('$blogPostID', '$imgID')");
+                $handle = $conn->prepare("INSERT INTO BlogImg (BlogPostID, ImgID) VALUES (:BlogPostID, :ImgID)");
+                $handle->bindParam(":ImgID", $secImgId);
+                $handle->bindParam(":BlogPostID", $secPostId);
                 $handle->execute();
             }
 
@@ -98,8 +107,13 @@ class GalleryBlog {
             } else {
                 $filepath = $path . "/" . $target_file;
             }
+
+            // Secure input
+            $secFilepath = Security::secureString($filepath);
+
             // end check
-            $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES ('{$filepath}')");
+            $handle = $conn->prepare("INSERT INTO ImgGallery (URL) VALUES (:filepath)");
+            $handle->bindParam(":filepath", $secFilepath);
             if($uploadOk != 0) {
                 $handle->execute();
             }

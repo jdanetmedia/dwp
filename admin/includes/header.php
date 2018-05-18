@@ -8,7 +8,7 @@ spl_autoload_register(function($class) {
 require_once("includes/loginAdmin/session.php");
 require_once("includes/loginAdmin/functions.php");
 $adminstuff = new Admin($connection);
-require_once("../includes/seo.php");
+//require_once("../includes/seo.php");
 
 ?>
 <!DOCTYPE html>

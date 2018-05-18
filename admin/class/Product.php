@@ -5,7 +5,7 @@ class Product {
 
   function getAllProducts() {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM Product");
       $handle->execute();
@@ -13,7 +13,7 @@ class Product {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -22,15 +22,19 @@ class Product {
 
   function searchResult($search) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
-      $handle = $conn->prepare("SELECT * FROM Product WHERE ProductName LIKE '%{$search}%' OR ShortDescription LIKE '%{$search}%' OR LongDescription LIKE '%{$search}%' OR ItemNumber LIKE '%{$search}%'");
+      $secSearch = Security::secureString($search);
+
+      $handle = $conn->prepare("SELECT * FROM Product WHERE ProductName LIKE :search OR ShortDescription LIKE :search OR LongDescription LIKE :search OR ItemNumber LIKE :search");
+      $newSearch = "%$secSearch%";
+      $handle->bindParam(":search", $newSearch);
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -39,15 +43,18 @@ class Product {
 
   function getProductDetails($itemNumber) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
-      $handle = $conn->prepare("SELECT Product.*, ImgGallery.ImgID, ImgGallery.URL, ProductImg.IsPrimary FROM Product LEFT JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber LEFT JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber ORDER BY ProductImg.IsPrimary DESC, ProductImg.ImgID ASC");
+      $secItem = Security::secureString($itemNumber);
+
+      $handle = $conn->prepare("SELECT Product.*, ImgGallery.ImgID, ImgGallery.URL, ProductImg.IsPrimary FROM Product LEFT JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber LEFT JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = :item ORDER BY ProductImg.IsPrimary DESC, ProductImg.ImgID ASC");
+      $handle->bindParam(":item", $secItem);
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result;
 
-      // $conn = null;
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -56,7 +63,7 @@ class Product {
 
   function getCategories() {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM ProductCategory");
       $handle->execute();
@@ -64,7 +71,7 @@ class Product {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -73,27 +80,42 @@ class Product {
 
   function saveProduct($itemNumber) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
-      $itemNumber = $_POST["ItemNumber"];
-      $productName = $_POST["ProductName"];
-      $productCategoryID = $_POST["ProductCategoryID"];
-      $productStatus = $_POST["ProductStatus"];
-      $shortDescription = $_POST["ShortDescription"];
-      $longDescription = $_POST["LongDescription"];
-      $price = $_POST["Price"];
-      $offerPrice = $_POST["OfferPrice"];
-      $stockStatus = $_POST["StockStatus"];
-      $seoTitle = $_POST["SeoTitle"];
-      $metaDescription = $_POST["MetaDescription"];
-      $creationDate = date('m/d/Y', time());
-      $userEmail = $_SESSION["UserEmail"];
+      $itemNumber = Security::secureString($_POST["ItemNumber"]);
+      $productName = Security::secureString($_POST["ProductName"]);
+      $productCategoryID = Security::secureString($_POST["ProductCategoryID"]);
+      $productStatus = Security::secureString($_POST["ProductStatus"]);
+      $shortDescription = Security::secureString($_POST["ShortDescription"]);
+      $longDescription = Security::secureString($_POST["LongDescription"]);
+      $price = Security::secureString($_POST["Price"]);
+      $offerPrice = Security::secureString($_POST["OfferPrice"]);
+      $stockStatus = Security::secureString($_POST["StockStatus"]);
+      $seoTitle = Security::secureString($_POST["SeoTitle"]);
+      $metaDescription = Security::secureString($_POST["MetaDescription"]);
+      $creationDate = Security::secureString(date('m/d/Y', time()));
+      $userEmail = Security::secureString($_SESSION["UserEmail"]);
 
       $query = "INSERT INTO Product (ItemNumber, ProductName, ProductCategoryID, ProductStatus, ShortDescription, LongDescription, Price, OfferPrice, StockStatus, SeoTitle, MetaDescription, CreationDate, UserEmail)
-                VALUES ('{$itemNumber}', '{$productName}', '{$productCategoryID}', '{$productStatus}', '{$shortDescription}','{$longDescription}', '{$price}', '{$offerPrice}', '{$stockStatus}', '{$seoTitle}', '{$metaDescription}', '{$creationDate}', '{$userEmail}')";
+                VALUES (:itemNumber, :productName, :productCategoryID, :productStatus, :shortDescription, :longDescription, :price, :offerPrice, :stockStatus, :seoTitle, :metaDescription, :creationDate, :userEmail)";
 
       $handle = $conn->prepare($query);
+      $handle->bindParam(":itemNumber", $itemNumber);
+      $handle->bindParam(":productName", $productName);
+      $handle->bindParam(":productCategoryID", $productCategoryID);
+      $handle->bindParam(":productStatus", $productStatus);
+      $handle->bindParam(":shortDescription", $shortDescription);
+      $handle->bindParam(":longDescription", $longDescription);
+      $handle->bindParam(":price", $price);
+      $handle->bindParam(":offerPrice", $offerPrice);
+      $handle->bindParam(":stockStatus", $stockStatus);
+      $handle->bindParam(":seoTitle", $seoTitle);
+      $handle->bindParam(":metaDescription", $metaDescription);
+      $handle->bindParam(":creationDate", $creationDate);
+      $handle->bindParam(":userEmail", $userEmail);
       $handle->execute();
+
+      $conn = DB::close();
     }
     catch(\PDOExeption $ex) {
       print($ex->getMessage());
@@ -102,35 +124,49 @@ class Product {
 
   function updateProduct($itemNumber) {
       try {
-        $conn = connectToDB();
+        $conn = DB::connect();
 
-        $productName = $_POST["ProductName"];
-        $productCategoryID = $_POST["ProductCategoryID"];
-        $productStatus = $_POST["ProductStatus"];
-        $shortDescription = $_POST["ShortDescription"];
-        $longDescription = $_POST["LongDescription"];
-        $price = $_POST["Price"];
-        $offerPrice = $_POST["OfferPrice"];
-        $stockStatus = $_POST["StockStatus"];
-        $seoTitle = $_POST["SeoTitle"];
-        $metaDescription = $_POST["MetaDescription"];
+        $itemNumber = Security::secureString($itemNumber);
+        $productName = Security::secureString($_POST["ProductName"]);
+        $productCategoryID = Security::secureString($_POST["ProductCategoryID"]);
+        $productStatus = Security::secureString($_POST["ProductStatus"]);
+        $shortDescription = Security::secureString($_POST["ShortDescription"]);
+        $longDescription = Security::secureString($_POST["LongDescription"]);
+        $price = Security::secureString($_POST["Price"]);
+        $offerPrice = Security::secureString($_POST["OfferPrice"]);
+        $stockStatus = Security::secureString($_POST["StockStatus"]);
+        $seoTitle = Security::secureString($_POST["SeoTitle"]);
+        $metaDescription = Security::secureString($_POST["MetaDescription"]);
 
         $query = "
           UPDATE Product
-          SET ProductName = '{$productName}',
-          ProductCategoryID = '{$productCategoryID}',
-          ProductStatus = '{$productStatus}',
-          ShortDescription = '{$shortDescription}',
-          LongDescription = '{$longDescription}',
-          Price = '{$price}',
-          OfferPrice = '{$offerPrice}',
-          StockStatus = '{$stockStatus}',
-          SeoTitle = '{$seoTitle}',
-          MetaDescription = '{$metaDescription}'
-          WHERE ItemNumber = '{$itemNumber}'";
+          SET ProductName = :productName,
+          ProductCategoryID = :productCategoryID,
+          ProductStatus = :productStatus,
+          ShortDescription = :shortDescription,
+          LongDescription = :longDescription,
+          Price = :price,
+          OfferPrice = :offerPrice,
+          StockStatus = :stockStatus,
+          SeoTitle = :seoTitle,
+          MetaDescription = :metaDescription
+          WHERE ItemNumber = :itemNumber";
 
         $handle = $conn->prepare($query);
+        $handle->bindParam(":itemNumber", $itemNumber);
+        $handle->bindParam(":productName", $productName);
+        $handle->bindParam(":productCategoryID", $productCategoryID);
+        $handle->bindParam(":productStatus", $productStatus);
+        $handle->bindParam(":shortDescription", $shortDescription);
+        $handle->bindParam(":longDescription", $longDescription);
+        $handle->bindParam(":price", $price);
+        $handle->bindParam(":offerPrice", $offerPrice);
+        $handle->bindParam(":stockStatus", $stockStatus);
+        $handle->bindParam(":seoTitle", $seoTitle);
+        $handle->bindParam(":metaDescription", $metaDescription);
         $handle->execute();
+
+        $conn = DB::close();
       }
       catch(\PDOException $ex) {
         print($ex->getMessage());
@@ -138,27 +174,35 @@ class Product {
   }
 
   function updatePrimary($item, $id) {
-	  $conn = connectToDB();
+	  $conn = DB::connect();
+
+    $secItem = Security::secureString($item);
+    $secId = Security::secureString($id);
 
 	  $handle = $conn->prepare("
-	  	UPDATE ProductImg SET IsPrimary = false WHERE ItemNumber = '{$item}';
-      UPDATE ProductImg SET IsPrimary = true WHERE ImgID = '{$id}';
+	  	UPDATE ProductImg SET IsPrimary = false WHERE ItemNumber = :item;
+      UPDATE ProductImg SET IsPrimary = true WHERE ImgID = :id;
 	  ");
+    $handle->bindParam(":item", $secItem);
+    $handle->bindParam(":id", $secId);
     $handle->execute();
-
-    $conn = null;
+    $conn = DB::close();
   }
 
   function removeImg($id) {
-    $conn = connectToDB();
+    $conn = DB::connect();
 
-    $handle = $conn->prepare("DELETE FROM ProductImg WHERE ImgID = '{$id}'");
+    $secId = Security::secureString($id);
+
+    $handle = $conn->prepare("DELETE FROM ProductImg WHERE ImgID = :id");
+    $handle->bindParam(":id", $secId);
     $handle->execute();
+    $conn = DB::close();
   }
 
   function exportJSON() {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM Product");
       $handle->execute();
@@ -182,6 +226,8 @@ class Product {
         array_push($json_final_data, $json_temp_array); //add this row ($json_temp_array) to the end of the array
       }
       return json_encode($json_final_data);
+
+      $conn = DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -189,7 +235,7 @@ class Product {
   }
   function importJSON($file) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
       $json_data = file_get_contents($file);
       $data = json_decode($json_data,true); //decode the json file and return as array
       $stmt = $conn->prepare('INSERT INTO Product (ItemNumber, ProductName, StockStatus, ShortDescription, LongDescription, Price, OfferPrice, SeoTitle, MetaDescription, ProductStatus, CreationDate, UserEmail, ProductCategoryID) VALUES (:ItemNumber, :ProductName, :StockStatus, :ShortDescription, :LongDescription, :Price, :OfferPrice, :SeoTitle, :MetaDescription, :ProductStatus, :CreationDate, :UserEmail, :ProductCategoryID)');
@@ -210,6 +256,8 @@ class Product {
         $stmt->bindParam(':ProductCategoryID', $row['ProductCategoryID']);
         $stmt->execute();
       }
+
+      $conn = DB::close();
     }
     catch(\PDOException $ex)
     {

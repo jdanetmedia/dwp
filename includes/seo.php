@@ -6,6 +6,8 @@
 
   // Product
   if(isset($_GET["item"])) {
+    include("../admin/class/DB.php");
+    include("../admin/class/Security.php");
     include("../admin/class/Product.php");
 
     $product = new Product();
