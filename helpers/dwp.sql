@@ -262,6 +262,12 @@ VALUES (NULL, "Sport Ducks", "This is the Third description", "SeoTitle for Cat3
 INSERT INTO User
 VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Rasmus Andreas", "Nielsen", NULL, 1);
 
+INSERT INTO User
+VALUES ("post@jdanet.dk", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Jesper", "Dalsgaard", NULL, 0);
+
+INSERT INTO User
+VALUES ("sebastiankbuch@hotmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Sebastian", "Buch", NULL, 0);
+
 -- Insert Products
 INSERT INTO Product
 VALUES ("1111", "Green Duck", 1000, "Short Description of Green Duck", "Longer Description Green Duck",
