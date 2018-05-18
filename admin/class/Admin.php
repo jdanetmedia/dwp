@@ -101,45 +101,45 @@ class Admin extends Security {
   }
 
   function newpass() {
-		if (isset($_GET["admin"]) && isset($_GET["key"])) {
-			$errors = array();
-			$message = "";
-			$vali = true;
+    if (isset($_GET["admin"]) && isset($_GET["key"])) {
+      $errors = array();
+      $message = "";
+      $vali = true;
 
-			if($_POST['pass'] == "") {
-				$message .= "You need to enter a password. <br>";
-				$vali = false;
-			}
-			if($_POST['pass2'] == "") {
-				$message .= "You need to repeat your password. <br>";
-				$vali = false;
-			}
+      if($_POST['pass'] == "") {
+        $message .= "You need to enter a password. <br>";
+        $vali = false;
+      }
+      if($_POST['pass2'] == "") {
+        $message .= "You need to repeat your password. <br>";
+        $vali = false;
+      }
 
-			// perform validations on the form data
-			$password = trim($_POST['pass']);
-			$password2 = trim($_POST['pass2']);
-			if ($password == $password2 && $vali == true) {
-		    $iterations = ['cost' => 10];
-		    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+      // perform validations on the form data
+      $password = trim($_POST['pass']);
+      $password2 = trim($_POST['pass2']);
+      if ($password == $password2 && $vali == true) {
+        $iterations = ['cost' => 10];
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
 
-				$email = $_GET["admin"];
-				$reset = $_GET["key"];
+        $email = $_GET["admin"];
+        $reset = $_GET["key"];
 
-				try {
-			      $conn = connectToDB();
+        try {
+            $conn = connectToDB();
 
-			      $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";
-			      $handle = $conn->prepare($statement);
-			      $handle->bindParam(':password', $hashed_password);
+            $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";
+            $handle = $conn->prepare($statement);
+            $handle->bindParam(':password', $hashed_password);
             $handle->bindParam(':email', $email);
             $handle->bindParam(':resetkey', $reset);
-			      $handle->execute();
-			  }
-			  catch(\PDOException $ex) {
-			      print($ex->getMessage());
-			  }
-  		}
-  	}
+            $handle->execute();
+        }
+        catch(\PDOException $ex) {
+            print($ex->getMessage());
+        }
+      }
+    }
   }
 }
 ?>
