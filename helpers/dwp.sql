@@ -38,7 +38,7 @@ CREATE TABLE BasicPageInfo (
   CVR int NOT NULL PRIMARY KEY,
   LogoURL varchar(255) NOT NULL,
   ShopName varchar(255) NOT NULL,
-  AboutUsText varchar(255) NULL,
+  AboutUsText TEXT NULL,
   Email varchar(255) NULL,
   Phone int NULL,
   Street varchar(255) NULL,
@@ -60,7 +60,7 @@ CREATE TABLE Product (
   ProductName varchar(255) NOT NULL,
   StockStatus int NOT NULL,
   ShortDescription varchar(255) NOT NULL,
-  LongDescription varchar(255) NOT NULL,
+  LongDescription TEXT NOT NULL,
   Price FLOAT(2) NOT NULL,
   OfferPrice FLOAT(2) NULL,
   SeoTitle varchar(255) NULL,
@@ -76,7 +76,8 @@ CREATE TABLE User (
   Password varchar(255) NOT NULL,
   FirstName varchar(255) NOT NULL,
   LastName varchar(255) NOT NULL,
-  ResetKey varchar(255) NULL
+  ResetKey varchar(255) NULL,
+  AccessLevel int NOT NULL
 );
 
 CREATE TABLE Review (
@@ -85,14 +86,14 @@ CREATE TABLE Review (
   Rating int(1) NOT NULL,
   ReviewTitle varchar(255) NOT NULL,
   ReviewName varchar(255) NULL,
-  ReviewContent varchar(255) NULL,
+  ReviewContent TEXT NULL,
   ItemNumber varchar(255) NOT NULL -- Foreign Key, set later
 );
 
 CREATE TABLE ProductCategory (
   ProductCategoryID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   CategoryName varchar(255) NOT NULL,
-  Description varchar(255) NULL,
+  Description TEXT NULL,
   SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL
 );
@@ -129,7 +130,7 @@ CREATE TABLE BlogPost (
 CREATE TABLE BlogCategory (
   BlogCategoryID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
   CategoryName varchar(255) NOT NULL,
-  Description varchar(255) NULL,
+  Description TEXT NULL,
   SeoTitle varchar(255) NULL,
   MetaDescription varchar(255) NULL
 );
@@ -150,7 +151,7 @@ CREATE TABLE CustomerOrder (
 
 CREATE TABLE OrderMessage (
   OrderMessageID int AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  OrderMessage varchar(255) NOT NULL,
+  OrderMessage TEXT NOT NULL,
   OrderMessageDate TIMESTAMP NOT NULL,
   OrderNumber int NOT NULL -- Foreign Key, set later
 );
@@ -259,7 +260,7 @@ VALUES (NULL, "Sport Ducks", "This is the Third description", "SeoTitle for Cat3
 
 -- Insert Users
 INSERT INTO User
-VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Rasmus Andreas", "Nielsen", NULL);
+VALUES ("rasmus.andreas96@gmail.com", "$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li", "Rasmus Andreas", "Nielsen", NULL, 1);
 
 -- Insert Products
 INSERT INTO Product
@@ -268,7 +269,7 @@ VALUES ("1111", "Green Duck", 1000, "Short Description of Green Duck", "Longer D
 
 INSERT INTO Product
 VALUES ("1112", "Red Duck", 1000, "Short Description of Red Duck", "Longer Description Red Duck",
-18, NULL, NULL, NULL, true, "2018-4-2", "rasmus.andreas96@gmail.com", 1);
+18, 10, NULL, NULL, true, "2018-4-2", "rasmus.andreas96@gmail.com", 1);
 
 INSERT INTO Product
 VALUES ("1113", "Yellow Duck", 1000, "Short Description of Yellow Duck", "Longer Description Yellow Duck",
@@ -276,7 +277,7 @@ VALUES ("1113", "Yellow Duck", 1000, "Short Description of Yellow Duck", "Longer
 
 INSERT INTO Product
 VALUES ("2221", "Batman Duck", 50, "Short Description of Batman Duck", "Longer Description Batman Duck",
-10, NULL, NULL, NULL, true, "2016-4-4", "rasmus.andreas96@gmail.com", 2);
+10, 8, NULL, NULL, true, "2016-4-4", "rasmus.andreas96@gmail.com", 2);
 
 INSERT INTO Product
 VALUES ("2222", "Deadpool Duck", 49, "Short Description of Deadpool Duck", "Longer Description Deadpool Duck",
@@ -284,7 +285,7 @@ VALUES ("2222", "Deadpool Duck", 49, "Short Description of Deadpool Duck", "Long
 
 INSERT INTO Product
 VALUES ("3331", "EfB Duck", 1000, "Short Description of EfB Duck", "Longer Description EfB Duck",
-15, NULL, NULL, NULL, true, "2012-12-24", "rasmus.andreas96@gmail.com", 3);
+15, 1, NULL, NULL, true, "2012-12-24", "rasmus.andreas96@gmail.com", 3);
 
 INSERT INTO Product
 VALUES ("3332", "Chelsea Duck", 2, "Short Description of Chelsea Duck", "Longer Description Chelsea Duck",
