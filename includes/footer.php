@@ -11,8 +11,12 @@ $hours = getHours();
             <p class="grey-text text-lighten-4">
                 <?php echo $pageInfo["Street"] . " " . $pageInfo["HouseNumber"] . ", " . $pageInfo["ZipCode"] . " " . $pageInfo["City"]; ?>
             </p>
-              <p><?php echo $pageInfo["Phone"] ?></p>
-              <p><?php echo $pageInfo["Email"] ?></p>
+              <p>
+                Phone: <?php echo $pageInfo["Phone"] ?>
+                <br>
+                <?php echo $pageInfo["Email"] ?>
+                <br>
+                CVR: <?php echo $pageInfo["Phone"] ?></p>
           </div>
           <div class="col s12 m3 offset-m2">
             <h5 class="white-text">Hours</h5>

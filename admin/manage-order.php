@@ -24,45 +24,39 @@ if (isset($_POST["status"])) {
   $order->updateStatus($_GET["order"], $_POST["status"]);
 }
 
-$orderdetails = $order->getOrder($_GET["order"]);
+$orderdetails = $order->getOrderDetails($_GET["order"]);
 $ordermessage = $order->getMessage($_GET["order"]);
-$orderproducts = $order->getProducts($_GET["order"]);
 $price = $order->getSum($_GET["order"]);
 ?>
 <div class="container">
   <div class="row">
     <div class="col s12">
-      <div class="card">
-        <div class="card-content">
-                <?php
-                  foreach ($orderdetails as $orderD) {
-                    //$price = $order->getSum($order->OrderNumber);
-                    ?><span class="card-title">Order #<?php echo $orderD->OrderNumber; ?> <p class="right">Order placed at: <?php echo $orderD->OrderDate; ?></p></span>
+          <h5>Order #<?php echo $orderdetails["OrderInfo"]["OrderNumber"]; ?>Order placed at: <?php echo $orderdetails["OrderInfo"]["OrderDate"]; ?></h5>
                       <div class="card small">
                         <div class="card-content">
                           <span class="card-title">Shipping info</span>
                           <div class="col s12 m6">
-                            <p>Name: <br><?php echo $orderD->FirstName; ?> <?php echo $orderD->LastName; ?></p><br>
-                            <p>Address: <br><?php echo $orderD->ShippingStreet . " " . $orderD->ShippingHouseNumber . ", " . $orderD->ZipCode . " " . $orderD->City; ?></p><br>
-                            <p>Stripe Charge ID: <br><?php echo $orderD->StripeChargeID; ?></p><br>
+                            <p>Name: <br><?php echo $orderdetails["OrderInfo"]["FirstName"]; ?> <?php echo $orderdetails["OrderInfo"]["LastName"]; ?></p><br>
+                            <p>Address: <br><?php echo $orderdetails["OrderInfo"]["ShippingStreet"] . " " . $orderdetails["OrderInfo"]["ShippingHouseNumber"] . ", " . $orderdetails["OrderInfo"]["ZipCode"] . " " . $orderdetails["OrderInfo"]["City"]; ?></p><br>
+                            <p>Stripe Charge ID: <br><?php echo $orderdetails["OrderInfo"]["StripeChargeID"]; ?></p><br>
                           </div>
                           <div class="col s12 m6">
-                            <p>Delivery Method: <br><?php echo $orderD->Method; ?></p><br>
-                            <p>Delivery Price: <br>$<?php echo $orderD->DeliveryPrice; ?></p>
-                            <?php if (isset($orderD->PromoCode)) {
-                              $discount = $order->getPromoCodeDiscount($orderD->PromoCode);
+                            <p>Delivery Method: <br><?php echo $orderdetails["OrderInfo"]["Method"]; ?></p><br>
+                            <p>Delivery Price: <br>$<?php echo $orderdetails["OrderInfo"]["DeliveryPrice"]; ?></p>
+                            <?php if (isset($orderdetails["OrderInfo"]["PromoCode"])) {
+                              $discount = $order->getPromoCodeDiscount($orderdetails["OrderInfo"]["PromoCode"]);
                             ?>
-                            <br><p>Promocode: <br><?php echo $orderD->PromoCode; ?></p>
-                            <?php } ?>
+                            <br><p>Promocode: <br><?php echo $orderdetails["OrderInfo"]["PromoCode"]; ?></p>
                           </div>
                         </div>
                       </div>
                       <div class="card">
                         <div class="card-content">
                           <span class="card-title">Comment</span>
-                          <p><?php echo $orderD->Comment; ?></p>
+                          <p><?php echo $orderdetails["OrderInfo"]["Comment"]; ?></p>
                         </div>
                       </div>
+                </div>
                       <h5 class="left">Status</h5>
                       <form action="manage-order.php?order=<?php echo $_GET["order"]; ?>" method="post">
                         <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn right" type="submit" name="statussubmit" value="Save">
@@ -88,47 +82,39 @@ $price = $order->getSum($_GET["order"]);
                     <?php
                   }
                 ?>
-          <table class="responsive-table striped">
-            <thead>
-              <tr>
-                  <th>ItemNumber</th>
-                  <th>Name</th>
-                  <th>Amount</th>
-                  <th>Price per product</th>
-                  <th>Combined price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-                foreach ($orderproducts as $products) {
-                  ?>
-                  <tr>
-                    <td><?php echo $products->ItemNumber; ?></td>
-                    <td><?php echo $products->ProductName; ?></td>
-                    <td><?php echo $products->Amount; ?></td>
-                    <td><?php echo $products->FinalPrice; ?></td>
-                    <td><?php echo $products->FinalPrice * $products->Amount; ?></td>
-                  </tr>
-                  <?php
-                }
-              ?>
-            </tbody>
-          </table>
+                    <table class="responsive-table striped">
+                      <thead>
+                        <tr>
+                            <th>ItemNumber</th>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Price per product</th>
+                            <th>Combined price</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                          foreach ($orderdetails["Products"] as $products) {
+                            ?>
+                            <tr>
+                              <td><?php echo $products["ItemNumber"]; ?></td>
+                              <td><?php echo $products["ProductName"]; ?></td>
+                              <td><?php echo $products["Amount"]; ?></td>
+                              <td><?php echo $products["FinalPrice"]; ?></td>
+                              <td><?php echo $products["FinalPrice"] * $products["Amount"]; ?></td>
+                            </tr>
+                            <?php
+                          }
+                        ?>
+                      </tbody>
+                    </table>
+          <?php if(isset($orderdetails["BeforeDiscount"])) {
+          ?>
+          <h4>Before discount: <strike>$<?php echo $orderdetails["BeforeDiscount"] + $orderdetails["OrderInfo"]["DeliveryPrice"]; ?></strike></h4>
           <?php
-          foreach ($price as $totalprice) {
-            if(isset($discount)) {
-              $amount = ($totalprice->totalprice / 100) * $discount[0]["DiscountAmount"];
-              $total = $totalprice->totalprice - $amount;
-            ?>
-            <h4>Total: <p class="right">$<?php echo $total; ?></p></h4>
-            <?php
-            } else {
-              $total = $totalprice->totalprice;
-            ?>
-            <h4>Total: <p class="right">$<?php echo $total; ?></p></h4>
-            <?php }} ?>
+          } ?>
+          <h4>Total: $<?php echo $orderdetails["Total"] + $orderdetails["OrderInfo"]["DeliveryPrice"]; ?></h4>
         </div>
-      </div>
       <h5>Messages</h5>
       <?php
       foreach ($ordermessage as $message) {
