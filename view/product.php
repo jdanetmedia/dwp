@@ -19,7 +19,7 @@ if($itemCheck == 0) {
   <?php
 }
 
-$related = getRelatedProducts($currentItem["ProductCategoryID"]);
+$related = getRelatedProducts($currentItem["ProductCategoryID"], $currentItem["ItemNumber"]);
 if (isset($_SESSION["cart"])) {
   $usercart = $_SESSION["cart"];
 }
