@@ -15,7 +15,7 @@ $token = $_POST['stripeToken'];
 $charge = \Stripe\Charge::create([
     'amount' => $_SESSION["totalWithShipping"] * 100,
     'currency' => 'usd',
-    'description' => 'Example charge',
+    'description' => 'DWP test charge',
     'source' => $token,
     'receipt_email' => $_SESSION["CustomerEmail"],
 ]);

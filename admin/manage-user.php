@@ -40,31 +40,31 @@ $userinfo = $users->GetUserInfo($_SESSION["UserEmail"]);
 	          <label for="email">Email</label>
 	        </div>
 	      </div>
-				<input class="waves-effect waves-light btn grey darken-4 black" type="submit" name="submit" value="Save">
+				<input class="waves-effect waves-light btn grey darken-4 black" type="submit" name="submitupdateinfo" value="Save">
     	</form>
 	  </div>
 	</div>
 	<div class="card">
 	  <div class="card-content">
 	    <span class="card-title">Change your password</span>
-			<form class="col s12" action="manage-user.php?updatepass=<?php echo $_SESSION["UserEmail"]; ?>" method="post">
+			<form class="col s12" action="" method="post">
 				<div class="row">
 	        <div class="input-field col s12">
-	          <input id="passold" type="password" class="validate">
+	          <input id="passold" name="oldpass" type="password" class="validate">
 	          <label for="passold">Old Password</label>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s6">
-	          <input id="pass" type="password" class="validate">
+	          <input id="pass" name="newpass" type="password" class="validate">
 	          <label for="pass">New password</label>
 	        </div>
 	        <div class="input-field col s6">
-	          <input id="passrepeat" type="password" class="validate">
+	          <input id="passrepeat" name="repeatnewpass" type="password" class="validate">
 	          <label for="passrepeat">Repeat new password</label>
 	        </div>
 	      </div>
-				<input class="waves-effect waves-light btn grey darken-4 black" type="submit" name="submit" value="Save">
+				<input class="waves-effect waves-light btn grey darken-4 black" type="submit" name="submitupdatepass" value="Save">
     	</form>
 	  </div>
 	</div>

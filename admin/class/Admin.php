@@ -43,15 +43,15 @@ class Admin extends Security {
       $this->updateUserInfo($_GET["update"]);
     }
 
-    if (isset($_GET["updatepass"])) {
-      $this->updateUserPass($_GET["updatepass"]);
+    if (isset($_POST["submitupdatepass"])) {
+      $this->updateUserPass($_SESSION["UserEmail"]);
     }
 
-    if (isset($_GET["newuser"])) {
+    if (isset($_POST["submitnewuser"])) {
       $this->createNewUser();
     }
 
-    if (isset($_GET["remove"])) {
+    if (isset($_POST["submitdeleteuser"])) {
       $this->deleteUser($_GET["remove"]);
     }
   }
@@ -208,8 +208,6 @@ class Admin extends Security {
           $handle->bindParam(':lastname', $lastname);
           $handle->bindParam(':newmail', $newmail);
           $handle->execute();
-
-          $conn = null;
       }
       catch(\PDOException $ex) {
           return print($ex->getMessage());
@@ -218,15 +216,121 @@ class Admin extends Security {
   }
 
   function updateUserPass($useremail) {
-    echo "Update user password";
+    $message = "";
+    $vali = true;
+
+    if($_POST['newpass'] == "") {
+      $message .= "You need to enter a password. <br>";
+      $vali = false;
+    }
+    if($_POST['repeatnewpass'] == "") {
+      $message .= "You need to repeat your password. <br>";
+      $vali = false;
+    }
+    try {
+      $conn = DB::connect();
+      // perform validations on the form data
+      $password = Security::secureString($_POST['newpass']);
+      $password2 = Security::secureString($_POST['repeatnewpass']);
+      $oldpassword = Security::secureString($_POST['oldpass']);
+      $statement = "SELECT Password FROM User WHERE UserEmail = :email LIMIT 1";
+  		$handle = $conn->prepare($statement);
+  		$handle->bindParam(':email', $useremail);
+  		$handle->execute();
+  		$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+  		if(password_verify($oldpassword, $result[0]["Password"])){
+        if ($password == $password2 && $vali == true) {
+          $iterations = ['cost' => 10];
+          $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+          try {
+
+              $statement = "UPDATE User SET Password = :password WHERE UserEmail = :email";
+              $handle = $conn->prepare($statement);
+              $handle->bindParam(':password', $hashed_password);
+              $handle->bindParam(':email', $useremail);
+              $handle->execute();
+          }
+          catch(\PDOException $ex) {
+              print($ex->getMessage());
+          }
+        }
+      }
+    }
+    catch(\PDOException $ex) {
+        print($ex->getMessage());
+    }
   }
 
   function createNewUser() {
     echo "Create a new user";
+
+    $message = "";
+    $vali = true;
+    if($_POST['newname'] == "") {
+      $message .= "You need to enter a first name. <br>";
+      $vali = false;
+    }
+    if($_POST['newlname'] == "") {
+      $message .= "You need to enter a last name. <br>";
+      $vali = false;
+    }
+    if($_POST['newmail'] == "") {
+      $message .= "You need to enter an email. <br>";
+      $vali = false;
+    }
+    if($_POST['newpass'] == "") {
+      $message .= "You need to enter a password. <br>";
+      $vali = false;
+    }
+    if($_POST['newrpass'] == "") {
+      $message .= "You need to repeat your password. <br>";
+      $vali = false;
+    }
+
+    $newname = Security::secureString($_POST["newname"]);
+    $newlname = Security::secureString($_POST["newlname"]);
+    $newmail = Security::secureString($_POST["newmail"]);
+    $newpass = Security::secureString($_POST["newpass"]);
+    $newrpass = Security::secureString($_POST["newrpass"]);
+
+		// perform validations on the form data
+		if ($newpass == $newrpass && $vali == true) {
+	    $iterations = ['cost' => 10];
+	    $hashed_password = password_hash($newpass, PASSWORD_BCRYPT, $iterations);
+      try {
+          $conn = DB::connect();
+
+          $handle = $conn->prepare("INSERT INTO User (UserEmail, Password, FirstName, LastName, ResetKey, AccessLevel) VALUES (:mail, :password, :firstname, :lastname, NULL, 0)");
+          $handle->bindParam(':mail', $newmail);
+          $handle->bindParam(':password', $hashed_password);
+          $handle->bindParam(':firstname', $newname);
+          $handle->bindParam(':lastname', $newlname);
+          $handle->execute();
+
+          $conn = null;
+      }
+      catch(\PDOException $ex) {
+          return print($ex->getMessage());
+      }
+		} else {
+			$message .= "The passwords has to be the same!";
+		}
   }
 
   function deleteUser($useremail) {
     echo "Delete this one: " . $useremail;
+    try {
+        $conn = DB::connect();
+
+        $handle = $conn->prepare("DELETE FROM User WHERE UserEmail = :mail");
+        $handle->bindParam(':mail', $usermail);
+        $handle->execute();
+
+        $conn = null;
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
   }
 }
 ?>
