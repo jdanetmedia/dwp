@@ -26,7 +26,7 @@ class GalleryBlog {
             $secImgId = Security::secureString($imgID);
 
             $countRows = $conn->prepare("SELECT * FROM BlogImg WHERE BlogPostID = :BlogPostID");
-            $countRows->bindParam(":BlogPostID", $secPostId)
+            $countRows->bindParam(":BlogPostID", $secPostId);
             $countRows->execute();
             $rows = $countRows->fetchAll( \PDO::FETCH_OBJ );
             $numberOfRows = count($rows);

@@ -26,7 +26,7 @@ function getAllPosts() {
 function getAllRelatedPosts($categoryID, $postID) {
   global $connection;
 
-  $query = "SELECT * FROM `BlogPost` WHERE `BlogCategoryID` = $categoryID AND NOT BlogPostID = $postID";
+  $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = $categoryID AND NOT BlogPost.BlogPostID = $postID";
   $blogResult = mysqli_query($connection, $query);
   return $blogResult;
 }

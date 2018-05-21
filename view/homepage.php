@@ -25,21 +25,32 @@ require_once("../model/indexDAO.php");
 <div class="outer">
   <div class="container">
     <div class="carousel">
-      <h4>Recommended</h4>
+      <h4>Recommended producks!</h4>
         <?php
         //Gets highest rated products
         $highestRatedProducts = getHighestRatedProducts();
         while($row = mysqli_fetch_array($highestRatedProducts)) {
             $itemNumber = $row["ItemNumber"];
             ?>
-            <a class='carousel-item' href='product.php?item=<?php echo $itemNumber; ?>'>
+            <a class='carousel-item' href="product.php?item=<?php echo $itemNumber; ?>">
                 <div class='card'>
                     <div class='card-image'>
-                        <img src='http://via.placeholder.com/400x400'>
+                        <img src='<?php echo $row["URL"]; ?>'>
                         <span class='card-title'><?php echo $row["ProductName"]; ?></span>
                     </div>
                     <div class='card-action'>
-                        <p class='price'>$<?php echo $row["Price"]; ?></p>
+                        <?php
+                        if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+                            ?>
+                            <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"];
+                            ?></b></p>
+                            <?php
+                        } else {
+                            ?>
+                            <p class="price">$<?php echo $row["Price"]; ?></p>
+                            <?php
+                        }
+                        ?>
                         <div class='stars right rated'>
                             <?php
                                 echo getReviewForProduct($itemNumber);
@@ -57,21 +68,21 @@ require_once("../model/indexDAO.php");
 <div class="outer gray">
 	<div class="container">
 		<div class="carousel product-slider">
-			<h4>New producks!</h4>
+			<h4>Daily offers on producks!</h4>
             <?php
-            //Gets recently added products
-            $newestProducts = getNewestProducts();
-            while($row = mysqli_fetch_array($newestProducts)) {
+            //Gets products on sale
+            $productsOnSale = getProductsOnSale();
+            while($row = mysqli_fetch_array($productsOnSale)) {
                 $itemNumber = $row["ItemNumber"];
                 ?>
                 <a class='carousel-item' href='product.php?item=<?php echo $itemNumber; ?>'>
                     <div class='card'>
                         <div class='card-image'>
-                            <img src='http://via.placeholder.com/400x400'>
+                            <img src="<?php echo $row["URL"]; ?>">
                             <span class='card-title'><?php echo $row["ProductName"]; ?></span>
                         </div>
                         <div class='card-action'>
-                            <p class='price'>$<?php echo $row["Price"]; ?></p>
+                            <p class='price'>$<strike><?php echo $row["Price"]; ?></strike> <b>$<?php echo $row["OfferPrice"]; ?></b></p>
                             <div class='stars right rated'>
                                 <?php
                                 echo getReviewForProduct($itemNumber);
@@ -83,8 +94,54 @@ require_once("../model/indexDAO.php");
                 <?php
             }
             ?>
-    </div>
+        </div>
+        <!--<div class="carousel">
+            <?php
+            //Gets products on sale
+            $productsOnSale = getProductsOnSale();
+            while($row = mysqli_fetch_array($productsOnSale)) {
+            $itemNumber = $row["ItemNumber"];
+            ?>
+                <a class="carousel-item" href='product.php?item=<?php echo $itemNumber; ?>'><img src="http://via.placeholder.com/400x400"><?php $row["ProductName"]; ?></a>
+                <p>HFGFDGFD</p>
+            <?php } ?>
+
+        </div>-->
 	</div>
 </div>
+<div class="outer">
+    <div class="container">
+        <h4>Recent Blucks!</h4>
+        <div class="row">
+            <?php
+            $recentBlogs = getRecentBlogs();
+            while($row = mysqli_fetch_array($recentBlogs)) {
+                ?>
+                <div class="col s12 m6">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="<?php if($row["URL"] != "") {
+                                echo $row["URL"];
+                            } else echo "http://via.placeholder.com/1920x1080"; ?>">
+                            <span class="card-title"><?php echo $row["Title"]; ?></span>
+                        </div>
+                        <div class="card-content">
+                            <p><?php if (strlen($row["BlogContent"]) > 160) {
+                                    echo preg_replace('/\s+?(\S+)?$/', '', filter_var(substr($row["BlogContent"],
+                                            0, 160), FILTER_SANITIZE_STRING)) . " ...";
+                                } else echo $row["BlogContent"]; ?></p>
+                        </div>
+                        <div class="card-action">
+                            <a href="post.php?post=<?php echo $row["BlogPostID"]; ?>">Read more</a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </div>
+</div>
+
 
 <?php require_once('../includes/footer.php') ?>

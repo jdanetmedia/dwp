@@ -16,14 +16,15 @@ if (!logged_in()) {
   <div class="row">
       <h5>Payment</h5>
       <?php
-      echo $_SESSION["street"];
-      echo $_SESSION["house"];
-      echo $_SESSION["zipcode"];
-      echo $_SESSION["city"];
-      echo $_SESSION["saveaddress"];
-      echo $_SESSION["shippingoption"];
-      echo $_SESSION["total"];
-      echo $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];;
+			var_dump($_SESSION);
+      //echo $_SESSION["street"];
+      //echo $_SESSION["house"];
+      //echo $_SESSION["zipcode"];
+      //echo $_SESSION["city"];
+      //echo $_SESSION["saveaddress"];
+      //echo $_SESSION["shippingoption"];
+      //echo $_SESSION["total"];
+      //echo $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];;
 
       if (isset($_SESSION["DiscountAmount"])) {
 				$discount = ($_SESSION["total"] / 100) * $_SESSION["DiscountAmount"];

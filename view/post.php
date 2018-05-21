@@ -3,9 +3,10 @@ require_once("../includes/sessionstart.php");
 require_once('../includes/header.php');
 require_once("../model/blogDAO.php");
 require_once("../model/productDAO.php");
+require_once('../model/productsDAO.php');
 $post = $_GET["post"];
 $postData = getPost($post);
-$related = getRelatedProducts($postData["RelatedProducts"]);
+$related = getRelatedProductsForBlog($postData["RelatedProducts"]);
 $breadcrumbCat = getBlogCategory($postData["BlogCategoryID"]);
 $author = getAuthor($postData["UserEmail"]);
 ?>
@@ -44,20 +45,29 @@ $author = getAuthor($postData["UserEmail"]);
                 ?>
                   <a class='carousel-item' href='product.php?item=<?php echo $row["ItemNumber"]; ?>'>
                       <div class='card'>
-                        <div class='card-image'>
-                          <img src='http://via.placeholder.com/400x400'>
-                          <span class='card-title'><?php echo $row["ProductName"]; ?></span>
-                        </div>
-                        <div class='card-action'>
-                          <p class='price'>$<?php echo $row["Price"]; ?></p>
-                          <div class='stars right'>
-                            <i class='material-icons tiny rated'>star</i>
-                            <i class='material-icons tiny rated'>star</i>
-                            <i class='material-icons tiny rated'>star</i>
-                            <i class='material-icons tiny rated'>star</i>
-                            <i class='material-icons tiny'>star_border</i>
+                          <div class='card-image'>
+                              <img src='<?php echo $row["URL"] ?>'>
+                              <span class='card-title'><?php echo $row["ProductName"]; ?></span>
                           </div>
-                        </div>
+                          <div class='card-action'>
+                              <?php
+                              if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+                                  ?>
+                                  <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"];
+                                          ?></b></p>
+                                  <?php
+                              } else {
+                                  ?>
+                                  <p class="price">$<?php echo $row["Price"]; ?></p>
+                                  <?php
+                              }
+                              ?>
+                              <div class='stars right'>
+                                  <?php
+                                  //echo getReviewForProduct($row["ItemNumber"]);
+                                  ?>
+                              </div>
+                          </div>
                       </div>
                   </a>
                 <?php
@@ -70,21 +80,24 @@ $author = getAuthor($postData["UserEmail"]);
           $blogResult = getAllRelatedPosts($postData["BlogCategoryID"], $post);
           while($row = mysqli_fetch_array($blogResult)) {
             ?>
-            <div class="col s12 m6">
-              <div class="card">
-                <div class="card-image">
-                  <img src="http://via.placeholder.com/1920x1080">
-                  <span class="card-title"><?php echo $row["Title"]; ?></span>
-                </div>
-                <div class="card-content">
-                  <p>I am a very simple card. I am good at containing small bits of information.
-                  I am convenient because I require little markup to use effectively.</p>
-                </div>
-                <div class="card-action">
-                  <a href="post.php?post=<?php echo $row["BlogPostID"] ?>">Read more</a>
-                </div>
+              <div class="col s12 m6">
+                  <div class="card">
+                      <div class="card-image">
+                          <img src="<?php if($row["URL"] != "") {
+                              echo $row["URL"];
+                          } else echo "http://via.placeholder.com/1920x1080"; ?>">
+                          <span class="card-title"><?php echo $row["Title"]; ?></span>
+                      </div>
+                      <div class="card-content">
+                          <p><?php if (strlen($row["BlogContent"]) > 160) {
+                                  echo preg_replace('/\s+?(\S+)?$/', '', filter_var(substr($row["BlogContent"], 0, 160), FILTER_SANITIZE_STRING)) . " ...";
+                              } else echo $row["BlogContent"]; ?></p>
+                      </div>
+                      <div class="card-action">
+                          <a href="post.php?post=<?php echo $row["BlogPostID"]; ?>">Read more</a>
+                      </div>
+                  </div>
               </div>
-            </div>
           <?php
           }
         ?>
