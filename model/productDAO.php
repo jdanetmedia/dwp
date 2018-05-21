@@ -55,10 +55,18 @@ function addReview($item) {
   }
 }
 
-function getRelatedProducts($productCat) {
+function getRelatedProducts($productCat, $itemNumber) {
   global $connection;
 
-  $query = "SELECT * FROM Product WHERE ProductCategoryID = $productCat AND ProductStatus = 1 LIMIT 5";
+  $query = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = $productCat AND NOT Product.ItemNumber = $itemNumber LIMIT 5";
   $result = mysqli_query($connection, $query);
   return $result;
+}
+
+function getRelatedProductsForBlog($productCat) {
+    global $connection;
+
+    $query = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = $productCat LIMIT 5";
+    $result = mysqli_query($connection, $query);
+    return $result;
 }

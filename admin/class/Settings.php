@@ -12,7 +12,7 @@ class Settings {
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result[0];
 
-      // $conn = null;
+      $conn = null;
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -22,6 +22,28 @@ class Settings {
   function saveBasicPageInfo($post) {
     try {
       $conn = connectToDB();
+
+      // Secure input
+      $cvr = Security::secureString($post["CVR"]);
+      $logoURL = Security::secureString($post["LogoURL"]);
+      $shopName = Security::secureString($post["ShopName"]);
+      $aboutUsText = Security::secureString($post["AboutUsText"]);
+      $email = Security::secureString($post["Email"]);
+      $phone = Security::secureString($post["Phone"]);
+      $street = Security::secureString($post["Street"]);
+      $housenumber = Security::secureString($post["HouseNumber"]);
+      $zipCode = Security::secureString($post["ZipCode"]);
+      $stripeToken = Security::secureString($post["StripeToken"]);
+      $homeSeoTitle = Security::secureString($post["HomeSeoTitle"]);
+      $homeMetaDescription = Security::secureString($post["HomeMetaDescription"]);
+      $contactSeoTitle = Security::secureString($post["ContactSeoTitle"]);
+      $contactMetaDescription = Security::secureString($post["ContactMetaDescription"]);
+      $productsSeoTitle = Security::secureString($post["ProductsSeoTitle"]);
+      $productsMetaDescription = Security::secureString($post["ProductsMetaDescription"]);
+      $blogSeoTitle = Security::secureString($post["BlogSeoTitle"]);
+      $blogSeoTitle = Security::secureString($post["BlogSeoTitle"]);
+      $blogMetaDescription = Security::secureString($post["BlogMetaDescription"]);
+
 
       $query = "UPDATE BasicPageInfo
                 SET CVR = :CVR,
@@ -44,24 +66,24 @@ class Settings {
                 BlogMetaDescription = :BlogMetaDescription";
 
       $handle = $conn->prepare($query);
-      $handle->bindParam(":CVR", $post["CVR"]);
-      $handle->bindParam(":LogoURL", $post["LogoURL"]);
-      $handle->bindParam(":ShopName", $post["ShopName"]);
-      $handle->bindParam(":AboutUsText", $post["AboutUsText"]);
-      $handle->bindParam(":Email", $post["Email"]);
-      $handle->bindParam(":Phone", $post["Phone"]);
-      $handle->bindParam(":Street", $post["Street"]);
-      $handle->bindParam(":HouseNumber", $post["HouseNumber"]);
-      $handle->bindParam(":ZipCode", $post["ZipCode"]);
-      $handle->bindParam(":StripeToken", $post["StripeToken"]);
-      $handle->bindParam(":HomeSeoTitle", $post["HomeSeoTitle"]);
-      $handle->bindParam(":HomeMetaDescription", $post["HomeMetaDescription"]);
-      $handle->bindParam(":ContactSeoTitle", $post["ContactSeoTitle"]);
-      $handle->bindParam(":ContactMetaDescription", $post["ContactMetaDescription"]);
-      $handle->bindParam(":ProductsSeoTitle", $post["ProductsSeoTitle"]);
-      $handle->bindParam(":ProductsMetaDescription", $post["ProductsMetaDescription"]);
-      $handle->bindParam(":BlogSeoTitle", $post["BlogSeoTitle"]);
-      $handle->bindParam(":BlogMetaDescription", $post["BlogMetaDescription"]);
+      $handle->bindParam(":CVR", $cvr);
+      $handle->bindParam(":LogoURL", $logoURL);
+      $handle->bindParam(":ShopName", $shopName);
+      $handle->bindParam(":AboutUsText", $aboutUsText);
+      $handle->bindParam(":Email", $email);
+      $handle->bindParam(":Phone", $phone);
+      $handle->bindParam(":Street", $street);
+      $handle->bindParam(":HouseNumber", $housenumber);
+      $handle->bindParam(":ZipCode", $zipCode);
+      $handle->bindParam(":StripeToken", $stripeToken);
+      $handle->bindParam(":HomeSeoTitle", $homeSeoTitle);
+      $handle->bindParam(":HomeMetaDescription", $homeMetaDescription);
+      $handle->bindParam(":ContactSeoTitle", $contactSeoTitle);
+      $handle->bindParam(":ContactMetaDescription", $contactMetaDescription);
+      $handle->bindParam(":ProductsSeoTitle", $productsSeoTitle);
+      $handle->bindParam(":ProductsMetaDescription", $productsMetaDescription);
+      $handle->bindParam(":BlogSeoTitle", $blogSeoTitle);
+      $handle->bindParam(":BlogMetaDescription", $blogMetaDescription);
       $handle->execute();
 
       $conn = null;
@@ -74,6 +96,9 @@ class Settings {
   function getCity($zip) {
     try {
       $conn = connectToDB();
+
+      // Secure input
+      $zip = Security::secureString($zip);
 
       $query = "SELECT City FROM ZipCode WHERE ZipCode = :ZipCode";
       $handle = $conn->prepare($query);
@@ -113,6 +138,10 @@ class Settings {
     try {
         $conn = connectToDB();
 
+        $post["Day"] = Security::secureString($post["Day"]);
+        $post["Open"] = Security::secureString($post["Open"]);
+        $post["Close"] = Security::secureString($post["Close"]);
+
         $query = "INSERT INTO Hours (Day, Open, Close) VALUES (:Day, :Open, :Close)";
 
         $handle = $conn->prepare($query);
@@ -131,6 +160,11 @@ class Settings {
   function updateHours($post, $id) {
     try {
         $conn = connectToDB();
+
+        $post["Day"] = Security::secureString($post["Day"]);
+        $post["Open"] = Security::secureString($post["Open"]);
+        $post["Close"] = Security::secureString($post["Close"]);
+        $id = Security::secureString($id);
 
         $query = "UPDATE Hours
                   SET Day = :Day,
@@ -155,6 +189,9 @@ class Settings {
   function deleteHours($id) {
     try {
         $conn = connectToDB();
+
+        // Secure input
+        $id = Security::secureString($id);
 
         $query = "DELETE FROM Hours WHERE HoursID = :id";
 
@@ -199,7 +236,7 @@ class Settings {
         $handle->bindParam(":DeliveryPrice", $post["DeliveryPrice"]);
         $handle->execute();
 
-        $conn = null;
+        $conn = connectToDB();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -209,6 +246,10 @@ class Settings {
   function updateShippingMethod($post, $id) {
     try {
         $conn = connectToDB();
+
+        // Secure input
+        $post["Method"] = Security::secureString($post["Method"]);
+        $id = Security::secureString($id);
 
         $query = "UPDATE DeliveryMethod
                   SET Method = :Method,
@@ -233,6 +274,9 @@ class Settings {
   function deleteShippingMethod($id) {
     try {
         $conn = connectToDB();
+
+        // Secure input
+        $id = Security::secureString($id);
 
         $query = "DELETE FROM DeliveryMethod WHERE DeliveryMethodID = :id";
 
