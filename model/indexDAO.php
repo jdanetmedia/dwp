@@ -29,7 +29,7 @@ function getRecentBlogs() {
 function getProductsOnSale() {
     global $connection;
 
-    $query = "SELECT Product.*, ProductImg.ImgID, ProductImg.IsPrimary, ImgGallery.URL FROM Product LEFT JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber LEFT JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1 AND ProductImg.IsPrimary = 1 AND NOT Product.OfferPrice = 0 LIMIT 5";
+    $query = "SELECT Product.*, ProductImg.ImgID, ProductImg.IsPrimary, ImgGallery.URL FROM Product LEFT JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber LEFT JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1 AND ProductImg.IsPrimary = 1 AND NOT Product.OfferPrice = 0 LIMIT 4";
     $result = mysqli_query($connection, $query);
     return $result;
 }
@@ -37,7 +37,7 @@ function getProductsOnSale() {
 function getHighestRatedProducts() {
     global $connection;
 
-    $query = "SELECT AVG(Rating), ImgGallery.*, ProductImg.IsPrimary, Product.* FROM Product INNER JOIN Review ON Review.ItemNumber = Product.ItemNumber LEFT JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber LEFT JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1 AND ProductImg.IsPrimary = 1 GROUP BY ItemNumber ORDER BY AVG(Rating) DESC LIMIT 5";
+    $query = "SELECT AVG(Rating), ImgGallery.*, ProductImg.IsPrimary, Product.* FROM Product INNER JOIN Review ON Review.ItemNumber = Product.ItemNumber LEFT JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber LEFT JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1 AND ProductImg.IsPrimary = 1 GROUP BY ItemNumber ORDER BY AVG(Rating) DESC LIMIT 4";
     $result = mysqli_query($connection, $query);
     return $result;
 }
@@ -63,7 +63,7 @@ function getReviewForProduct($itemNumber) {
         $i++;
     }
     while($i2 <= $ratedRemaining) {
-        echo "<i class='material-icons tiny'>star_border</i>";
+        echo "<i class='material-icons tiny rated'>star_border</i>";
         $i2++;
     }
 }

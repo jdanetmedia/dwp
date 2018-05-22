@@ -54,7 +54,7 @@ $url = $_SERVER['REQUEST_URI'];
   </div>
   <?php
   if(isset($catResult)) {
-    while ($row = mysqli_fetch_array($catResult)) {
+    foreach ($catResult as $row) {
   ?>
   <div class="row">
     <div class="col s12 m12">

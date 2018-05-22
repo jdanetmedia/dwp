@@ -76,7 +76,7 @@ if ($orderProductsAndPrice["OrderInfo"]["CustomerEmail"] != $_SESSION["CustomerE
 				<p>Price: $<?php echo $products["FinalPrice"] * $products["Amount"]; ?></p>
 			</div>
 			<div class="card-action">
-				<a href="product.php?item=<?php echo $row["ItemNumber"]; ?>">View product</a>
+				<a href="product.php?item=<?php echo $products["ItemNumber"]; ?>">View product</a>
 			</div>
 		</div>
 		<?php

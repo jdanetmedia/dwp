@@ -39,8 +39,8 @@ class Admin extends Security {
       $this->newpass();
     }
 
-    if (isset($_GET["update"])) {
-      $this->updateUserInfo($_GET["update"]);
+    if (isset($_POST["submitupdateinfo"])) {
+      $this->updateUserInfo($_SESSION["UserEmail"]);
     }
 
     if (isset($_POST["submitupdatepass"])) {
@@ -195,6 +195,7 @@ class Admin extends Security {
   }
 
   function updateUserInfo($useremail) {
+    echo "SOME FUCKING BULLS**T!";
     $firstname = Security::secureString($_POST["firstname"]);
     $lastname = Security::secureString($_POST["lastname"]);
     $newmail = Security::secureString($_POST["email"]);
@@ -202,7 +203,7 @@ class Admin extends Security {
       try {
           $conn = DB::connect();
 
-          $handle = $conn->prepare("UPDATE User SET FirstName = :firstname, LastName = :lastname, UserEmail = :newmail WHERE UserEmail = :useremail");
+          $handle = $conn->prepare("UPDATE User SET User.FirstName = :firstname, User.LastName = :lastname, User.UserEmail = :newmail WHERE User.UserEmail = :useremail");
           $handle->bindParam(':useremail', $useremail);
           $handle->bindParam(':firstname', $firstname);
           $handle->bindParam(':lastname', $lastname);
@@ -218,7 +219,6 @@ class Admin extends Security {
   function updateUserPass($useremail) {
     $message = "";
     $vali = true;
-
     if($_POST['newpass'] == "") {
       $message .= "You need to enter a password. <br>";
       $vali = false;
@@ -238,21 +238,15 @@ class Admin extends Security {
   		$handle->bindParam(':email', $useremail);
   		$handle->execute();
   		$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-  		if(password_verify($oldpassword, $result[0]["Password"])){
+  		if(password_verify($oldpassword, $result[0]["Password"])) {
         if ($password == $password2 && $vali == true) {
           $iterations = ['cost' => 10];
           $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
-          try {
-
-              $statement = "UPDATE User SET Password = :password WHERE UserEmail = :email";
-              $handle = $conn->prepare($statement);
-              $handle->bindParam(':password', $hashed_password);
-              $handle->bindParam(':email', $useremail);
-              $handle->execute();
-          }
-          catch(\PDOException $ex) {
-              print($ex->getMessage());
-          }
+          $statement1 = "UPDATE User SET User.Password = :password WHERE UserEmail = :email";
+          $handle = $conn->prepare($statement1);
+          $handle->bindParam(':password', $hashed_password);
+          $handle->bindParam(':email', $useremail);
+          $handle->execute();
         }
       }
     }
@@ -262,7 +256,6 @@ class Admin extends Security {
   }
 
   function createNewUser() {
-    echo "Create a new user";
 
     $message = "";
     $vali = true;
@@ -318,12 +311,11 @@ class Admin extends Security {
   }
 
   function deleteUser($useremail) {
-    echo "Delete this one: " . $useremail;
     try {
         $conn = DB::connect();
 
-        $handle = $conn->prepare("DELETE FROM User WHERE UserEmail = :mail");
-        $handle->bindParam(':mail', $usermail);
+        $handle = $conn->prepare("DELETE FROM User WHERE User.UserEmail = :mail");
+        $handle->bindParam(':mail', $useremail);
         $handle->execute();
 
         $conn = null;

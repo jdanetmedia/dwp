@@ -36,24 +36,25 @@ $author = getAuthor($postData["UserEmail"]);
           </div>
         </div>
       </div>
-      <div class="row">
         <?php if(isset($postData["RelatedProducts"])) { ?>
-          <div class="carousel product-slider">
-      			<h4>Related producks!</h4>
-            <?php
-              while($row = mysqli_fetch_array($related)) {
-                ?>
-                  <a class='carousel-item' href='product.php?item=<?php echo $row["ItemNumber"]; ?>'>
-                      <div class='card'>
-                          <div class='card-image'>
-                              <img src='<?php echo $row["URL"] ?>'>
-                              <span class='card-title'><?php echo $row["ProductName"]; ?></span>
+      <div class="outer row">
+          <h4>Related Producks!</h4>
+          <?php
+          while($row = mysqli_fetch_array($related)) {
+              $itemNumber = $row["ItemNumber"];
+              ?>
+              <a href="product.php?item=<?php echo $itemNumber; ?>">
+                  <div class="col m3 s12">
+                      <div class="card">
+                          <div class="card-image">
+                              <img src="<?php echo $row["URL"]; ?>">
+                              <span class="card-title"><?php echo $row["ProductName"]; ?></span>
                           </div>
-                          <div class='card-action'>
-                              <?php
-                              if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+                          <div class="card-action">
+                              <?php if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
                                   ?>
-                                  <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"];
+                                  <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo
+                                          $row["OfferPrice"];
                                           ?></b></p>
                                   <?php
                               } else {
@@ -62,19 +63,21 @@ $author = getAuthor($postData["UserEmail"]);
                                   <?php
                               }
                               ?>
-                              <div class='stars right'>
+                              <div class="stars right">
                                   <?php
-                                  //echo getReviewForProduct($row["ItemNumber"]);
+                                  //echo getReviewForProduct($itemNumber);
                                   ?>
                               </div>
                           </div>
                       </div>
-                  </a>
-                <?php
-              }
-            ?>
-          </div>
-        <?php } ?>
+                  </div>
+              </a>
+              <?php
+          }
+          ?>
+      </div>
+      <?php } ?>
+      <div class="outer row">
         <h4>Related Bluckposts!</h4>
         <?php
           $blogResult = getAllRelatedPosts($postData["BlogCategoryID"], $post);
