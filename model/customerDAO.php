@@ -63,9 +63,25 @@
 			$email = trim(mysqli_real_escape_string($connection, $_POST['CustomerEmail']));
 	    $iterations = ['cost' => 10];
 	    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+			try {
+	        $conn = DB::connect();
 
-		$query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode, ResetKey) VALUES ('{$email}', '{$hashed_password}', NULL, NULL, NULL, '{$firstName}', '{$lastName}', NULL, NULL)";
-		$result = mysqli_query($connection, $query);
+	        $cat = Security::secureString($_GET["cat"]);
+
+	        $query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode, ResetKey) VALUES ('{$email}', '{$hashed_password}', NULL, NULL, NULL, '{$firstName}', '{$lastName}', NULL, NULL)";
+
+	        $handle = $conn->prepare($query);
+	        $handle->bindParam(':cat', $cat);
+	        $handle->execute();
+
+	        $catResult = $handle->fetchAll( \PDO::FETCH_ASSOC );
+	        $conn = DB::close();
+	        return $catResult;
+
+	    }
+	    catch(\PDOException $ex) {
+	        return print($ex->getMessage());
+	    }
 			if ($result) {
 				$message = "User Created.";
 				redirect_to("login.php");
