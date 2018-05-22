@@ -1,16 +1,32 @@
 <?php
 	// START FORM PROCESSING ON LOGIN CUSTOMER
 	if (isset($_POST['submitlogin'])) { // Form has been submitted.
-		$email = trim(mysqli_real_escape_string($connection, $_POST['email']));
-		$password = trim(mysqli_real_escape_string($connection,$_POST['pass']));
+		$email = Security::secureString($_POST['email']);
+		$password = Security::secureString($_POST['pass']);
+		try {
+				$conn = DB::connect();
 
-		$query = "SELECT CustomerEmail, Password, FirstName FROM Customer WHERE CustomerEmail = '{$email}' LIMIT 1";
-		$result = mysqli_query($connection, $query);
+				$cat = Security::secureString($_GET["cat"]);
 
-			if (mysqli_num_rows($result) == 1) {
+				$query = "SELECT CustomerEmail, Password, FirstName FROM Customer WHERE CustomerEmail = :email LIMIT 1";
+
+				$handle = $conn->prepare($query);
+				$handle->bindParam(':email', $email);
+				$handle->execute();
+
+				$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+				$conn = DB::close();
+				return $result;
+
+		}
+		catch(\PDOException $ex) {
+				return print($ex->getMessage());
+		}
+
+			if (count($result) == 1) {
 				// username/password authenticated
 				// and only 1 match
-				$found_user = mysqli_fetch_array($result);
+				$found_user = $result[0];
                 if(password_verify($password, $found_user['Password'])){
 				    $_SESSION['CustomerEmail'] = $found_user['CustomerEmail'];
 				    $_SESSION['FirstName'] = $found_user['FirstName'];
@@ -55,12 +71,12 @@
 		}
 
 		// perform validations on the form data
-		$password = trim(mysqli_real_escape_string($connection, $_POST['pass']));
-		$passwordvali = trim(mysqli_real_escape_string($connection, $_POST['passvali']));
+		$password = Security::secureString($_POST['pass']);
+		$passwordvali = Security::secureString($_POST['passvali']);
 		if ($password == $passwordvali && $vali == true) {
-			$firstName = mysqli_real_escape_string($connection, $_POST['firstName']);
-			$lastName = mysqli_real_escape_string($connection, $_POST['lastName']);
-			$email = trim(mysqli_real_escape_string($connection, $_POST['CustomerEmail']));
+			$firstName = Security::secureString($_POST['firstName']);
+			$lastName = Security::secureString($_POST['lastName']);
+			$email = Security::secureString($_POST['CustomerEmail']);
 	    $iterations = ['cost' => 10];
 	    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
 			try {
@@ -68,15 +84,18 @@
 
 	        $cat = Security::secureString($_GET["cat"]);
 
-	        $query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode, ResetKey) VALUES ('{$email}', '{$hashed_password}', NULL, NULL, NULL, '{$firstName}', '{$lastName}', NULL, NULL)";
+	        $query = "INSERT INTO `Customer` (CustomerEmail, Password, Street, HouseNumber, Phone, FirstName, LastName, ZipCode, ResetKey) VALUES (:email, :hashed_password, NULL, NULL, NULL, :firstName, :lastName, NULL, NULL)";
 
 	        $handle = $conn->prepare($query);
-	        $handle->bindParam(':cat', $cat);
+	        $handle->bindParam(':email', $email);
+	        $handle->bindParam(':hashed_password', $hashed_password);
+	        $handle->bindParam(':firstName', $firstName);
+	        $handle->bindParam(':lastName', $lastName);
 	        $handle->execute();
 
-	        $catResult = $handle->fetchAll( \PDO::FETCH_ASSOC );
+	        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
 	        $conn = DB::close();
-	        return $catResult;
+	        return $result;
 
 	    }
 	    catch(\PDOException $ex) {
@@ -109,24 +128,31 @@
         if (!isset($_POST["emailforgot"])) {
             error("No input to validate!");
         }
-				$email = $_POST["emailforgot"];
+				$email = Security::secureString($_POST["emailforgot"]);
 				$randomkey = substr(md5(rand()), 0, 20);
 
 				try {
 			      $conn = connectToDB();
 
-			      $statement = "UPDATE Customer SET ResetKey = :randomkey WHERE CustomerEmail = '{$email}'";
+			      $statement = "UPDATE Customer SET ResetKey = :randomkey WHERE CustomerEmail = :email";
 
 			      $handle = $conn->prepare($statement);
 			      $handle->bindParam(':randomkey', $randomkey);
+						$handle->bindParam(':email', $email);
 			      $handle->execute();
+
+						$statement2 = "INSERT INTO Customer (ResetKey) VALUES (:randomkey) WHERE CustomerEmail = :email";
+
+			      $handle = $conn->prepare($statement2);
+			      $handle->bindParam(':randomkey', $randomkey);
+						$handle->bindParam(':email', $email);
+			      $handle->execute();
+
+						$conn = DB::close();
 			  }
 			  catch(\PDOException $ex) {
 			      print($ex->getMessage());
 			  }
-
-				$query = "INSERT INTO Customer (ResetKey) VALUES ($randomkey) WHERE CustomerEmail = $email";
-				$result = mysqli_query($connection, $query);
 
 				$domain = $_SERVER['HTTP_HOST'];
 				$resetmessage = "Reset password: <$domain/view/newpass.php?email=$email&key=$randomkey>";
@@ -169,8 +195,8 @@
 			}
 
 			// perform validations on the form data
-			$password = trim(mysqli_real_escape_string($connection, $_POST['pass']));
-			$password2 = trim(mysqli_real_escape_string($connection, $_POST['pass2']));
+			$password = Security::secureString($_POST['pass']);
+			$password2 = Security::secureString($_POST['pass2']);
 			if ($password == $password2 && $vali == true) {
 		    $iterations = ['cost' => 10];
 		    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
@@ -185,6 +211,7 @@
 			      $handle = $conn->prepare($statement);
 			      $handle->bindParam(':password', $hashed_password);
 			      $handle->execute();
+						$conn = DB::close();
 			  }
 			  catch(\PDOException $ex) {
 			      print($ex->getMessage());
@@ -202,8 +229,7 @@ function getCustomerInfo($email) {
 
 		$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
 		return $result;
-
-		// $conn = null;
+		$conn = DB::close();
 	}
 	catch(\PDOException $ex) {
 		print($ex->getMessage());
@@ -278,7 +304,7 @@ if (isset($_POST["updateprofile"])) {
 			$handle->execute();
 			$_SESSION["FirstName"] = $_POST["firstname"];
 		}
-		// $conn = null;
+		$conn = DB::close();
 	}
 	catch(\PDOException $ex) {
 		print($ex->getMessage());
@@ -316,6 +342,7 @@ if (isset($_POST["updatepassword"])) {
 			  }
 			}
 		}
+		$conn = DB::close();
 	}
 	catch(\PDOException $ex) {
 		print($ex->getMessage());
