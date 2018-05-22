@@ -1,8 +1,6 @@
 <?php
 // DB Connection
 require_once("../includes/connection.php");
-require_once('../admin/class/DB.php');
-require_once('../admin/class/Security.php');
 
 if(isset($_POST["submitreview"])) {
   addReview($_GET["item"]);
