@@ -3,7 +3,7 @@ if (!file_exists('../includes/constants.php')) {
   header('Location: ../install/install.php');
 }
 // DB connection
-require_once("../includes/connection.php");
+require_once('../admin/class/DB.php');
 
 // Security
 require_once("../admin/class/Security.php");

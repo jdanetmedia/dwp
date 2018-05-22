@@ -1,5 +1,7 @@
 <?php
 require_once('../includes/connection.php');
+require_once('../admin/class/DB.php');
+require_once('../admin/class/Security.php');
 
 if (isset($_POST["email"])) {
     mailCheck();
@@ -86,14 +88,43 @@ if (isset($_POST["email"])) {
 }
 
     function getPageInfo() {
-    global $connection;
+        try {
+            $conn = DB::connect();
+
+            $handle = $conn->prepare("SELECT BasicPageInfo.* , ZipCode.City FROM `BasicPageInfo` INNER JOIN ZipCode ON ZipCode.ZipCode = BasicPageInfo.ZipCode");
+            $handle->execute();
+
+            $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+            $conn = DB::close();
+            return $result;
+
+        }
+        catch(\PDOException $ex) {
+            return print($ex->getMessage());
+        }
+
+        /*global $connection;
         $pageInfo = mysqli_query($connection, "SELECT BasicPageInfo.* , ZipCode.City FROM `BasicPageInfo` INNER JOIN ZipCode ON ZipCode.ZipCode = BasicPageInfo.ZipCode");
         $row = mysqli_fetch_assoc($pageInfo);
-        return $row;
+        return $row;*/
     }
 
     function getHours() {
-    global $connection;
+        try {
+            $conn = DB::connect();
+
+            $handle = $conn->prepare("SELECT * FROM Hours");
+            $handle->execute();
+
+            $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+            $conn = DB::close();
+            return $result;
+        }
+        catch(\PDOException $ex) {
+            return print($ex->getMessage());
+        }
+
+        /*global $connection;
         $hours = mysqli_query($connection, "SELECT * FROM Hours");
-        return $hours;
+        return $hours;*/
     }

@@ -1,6 +1,8 @@
 <?php
 // DB Connection
 require_once("../includes/connection.php");
+require_once('../admin/class/DB.php');
+require_once('../admin/class/Security.php');
 
 if(isset($_POST["submitreview"])) {
   addReview($_GET["item"]);
@@ -8,21 +10,56 @@ if(isset($_POST["submitreview"])) {
 
 // Function to get the current item on single productpage
 function getCurrentProduct($itemNumber) {
-  global $connection;
+    try {
+        $conn = DB::connect();
+        $secItem = Security::secureString($itemNumber);
+
+        $statement = "SELECT Product.*, ImgGallery.URL, ProductImg.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = :ItemNumber";
+        $handle = $conn->prepare($statement);
+        $handle->bindParam(":ItemNumber", $secItem);
+        $handle->execute();
+
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $conn = DB::close();
+        return $result;
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
+
+    /*global $connection;
 
   $query = "SELECT Product.*, ImgGallery.URL, ProductImg.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber";
   // $query = "SELECT * FROM Product WHERE ItemNumber = $itemNumber";
   $result = mysqli_query($connection, $query);
-  return $result;
+  return $result;*/
 }
 
 // Get reviews for current product
 function getReviews($itemNumber) {
-  global $connection;
+    try {
+        $conn = DB::connect();
+        $secItem = Security::secureString($itemNumber);
+
+        $statement = "SELECT * FROM Review WHERE ItemNumber = :ItemNumber";
+        $handle = $conn->prepare($statement);
+        $handle->bindParam(":ItemNumber", $secItem);
+        $handle->execute();
+
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $conn = DB::close();
+        return $result;
+
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
+
+    /*global $connection;
 
   $query = "SELECT * FROM Review WHERE ItemNumber = $itemNumber";
   $result = mysqli_query($connection, $query);
-  return $result;
+  return $result;*/
 }
 
 // Add review for current product
@@ -56,17 +93,54 @@ function addReview($item) {
 }
 
 function getRelatedProducts($productCat, $itemNumber) {
-  global $connection;
+    try {
+        $conn = DB::connect();
+        $itemNumber = Security::secureString($itemNumber);
+        $productCat = Security::secureInt($productCat);
+
+        $statement = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = :ProductCategoryID AND NOT Product.ItemNumber = :ItemNumber LIMIT 4";
+        $handle = $conn->prepare($statement);
+        $handle->bindParam(":ProductCategoryID", $productCat);
+        $handle->bindParam(":ItemNumber", $itemNumber);
+        $handle->execute();
+
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $conn = DB::close();
+        return $result;
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
+
+    /*global $connection;
 
   $query = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = $productCat AND NOT Product.ItemNumber = $itemNumber LIMIT 5";
   $result = mysqli_query($connection, $query);
-  return $result;
+  return $result;*/
 }
 
 function getRelatedProductsForBlog($productCat) {
-    global $connection;
+    try {
+        $conn = DB::connect();
+        $secProdCat = Security::secureInt($productCat);
+
+        $statement = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = :ProductCategoryID LIMIT 4";
+        $handle = $conn->prepare($statement);
+        $handle->bindParam(":ProductCategoryID", $secProdCat);
+        $handle->execute();
+
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $conn = DB::close();
+        return $result;
+
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
+
+    /*global $connection;
 
     $query = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = $productCat LIMIT 5";
     $result = mysqli_query($connection, $query);
-    return $result;
+    return $result;*/
 }
