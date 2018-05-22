@@ -23,7 +23,7 @@ $userinfo = $users->GetUserInfo($_SESSION["UserEmail"]);
 	<div class="card">
 	  <div class="card-content">
 	    <span class="card-title">Edit your info</span>
-			<form class="col s12" action="manage-user.php?update=<?php echo $_SESSION["UserEmail"]; ?>" method="post">
+			<form class="col s12" action="" method="post">
 	      <div class="row">
 	        <div class="input-field col s6">
 	          <input id="first_name" type="text" name="firstname" class="validate" value="<?php echo $userinfo[0]["FirstName"]; ?>">
@@ -40,7 +40,7 @@ $userinfo = $users->GetUserInfo($_SESSION["UserEmail"]);
 	          <label for="email">Email</label>
 	        </div>
 	      </div>
-				<input class="waves-effect waves-light btn grey darken-4 black" type="submit" name="submitupdateinfo" value="Save">
+				<input class="waves-effect waves-light btn grey darken-4 black" type="submit" name="submitupdateinfo" value="Update info">
     	</form>
 	  </div>
 	</div>

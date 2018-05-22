@@ -36,7 +36,7 @@ if (!logged_in()) {
 	          <label for="email">Email</label>
 	        </div>
 					<div class="input-field col s6">
-	          <input value="<?php echo $customerinfo[0]["Phone"]; ?>" name="phone" id="phone" type="email" class="validate">
+	          <input value="<?php echo $customerinfo[0]["Phone"]; ?>" name="phone" id="phone" type="number" class="validate">
 	          <label for="phone">Phone</label>
 	        </div>
 	      </div>

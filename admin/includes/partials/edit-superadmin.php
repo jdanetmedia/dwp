@@ -17,7 +17,7 @@ foreach ($allusers as $user) {
         <tr>
           <td><?php echo $user["FirstName"] . " " . $user["LastName"]; ?></td>
           <td><?php echo $user["UserEmail"]; ?></td>
-          <td><form action="manage-user.php?remove=<?php echo $user["UserEmail"]; ?>" method="post"><input class="waves-effect waves-light btn grey darken-4 black right" type="submit" name="submitdeleteuser" value="Delete"></form</td>
+          <td><form action="manage-user.php?remove=<?php echo $user["UserEmail"]; ?>" method="post" onsubmit="return confirm('Are you sure?');"><input class="waves-effect waves-light btn grey darken-4 black right" type="submit" name="submitdeleteuser" value="Delete"></form></td>
         </tr>
 <?php
 }
