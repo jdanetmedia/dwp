@@ -22,39 +22,81 @@ require_once("../model/indexDAO.php");
     ?>
   </div>
 </div>
-<div class="outer">
-  <div class="container">
-    <div class="carousel">
-      <h4>Recommended producks!</h4>
+<div class="outer row">
+    <div class="container">
+        <h4>Recommended Producks!</h4>
+            <?php
+            //Gets highest rated products
+            $highestRatedProducts = getHighestRatedProducts();
+            while($row = mysqli_fetch_array($highestRatedProducts)) {
+                $itemNumber = $row["ItemNumber"];
+                ?>
+            <a href="product.php?item=<?php echo $itemNumber; ?>">
+                <div class="col m3 s12">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="<?php echo $row["URL"]; ?>">
+                            <span class="card-title"><?php echo $row["ProductName"]; ?></span>
+                        </div>
+                        <div class="card-action">
+                            <?php if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+                                ?>
+                                <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"];
+                                ?></b></p>
+                                <?php
+                            } else {
+                                ?>
+                                <p class="price">$<?php echo $row["Price"]; ?></p>
+                                <?php
+                            }
+                            ?>
+                            <div class="stars right">
+                                <?php
+                                echo getReviewForProduct($itemNumber);
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+                <?php
+            }
+            ?>
+    </div>
+</div>
+<div class="outer gray row">
+	<div class="container">
+        <h4>Daily offers on producks!</h4>
         <?php
-        //Gets highest rated products
-        $highestRatedProducts = getHighestRatedProducts();
-        while($row = mysqli_fetch_array($highestRatedProducts)) {
+        //Gets products on sale
+        $productsOnSale = getProductsOnSale();
+        while($row = mysqli_fetch_array($productsOnSale)) {
             $itemNumber = $row["ItemNumber"];
             ?>
-            <a class='carousel-item' href="product.php?item=<?php echo $itemNumber; ?>">
-                <div class='card'>
-                    <div class='card-image'>
-                        <img src='<?php echo $row["URL"]; ?>'>
-                        <span class='card-title'><?php echo $row["ProductName"]; ?></span>
-                    </div>
-                    <div class='card-action'>
-                        <?php
-                        if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+            <a href="product.php?item=<?php echo $itemNumber; ?>">
+                <div class="col m3 s12">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="<?php echo $row["URL"]; ?>">
+                            <span class="card-title"><?php echo $row["ProductName"]; ?></span>
+                        </div>
+                        <div class="card-action">
+                            <?php if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+                                ?>
+                                <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"];
+                                        ?></b></p>
+                                <?php
+                            } else {
+                                ?>
+                                <p class="price">$<?php echo $row["Price"]; ?></p>
+                                <?php
+                            }
                             ?>
-                            <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"];
-                            ?></b></p>
-                            <?php
-                        } else {
-                            ?>
-                            <p class="price">$<?php echo $row["Price"]; ?></p>
-                            <?php
-                        }
-                        ?>
-                        <div class='stars right rated'>
-                            <?php
+                            <div class="stars right">
+                                <?php
                                 echo getReviewForProduct($itemNumber);
-                            ?>
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -62,51 +104,6 @@ require_once("../model/indexDAO.php");
             <?php
         }
         ?>
-    </div>
-  </div>
-</div>
-<div class="outer gray">
-	<div class="container">
-		<div class="carousel product-slider">
-			<h4>Daily offers on producks!</h4>
-            <?php
-            //Gets products on sale
-            $productsOnSale = getProductsOnSale();
-            while($row = mysqli_fetch_array($productsOnSale)) {
-                $itemNumber = $row["ItemNumber"];
-                ?>
-                <a class='carousel-item' href='product.php?item=<?php echo $itemNumber; ?>'>
-                    <div class='card'>
-                        <div class='card-image'>
-                            <img src="<?php echo $row["URL"]; ?>">
-                            <span class='card-title'><?php echo $row["ProductName"]; ?></span>
-                        </div>
-                        <div class='card-action'>
-                            <p class='price'>$<strike><?php echo $row["Price"]; ?></strike> <b>$<?php echo $row["OfferPrice"]; ?></b></p>
-                            <div class='stars right rated'>
-                                <?php
-                                echo getReviewForProduct($itemNumber);
-                                ?>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <?php
-            }
-            ?>
-        </div>
-        <!--<div class="carousel">
-            <?php
-            //Gets products on sale
-            $productsOnSale = getProductsOnSale();
-            while($row = mysqli_fetch_array($productsOnSale)) {
-            $itemNumber = $row["ItemNumber"];
-            ?>
-                <a class="carousel-item" href='product.php?item=<?php echo $itemNumber; ?>'><img src="http://via.placeholder.com/400x400"><?php $row["ProductName"]; ?></a>
-                <p>HFGFDGFD</p>
-            <?php } ?>
-
-        </div>-->
 	</div>
 </div>
 <div class="outer">

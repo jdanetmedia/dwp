@@ -71,7 +71,8 @@ if (isset($_SESSION["cart"])) {
                 <input name="amount" id="quantity" type="number" value="1">
                 <label for="quantity">Quantity</label>
               </div>
-              <a class="waves-effect waves-light btn cart-btt"><input class="presscart" type="submit" name="submitcart" value="Add to cart"><i class="material-icons right">add_shopping_cart</i></a>
+              <a class="waves-effect waves-light btn cart-btt"><input class="presscart" type="submit" name="submitcart" value="Add
+              to cart"><i class="material-icons right">add_shopping_cart</i></a>
             </form>
           </div>
           <div class="col s12 avr-review">
@@ -178,7 +179,8 @@ if (isset($_SESSION["cart"])) {
                     <div class="card-content">
                       <span class="card-title"><?php echo $row["ReviewTitle"]; ?></span>
                       <p><?php echo $row["ReviewContent"] ?></p>
-                      <span class="review-meta"><?php echo "Posted by <b>" . $row["ReviewName"] . "</b> on <b>" . $row["ReviewDate"] . "</b>"; ?></span>
+                      <span class="review-meta"><?php echo "Posted by <b>" . $row["ReviewName"] . "</b> on <b>" . $row["ReviewDate"]
+                              . "</b>"; ?></span>
                     </div>
                     <div class="card-action">
                       <div class="stars">
@@ -212,42 +214,45 @@ if (isset($_SESSION["cart"])) {
         </div>
       </div>
     </div>
-    <div class="carousel product-slider">
-			<h4>Related producks!</h4>
-      <?php
-        while($row = mysqli_fetch_array($related)) {
-            $itemNumber = $row["ItemNumber"];
-          ?>
-            <a class='carousel-item' href='product.php?item=<?php echo $itemNumber; ?>'>
-                <div class='card'>
-                  <div class='card-image'>
-                    <img src='<?php echo $row["URL"] ?>'>
-                    <span class='card-title'><?php echo $row["ProductName"]; ?></span>
-                  </div>
-                  <div class='card-action'>
-                      <?php
-                      if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
-                          ?>
-                          <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo $row["OfferPrice"];
-                                  ?></b></p>
-                          <?php
-                      } else {
-                          ?>
-                          <p class="price">$<?php echo $row["Price"]; ?></p>
-                          <?php
-                      }
-                      ?>
-                    <div class='stars right'>
-                        <?php
-                        echo getReviewForProduct($itemNumber);
-                        ?>
-                    </div>
-                  </div>
-                </div>
-            </a>
-          <?php
-        }
-      ?>
-    </div>
+      <div class="outer row">
+              <h4>Related Producks!</h4>
+              <?php
+              $related2 = getRelatedProducts($currentItem["ProductCategoryID"], $currentItem["ItemNumber"]);
+              while($row = mysqli_fetch_array($related2)) {
+                  $itemNumber = $row["ItemNumber"];
+                  ?>
+                  <a href="product.php?item=<?php echo $itemNumber; ?>">
+                      <div class="col m3 s12">
+                          <div class="card">
+                              <div class="card-image">
+                                  <img src="<?php echo $row["URL"]; ?>">
+                                  <span class="card-title"><?php echo $row["ProductName"]; ?></span>
+                              </div>
+                              <div class="card-action">
+                                  <?php if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
+                                      ?>
+                                      <p class="price"><strike>$<?php echo $row["Price"]; ?></strike><b> $<?php echo
+                                              $row["OfferPrice"];
+                                              ?></b></p>
+                                      <?php
+                                  } else {
+                                      ?>
+                                      <p class="price">$<?php echo $row["Price"]; ?></p>
+                                      <?php
+                                  }
+                                  ?>
+                                  <div class="stars right">
+                                      <?php
+                                      echo getReviewForProduct($itemNumber);
+                                      ?>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </a>
+                  <?php
+              }
+              ?>
+      </div>
   </div>
 <?php require_once("../includes/footer.php") ?>
