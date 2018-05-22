@@ -25,16 +25,15 @@
   </div>
 </div>
 <div class="row">
-  <div class="file-field input-field">
-      <p>Upload logo</p>
-      <div class="btn">
-        <span>Upload</span>
-        <input type="file">
-      </div>
-      <div class="file-path-wrapper">
-        <input class="file-path validate" name="LogoURL" type="text" <?php if(isset($info["LogoURL"])) echo "value='" . $info["LogoURL"] . "'"; ?>>
-      </div>
-    </div>
+  <div class="col s6">
+    <?php if(isset($info["LogoURL"]) && !empty($info["LogoURL"])): ?>
+      <img style="width: 120px; height: auto;" src="<?php echo $info["LogoURL"]; ?>" alt="Logo">
+      <p><a href="gallery.php?logo=true">Change logo image</a></p>
+    <?php else: ?>
+      <img src="http://via.placeholder.com/350x150" alt="Logo">
+      <p><a href="gallery.php?logo=true">Add logo image</a></p>
+    <?php endif; ?>
+  </div>
 </div>
 <div class="row">
   <div class="input-field col s6">
