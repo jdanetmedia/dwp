@@ -82,7 +82,7 @@ $info = $BasicPageInfo->getBasicPageInfo();
 					<div id="seo" class="col s12 settings-content">
 						<?php include("includes/partials/seo-settings.php"); ?>
 					</div>
-					<input class="waves-effect waves-light btn grey darken-4" type="submit" name="submit" value="Update settings">
+					<input style="margin-left: 30px; margin-bottom: 30px;" class="waves-effect waves-light btn grey darken-4" type="submit" name="submit" value="Update settings">
 	      </div>
       </form>
     </div>

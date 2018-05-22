@@ -31,7 +31,7 @@ $hours = getHours();
             </ul>
           </div>
           <div class="col s12 m3">
-            <img class="responsive-img" src="../<?php echo $pageInfo["LogoURL"]; ?>">
+            <img class="responsive-img" src="<?php echo $pageInfo["LogoURL"]; ?>">
           </div>
         </div>
       </div>

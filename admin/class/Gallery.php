@@ -19,7 +19,7 @@ class Gallery {
       print($ex->getMessage());
     }
   }
-  function attachImage($item, $imgId) {
+  function attachImage($item, $imgId, $type) {
     try {
       $conn = DB::connect();
 
@@ -53,9 +53,32 @@ class Gallery {
     }
   }
 
-  function uploadImages($img) {
-    $target_dir = "productimgs/";
-    $target_file = $target_dir . basename($img["fileToUpload"]["name"]);
+  function addLogo($id) {
+    try {
+      $conn = DB::connect();
+
+      $getLogoUrl = $conn->prepare("SELECT URL FROM ImgGallery WHERE ImgID = :id");
+      $getLogoUrl->bindParam(":id", $id);
+      $getLogoUrl->execute();
+
+      $logo = $getLogoUrl->fetchAll( \PDO::FETCH_ASSOC );
+      $logoURL = $logo[0]["URL"];
+
+      $query = "UPDATE BasicPageInfo SET LogoURL = :logoURL";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(":logoURL", $logoURL);
+      $handle->execute();
+
+      $conn = DB::close();
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  function uploadImage($img, $type) {
+    $target_dir = "img/";
+    $target_file = $target_dir . basename(strtolower(preg_replace('/[^a-zA-Z0-9-_\.]/','', $img["fileToUpload"]["name"])));
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     // Check if image file is a actual image or fake image
@@ -94,6 +117,19 @@ class Gallery {
         echo "Sorry, there was an error uploading your file.";
       }
     }
+
+    if($type == "logo") {
+      // Resize image to 312 x 135 px
+      $image = new SimpleImage($target_file);
+      $image->maxareafill(312,135,21,149,135);
+      $image->save($target_file);
+    } else {
+      // Resize image to 800 x 800 px
+      $image = new SimpleImage($target_file);
+      $image->maxareafill(800,800,204,204,204);
+      $image->save($target_file);
+    }
+
     // Save to database
     try {
       $conn = DB::connect();
