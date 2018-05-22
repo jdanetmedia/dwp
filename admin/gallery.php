@@ -13,26 +13,53 @@
 
   $gallery = new Gallery();
 
-  if(isset($_POST["submit"])) {
-    if(isset($_POST["imgId"])) {
-      $gallery->attachImage($_GET["item"], $_POST["imgId"]); ?>
-      <script type="text/javascript">
-        // window.location.href = 'edit-product.php?item=<?php // echo $_GET["item"]; ?>&select=images';
-      </script>
-    <?php }
-  }
-  if(isset($_POST["uploadImg"])) {
-    if($_FILES && $_FILES['fileToUpload']['size'] > 0) {
-        $gallery->uploadImages($_FILES);
+  if(isset($_GET["item"])) {
+    $link = "gallery.php?item=" . $_GET["item"];
+    if(isset($_POST["submit"])) {
+      if(isset($_POST["imgId"])) {
+        $gallery->attachImage($_GET["item"], $_POST["imgId"], "product"); ?>
+        <script type="text/javascript">
+          window.location.href = 'edit-product.php?item=<?php echo $_GET["item"]; ?>&select=images';
+        </script>
+      <?php }
     }
+    if(isset($_POST["uploadImg"])) {
+      if($_FILES && $_FILES['fileToUpload']['size'] > 0) {
+          $gallery->uploadImage($_FILES, $_GET["item"], "product");
+      }
 
+    }
+  } elseif(isset($_GET["logo"])) {
+    $link = "gallery.php?logo=true";
+    if(isset($_POST["submit"])) {
+      if(isset($_POST["imgId"])) {
+        $gallery->addLogo($_POST["imgId"]); ?>
+        <script type="text/javascript">
+          window.location.href = 'manage-settings.php';
+        </script>
+      <?php }
+    }
+    if(isset($_POST["uploadImg"])) {
+      if($_FILES && $_FILES['fileToUpload']['size'] > 0) {
+          $gallery->uploadImage($_FILES, "logo");
+      }
+
+    }
   }
+
   $allImages = $gallery->getAllImages();
 ?>
   <div class="container gallery-cnt">
     <div class="row">
       <h2>Choose/Upload image</h2>
-      <form class="upload-form" action="gallery.php?item=<?php echo $_GET["item"]; ?>" method="post" enctype="multipart/form-data">
+      <?php
+        if(isset($_GET["item"])) {
+          $link = "gallery.php?item=" . $_GET["item"];
+        } elseif(isset($_GET["logo"])) {
+          $link = "gallery.php?logo=true";
+        }
+      ?>
+      <form class="upload-form" action="<?php echo $link; ?>" method="post" enctype="multipart/form-data">
         <input type="file" name="fileToUpload" id="fileToUpload">
         <input type="submit" name="uploadImg" value="Upload">
       </form>
