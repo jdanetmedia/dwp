@@ -6,17 +6,17 @@ require_once("../model/productDAO.php");
 require_once('../model/productsDAO.php');
 $post = $_GET["post"];
 $postData = getPost($post);
-$related = getRelatedProductsForBlog($postData["RelatedProducts"]);
-$breadcrumbCat = getBlogCategory($postData["BlogCategoryID"]);
-$author = getAuthor($postData["UserEmail"]);
+$related = getRelatedProductsForBlog($postData[0]["RelatedProducts"]);
+$breadcrumbCat = getBlogCategory($postData[0]["BlogCategoryID"]);
+$author = getAuthor($postData[0]["UserEmail"]);
 ?>
   <div class="container post-container">
       <nav class="breadcrumb-nav">
         <div class="nav-wrapper">
           <div class="col s12">
             <a href="blog.php" class="breadcrumb">Bluck</a>
-            <a href="blog.php?cat=<?php echo $postData["BlogCategoryID"]; ?>" class="breadcrumb"><?php echo $breadcrumbCat["CategoryName"]; ?></a>
-            <a href="#!" class="breadcrumb"><?php echo $postData["Title"]; ?></a>
+            <a href="blog.php?cat=<?php echo $postData[0]["BlogCategoryID"]; ?>" class="breadcrumb"><?php echo $breadcrumbCat[0]["CategoryName"]; ?></a>
+            <a href="#!" class="breadcrumb"><?php echo $postData[0]["Title"]; ?></a>
           </div>
         </div>
       </nav>
@@ -24,23 +24,23 @@ $author = getAuthor($postData["UserEmail"]);
         <div class="col s12">
           <div class="card">
             <div class="card-image">
-                <img src="<?php if($postData["URL"] != "") {
-                    echo $postData["URL"];
+                <img src="<?php if($postData[0]["URL"] != "") {
+                    echo $postData[0]["URL"];
                 } else echo "http://via.placeholder.com/1920x1080"; ?>">
-              <span class="card-title"><?php echo $postData["Title"]; ?></span>
+              <span class="card-title"><?php echo $postData[0]["Title"]; ?></span>
             </div>
             <div class="card-content">
-              <i>Posted on <b><?php echo $postData["BlogDate"]; ?></b> by <b><?php echo $author["FirstName"]; ?></b> in <b><?php echo $breadcrumbCat["CategoryName"]; ?></b></i>
-              <p><?php echo $postData["BlogContent"]; ?></p>
+              <i>Posted on <b><?php echo $postData[0]["BlogDate"]; ?></b> by <b><?php echo $author[0]["FirstName"]; ?></b> in <b><?php echo $breadcrumbCat[0]["CategoryName"]; ?></b></i>
+              <p><?php echo $postData[0]["BlogContent"]; ?></p>
             </div>
           </div>
         </div>
       </div>
-        <?php if(isset($postData["RelatedProducts"])) { ?>
+        <?php if(isset($postData[0]["RelatedProducts"])) { ?>
       <div class="outer row">
           <h4>Related Producks!</h4>
           <?php
-          while($row = mysqli_fetch_array($related)) {
+          foreach($related as $row) {
               $itemNumber = $row["ItemNumber"];
               ?>
               <a href="product.php?item=<?php echo $itemNumber; ?>">
@@ -80,8 +80,8 @@ $author = getAuthor($postData["UserEmail"]);
       <div class="outer row">
         <h4>Related Bluckposts!</h4>
         <?php
-          $blogResult = getAllRelatedPosts($postData["BlogCategoryID"], $post);
-          while($row = mysqli_fetch_array($blogResult)) {
+          $blogResult = getAllRelatedPosts($postData[0]["BlogCategoryID"], $post);
+          foreach($blogResult as $row) {
             ?>
               <div class="col s12 m6">
                   <div class="card">
