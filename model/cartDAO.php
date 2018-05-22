@@ -31,9 +31,6 @@ return $array;
 }
 
 // DB Connection
-require_once("../includes/connection.php");
-require_once('../admin/class/DB.php');
-require_once('../admin/class/Security.php');
 
 // Function to get the current item on single productpage
 function getCartProduct($itemNumber) {
@@ -192,7 +189,7 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     $Ordermessage = Security::secureString($Ordermessage);
     $StripeChargeID = Security::secureString($StripeChargeID);
     $Time = Security::secureString($Time);
-    $Street Security::secureString($Street);
+    $Street = Security::secureString($Street);
     $HouseNumber = Security::secureString($HouseNumber);
     $ZipCode = Security::secureString($ZipCode);
     $CustomerEmail = Security::secureString($CustomerEmail);

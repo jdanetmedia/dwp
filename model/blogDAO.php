@@ -1,7 +1,4 @@
 <?php
-require_once('../includes/connection.php');
-require_once('../admin/class/DB.php');
-require_once('../admin/class/Security.php');
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
     try {
