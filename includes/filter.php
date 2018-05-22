@@ -5,20 +5,20 @@
         <option value="0" selected>All Categories</option>
         <?php
         $categories = getCategories();
-        /*foreach ($categories as $cat) {
-            if ($_GET["cat"] == $cat["ProductCategory"]) {
+        foreach ($categories as $cat) {
+            if ($_GET["cat"] == $cat["ProductCategoryID"]) {
                 echo "<option selected value='". $cat["ProductCategoryID"] ."'>". $cat["CategoryName"] . "</option>";
             } else {
                 echo "<option  value='". $cat["ProductCategoryID"] ."'>". $cat["CategoryName"] . "</option>";
             }
-        }*/
-        while ($row = mysqli_fetch_array($categories)) {
+        }
+        /*while ($row = mysqli_fetch_array($categories)) {
           if ($_GET["cat"] == $row["ProductCategoryID"]) {
             echo "<option selected value='". $row["ProductCategoryID"] ."'>". $row["CategoryName"] . "</option>";
           } else {
         echo "<option  value='". $row["ProductCategoryID"] ."'>". $row["CategoryName"] . "</option>";
           }
-        }?>
+        } */?>
       </select>
     </div>
     <div class="col s12 m4">

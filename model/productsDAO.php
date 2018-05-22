@@ -142,26 +142,26 @@ function getReviewForProduct($itemNumber) {
 }
 
 function getCategories() {
-    /*try {
+    try {
         $conn = DB::connect();
 
         $handle = $conn->prepare("SELECT * FROM ProductCategory");
         $handle->execute();
 
-        $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
         $conn = DB::close();
         return $result;
 
     }
     catch(\PDOException $ex) {
         return print($ex->getMessage());
-    }*/
+    }
 
 
-  global $connection;
+  /*global $connection;
 
   $prodCatResult = mysqli_query($connection, "SELECT * FROM `ProductCategory`");
   return $prodCatResult;
-
+  */
 }
 ?>
