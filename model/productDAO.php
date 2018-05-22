@@ -70,7 +70,28 @@ function addReview($item) {
     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
     $responseData = json_decode($verifyResponse);
     if($responseData->success){
-      global $connection;
+        try {
+            $conn = DB::connect();
+            $rating = Security::secureInt($_POST["rating"]);
+            $reviewTitle = Security::secureString($_POST["reviewTitle"]);
+            $reviewContent = Security::secureString($_POST["reviewText"]);
+            $itemNumber = Security::secureString($item);
+
+            $statement = "INSERT INTO Review VALUES (NULL, NULL, :Rating, :ReviewTitle, NULL, :ReviewContent, :ItemNumber)";
+
+            $handle = $conn->prepare($statement);
+            $handle->bindParam(":Rating", $rating);
+            $handle->bindParam(":ReviewTitle", $reviewTitle);
+            $handle->bindParam(":ReviewContent", $reviewContent);
+            $handle->bindParam(":ItemNumber", $itemNumber);
+            $handle->execute();
+
+            $conn = DB::close();
+
+        } catch(\PDOException $ex) {
+            return print($ex->getMessage());
+        }
+      /*global $connection;
 
       $rating = $_POST["rating"];
       $reviewTitle = $_POST["reviewTitle"];
@@ -78,7 +99,7 @@ function addReview($item) {
       $itemNumber = $item;
 
       $query = "INSERT INTO Review VALUES (NULL, NULL, '{$rating}', '{$reviewTitle}', NULL, '{$reviewText}', '{$itemNumber}')";
-      mysqli_query($connection, $query);
+      mysqli_query($connection, $query);*/
 
       $succMsg = 'Your review have been submitted successfully.';
       echo $succMsg;
