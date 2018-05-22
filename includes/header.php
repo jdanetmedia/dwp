@@ -35,7 +35,7 @@ $pageInfo = getPageInfo();
     <body>
       <nav class="teal">
         <div class="nav-wrapper">
-          <a href="../index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="<?php echo $pageInfo["LogoURL"]; ?>"></a>
+          <a href="../index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="<?php echo $pageInfo[0]["LogoURL"]; ?>"></a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <!-- Dropdown Structure -->
           <ul id="dropdown1" class="dropdown-content">
