@@ -7,22 +7,22 @@ $hours = getHours();
       <div class="container">
         <div class="row">
           <div class="col s12 m4">
-            <h5 class="white-text"><?php echo $pageInfo["ShopName"];?> </h5>
+            <h5 class="white-text"><?php echo $pageInfo[0]["ShopName"];?> </h5>
             <p class="grey-text text-lighten-4">
-                <?php echo $pageInfo["Street"] . " " . $pageInfo["HouseNumber"] . ", " . $pageInfo["ZipCode"] . " " . $pageInfo["City"]; ?>
+                <?php echo $pageInfo[0]["Street"] . " " . $pageInfo[0]["HouseNumber"] . ", " . $pageInfo[0]["ZipCode"] . " " . $pageInfo[0]["City"]; ?>
             </p>
               <p>
-                Phone: <?php echo $pageInfo["Phone"] ?>
+                Phone: <?php echo $pageInfo[0]["Phone"] ?>
                 <br>
-                <?php echo $pageInfo["Email"] ?>
+                <?php echo $pageInfo[0]["Email"] ?>
                 <br>
-                CVR: <?php echo $pageInfo["Phone"] ?></p>
+                CVR: <?php echo $pageInfo[0]["Phone"] ?></p>
           </div>
           <div class="col s12 m3 offset-m2">
             <h5 class="white-text">Hours</h5>
             <ul>
               <?php
-              while ($row = mysqli_fetch_array($hours)) {
+              foreach ($hours as $row) {
               ?>
               <li><?php echo $row["Day"] . "<br>" . $row["Open"] . "-" . $row["Close"]; ?></li>
               <?php
@@ -31,7 +31,7 @@ $hours = getHours();
             </ul>
           </div>
           <div class="col s12 m3">
-            <img class="responsive-img" src="<?php echo $pageInfo["LogoURL"]; ?>">
+            <img class="responsive-img" src="<?php echo $pageInfo[0]["LogoURL"]; ?>">
           </div>
         </div>
       </div>
