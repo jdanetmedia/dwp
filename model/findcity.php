@@ -1,14 +1,21 @@
 <?php
 $q = intval($_GET['q']);
-
-$con = mysqli_connect('mysql5.unoeuro.com','rasmusandre_dk','rasm8468','rasmusandreas_dk_db3');
-if (!$con) {
-    die('Could not connect: ' . mysqli_error($con));
+require_once('../admin/class/DB.php');
+require_once('../admin/class/Security.php');
+try {
+  $conn = DB::connect();
+  $q = Security::secureString($q);
+  $statement = "SELECT * FROM ZipCode WHERE ZipCode = :zip";
+  $handle = $conn->prepare($statement);
+  $handle->bindParam(':zip', $q);
+  $handle->execute();
+  $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+  $conn = DB::close();
+  foreach($result as $row) {
+      echo $row['City'];
+  }
 }
-
-$sql = "SELECT * FROM ZipCode WHERE ZipCode = '{$q}'";
-$result = mysqli_query($con, $sql);
-while($row = mysqli_fetch_array($result)) {
-    echo $row['City'];
+catch(\PDOException $ex) {
+  print($ex->getMessage());
 }
 ?>

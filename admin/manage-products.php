@@ -55,7 +55,7 @@ if(isset($_GET["search"])) {
                     <tr>
                       <td><?php echo $product->ProductName; ?></td>
                       <td><?php echo $product->ItemNumber; ?></td>
-                      <td><?php echo $product->Price; ?></td>
+                      <td>$<?php echo $product->Price; ?></td>
                       <td>
                         <?php
                           if(isset($product->OfferPrice)) {

@@ -1,5 +1,6 @@
 <?php
-require_once("../includes/connection.php");
+
+
 
 if (isset($_SESSION["OrderNumber"])) {
   echo "<h2>Your order was successfully placed!</h2>";
@@ -8,7 +9,7 @@ if (isset($_SESSION["OrderNumber"])) {
 
 function getAllOrders($customerEmail) {
   try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $statement = "SELECT * FROM CustomerOrder WHERE CustomerEmail = :CustomerEmail ORDER BY OrderNumber DESC";
 
@@ -16,6 +17,7 @@ function getAllOrders($customerEmail) {
       $handle->bindParam(':CustomerEmail', $customerEmail);
       $handle->execute();
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
       return $result;
   }
   catch(\PDOExeption $ex) {
@@ -25,7 +27,8 @@ function getAllOrders($customerEmail) {
 
 function getOrder($orderNumber){
   try {
-      $conn = connectToDB();
+      $conn = DB::connect();
+      $orderNumber = Security::secureString($orderNumber);
 
       $statement = "SELECT * FROM OrderDetails INNER JOIN Product ON OrderDetails.ItemNumber = Product.ItemNumber WHERE OrderNumber = :OrderNumber";
 
@@ -67,10 +70,11 @@ function getOrder($orderNumber){
         "OrderInfo"=>$result2[0],
     );
       //var_dump($orderinfo);
+      $conn = DB::close();
       return $orderinfo;
   }
   catch(\PDOExeption $ex) {
-      print($ex->getMessage());
+      return print($ex->getMessage());
   }
 }
 ?>

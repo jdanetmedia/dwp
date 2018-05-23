@@ -1,7 +1,7 @@
 <?php
 require_once("../includes/sessionstart.php");
-require_once('../model/cartDAO.php');
 require_once('../includes/header.php');
+require_once('../model/cartDAO.php');
 unset($_SESSION["total"]);
 if (isset($_GET["remove"]) && $_GET["remove"] == "promocode") {
   unset($_SESSION["promocode"]);
@@ -27,21 +27,21 @@ if (isset($_GET["remove"]) && $_GET["remove"] == "promocode") {
       if(isset($_SESSION["cart"])) {
         foreach($_SESSION["cart"] as $key => $value) {
           $product = getCartProduct($key);
-          if ($product["OfferPrice"] != NULL && $product["OfferPrice"] != 0) {
-            $total = $total + $product["OfferPrice"] * $value;
+          if ($product[0]["OfferPrice"] != NULL && $product[0]["OfferPrice"] != 0) {
+            $total = $total + $product[0]["OfferPrice"] * $value;
           } else {
-            $total = $total + $product["Price"] * $value;
+            $total = $total + $product[0]["Price"] * $value;
           }
       ?>
       <div class="card horizontal">
         <div class="card-image">
-          <img class="cart-img" src="<?php echo $product["URL"]; ?>">
+          <img class="cart-img" src="<?php echo $product[0]["URL"]; ?>">
         </div>
         <div class="card-stacked">
           <div class="card-content">
             <div class="left">
-              <h5><?php echo $product["ProductName"]; ?></h5>
-              <p><?php echo $product["ShortDescription"]; ?></p>
+              <h5><?php echo $product[0]["ProductName"]; ?></h5>
+              <p><?php echo $product[0]["ShortDescription"]; ?></p>
             </div>
             <div class="right">
                 <div class="input-field inline cart_quantity">
@@ -53,13 +53,13 @@ if (isset($_GET["remove"]) && $_GET["remove"] == "promocode") {
           <div class="card-action">
             <a href="cart.php?remove=<?php echo $key; ?>" class="remove_from_cart">Remove from cart</a>
             <?php
-            if ($product["OfferPrice"] != NULL && $product["OfferPrice"] > 0) {
+            if ($product[0]["OfferPrice"] != NULL && $product[0]["OfferPrice"] > 0) {
             ?>
-            <p class="price right"><strike class="black-text">$<?php echo $product["Price"] * $value; ?></strike> $<?php echo $product["OfferPrice"] * $value; ?></p>
+            <p class="price right"><strike class="black-text">$<?php echo $product[0]["Price"] * $value; ?></strike> $<?php echo $product[0]["OfferPrice"] * $value; ?></p>
             <?php
             } else {
             ?>
-            <p class="price right">$<?php echo $product["Price"] * $value; ?></p>
+            <p class="price right">$<?php echo $product[0]["Price"] * $value; ?></p>
             <?php
             }
             ?>

@@ -8,7 +8,7 @@ require_once('../includes/header.php');
     <div class="row">
         <div class="col s12 m6">
             <h4>About us</h4>
-            <p class="col s12 m12"><?php echo $pageInfo["AboutUsText"]; ?></p>
+            <p class="col s12 m12"><?php echo $pageInfo[0]["AboutUsText"]; ?></p>
         </div>
         <form class="col s12 m6" name="contact" method="post" action="../model/contactDAO.php">
             <div class="row">
@@ -34,7 +34,7 @@ require_once('../includes/header.php');
     </div>
     <div class="row">
         <iframe style="width:100%;height:350px;" frameborder="0" style="border:0"
-        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA414Nqm3BnCRdpETHYt6ySV3DRjvEQ1ec&q=<?php echo $pageInfo["Street"]; ?>+<?php echo $pageInfo["HouseNumber"]; ?>,<?php echo $pageInfo["ZipCode"]; ?>" allowfullscreen>
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA414Nqm3BnCRdpETHYt6ySV3DRjvEQ1ec&q=<?php echo $pageInfo[0]["Street"]; ?>+<?php echo $pageInfo[0]["HouseNumber"]; ?>,<?php echo $pageInfo[0]["ZipCode"]; ?>" allowfullscreen>
       </iframe>
     </div>
 </div>

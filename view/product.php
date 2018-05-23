@@ -8,7 +8,7 @@ require_once('../model/productsDAO.php');
 // Store information on the current product item
 $productImgs = getCurrentProduct($_GET["item"]);
 $reviews = getReviews($_GET["item"]);
-$currentItem = mysqli_fetch_assoc($productImgs);
+$currentItem = $productImgs[0];
 $itemCheck = count($currentItem);
 
 if($itemCheck == 0) {
@@ -71,8 +71,7 @@ if (isset($_SESSION["cart"])) {
                 <input name="amount" id="quantity" type="number" value="1">
                 <label for="quantity">Quantity</label>
               </div>
-              <a class="waves-effect waves-light btn cart-btt"><input class="presscart" type="submit" name="submitcart" value="Add
-              to cart"><i class="material-icons right">add_shopping_cart</i></a>
+              <a class="waves-effect waves-light btn cart-btt"><input class="presscart" type="submit" name="submitcart" value="Add to cart"><i class="material-icons right">add_shopping_cart</i></a>
             </form>
           </div>
           <div class="col s12 avr-review">
@@ -172,14 +171,15 @@ if (isset($_SESSION["cart"])) {
             </div>
           </div>
           <div class="row">
-            <?php while($row = mysqli_fetch_array($reviews)) {
+            <?php foreach($reviews as $row) {
+              if(isset($row["ReviewName"])) { $name = $row["ReviewName"]; } else { $name = "Anonymous"; }
               ?>
                 <div class="col s12 m6">
                   <div class="card">
                     <div class="card-content">
                       <span class="card-title"><?php echo $row["ReviewTitle"]; ?></span>
                       <p><?php echo $row["ReviewContent"] ?></p>
-                      <span class="review-meta"><?php echo "Posted by <b>" . $row["ReviewName"] . "</b> on <b>" . $row["ReviewDate"]
+                      <span class="review-meta"><?php echo "Posted by <b>" . $name . "</b> on <b>" . $row["ReviewDate"]
                               . "</b>"; ?></span>
                     </div>
                     <div class="card-action">
@@ -199,7 +199,7 @@ if (isset($_SESSION["cart"])) {
                           }
                           while($items2 <= $notRated) {
                             ?>
-                              <i class="material-icons small">star_border</i>
+                              <i class="material-icons small rated">star_border</i>
                             <?php
                             $items2++;
                           }
@@ -217,8 +217,7 @@ if (isset($_SESSION["cart"])) {
       <div class="outer row">
               <h4>Related Producks!</h4>
               <?php
-              $related2 = getRelatedProducts($currentItem["ProductCategoryID"], $currentItem["ItemNumber"]);
-              while($row = mysqli_fetch_array($related2)) {
+              foreach($related as $row) {
                   $itemNumber = $row["ItemNumber"];
                   ?>
                   <a href="product.php?item=<?php echo $itemNumber; ?>">

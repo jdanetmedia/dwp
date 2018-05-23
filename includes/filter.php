@@ -12,13 +12,7 @@
                 echo "<option  value='". $cat["ProductCategoryID"] ."'>". $cat["CategoryName"] . "</option>";
             }
         }
-        /*while ($row = mysqli_fetch_array($categories)) {
-          if ($_GET["cat"] == $row["ProductCategoryID"]) {
-            echo "<option selected value='". $row["ProductCategoryID"] ."'>". $row["CategoryName"] . "</option>";
-          } else {
-        echo "<option  value='". $row["ProductCategoryID"] ."'>". $row["CategoryName"] . "</option>";
-          }
-        } */?>
+        ?>
       </select>
     </div>
     <div class="col s12 m4">

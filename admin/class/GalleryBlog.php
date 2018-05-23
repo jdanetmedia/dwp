@@ -3,13 +3,13 @@
 class GalleryBlog {
     function getAllImages() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $handle = $conn->prepare("SELECT * FROM ImgGallery");
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            $conn = null;
+            DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
@@ -19,7 +19,7 @@ class GalleryBlog {
 
     function attachImage($blogPostID, $imgID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             // Secure input
             $secPostId = Security::secureString($blogPostID);
@@ -43,7 +43,7 @@ class GalleryBlog {
                 $handle->execute();
             }
 
-            $conn = null;
+            DB::close();
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -93,7 +93,7 @@ class GalleryBlog {
         }
         // Save to database
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
             $path = $_SERVER["DOCUMENT_ROOT"] . getcwd();
             $cleanedPath = str_replace('/Applications/MAMP/htdocs/Applications/MAMP/htdocs', 'http://localhost:8888', $path);
 
@@ -118,7 +118,7 @@ class GalleryBlog {
                 $handle->execute();
             }
 
-            $conn = null;
+            DB::close();
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());

@@ -2,13 +2,14 @@
 require_once("../includes/sessionstart.php");
 require_once('../includes/header.php');
 require_once("../model/indexDAO.php");
+require_once("../model/productsDAO.php");
 
 ?>
 <div class="container">
   <div class="carousel carousel-slider center" data-indicators="true">
     <?php
     $slideResult = getSlides();
-    while ($row = mysqli_fetch_array($slideResult)) {
+    foreach ($slideResult as $row) {
     ?>
     <div class="carousel-item white-text slider-image" style="background-image: URL('<?php echo $row["SliderImg"]; ?>');">
       <h2><?php echo $row["SliderHeader"]; ?></h2>
@@ -28,7 +29,7 @@ require_once("../model/indexDAO.php");
             <?php
             //Gets highest rated products
             $highestRatedProducts = getHighestRatedProducts();
-            while($row = mysqli_fetch_array($highestRatedProducts)) {
+            foreach($highestRatedProducts as $row) {
                 $itemNumber = $row["ItemNumber"];
                 ?>
             <a href="product.php?item=<?php echo $itemNumber; ?>">
@@ -70,7 +71,7 @@ require_once("../model/indexDAO.php");
         <?php
         //Gets products on sale
         $productsOnSale = getProductsOnSale();
-        while($row = mysqli_fetch_array($productsOnSale)) {
+        foreach($productsOnSale as $row) {
             $itemNumber = $row["ItemNumber"];
             ?>
             <a href="product.php?item=<?php echo $itemNumber; ?>">
@@ -112,7 +113,7 @@ require_once("../model/indexDAO.php");
         <div class="row">
             <?php
             $recentBlogs = getRecentBlogs();
-            while($row = mysqli_fetch_array($recentBlogs)) {
+            foreach($recentBlogs as $row) {
                 ?>
                 <div class="col s12 m6">
                     <div class="card">

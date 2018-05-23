@@ -49,6 +49,10 @@ if(isset($_POST["deleteShipping"])) {
 	$tab = "shipping";
 }
 
+if (isset($_POST["submitdeletereview"])) {
+	$tab = "reviews";
+}
+
 $info = $BasicPageInfo->getBasicPageInfo();
 ?>
 
@@ -66,6 +70,7 @@ $info = $BasicPageInfo->getBasicPageInfo();
 						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "payment") echo "class='active'"; ?> href="#payment">Payment</a></li>
 						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "shipping") echo "class='active'"; ?> href="#shipping">Shipping</a></li>
 						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "seo") echo "class='active'"; ?> href="#seo">SEO</a></li>
+						<li class="tab col s2"><a <?php if(isset($tab) && $tab == "reviews") echo "class='active'"; ?> href="#reviews">Reviews</a></li>
 					</ul>
 					<div id="company" class="col s12 settings-content">
 						<?php include("includes/partials/company-details.php"); ?>
@@ -81,6 +86,9 @@ $info = $BasicPageInfo->getBasicPageInfo();
 					</div>
 					<div id="seo" class="col s12 settings-content">
 						<?php include("includes/partials/seo-settings.php"); ?>
+					</div>
+					<div id="reviews" class="col s12 settings-content">
+						<?php include("includes/partials/manage-reviews.php"); ?>
 					</div>
 					<input style="margin-left: 30px; margin-bottom: 30px;" class="waves-effect waves-light btn grey darken-4" type="submit" name="submit" value="Update settings">
 	      </div>

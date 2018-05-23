@@ -10,7 +10,7 @@ if (!logged_in()) {
 <?php
 	//redirect_to("login.php");
 }
-$users = new Admin($connection);
+$users = new Admin();
 $userinfo = $users->GetUserInfo($_SESSION["UserEmail"]);
 ?>
 <div class="container">

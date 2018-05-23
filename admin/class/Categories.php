@@ -3,7 +3,7 @@ Class Categories {
 
     function getAllProductCategories() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $handle = $conn->prepare("SELECT * FROM ProductCategory");
             $handle->execute();
@@ -11,7 +11,7 @@ Class Categories {
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
             return $result;
 
-            $conn = null;
+            DB::close();
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -20,7 +20,7 @@ Class Categories {
 
     function getAllBlogPostCategories() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $handle = $conn->prepare("SELECT * FROM `BlogCategory`");
             $handle->execute();
@@ -28,7 +28,7 @@ Class Categories {
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
             return $result;
 
-            $conn = null;
+            DB::close();
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -37,7 +37,7 @@ Class Categories {
 
     function saveProductCategory() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             // Secure inputs
             $categoryName = Security::secureString($_POST["categoryName"]);
@@ -54,7 +54,7 @@ Class Categories {
             $handle->bindParam(':SeoTitle', $seoTitle);
             $handle->bindParam(':MetaDescription', $metaDescription);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -63,7 +63,7 @@ Class Categories {
 
     function saveBlogPostCategory() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             // Secure inputs
             $categoryName = Security::secureString($_POST["categoryName"]);
@@ -80,7 +80,7 @@ Class Categories {
             $handle->bindParam(':SeoTitle', $seoTitle);
             $handle->bindParam(':MetaDescription', $metaDescription);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -89,7 +89,7 @@ Class Categories {
 
     function updateProductCategory ($categoryID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             // Secure inputs
             $categoryName = Security::secureString($_POST["categoryName"]);
@@ -113,7 +113,7 @@ Class Categories {
             $handle->bindParam(':MetaDescription', $metaDescription);
             $handle->bindParam(':ProductCategoryID', $catID);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -122,7 +122,7 @@ Class Categories {
 
     function updateBlogPostCategory ($categoryID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             // Secure inputs
             $categoryName = Security::secureString($_POST["categoryName"]);
@@ -146,7 +146,7 @@ Class Categories {
             $handle->bindParam(':MetaDescription', $metaDescription);
             $handle->bindParam(':BlogCategoryID', $catID);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -155,7 +155,7 @@ Class Categories {
 
     function deleteProductCategory ($categoryID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             // Secure input
             $catID = Security::secureString($categoryID);
@@ -166,7 +166,7 @@ Class Categories {
 
             $handle->bindParam(':ProductCategoryID', $catID);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch (\PDOException $ex) {
             print($ex->getMessage());
@@ -175,7 +175,7 @@ Class Categories {
 
     function deleteBlogPostCategory ($categoryID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             // Secure input
             $catID = Security::secureString($categoryID);
@@ -186,7 +186,7 @@ Class Categories {
 
             $handle->bindParam(':BlogCategoryID', $catID);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch (\PDOException $ex) {
             print($ex->getMessage());
@@ -195,18 +195,20 @@ Class Categories {
 
     function getProductCategoryDetails($categoryID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
+
+            $categoryID = Security::secureString($categoryID);
 
             $statement = "SELECT * FROM ProductCategory WHERE ProductCategoryID = :ProductCategoryID";
 
             $handle = $conn->prepare($statement);
-            $handle->bindParam("ProductCategoryID", $catID);
+            $handle->bindParam(":ProductCategoryID", $categoryID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
             return $result;
 
-            // $conn = null;
+            // DB::close();
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -215,7 +217,7 @@ Class Categories {
 
     function getBlogPostCategoryDetails($categoryID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $statement = "SELECT * FROM BlogCategory WHERE BlogCategoryID = :BlogCategoryID";
 
@@ -226,7 +228,7 @@ Class Categories {
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
             return $result;
 
-            // $conn = null;
+            // DB::close();
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());

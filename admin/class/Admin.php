@@ -1,30 +1,42 @@
 <?php
 class Admin extends Security {
 
-  function __construct($connection)
+  function __construct()
   {
     // START FORM PROCESSING ON LOGIN CUSTOMER
   	if (isset($_POST['submitadminlogin'])) { // Form has been submitted.
-  		$email = trim(mysqli_real_escape_string($connection, $_POST['email']));
-  		$password = trim(mysqli_real_escape_string($connection,$_POST['pass']));
+      try {
+          $conn = DB::connect();
 
-  		$query = "SELECT UserEmail, Password, FirstName, AccessLevel FROM User WHERE UserEmail = '{$email}' LIMIT 1";
-  		$result = mysqli_query($connection, $query);
+          $email = $_POST['email'];
+          $password = $_POST['pass'];
 
-  			if (mysqli_num_rows($result) == 1) {
-  				// username/password authenticated
-  				// and only 1 match
-  				$found_user = mysqli_fetch_array($result);
-                  if(password_verify($password, $found_user['Password'])){
-  				    $_SESSION['UserEmail'] = $found_user['UserEmail'];
-  				    $_SESSION['AdminFirstName'] = $found_user['FirstName'];
-              $_SESSION['AccessLevel'] = $found_user['AccessLevel'];
-  				    redirect_to("index.php");
-  			} else {
-  				// username/password combo was not found in the database
-  				$message = "Username/password combination incorrect.<br />
-  					Please make sure your caps lock key is off and try again.";
-  			}}
+          $statement = "SELECT UserEmail, Password, FirstName, AccessLevel FROM User WHERE UserEmail = :email LIMIT 1";
+
+          $handle = $conn->prepare($statement);
+          $handle->bindParam(':email', $email);
+          $handle->execute();
+          $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+
+          if (count($result) == 1) {
+    				// username/password authenticated
+    				// and only 1 match
+    				$found_user = $result[0];
+                    if(password_verify($password, $found_user['Password'])){
+    				    $_SESSION['UserEmail'] = $found_user['UserEmail'];
+    				    $_SESSION['AdminFirstName'] = $found_user['FirstName'];
+                $_SESSION['AccessLevel'] = $found_user['AccessLevel'];
+    				    redirect_to("index.php");
+    			} else {
+    				// username/password combo was not found in the database
+    				$message = "Username/password combination incorrect.<br />
+    					Please make sure your caps lock key is off and try again.";
+    			}}
+
+      }
+      catch(\PDOException $ex) {
+          print($ex->getMessage());
+      }
   	} else { // Form has not been submitted.
   		if (isset($_GET['logout']) && $_GET['logout'] == 1) {
   			$message = "You are now logged out.";
@@ -75,7 +87,7 @@ class Admin extends Security {
     $randomkey = substr(md5(rand()), 0, 20);
 
     try {
-        $conn = connectToDB();
+        $conn = DB::connect();
 
         // Secure inputs
         $secKey = Security::secureString($randomkey);
@@ -143,7 +155,7 @@ class Admin extends Security {
         $reset = $_GET["key"];
 
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $statement = "UPDATE User SET Password = :password, ResetKey = NULL WHERE UserEmail = :email AND ResetKey = :resetkey";
             $handle = $conn->prepare($statement);
@@ -161,13 +173,13 @@ class Admin extends Security {
 
   function GetAllUsers() {
     try {
-        $conn = connectToDB();
+        $conn = DB::connect();
 
         $handle = $conn->prepare("SELECT * FROM User WHERE NOT AccessLevel = 1");
         $handle->execute();
 
         $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-        $conn = null;
+        DB::close();
         return $result;
     }
     catch(\PDOException $ex) {
@@ -186,7 +198,7 @@ class Admin extends Security {
         $handle->execute();
 
         $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-        $conn = null;
+        DB::close();
         return $result;
     }
     catch(\PDOException $ex) {
@@ -300,7 +312,7 @@ class Admin extends Security {
           $handle->bindParam(':lastname', $newlname);
           $handle->execute();
 
-          $conn = null;
+          DB::close();
       }
       catch(\PDOException $ex) {
           return print($ex->getMessage());
@@ -314,11 +326,21 @@ class Admin extends Security {
     try {
         $conn = DB::connect();
 
+        $handle = $conn->prepare("SELECT UserEmail FROM User WHERE AccessLevel = 1");
+        $handle->execute();
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $superadmin = $result[0]["UserEmail"];
+
+        $handle = $conn->prepare("UPDATE BlogPost SET UserEmail = :superadmin WHERE UserEmail = :email; UPDATE FrontSlider SET UserEmail = :superadmin WHERE UserEmail = :email; UPDATE Product SET UserEmail = :superadmin WHERE UserEmail = :email; UPDATE PromoCode SET UserEmail = :superadmin WHERE UserEmail = :email;");
+        $handle->bindParam(':email', $useremail);
+        $handle->bindParam(':superadmin', $superadmin);
+        $handle->execute();
+
         $handle = $conn->prepare("DELETE FROM User WHERE User.UserEmail = :mail");
         $handle->bindParam(':mail', $useremail);
         $handle->execute();
 
-        $conn = null;
+        DB::close();
     }
     catch(\PDOException $ex) {
         return print($ex->getMessage());

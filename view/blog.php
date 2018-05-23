@@ -17,7 +17,7 @@ require_once("../model/blogDAO.php");
           <option value="0" selected>All Categories</option>
           <?php
           $categories = getBlogCategories();
-          while ($row = mysqli_fetch_array($categories)) {
+          foreach ($categories as $row) {
             if ($_GET["cat"] == $row["BlogCategoryID"]) {
               ?>
               <option selected value='<?php echo $row["BlogCategoryID"] ?>'><?php echo $row["CategoryName"]; ?></option>
@@ -46,7 +46,7 @@ require_once("../model/blogDAO.php");
     <div class="row">
       <?php
       $blogResult = getAllPosts();
-      while($row = mysqli_fetch_array($blogResult)) {
+      foreach($blogResult as $row) {
         ?>
         <div class="col s12 m6">
           <div class="card">
@@ -72,7 +72,7 @@ require_once("../model/blogDAO.php");
     </div>
     <?php
     if(isset($catResult)) {
-      while ($row = mysqli_fetch_array($catResult)) {
+      foreach ($catResult as $row) {
     ?>
     <div class="row">
       <div class="col s12 m12">

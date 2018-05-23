@@ -16,20 +16,11 @@ if (!logged_in()) {
   <div class="row">
       <h5>Payment</h5>
       <?php
-			var_dump($_SESSION);
-      //echo $_SESSION["street"];
-      //echo $_SESSION["house"];
-      //echo $_SESSION["zipcode"];
-      //echo $_SESSION["city"];
-      //echo $_SESSION["saveaddress"];
-      //echo $_SESSION["shippingoption"];
-      //echo $_SESSION["total"];
-      //echo $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];;
 
       if (isset($_SESSION["DiscountAmount"])) {
 				$discount = ($_SESSION["total"] / 100) * $_SESSION["DiscountAmount"];
 				$newtotal =	$_SESSION["total"] - $discount;
-        $_SESSION["totalWithShipping"] = $newtotal + $deliveryInfo["DeliveryPrice"];
+        $_SESSION["totalWithShipping"] = $newtotal + $deliveryInfo[0]["DeliveryPrice"];
       } else {
 				$_SESSION["totalWithShipping"] = $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];
 			}

@@ -31,17 +31,28 @@ return $array;
 }
 
 // DB Connection
-require_once("../includes/connection.php");
 
 // Function to get the current item on single productpage
 function getCartProduct($itemNumber) {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $query = "SELECT * FROM Product INNER JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ItemNumber = $itemNumber AND ProductImg.IsPrimary = true";
-  // $query = "SELECT * FROM Product WHERE ItemNumber = $itemNumber";
-  $result = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($result);
-  return $row;
+      $itemNumber = Security::secureString($itemNumber);
+
+      $query = "SELECT * FROM Product INNER JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ItemNumber = :itemNumber AND ProductImg.IsPrimary = true";
+
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':itemNumber', $itemNumber);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 // remove from cart
@@ -84,35 +95,88 @@ if(isset($_POST["submitshipping"])) {
 }
 
 function updateAddress($CustomerEmail, $Street, $HouseNumber, $ZipCode, $City) {
-  global $connection;
-  $query = "UPDATE Customer SET Street = '{$Street}', HouseNumber = '{$HouseNumber}', ZipCode = '{$ZipCode}' WHERE CustomerEmail = '{$CustomerEmail}'";
-  mysqli_query($connection, $query);
+  try {
+      $conn = DB::connect();
+
+      $CustomerEmail = Security::secureString($CustomerEmail);
+      $Street = Security::secureString($Street);
+      $HouseNumber = Security::secureString($HouseNumber);
+      $ZipCode = Security::secureString($ZipCode);
+      $City = Security::secureString($City);
+
+      $query = "UPDATE Customer SET Street = :Street, HouseNumber = :HouseNumber, ZipCode = :ZipCode WHERE CustomerEmail = :CustomerEmail";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':Street', $Street);
+      $handle->bindParam(':CustomerEmail', $CustomerEmail);
+      $handle->bindParam(':HouseNumber', $HouseNumber);
+      $handle->bindParam(':ZipCode', $ZipCode);
+      $handle->execute();
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 function getCityName($ZipCode) {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $query = "SELECT * FROM ZipCode WHERE ZipCode = '{$ZipCode}'";
-  $result = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($result);
-  return $row;
+      $ZipCode = Security::secureString($ZipCode);
+
+      $query = "SELECT * FROM ZipCode WHERE ZipCode = :zipcode";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':zipcode', $ZipCode);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 function getDeliveryInfo($DeliveryMethodID) {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $query = "SELECT * FROM DeliveryMethod WHERE DeliveryMethodID = '{$DeliveryMethodID}'";
-  $result = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($result);
-  return $row;
+      $itemNumber = Security::secureString($DeliveryMethodID);
+
+      $query = "SELECT * FROM DeliveryMethod WHERE DeliveryMethodID = :DeliveryMethod";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':DeliveryMethod', $DeliveryMethodID);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNumber, $ZipCode, $CustomerEmail, $Shippingoption, $OrderStatus, $PromoCode) {
   try {
     //create a new PDO connection object
-    $conn = connectToDB();
+    $conn = DB::connect();
 
     $conn->beginTransaction();
+
+    $Ordermessage = Security::secureString($Ordermessage);
+    $StripeChargeID = Security::secureString($StripeChargeID);
+    $Time = Security::secureString($Time);
+    $Street = Security::secureString($Street);
+    $HouseNumber = Security::secureString($HouseNumber);
+    $ZipCode = Security::secureString($ZipCode);
+    $CustomerEmail = Security::secureString($CustomerEmail);
+    $Shippingoption = Security::secureString($Shippingoption);
+    $OrderStatus = Security::secureString($OrderStatus);
+    $PromoCode = Security::secureString($PromoCode);
 
     $statement = "INSERT INTO CustomerOrder (OrderNumber, Comment, StripeChargeID, OrderDate, ShippingStreet, ShippingHouseNumber, ZipCode, CustomerEmail, DeliveryMethodID, OrderStatusID, PromoCode)
                   VALUES (NULL, :Ordermessage, :StripeChargeID, :OrderTime, :Street, :HouseNumber, :ZipCode, :CustomerEmail, :Shippingoption, :OrderStatus, :PromoCode)";
@@ -138,6 +202,7 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     //echo $OrderNumber;
 
     foreach($_SESSION["cart"] as $key => $value) {
+      $key = Security::secureString($key);
       $statement2 = "SELECT Price, OfferPrice FROM Product WHERE ItemNumber = :key";
       $handle = $conn->prepare($statement2);
       $handle->bindParam(':key', $key);
@@ -149,6 +214,10 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
         $price = $result[0]["Price"];
       }
 
+      $key = Security::secureString($key);
+      $OrderNumber = Security::secureString($OrderNumber);
+      $value = Security::secureString($value);
+      $price = Security::secureString($price);
 
       $statement1 = "INSERT INTO OrderDetails VALUES (:OrderNumber, :key, :value, :price)";
       $handle = $conn->prepare($statement1);
@@ -166,6 +235,7 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     }
 
     if (isset($_SESSION["promocode"])) {
+      $_SESSION["promocode"] = Security::secureString($_SESSION["promocode"]);
       $statement3 = "UPDATE PromoCode SET NumberOfUses = NumberOfUses - 1 WHERE PromoCode = :PromoCode";
       $handle = $conn->prepare($statement3);
       $handle->bindParam(':PromoCode', $_SESSION["promocode"]);
@@ -214,7 +284,9 @@ if (isset($_POST["submitpromocode"])) {
 
 function checkForPromoCode($PromoCode) {
   try {
-      $conn = connectToDB();
+      $conn = DB::connect();
+
+      $PromoCode = Security::secureString($PromoCode);
 
       $statement = "SELECT * FROM PromoCode WHERE PromoCode = :PromoCode";
 
@@ -227,6 +299,25 @@ function checkForPromoCode($PromoCode) {
   }
   catch(\PDOException $ex) {
       print($ex->getMessage());
+  }
+}
+
+function getDeliveryMethod() {
+  try {
+      $conn = DB::connect();
+
+      $query = "SELECT * FROM `DeliveryMethod`";
+
+      $handle = $conn->prepare($query);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
   }
 }
 ?>

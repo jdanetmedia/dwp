@@ -5,7 +5,7 @@ require_once('../includes/header.php');
 require_once('../model/cartDAO.php');
 $CustomerInfo = getCustomerInfo($_SESSION["CustomerEmail"]);
 $city = getCityName($CustomerInfo[0]["ZipCode"]);
-$deliveryResult = mysqli_query($connection, "SELECT * FROM `DeliveryMethod`");
+$deliveryResult = getDeliveryMethod();
 if (!logged_in()) {
 ?>
 <script type="text/javascript">
@@ -51,7 +51,7 @@ if (!logged_in()) {
       </div>
       <div class="row col s12 m6">
         <?php
-          while ($row = mysqli_fetch_array($deliveryResult)) {
+          foreach ($deliveryResult as $row) {
         ?>
           <div class="card">
             <div class="card-content">

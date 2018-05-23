@@ -1,69 +1,162 @@
 <?php
-require_once('../includes/connection.php');
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
-    $cat = $_GET["cat"];
-    $catResult = mysqli_query($connection, "SELECT * FROM `BlogCategory` WHERE `BlogCategoryID` = $cat");
+    try {
+        $conn = DB::connect();
+
+        $cat = Security::secureString($_GET["cat"]);
+
+        $query = "SELECT * FROM `BlogCategory` WHERE `BlogCategoryID` = :cat";
+
+        $handle = $conn->prepare($query);
+        $handle->bindParam(':cat', $cat);
+        $handle->execute();
+
+        $catResult = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $conn = DB::close();
+        return $catResult;
+
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
   }
 }
 
 function getAllPosts() {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID";
-  if (isset($_GET["cat"])) {
-    if ($_GET["cat"] != "0") {
-      $cat = $_GET["cat"];
-      $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = $cat ";
-      $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
-    }
+      $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID ORDER BY BlogPostID DESC";
+      if (isset($_GET["cat"])) {
+        if ($_GET["cat"] != "0") {
+          $cat = $_GET["cat"];
+          $cat = Security::secureString($cat);
+          $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = :cat ORDER BY BlogPostID DESC";
+          $catquery = "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = :cat";
+          $handle = $conn->prepare($catquery);
+          $handle->bindParam(':cat', $cat);
+          $handle->execute();
+        }
+      }
+
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':cat', $cat);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
   }
 
-  $blogResult = mysqli_query($connection, $query);
-  return $blogResult;
 }
 
 function getAllRelatedPosts($categoryID, $postID) {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = $categoryID AND NOT BlogPost.BlogPostID = $postID";
-  $blogResult = mysqli_query($connection, $query);
-  return $blogResult;
+      $categoryID = Security::secureString($categoryID);
+      $postID = Security::secureString($postID);
+
+      $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = :catid AND NOT BlogPost.BlogPostID = :postid";
+
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':catid', $categoryID);
+      $handle->bindParam(':postid', $postID);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 function getPost($blogID) {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $query = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = $blogID ORDER BY BlogImg.ImgID ASC";
+      $blogID = Security::secureString($blogID);
 
-  //$query = "SELECT * FROM BlogPost WHERE `BlogPostID` = $blogID";
+      $query = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :blogid ORDER BY BlogImg.ImgID ASC";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':blogid', $blogID);
+      $handle->execute();
 
-  $result = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($result);
-  return $row;
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 function getBlogCategories() {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $prodCatResult = mysqli_query($connection, "SELECT * FROM `BlogCategory`");
-  return $prodCatResult;
+      $query = "SELECT * FROM `BlogCategory`";
+      $handle = $conn->prepare($query);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 function getBlogCategory($id) {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $prodCatResult = mysqli_query($connection, "SELECT * FROM `BlogCategory` WHERE BlogCategoryID = $id");
-  $row = mysqli_fetch_assoc($prodCatResult);
-  return $row;
+      $id = Security::secureString($id);
+
+      $query = "SELECT * FROM `BlogCategory` WHERE BlogCategoryID = :id";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':id', $id);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 
 function getAuthor($authorEmail) {
-  global $connection;
+  try {
+      $conn = DB::connect();
 
-  $query = "SELECT * FROM `User` WHERE UserEmail = '{$authorEmail}'";
-  $result = mysqli_query($connection, $query);
-  $row = mysqli_fetch_assoc($result);
-  return $row;
+      $authorEmail = Security::secureString($authorEmail);
+
+      $query = "SELECT * FROM `User` WHERE UserEmail = :mail";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(':mail', $authorEmail);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
+  }
 }
 ?>
