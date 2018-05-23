@@ -16,7 +16,7 @@ $hours = getHours();
                 <br>
                 <?php echo $pageInfo[0]["Email"] ?>
                 <br>
-                CVR: <?php echo $pageInfo[0]["Phone"] ?></p>
+                CVR: <?php echo $pageInfo[0]["CVR"] ?></p>
           </div>
           <div class="col s12 m3 offset-m2">
             <h5 class="white-text">Hours</h5>
