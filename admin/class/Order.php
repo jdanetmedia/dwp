@@ -69,7 +69,7 @@ class Order {
 
   function getLatestOrders() {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM CustomerOrder
         INNER JOIN Customer ON CustomerOrder.CustomerEmail = Customer.CustomerEmail
@@ -81,7 +81,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -90,7 +90,7 @@ class Order {
 
   function getAllOrders() {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM CustomerOrder
         INNER JOIN Customer ON CustomerOrder.CustomerEmail = Customer.CustomerEmail
@@ -102,7 +102,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -111,7 +111,7 @@ class Order {
 
   function getSum($ordernumber) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT SUM(OrderDetails.FinalPrice * OrderDetails.Amount) + DeliveryMethod.DeliveryPrice AS totalprice
       FROM OrderDetails INNER JOIN Product ON OrderDetails.ItemNumber = Product.ItemNumber
@@ -123,7 +123,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -132,7 +132,7 @@ class Order {
 
   function getOrder($ordernumber) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM CustomerOrder
         INNER JOIN Customer ON CustomerOrder.CustomerEmail = Customer.CustomerEmail
@@ -145,7 +145,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -154,7 +154,7 @@ class Order {
 
   function getMessage($ordernumber) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM OrderMessage
         WHERE OrderNumber = $ordernumber");
@@ -163,7 +163,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -172,7 +172,7 @@ class Order {
 
   function getProducts($ordernumber) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM OrderDetails INNER JOIN Product ON OrderDetails.ItemNumber = Product.ItemNumber WHERE OrderNumber = $ordernumber");
       $handle->execute();
@@ -180,7 +180,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -189,7 +189,7 @@ class Order {
 
   function CheckStock() {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM Product WHERE StockStatus < 50 ORDER BY StockStatus ASC");
       $handle->execute();
@@ -197,7 +197,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -206,13 +206,13 @@ class Order {
 
   function updateStatus($ordernumber, $newstatus) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("UPDATE CustomerOrder SET OrderStatusID = '{$newstatus}' WHERE OrderNumber = '{$ordernumber}'");
       $handle->execute();
       // TODO: if changed to sent send a mail
       $this->sendUpdateMail($ordernumber, $newstatus);
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -221,7 +221,7 @@ class Order {
 
   function getStatus(){
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM OrderStatus");
       $handle->execute();
@@ -229,7 +229,7 @@ class Order {
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -238,7 +238,7 @@ class Order {
 
 function getPromoCodeDiscount($promocode) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT DiscountAmount FROM PromoCode WHERE PromoCode = :promocode");
       $handle->bindParam(":promocode", $promocode);
@@ -246,7 +246,7 @@ function getPromoCodeDiscount($promocode) {
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       return $result;
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -255,7 +255,7 @@ function getPromoCodeDiscount($promocode) {
 
   function sendUpdateMail($ordernumber, $newstatus) {
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT CustomerEmail FROM CustomerOrder WHERE OrderNumber = $ordernumber");
       $handle->execute();
@@ -263,13 +263,13 @@ function getPromoCodeDiscount($promocode) {
       $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
       $email = $result[0]["CustomerEmail"];
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
     }
     try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $handle = $conn->prepare("SELECT * FROM OrderStatus WHERE OrderStatusID = $newstatus");
       $handle->execute();
@@ -277,7 +277,7 @@ function getPromoCodeDiscount($promocode) {
       $resultone = $handle->fetchAll( \PDO::FETCH_ASSOC );
       $status = $resultone[0]["Status"];
 
-      $conn = null;
+      DB::close();
     }
     catch(\PDOException $ex) {
       print($ex->getMessage());
@@ -306,7 +306,7 @@ function getPromoCodeDiscount($promocode) {
 
   function getOrderDetails($orderNumber){
     try {
-        $conn = connectToDB();
+        $conn = DB::connect();
 
         $statement = "SELECT * FROM OrderDetails INNER JOIN Product ON OrderDetails.ItemNumber = Product.ItemNumber WHERE OrderNumber = :OrderNumber";
 

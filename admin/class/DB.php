@@ -1,5 +1,5 @@
 <?php
-
+require("../includes/constants.php");
 class DB {
 
   static function connect() {

@@ -20,10 +20,10 @@ if (isset($_POST["submitdbinfo"])) {
 
   // create DB
 
-  require_once("../includes/connection.php");
+  
 
   try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $statement = "SELECT UserEmail FROM User";
 
@@ -42,7 +42,7 @@ if (isset($_POST["submitdbinfo"])) {
 
   function createDBtables() {
     try {
-        $conn = connectToDB();
+        $conn = DB::connect();
 
         $handle = $conn->prepare("CREATE TABLE ZipCode (
   ZipCode int(20) NOT NULL PRIMARY KEY,
@@ -1873,7 +1873,7 @@ VALUES ('intetantal', 50, '2009-11-11 13:23:44', '2020-11-11 13:23:44', NULL, 'r
 ");
         $handle->execute();
 
-        $conn = null;
+        DB::close();
     }
     catch(\PDOException $ex) {
         //print($ex->getMessage());

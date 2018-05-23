@@ -1,6 +1,6 @@
 <?php
 // DB Connection
-require_once("../includes/connection.php");
+
 
 if(isset($_POST["submitreview"])) {
   addReview($_GET["item"]);

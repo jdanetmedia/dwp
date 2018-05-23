@@ -1,8 +1,8 @@
 <?php
-require_once("../includes/connection.php");
+
 
 try {
-    $conn = connectToDB();
+    $conn = DB::connect();
 
     $statement = "SELECT UserEmail FROM User";
 

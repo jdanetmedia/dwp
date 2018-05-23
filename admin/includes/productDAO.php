@@ -1,9 +1,9 @@
 <?php
-require_once("../includes/connection.php");
+
 
 function getAllProducts() {
   try {
-    $conn = connectToDB();
+    $conn = DB::connect();
 
     $handle = $conn->prepare("SELECT * FROM Product");
     $handle->execute();
@@ -11,7 +11,7 @@ function getAllProducts() {
     $result = $handle->fetchAll( \PDO::FETCH_OBJ );
     return $result;
 
-    $conn = null;
+    DB::close();
   }
   catch(\PDOException $ex) {
     print($ex->getMessage());
@@ -20,7 +20,7 @@ function getAllProducts() {
 
 function searchResult($search) {
   try {
-    $conn = connectToDB();
+    $conn = DB::connect();
 
     $handle = $conn->prepare("SELECT * FROM Product WHERE ProductName LIKE '%{$search}%' OR ShortDescription LIKE '%{$search}%' OR LongDescription LIKE '%{$search}%'");
     $handle->execute();
@@ -28,7 +28,7 @@ function searchResult($search) {
     $result = $handle->fetchAll( \PDO::FETCH_OBJ );
     return $result;
 
-    $conn = null;
+    DB::close();
   }
   catch(\PDOException $ex) {
     print($ex->getMessage());
@@ -37,7 +37,7 @@ function searchResult($search) {
 
 function getProductDetails($itemNumber) {
   try {
-    $conn = connectToDB();
+    $conn = DB::connect();
 
     $handle = $conn->prepare("SELECT Product.*, ImgGallery.URL FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber");
     $handle->execute();
@@ -45,7 +45,7 @@ function getProductDetails($itemNumber) {
     $result = $handle->fetchAll( \PDO::FETCH_OBJ );
     return $result;
 
-    $conn = null;
+    DB::close();
   }
   catch(\PDOException $ex) {
     print($ex->getMessage());
@@ -54,7 +54,7 @@ function getProductDetails($itemNumber) {
 
 function getCategories() {
   try {
-    $conn = connectToDB();
+    $conn = DB::connect();
 
     $handle = $conn->prepare("SELECT * FROM ProductCategory");
     $handle->execute();
@@ -62,7 +62,7 @@ function getCategories() {
     $result = $handle->fetchAll( \PDO::FETCH_OBJ );
     return $result;
 
-    $conn = null;
+    DB::close();
   }
   catch(\PDOException $ex) {
     print($ex->getMessage());

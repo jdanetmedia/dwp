@@ -1,5 +1,5 @@
 <?php
-require_once("../includes/connection.php");
+
 // handle user creation
 if (isset($_POST['submitusercreate'])) { // Form has been submitted.
   $errors = array();

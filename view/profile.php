@@ -56,7 +56,7 @@ if (!logged_in()) {
 	          <label for="zipcode">ZipCode</label>
 	        </div>
 					<div class="input-field col s6">
-	          <input disabled value="<?php if(isset($city["City"])) { echo $city["City"];} ?>" name="city" id="city" type="text" class="validate txtHint">
+	          <input disabled value="<?php if(isset($city[0]["City"])) { echo $city[0]["City"];} ?>" name="city" id="city" type="text" class="validate txtHint">
 	          <label for="city">City</label>
 	        </div>
 	      </div>

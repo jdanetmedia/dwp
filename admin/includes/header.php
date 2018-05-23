@@ -1,5 +1,5 @@
 <?php
-require_once("../includes/connection.php");
+require_once("class/DB.php");
 spl_autoload_register(function($class) {
   include "class/" . $class . ".php";
 });
@@ -7,7 +7,7 @@ spl_autoload_register(function($class) {
 // Customer login functions and session
 require_once("includes/loginAdmin/session.php");
 require_once("includes/loginAdmin/functions.php");
-$adminstuff = new Admin($connection);
+$adminstuff = new Admin();
 //require_once("../includes/seo.php");
 
 ?>

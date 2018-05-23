@@ -182,7 +182,7 @@ function getDeliveryInfo($DeliveryMethodID) {
 function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNumber, $ZipCode, $CustomerEmail, $Shippingoption, $OrderStatus, $PromoCode) {
   try {
     //create a new PDO connection object
-    $conn = connectToDB();
+    $conn = DB::connect();
 
     $conn->beginTransaction();
 
@@ -303,7 +303,7 @@ if (isset($_POST["submitpromocode"])) {
 
 function checkForPromoCode($PromoCode) {
   try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $PromoCode = Security::secureString($PromoCode);
 

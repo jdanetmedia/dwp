@@ -1,46 +1,43 @@
 <?php
 	// START FORM PROCESSING ON LOGIN CUSTOMER
 	if (isset($_POST['submitlogin'])) { // Form has been submitted.
-		$email = Security::secureString($_POST['email']);
-		$password = Security::secureString($_POST['pass']);
 		try {
-				$conn = DB::connect();
+			$conn = DB::connect();
 
-				$cat = Security::secureString($_GET["cat"]);
+			$email = $_POST['email'];
+			$password = $_POST['pass'];
 
-				$query = "SELECT CustomerEmail, Password, FirstName FROM Customer WHERE CustomerEmail = :email LIMIT 1";
+			$query = "SELECT CustomerEmail, Password, FirstName FROM Customer WHERE Customer.CustomerEmail = :email LIMIT 1";
 
-				$handle = $conn->prepare($query);
-				$handle->bindParam(':email', $email);
-				$handle->execute();
-
-				$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-				$conn = DB::close();
-				return $result;
-
-		}
-		catch(\PDOException $ex) {
-				return print($ex->getMessage());
-		}
+			$handle = $conn->prepare($query);
+			$handle->bindParam(':email', $email);
+			$handle->execute();
+			$result = $handle->fetchAll( \PDO::FETCH_ASSOC );
 
 			if (count($result) == 1) {
 				// username/password authenticated
 				// and only 1 match
 				$found_user = $result[0];
-                if(password_verify($password, $found_user['Password'])){
-				    $_SESSION['CustomerEmail'] = $found_user['CustomerEmail'];
-				    $_SESSION['FirstName'] = $found_user['FirstName'];
-						redirect_to("../index.php");
-			} else {
+        if(password_verify($password, $found_user['Password'])){
+				  $_SESSION['CustomerEmail'] = $found_user['CustomerEmail'];
+				  $_SESSION['FirstName'] = $found_user['FirstName'];
+					redirect_to("../index.php");
+				} else {
 				// username/password combo was not found in the database
 				$message = "Username/password combination incorrect.<br />
 					Please make sure your caps lock key is off and try again.";
-			}}
-	} else { // Form has not been submitted.
-		if (isset($_GET['logout']) && $_GET['logout'] == 1) {
-			$message = "You are now logged out.";
-		}
+				}
+			} else { // Form has not been submitted.
+				if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+					$message = "You are now logged out.";
+				}
+			}
+			$conn = DB::close();
 	}
+	catch(\PDOException $ex) {
+			return print($ex->getMessage());
+	}
+}
 
 	// START FORM PROCESSING ON CREATE CUSTOMER
 
@@ -76,7 +73,7 @@
 		if ($password == $passwordvali && $vali == true) {
 			$firstName = Security::secureString($_POST['firstName']);
 			$lastName = Security::secureString($_POST['lastName']);
-			$email = Security::secureString($_POST['CustomerEmail']);
+			$email = $_POST['CustomerEmail'];
 	    $iterations = ['cost' => 10];
 	    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
 			try {
@@ -132,7 +129,7 @@
 				$randomkey = substr(md5(rand()), 0, 20);
 
 				try {
-			      $conn = connectToDB();
+			      $conn = DB::connect();
 
 			      $statement = "UPDATE Customer SET ResetKey = :randomkey WHERE CustomerEmail = :email";
 
@@ -205,11 +202,13 @@
 				$reset = $_GET["key"];
 
 				try {
-			      $conn = connectToDB();
+			      $conn = DB::connect();
 
-			      $statement = "UPDATE Customer SET Password = :password, ResetKey = NULL WHERE CustomerEmail = '{$email}' AND ResetKey = '{$reset}'";
+			      $statement = "UPDATE Customer SET Password = :password, ResetKey = NULL WHERE CustomerEmail = :email AND ResetKey = :reset";
 			      $handle = $conn->prepare($statement);
 			      $handle->bindParam(':password', $hashed_password);
+						$handle->bindParam(':key', $email);
+						$handle->bindParam(':email', $reset);
 			      $handle->execute();
 						$conn = DB::close();
 			  }
@@ -222,7 +221,7 @@
 
 function getCustomerInfo($email) {
 	try {
-		$conn = connectToDB();
+		$conn = DB::connect();
 
 		$handle = $conn->prepare("SELECT * FROM Customer WHERE CustomerEmail = '{$email}'");
 		$handle->execute();
@@ -238,7 +237,7 @@ function getCustomerInfo($email) {
 
 if (isset($_POST["updateprofile"])) {
 	try {
-		$conn = connectToDB();
+		$conn = DB::connect();
 
 		$vali = true;
 
@@ -317,7 +316,7 @@ if (isset($_POST["updatepassword"])) {
 	$oldpassword = $_POST['old'];
 
 	try {
-		$conn = connectToDB();
+		$conn = DB::connect();
 		$email = $_SESSION["CustomerEmail"];
 		$statement = "SELECT Password FROM Customer WHERE CustomerEmail = :email LIMIT 1";
 		$handle = $conn->prepare($statement);
@@ -329,7 +328,7 @@ if (isset($_POST["updatepassword"])) {
 				$iterations = ['cost' => 10];
 				$hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
 				try {
-			      $conn = connectToDB();
+			      $conn = DB::connect();
 
 			      $statement1 = "UPDATE Customer SET Password = :password WHERE CustomerEmail = :email";
 			      $handle = $conn->prepare($statement1);

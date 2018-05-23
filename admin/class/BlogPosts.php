@@ -3,13 +3,13 @@ class BlogPosts {
 
     function getAllBlogPosts() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $handle = $conn->prepare("SELECT BlogPost.*, BlogCategory.CategoryName FROM `BlogPost` INNER JOIN BlogCategory ON BlogPost.BlogCategoryID =  BlogCategory.BlogCategoryID ORDER BY BlogPost.BlogDate DESC");
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            $conn = null;
+            DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
@@ -19,13 +19,13 @@ class BlogPosts {
 
     function getAllCategories() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $handle = $conn->prepare("SELECT * FROM `BlogCategory`");
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            $conn = null;
+            DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
@@ -38,7 +38,7 @@ class BlogPosts {
             // Secure input
             $postID = Security::secureString($blogPostID);
 
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $statement = "SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = :BlogPostID ORDER BY BlogImg.ImgID ASC";
 
@@ -47,7 +47,7 @@ class BlogPosts {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-            $conn = null;
+            DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
@@ -57,7 +57,7 @@ class BlogPosts {
 
     function saveBlogPost() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             if ($_POST["relatedProducts"] == 0) {
                 $related = NULL;
@@ -80,7 +80,7 @@ class BlogPosts {
             $handle->bindParam(':BlogDate',$date);
             $handle->bindParam(':UserEmail',$_SESSION["UserEmail"]);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -89,7 +89,7 @@ class BlogPosts {
 
     function updateBlogPost($blogPostID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             if ($_POST["relatedProducts"] == 0) {
                 $related = NULL;
@@ -116,7 +116,7 @@ class BlogPosts {
             $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
             $handle->bindParam(':BlogPostID',$blogPostID);
             $handle->execute();
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -125,13 +125,13 @@ class BlogPosts {
 
     function getRecentBlogPost() {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $handle = $conn->prepare("SELECT * FROM `BlogPost` ORDER BY BlogDate DESC LIMIT 1");
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            $conn = null;
+            DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
@@ -141,7 +141,7 @@ class BlogPosts {
 
     function deleteBlogPost($blogPostID) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $statement2 = "DELETE FROM BlogImg WHERE BlogPostID = :BlogPostID";
             $handle2 = $conn->prepare($statement2);
@@ -154,7 +154,7 @@ class BlogPosts {
             $handle->execute();
 
 
-            $conn = null; //CLOSE THE CONNECTION BRUH ?!
+            DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -164,7 +164,7 @@ class BlogPosts {
     function searchBlogPost($search) {
         try {
             $newSearch = "%$search%";
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $statement = "SELECT BlogPost.*, BlogCategory.CategoryName FROM `BlogPost` INNER JOIN BlogCategory ON BlogPost.BlogCategoryID =  BlogCategory.BlogCategoryID WHERE Title LIKE :Search OR BlogContent LIKE :Search OR UserEmail LIKE :Search OR BlogCategory.CategoryName LIKE :Search ORDER BY BlogPost.BlogDate DESC";
 
@@ -176,7 +176,7 @@ class BlogPosts {
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
             return $result;
 
-            $conn = null;
+            DB::close();
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
@@ -185,14 +185,14 @@ class BlogPosts {
 
     function removeImg($id) {
         try {
-            $conn = connectToDB();
+            $conn = DB::connect();
 
             $statement = "DELETE FROM BlogImg WHERE ImgID = :ImgID";
             $handle = $conn->prepare($statement);
             $handle->bindParam(":ImgID", $id);
             $handle->execute();
 
-            $conn = null;
+            DB::close();
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());

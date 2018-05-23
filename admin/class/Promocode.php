@@ -16,13 +16,13 @@ class Promocode {
 
   function getAllPromocodes() {
       try {
-          $conn = connectToDB();
+          $conn = DB::connect();
 
           $handle = $conn->prepare("SELECT * FROM PromoCode");
           $handle->execute();
 
           $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-          $conn = null;
+          DB::close();
           return $result;
       }
       catch(\PDOException $ex) {

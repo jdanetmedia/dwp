@@ -1,5 +1,5 @@
 <?php
-require_once("../includes/connection.php");
+
 
 
 if (isset($_SESSION["OrderNumber"])) {
@@ -10,7 +10,6 @@ if (isset($_SESSION["OrderNumber"])) {
 function getAllOrders($customerEmail) {
   try {
       $conn = DB::connect();
-      $customerEmail = Security::secureEmail($customerEmail);
 
       $statement = "SELECT * FROM CustomerOrder WHERE CustomerEmail = :CustomerEmail ORDER BY OrderNumber DESC";
 
@@ -29,7 +28,7 @@ function getAllOrders($customerEmail) {
 function getOrder($orderNumber){
   try {
       $conn = DB::connect();
-      $orderNumber = Security::secureInt($orderNumber);
+      $orderNumber = Security::secureString($orderNumber);
 
       $statement = "SELECT * FROM OrderDetails INNER JOIN Product ON OrderDetails.ItemNumber = Product.ItemNumber WHERE OrderNumber = :OrderNumber";
 

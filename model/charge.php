@@ -1,6 +1,6 @@
 <?php
 require_once("../includes/sessionstart.php");
-require_once("../includes/connection.php");
+
 require_once('../model/cartDAO.php');
 require_once('../vendor/autoload.php');
 
@@ -26,7 +26,7 @@ unset($_SESSION["cart"]);
 //var_dump($charge->id);
 function UpdateChargeID($chargeID) {
   try {
-      $conn = connectToDB();
+      $conn = DB::connect();
 
       $statement = "UPDATE CustomerOrder SET StripeChargeID = :StripeChargeID WHERE OrderNumber = :OrderNumber";
 

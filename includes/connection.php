@@ -1,5 +1,5 @@
 <?php
-require("constants.php");
+//require("constants.php");
 
 $connection = mysqli_connect(
   DB_SERVER,
@@ -19,7 +19,7 @@ if (!$db_select) {
 
 // mysqli_close($connection);
 
-function connectToDB()
+function DB::connect()
 {
 	$link = new \PDO(
 		'mysql:host=' . DB_SERVER . ';dbname=' . DB_NAME . ';charset=utf8mb4',
