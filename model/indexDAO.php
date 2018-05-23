@@ -118,7 +118,9 @@ function getHighestRatedProducts() {
 }
 
 function getReviewForProduct($itemNumber) {
-    /*try {
+    try {
+        $rated = 0;
+        $divide = 0;
         $conn = DB::connect();
         $itemNumber = Security::secureString($itemNumber);
 
@@ -126,22 +128,42 @@ function getReviewForProduct($itemNumber) {
         $handle = $conn->prepare($statement);
         $handle->bindParam(":ItemNumber", $itemNumber);
         $handle->execute();
-
         $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
         $conn = DB::close();
+
+        foreach ($result as $ratingRow) {
+            $rating = $ratingRow["Rating"];
+            $rated = $rated + $rating;
+            $divide = $divide + count($result);
+        }
+        $rated = $rated / $divide;
+
+        $i = 1;
+        $ratedRemaining = 5 - $rated;
+        $i2 = 1;
+        while ($i <= $rated) {
+            echo "<i class='material-icons tiny rated'>star</i>";
+            $i++;
+        }
+        while($i2 <= $ratedRemaining) {
+            echo "<i class='material-icons tiny rated'>star_border</i>";
+            $i2++;
+        }
+
         return $result;
 
     }
     catch(\PDOException $ex) {
         return print($ex->getMessage());
-    }*/
+    }
 
-    global $connection;
+    /*global $connection;
 
     $ratingResult = mysqli_query($connection, "SELECT `Rating` FROM `Review` WHERE ItemNumber = $itemNumber");
     $rated = 0;
     $divide = 0;
-    while ($ratingrow = mysqli_fetch_array($ratingResult)) {
+
+    /*while ($ratingrow = mysqli_fetch_array($ratingResult)) {
         $rating = $ratingrow["Rating"];
         $rated = $rated + $rating;
         $divide = $divide + count($ratingResult);
@@ -158,6 +180,6 @@ function getReviewForProduct($itemNumber) {
     while($i2 <= $ratedRemaining) {
         echo "<i class='material-icons tiny rated'>star_border</i>";
         $i2++;
-    }
+    }*/
 }
 ?>
