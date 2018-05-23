@@ -1,6 +1,6 @@
 <?php
-
-
+require_once("../admin/class/DB.php");
+require_once("../admin/class/Security.php");
 try {
     $conn = DB::connect();
 

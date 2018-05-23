@@ -1,5 +1,6 @@
 <?php
-
+require_once("../admin/class/DB.php");
+require_once("../admin/class/Security.php");
 // handle user creation
 if (isset($_POST['submitusercreate'])) { // Form has been submitted.
   $errors = array();
@@ -27,22 +28,35 @@ if (isset($_POST['submitusercreate'])) { // Form has been submitted.
   }
 
   // perform validations on the form data
-  $password = trim(mysqli_real_escape_string($connection, $_POST['password']));
-  $passwordvali = trim(mysqli_real_escape_string($connection, $_POST['password2']));
+  $password = $_POST['password'];
+  $passwordvali = $_POST['password2'];
   if ($password == $passwordvali && $vali == true) {
-    $firstName = mysqli_real_escape_string($connection, $_POST['firstName']);
-    $lastName = mysqli_real_escape_string($connection, $_POST['lastName']);
-    $email = trim(mysqli_real_escape_string($connection, $_POST['adminemail']));
+    $firstName = Security::secureString($_POST['firstName']);
+    $lastName = Security::secureString($_POST['lastName']);
+    $email = Security::secureString($_POST['adminemail']);
     $iterations = ['cost' => 10];
     $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
+    try {
+      $conn = DB::connect();
 
-  $query = "INSERT INTO `User` (UserEmail, Password, FirstName, LastName) VALUES ('{$email}', '{$hashed_password}', '{$firstName}', '{$lastName}')";
-  $result = mysqli_query($connection, $query);
-    if ($result) {
-      $message = "User Created.";
-    } else {
-      $message = "User could not be created.";
-      //$message .= "<br />" . mysql_error();
+      $handle = $conn->prepare("INSERT INTO `User` (UserEmail, Password, FirstName, LastName) VALUES (:email, :hashed_password, :firstName, :lastName)");
+      $handle->bindParam(':email', $email);
+      $handle->bindParam(':hashed_password', $hashed_password);
+      $handle->bindParam(':firstName', $firstName);
+      $handle->bindParam(':lastName', $lastName);
+      $check =  $handle->execute();
+
+        if ($check == true) {
+          $message = "User Created.";
+        } else {
+          $message = "User could not be created.";
+          //$message .= "<br />" . mysql_error();
+        }
+
+      DB::close();
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
     }
   } else {
     $message .= "The passwords has to be the same!";

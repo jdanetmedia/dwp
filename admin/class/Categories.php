@@ -197,10 +197,12 @@ Class Categories {
         try {
             $conn = DB::connect();
 
+            $categoryID = Security::secureString($categoryID);
+
             $statement = "SELECT * FROM ProductCategory WHERE ProductCategoryID = :ProductCategoryID";
 
             $handle = $conn->prepare($statement);
-            $handle->bindParam("ProductCategoryID", $catID);
+            $handle->bindParam(":ProductCategoryID", $categoryID);
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );

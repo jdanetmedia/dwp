@@ -3,16 +3,28 @@ class Order {
 
   function mailCheck($connection, $ordernumber)
   {
-      $query = "SELECT CustomerEmail, OrderNumber, OrderDate FROM CustomerOrder WHERE OrderNumber = $ordernumber";
-      $result = mysqli_query($connection, $query);
+      try {
+          $conn = DB::connect();
 
-      if (mysqli_num_rows($result) == 1) {
-        // username/password authenticated
-        // and only 1 match
-        $info = mysqli_fetch_array($result);
-        $email_to = $info['CustomerEmail'];
+          $itemNumber = Security::secureString($itemNumber);
 
-      }
+          $query = "SELECT CustomerEmail, OrderNumber, OrderDate FROM CustomerOrder WHERE OrderNumber = :ordernumber";
+
+          $handle = $conn->prepare($query);
+          $handle->bindParam(':ordernumber', $ordernumber);
+          $handle->execute();
+
+          $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+          $conn = DB::close();
+
+          if (count($result) == 1) {
+            // username/password authenticated
+            // and only 1 match
+            $info = $result[0];
+            $email_to = $info['CustomerEmail'];
+
+          }
+
 
       $subject = "Email regarding order: " . $ordernumber . " from Rubberduck shop";
 
@@ -61,10 +73,19 @@ class Order {
       $time = date("Y-m-d H:i:s");
 
       mail($email_to, $subject, $email_message, $headers);
-      $insertquery = "INSERT INTO OrderMessage VALUES (NULL, '{$message}', '{$time}', '{$ordernumber}');";
-      $newmessage = mysqli_query($connection, $insertquery);
+
+      $insertquery = "INSERT INTO OrderMessage VALUES (NULL, :message, :timenow, :ordernumber);";
+      $handle = $conn->prepare($insertquery);
+      $handle->bindParam(':ordernumber', $ordernumber);
+      $handle->bindParam(':message', $message);
+      $handle->bindParam(':timenow', $time);
+      $handle->execute();
 
       echo "Your message was '$message' and was sent from $email";
+    }
+    catch(\PDOException $ex) {
+        return print($ex->getMessage());
+    }
   }
 
   function getLatestOrders() {
