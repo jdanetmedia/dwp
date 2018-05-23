@@ -18,7 +18,7 @@ $url = $_SERVER['REQUEST_URI'];
   <div class="row">
     <?php
     $prodResult = getProducts();
-    while ($row = mysqli_fetch_array($prodResult)) {
+    foreach ($prodResult as $row) {
       $itemNumber = $row["ItemNumber"];
     ?>
     <a href="product.php?item=<?php echo $itemNumber; ?>">
