@@ -72,7 +72,7 @@ function addReview($item) {
     if($responseData->success){
         try {
             $conn = DB::connect();
-            $rating = Security::secureInt($_POST["rating"]);
+            $rating = Security::secureString($_POST["rating"]);
             $reviewTitle = Security::secureString($_POST["reviewTitle"]);
             $reviewContent = Security::secureString($_POST["reviewText"]);
             $itemNumber = Security::secureString($item);
@@ -115,7 +115,7 @@ function getRelatedProducts($productCat, $itemNumber) {
     try {
         $conn = DB::connect();
         $itemNumber = Security::secureString($itemNumber);
-        $productCat = Security::secureInt($productCat);
+        $productCat = Security::secureString($productCat);
 
         $statement = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = :ProductCategoryID AND NOT Product.ItemNumber = :ItemNumber LIMIT 4";
         $handle = $conn->prepare($statement);
@@ -141,7 +141,7 @@ function getRelatedProducts($productCat, $itemNumber) {
 function getRelatedProductsForBlog($productCat) {
     try {
         $conn = DB::connect();
-        $secProdCat = Security::secureInt($productCat);
+        $secProdCat = Security::secureString($productCat);
 
         $statement = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = :ProductCategoryID LIMIT 4";
         $handle = $conn->prepare($statement);
