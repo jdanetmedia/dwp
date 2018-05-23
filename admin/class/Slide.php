@@ -121,7 +121,7 @@ class Slide {
                   :CTAURL,
                   :UserEmail
                 )";
-                
+
         $handle = $conn->prepare($query);
         $handle->bindParam(":SliderHeader", $sliderHeader);
         $handle->bindParam(":SliderText", $sliderText);
@@ -129,6 +129,11 @@ class Slide {
         $handle->bindParam(":CTAURL", $ctaURL);
         $handle->bindParam(":UserEmail", $userEmail);
         $result = $handle->execute();
+
+        if($result == true) {
+          $last_id = $conn->lastInsertId();
+          return $last_id;
+        }
 
         $conn = DB::close();
     }

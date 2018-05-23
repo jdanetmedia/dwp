@@ -17,12 +17,12 @@ if (!logged_in()) {
 $slide = new Slide();
 
 if(isset($_POST["saveSlide"])) {
-  $slide->createSlide($_POST);
+  $slideID = $slide->createSlide($_POST);
 } elseif(isset($_POST["toGallery"])) {
-  $slide->createSlide($_POST);
+  $slideID = $slide->createSlide($_POST);
   ?>
   <script type="text/javascript">
-    window.location.href = "gallery.php?slide=<?php echo $_POST[]; ?>";
+    window.location.href = "gallery.php?slide=<?php echo $slideID; ?>";
   </script>
   <?php
 }
