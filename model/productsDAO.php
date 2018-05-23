@@ -129,12 +129,5 @@ function getCategories() {
     catch(\PDOException $ex) {
         return print($ex->getMessage());
     }
-
-
-  /*global $connection;
-
-  $prodCatResult = mysqli_query($connection, "SELECT * FROM `ProductCategory`");
-  return $prodCatResult;
-  */
 }
 ?>
