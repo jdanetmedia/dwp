@@ -78,25 +78,25 @@ $(document).ready(function() {
 
   // Star rating input
   $('.star-1').click(function() {
-    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-icon').text('star_border').css('color', '#F5C700');
     $(this).children('.star-icon').text('star').css('color', '#f1c40f');
     $('.rating-input').val($(this).attr('id'));
   });
   $('.star-2').click(function() {
-    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-icon').text('star_border').css('color', '#F5C700');
     $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.rating-input').val($(this).attr('id'));
   });
   $('.star-3').click(function() {
-    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-icon').text('star_border').css('color', '#F5C700');
     $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.star-3').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.rating-input').val($(this).attr('id'));
   });
   $('.star-4').click(function() {
-    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-icon').text('star_border').css('color', '#F5C700');
     $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.star-3').children('.star-icon').text('star').css('color', '#f1c40f');
@@ -104,7 +104,7 @@ $(document).ready(function() {
     $('.rating-input').val($(this).attr('id'));
   });
   $('.star-5').click(function() {
-    $('.star-icon').text('star_border').css('color', 'rgba(0,0,0,0.87)');
+    $('.star-icon').text('star_border').css('color', '#F5C700');
     $('.star-1').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.star-2').children('.star-icon').text('star').css('color', '#f1c40f');
     $('.star-3').children('.star-icon').text('star').css('color', '#f1c40f');

@@ -64,13 +64,20 @@ function addReview($item) {
             $reviewContent = Security::secureString($_POST["reviewText"]);
             $itemNumber = Security::secureString($item);
 
-            $statement = "INSERT INTO Review VALUES (NULL, NULL, :Rating, :ReviewTitle, NULL, :ReviewContent, :ItemNumber)";
+            if (isset($_SESSION["FirstName"])) {
+              $name = $_SESSION["FirstName"];
+            } else {
+              $name = "Anonymous";
+            }
+
+            $statement = "INSERT INTO Review VALUES (NULL, NULL, :Rating, :ReviewTitle, :Name, :ReviewContent, :ItemNumber)";
 
             $handle = $conn->prepare($statement);
             $handle->bindParam(":Rating", $rating);
             $handle->bindParam(":ReviewTitle", $reviewTitle);
             $handle->bindParam(":ReviewContent", $reviewContent);
             $handle->bindParam(":ItemNumber", $itemNumber);
+            $handle->bindParam(":Name", $name);
             $handle->execute();
 
             $conn = DB::close();
@@ -78,9 +85,6 @@ function addReview($item) {
         } catch(\PDOException $ex) {
             return print($ex->getMessage());
         }
-
-      $succMsg = 'Your review have been submitted successfully.';
-      echo $succMsg;
     } else {
       $errMsg .= 'Robot verification failed, please try again.';
     }
