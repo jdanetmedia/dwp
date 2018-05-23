@@ -174,30 +174,69 @@ class Product {
   }
 
   function updatePrimary($item, $id) {
-	  $conn = DB::connect();
+	  try {
+      $conn = DB::connect();
 
-    $secItem = Security::secureString($item);
-    $secId = Security::secureString($id);
+      $secItem = Security::secureString($item);
+      $secId = Security::secureString($id);
 
-	  $handle = $conn->prepare("
-	  	UPDATE ProductImg SET IsPrimary = false WHERE ItemNumber = :item;
-      UPDATE ProductImg SET IsPrimary = true WHERE ImgID = :id;
-	  ");
-    $handle->bindParam(":item", $secItem);
-    $handle->bindParam(":id", $secId);
-    $handle->execute();
-    $conn = DB::close();
+  	  $handle = $conn->prepare("
+  	  	UPDATE ProductImg SET IsPrimary = false WHERE ItemNumber = :item;
+        UPDATE ProductImg SET IsPrimary = true WHERE ImgID = :id;
+  	  ");
+      $handle->bindParam(":item", $secItem);
+      $handle->bindParam(":id", $secId);
+      $handle->execute();
+      $conn = DB::close();
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
   }
 
   function removeImg($id) {
+    try {
+      $conn = DB::connect();
+
+      $secId = Security::secureString($id);
+
+      $handle = $conn->prepare("DELETE FROM ProductImg WHERE ImgID = :id");
+      $handle->bindParam(":id", $secId);
+      $handle->execute();
+      $conn = DB::close();
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  function deleteProduct($item) {
     $conn = DB::connect();
 
-    $secId = Security::secureString($id);
+    $conn->beginTransaction();
+    try {
 
-    $handle = $conn->prepare("DELETE FROM ProductImg WHERE ImgID = :id");
-    $handle->bindParam(":id", $secId);
-    $handle->execute();
-    $conn = DB::close();
+      $item = Security::secureString($item);
+
+      $handle = $conn->prepare("DELETE FROM ProductImg WHERE ItemNumber = :item");
+      $handle->bindParam(":item", $item);
+      $handle->execute();
+
+      $handle = $conn->prepare("DELETE FROM Review WHERE ItemNumber = :item");
+      $handle->bindParam(":item", $item);
+      $handle->execute();
+
+      $handle = $conn->prepare("DELETE FROM Product WHERE ItemNumber = :item");
+      $handle->bindParam(":item", $item);
+      $handle->execute();
+
+      $conn->commit();
+      $conn = DB::close();
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+      $conn->rollback();
+    }
   }
 
   function exportJSON() {
@@ -233,6 +272,7 @@ class Product {
       print($ex->getMessage());
     }
   }
+
   function importJSON($file) {
     try {
       $conn = DB::connect();

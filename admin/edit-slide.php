@@ -18,6 +18,11 @@ $slide = new Slide();
 
 if(isset($_POST["updateSlide"])) {
   $slide->updateSlide($_POST, $_GET["slideID"]);
+  ?>
+  <script type="text/javascript">
+    window.location.href = "manage-slider.php";
+  </script>
+  <?php
 } elseif(isset($_POST["deleteSlide"])) {
   $slide->deleteSlide($_GET["slideID"]);
   ?>

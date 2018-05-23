@@ -24,10 +24,15 @@ if(isset($_POST["submit"])) {
     $products->removeImg($_POST["deleteImg"]);
   }
 }
-elseif (isset($_POST["toGallery"])) {
+elseif(isset($_POST["toGallery"])) {
   $products->updateProduct($_GET["item"]);
   ?>
     <script type="text/javascript">location.href = 'gallery.php?item=<?php echo $_GET["item"]; ?>';</script>
+  <?php
+} elseif(isset($_POST["deleteProduct"])) {
+	$products->deleteProduct($_GET["item"]);
+	?>
+    <script type="text/javascript">location.href = 'manage-products.php?deleted=<?php echo $_GET["item"]; ?>';</script>
   <?php
 }
 $product = $products->getProductDetails($_GET["item"]);
@@ -36,7 +41,7 @@ $product = $products->getProductDetails($_GET["item"]);
     <form action="edit-product.php?item=<?php echo $_GET["item"]; ?>" method="post" enctype="multipart/form-data">
       <div class="row">
         <input class="waves-effect waves-light btn grey darken-4 right new-prod-btn" type="submit" name="submit" value="Save">
-        <a class="waves-effect waves-light btn grey darken-1 right new-prod-btn">Delete</a>
+        <input class="waves-effect waves-light btn grey darken-1 right new-prod-btn" type="submit" name="deleteProduct" value="Delete">
       </div>
       <div class="row">
         <ul class="collapsible" data-collapsible="accordion">

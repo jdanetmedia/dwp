@@ -169,6 +169,19 @@ ul.stars-list {
     background-color: #fff; }
   .admin-area .richText .richText-toolbar ul li a {
     color: #212121; }
+  .admin-area .deleted {
+    padding: 0 10px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out; }
+    .admin-area .deleted .deleted-txt {
+      text-align: center;
+      padding: 10px;
+      background-color: #E5EFE6;
+      border: 1px solid #a6c8a9;
+      border-radius: 3px; }
   .admin-area .admin-product-img {
     position: relative;
     margin-bottom: 20px;

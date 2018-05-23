@@ -32,6 +32,14 @@ $('.datepicker').pickadate({
   });
 
 $(document).ready(function() {
+  // Hide deleted message after deleting product
+  setTimeout(function(){
+    $('.deleted').css('opacity', '0');
+    setTimeout(function() {
+      $('.deleted').css('display', 'none');
+    }, 500);
+  }, 2000);
+
   $('.modal').modal();
   // Product collapsible
   $('.collapsible').collapsible();

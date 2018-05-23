@@ -18,6 +18,11 @@ $slide = new Slide();
 
 if(isset($_POST["saveSlide"])) {
   $slideID = $slide->createSlide($_POST);
+  ?>
+  <script type="text/javascript">
+    window.location.href = "manage-slider.php";
+  </script>
+  <?php
 } elseif(isset($_POST["toGallery"])) {
   $slideID = $slide->createSlide($_POST);
   ?>

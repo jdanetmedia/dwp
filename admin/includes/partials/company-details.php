@@ -28,10 +28,9 @@
   <div class="col s6">
     <?php if(isset($info["LogoURL"]) && !empty($info["LogoURL"])): ?>
       <img style="width: 120px; height: auto;" src="<?php echo $info["LogoURL"]; ?>" alt="Logo">
-      <p><a href="gallery.php?logo=true">Change logo image</a></p>
+      <p style="margin-bottom: 20px;"><a href="gallery.php?logo=true">Change logo image</a></p>
     <?php else: ?>
-      <img src="http://via.placeholder.com/350x150" alt="Logo">
-      <p><a href="gallery.php?logo=true">Add logo image</a></p>
+      <p style="margin-bottom: 20px;"><a href="gallery.php?logo=true">Add logo image</a></p>
     <?php endif; ?>
   </div>
 </div>

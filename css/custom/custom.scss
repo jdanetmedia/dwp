@@ -222,6 +222,22 @@ ul.stars-list {
     color: $text-color;
   }
 
+  .deleted {
+    padding: 0 10px;
+    -webkit-transition: all 0.5s ease-out;
+    -moz-transition: all 0.5s ease-out;
+    -ms-transition: all 0.5s ease-out;
+    -o-transition: all 0.5s ease-out;
+    transition: all 0.5s ease-out;
+    .deleted-txt {
+      text-align: center;
+      padding: 10px;
+      background-color: #E5EFE6;
+      border: 1px solid darken(#E5EFE6, 20%);
+      border-radius: 3px;
+    }
+  }
+
   .admin-product-img {
     position: relative;
     margin-bottom: 20px;
@@ -297,6 +313,7 @@ ul.stars-list {
       padding: 0;
     }
   }
+
   /* Image gallery */
   .gallery-cnt {
     .gallery-item {

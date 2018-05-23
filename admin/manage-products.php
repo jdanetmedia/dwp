@@ -21,6 +21,15 @@ if(isset($_GET["search"])) {
 }
 ?>
 <div class="container">
+	<?php if(isset($_GET["deleted"])): ?>
+		<div class="row">
+			<div class="col s12 deleted">
+				<div class="deleted-txt">
+					Itemnumer <?php echo $_GET["deleted"]; ?> is now deleted
+				</div>
+			</div>
+		</div>
+	<?php endif; ?>
   <div class="row">
     <div class="col s12">
       <div class="card">
