@@ -24,17 +24,17 @@ if (!logged_in()) {
           <div class="row col s12">
             <div class="row col s12">
               <div class="input-field col s12">
-                <input id="first_name" type="text" name="street" class="validate" value="<?php if(isset($CustomerInfo[0]["Street"])) { echo $CustomerInfo[0]["Street"];} ?>">
+                <input required="" aria-required="true" id="first_name" type="text" name="street" class="validate" value="<?php if(isset($CustomerInfo[0]["Street"])) { echo $CustomerInfo[0]["Street"];} ?>">
                 <label for="first_name">Streetname</label>
               </div>
               <div class="input-field col s6">
-                <input id="last_name" type="text" name="house" class="validate" value="<?php if(isset($CustomerInfo[0]["HouseNumber"])) { echo $CustomerInfo[0]["HouseNumber"];} ?>">
+                <input required="" aria-required="true" id="last_name" type="text" name="house" class="validate" value="<?php if(isset($CustomerInfo[0]["HouseNumber"])) { echo $CustomerInfo[0]["HouseNumber"];} ?>">
                 <label for="last_name">Housenumber</label>
               </div>
             </div>
             <div class="row col s12">
               <div class="input-field col s6">
-                <input id="first_name" type="number" name="zipcode" class="validate" value="<?php if(isset($CustomerInfo[0]["ZipCode"])) { echo $CustomerInfo[0]["ZipCode"];}  ?>" onchange="showUser(this.value)">
+                <input required="" aria-required="true" id="first_name" type="number" name="zipcode" class="validate" value="<?php if(isset($CustomerInfo[0]["ZipCode"])) { echo $CustomerInfo[0]["ZipCode"];}  ?>" onchange="showUser(this.value)">
                 <label for="first_name">Zipcode</label>
               </div>
               <div class="input-field col s6">
@@ -56,7 +56,7 @@ if (!logged_in()) {
           <div class="card">
             <div class="card-content">
               <span class="card-title">
-                <input name="shippingoption" type="radio" id="<?php echo $row["DeliveryMethodID"]; ?>" value="<?php echo $row["DeliveryMethodID"]; ?>">
+                <input required="" aria-required="true" name="shippingoption" type="radio" id="<?php echo $row["DeliveryMethodID"]; ?>" value="<?php echo $row["DeliveryMethodID"]; ?>">
                 <label for="<?php echo $row["DeliveryMethodID"]; ?>"><?php echo $row["Method"]; ?> + $<?php echo $row["DeliveryPrice"]; ?></label>
               </span>
               <p><?php echo $row["MethodDescription"]; ?></p>

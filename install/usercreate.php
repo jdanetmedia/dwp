@@ -44,23 +44,23 @@ catch(\PDOException $ex) {
                 <form class="col s12" action="finishup.php" method="post">
                   <div class="row">
                     <div class="input-field col s6">
-                      <input value="" name="firstName" id="server" type="text" class="validate">
+                      <input required="" aria-required="true" value="" name="firstName" id="server" type="text" class="validate">
                       <label for="server">First name</label>
                     </div>
                     <div class="input-field col s6">
-                      <input value="" name="lastName" id="username" type="text" class="validate">
+                      <input required="" aria-required="true" value="" name="lastName" id="username" type="text" class="validate">
                       <label for="username">Last name</label>
                     </div>
                     <div class="input-field col s6">
-                      <input value="" name="adminemail" id="server" type="text" class="validate">
+                      <input required="" aria-required="true" value="" name="adminemail" id="server" type="text" class="validate">
                       <label for="server">Email</label>
                     </div>
                     <div class="input-field col s6">
-                      <input value="" name="password" id="username" type="text" class="validate">
+                      <input required="" aria-required="true" value="" name="password" id="username" type="text" class="validate">
                       <label for="username">Password</label>
                     </div>
                     <div class="input-field col s6">
-                      <input value="" name="password2" id="password" type="text" class="validate">
+                      <input required="" aria-required="true" value="" name="password2" id="password" type="text" class="validate">
                       <label for="password">Repeat Password</label>
                     </div>
                     <div class="card-action">

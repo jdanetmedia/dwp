@@ -26,19 +26,19 @@ if (!file_exists('../includes/constants.php')) {
                 <form class="col s12" action="dbcreation.php" method="post">
                   <div class="row">
                     <div class="input-field col s6">
-                      <input value="mysql5.unoeuro.com" name="server" id="server" type="text" class="validate">
+                      <input required="" aria-required="true" value="mysql5.unoeuro.com" name="server" id="server" type="text" class="validate">
                       <label for="server">SERVER</label>
                     </div>
                     <div class="input-field col s6">
-                      <input value="rasmusandre_dk" name="username" id="username" type="text" class="validate">
+                      <input required="" aria-required="true" value="rasmusandre_dk" name="username" id="username" type="text" class="validate">
                       <label for="username">Username</label>
                     </div>
                     <div class="input-field col s6">
-                      <input name="password" id="password" type="text" class="validate">
+                      <input required="" aria-required="true" name="password" id="password" type="password" class="validate">
                       <label for="password">Password</label>
                     </div>
                     <div class="input-field col s6">
-                      <input value="rasmusandreas_dk_db3" name="dbname" id="dbname" type="text" class="validate">
+                      <input required="" aria-required="true" value="rasmusandreas_dk_db3" name="dbname" id="dbname" type="text" class="validate">
                       <label for="dbname">Database name</label>
                     </div>
                     <div class="card-action">
