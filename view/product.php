@@ -172,13 +172,14 @@ if (isset($_SESSION["cart"])) {
           </div>
           <div class="row">
             <?php foreach($reviews as $row) {
+              if(isset($row["ReviewName"])) { $name = $row["ReviewName"]; } else { $name = "Anonymous"; }
               ?>
                 <div class="col s12 m6">
                   <div class="card">
                     <div class="card-content">
                       <span class="card-title"><?php echo $row["ReviewTitle"]; ?></span>
                       <p><?php echo $row["ReviewContent"] ?></p>
-                      <span class="review-meta"><?php echo "Posted by <b>" . $row["ReviewName"] . "</b> on <b>" . $row["ReviewDate"]
+                      <span class="review-meta"><?php echo "Posted by <b>" . $name . "</b> on <b>" . $row["ReviewDate"]
                               . "</b>"; ?></span>
                     </div>
                     <div class="card-action">
@@ -198,7 +199,7 @@ if (isset($_SESSION["cart"])) {
                           }
                           while($items2 <= $notRated) {
                             ?>
-                              <i class="material-icons small">star_border</i>
+                              <i class="material-icons small rated">star_border</i>
                             <?php
                             $items2++;
                           }

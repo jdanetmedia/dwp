@@ -39,7 +39,7 @@ if (isset($_POST['submitusercreate'])) { // Form has been submitted.
     try {
       $conn = DB::connect();
 
-      $handle = $conn->prepare("INSERT INTO `User` (UserEmail, Password, FirstName, LastName) VALUES (:email, :hashed_password, :firstName, :lastName)");
+      $handle = $conn->prepare("INSERT INTO `User` (UserEmail, Password, FirstName, LastName, AccessLevel) VALUES (:email, :hashed_password, :firstName, :lastName, 1)");
       $handle->bindParam(':email', $email);
       $handle->bindParam(':hashed_password', $hashed_password);
       $handle->bindParam(':firstName', $firstName);

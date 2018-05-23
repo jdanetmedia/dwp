@@ -1,6 +1,6 @@
 <?php
 require_once("../includes/sessionstart.php");
-
+require_once("../admin/class/DB.php");
 require_once('../model/cartDAO.php');
 require_once('../vendor/autoload.php');
 

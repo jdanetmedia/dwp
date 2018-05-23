@@ -1,7 +1,7 @@
 <?php
 require_once("../includes/sessionstart.php");
-require_once('../model/cartDAO.php');
 require_once('../includes/header.php');
+require_once('../model/cartDAO.php');
 unset($_SESSION["total"]);
 if (isset($_GET["remove"]) && $_GET["remove"] == "promocode") {
   unset($_SESSION["promocode"]);

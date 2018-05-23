@@ -23,7 +23,7 @@ $lowstock = $orders->CheckStock();
       <div class="col s12">
         <div class="card">
           <div class="card-content">
-            <span class="card-title">Welcome to your dashboard</span>
+            <span class="card-title">Welcome <?php echo $_SESSION["AdminFirstName"]; ?></span>
             <p>This is where you manage products, customers, orders, blogpost etc.</p>
             <p>If you are new to the system, you can take a quick tour to get an overview?</p>
           </div>

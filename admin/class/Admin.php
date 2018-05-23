@@ -326,6 +326,16 @@ class Admin extends Security {
     try {
         $conn = DB::connect();
 
+        $handle = $conn->prepare("SELECT UserEmail FROM User WHERE AccessLevel = 1");
+        $handle->execute();
+        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+        $superadmin = $result[0]["UserEmail"];
+
+        $handle = $conn->prepare("UPDATE BlogPost SET UserEmail = :superadmin WHERE UserEmail = :email; UPDATE FrontSlider SET UserEmail = :superadmin WHERE UserEmail = :email; UPDATE Product SET UserEmail = :superadmin WHERE UserEmail = :email; UPDATE PromoCode SET UserEmail = :superadmin WHERE UserEmail = :email;");
+        $handle->bindParam(':email', $useremail);
+        $handle->bindParam(':superadmin', $superadmin);
+        $handle->execute();
+
         $handle = $conn->prepare("DELETE FROM User WHERE User.UserEmail = :mail");
         $handle->bindParam(':mail', $useremail);
         $handle->execute();

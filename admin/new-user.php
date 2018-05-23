@@ -10,7 +10,7 @@ if (!logged_in()) {
 <?php
 	//redirect_to("login.php");
 }
-$users = new Admin($connection);
+$users = new Admin();
 ?>
 <div class="container">
 	<div class="card">

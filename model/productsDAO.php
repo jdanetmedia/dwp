@@ -88,7 +88,7 @@ function getReviewForProduct($itemNumber) {
          }
          if ($divide > 0) {
              $rated = $rated / $divide;
-
+             $rated = round($rated);
              $i = 1;
              $ratedRemaining = 5 - $rated;
              $i2 = 1;

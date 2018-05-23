@@ -93,7 +93,7 @@ class Product {
       $stockStatus = Security::secureString($_POST["StockStatus"]);
       $seoTitle = Security::secureString($_POST["SeoTitle"]);
       $metaDescription = Security::secureString($_POST["MetaDescription"]);
-      $creationDate = Security::secureString(date('m/d/Y', time()));
+      $creationDate = Security::secureString(date('Y/m/d H:i:s', time()));
       $userEmail = Security::secureString($_SESSION["UserEmail"]);
 
       $query = "INSERT INTO Product (ItemNumber, ProductName, ProductCategoryID, ProductStatus, ShortDescription, LongDescription, Price, OfferPrice, StockStatus, SeoTitle, MetaDescription, CreationDate, UserEmail)

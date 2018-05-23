@@ -27,12 +27,12 @@ function getAllPosts() {
   try {
       $conn = DB::connect();
 
-      $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID";
+      $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID ORDER BY BlogPostID DESC";
       if (isset($_GET["cat"])) {
         if ($_GET["cat"] != "0") {
           $cat = $_GET["cat"];
           $cat = Security::secureString($cat);
-          $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = :cat ";
+          $query = "SELECT BlogPost.*, ImgGallery.* FROM `BlogPost` LEFT JOIN `BlogImg` ON BlogPost.BlogPostID = BlogImg.BlogPostID LEFT JOIN `ImgGallery` ON BlogImg.ImgID = ImgGallery.ImgID WHERE `BlogCategoryID` = :cat ORDER BY BlogPostID DESC";
           $catquery = "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = :cat";
           $handle = $conn->prepare($catquery);
           $handle->bindParam(':cat', $cat);
