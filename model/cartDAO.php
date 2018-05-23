@@ -34,13 +34,6 @@ return $array;
 
 // Function to get the current item on single productpage
 function getCartProduct($itemNumber) {
-  // global $connection;
-  //
-  // $query = "SELECT * FROM Product INNER JOIN ProductImg ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN ImgGallery ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ItemNumber = $itemNumber AND ProductImg.IsPrimary = true";
-  // // $query = "SELECT * FROM Product WHERE ItemNumber = $itemNumber";
-  // $result = mysqli_query($connection, $query);
-  // $row = mysqli_fetch_assoc($result);
-  // return $row;
   try {
       $conn = DB::connect();
 
@@ -126,12 +119,6 @@ function updateAddress($CustomerEmail, $Street, $HouseNumber, $ZipCode, $City) {
 }
 
 function getCityName($ZipCode) {
-  // global $connection;
-  //
-  // $query = "SELECT * FROM ZipCode WHERE ZipCode = '{$ZipCode}'";
-  // $result = mysqli_query($connection, $query);
-  // $row = mysqli_fetch_assoc($result);
-  // return $row;
   try {
       $conn = DB::connect();
 
@@ -153,12 +140,6 @@ function getCityName($ZipCode) {
 }
 
 function getDeliveryInfo($DeliveryMethodID) {
-  // global $connection;
-  //
-  // $query = "SELECT * FROM DeliveryMethod WHERE DeliveryMethodID = '{$DeliveryMethodID}'";
-  // $result = mysqli_query($connection, $query);
-  // $row = mysqli_fetch_assoc($result);
-  // return $row;
   try {
       $conn = DB::connect();
 
@@ -318,6 +299,25 @@ function checkForPromoCode($PromoCode) {
   }
   catch(\PDOException $ex) {
       print($ex->getMessage());
+  }
+}
+
+function getDeliveryMethod() {
+  try {
+      $conn = DB::connect();
+
+      $query = "SELECT * FROM `DeliveryMethod`";
+
+      $handle = $conn->prepare($query);
+      $handle->execute();
+
+      $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+      $conn = DB::close();
+      return $result;
+
+  }
+  catch(\PDOException $ex) {
+      return print($ex->getMessage());
   }
 }
 ?>

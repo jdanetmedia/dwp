@@ -1,12 +1,22 @@
 <?php
 
-$query = "SELECT * FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber
-          INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = true AND Product.ProductStatus = 1";
+$query = "SELECT * FROM `Product` LEFT JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber
+          LEFT JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1";
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
     $cat = $_GET["cat"];
     $query .= " AND `ProductCategoryID` = $cat ";
-    $catResult = mysqli_query($connection, "SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
+    try {
+      $conn = DB::connect();
+
+      $handle = $conn->prepare("SELECT * FROM `ProductCategory` WHERE `ProductCategoryID` = $cat");
+      $handle->execute();
+      $catResult = $handle->fetchAll( \PDO::FETCH_ASSOC);
+
+    } catch(\PDOException $ex) {
+        print($ex->getMessage());
+    }
+
   }
 }
 // TODO: check if set
@@ -45,24 +55,22 @@ if (isset($_GET["order"])) {
 }
 //echo $query;
 
-function getProducts() {
-  /*try {
+function getProducts($query) {
+  try {
     $conn = DB::connect();
 
     $handle = $conn->prepare($query);
     $handle->execute();
+    $result = $handle->fetchAll( \PDO::FETCH_ASSOC);
+    return $result;
 
   } catch(\PDOException $ex) {
       print($ex->getMessage());
-  }*/
-    global $connection, $query;
-
-    $prodResult = mysqli_query($connection, $query);
-    return $prodResult;
+  }
 }
 
 function getReviewForProduct($itemNumber) {
-    /*try {
+    try {
          $conn = DB::connect();
 
          $secItem = Security::secureString($itemNumber);
@@ -71,11 +79,10 @@ function getReviewForProduct($itemNumber) {
          $handle = $conn->prepare($ratingResult);
          $handle->bindParam("ItemNumber",$secItem);
          $handle->execute();
-         $ratingrow = $handle->fetchAll( \PDO::FETCH_OBJ );
-
+         $rating = $handle->fetchAll( \PDO::FETCH_ASSOC );
          $rated = 0;
          $divide = 0;
-         while ($ratingrow DON*T RUN THIS) {
+         foreach ($rating as $ratingrow) {
              $rating = $ratingrow["Rating"];
              $rated = $rated + $rating;
              $divide = $divide + count($ratingResult);
@@ -104,39 +111,7 @@ function getReviewForProduct($itemNumber) {
 
      } catch(\PDOException $ex) {
          print($ex->getMessage());
-     }*/
-
-    global $connection;
-
-  $ratingResult = mysqli_query($connection, "SELECT `Rating` FROM `Review` WHERE ItemNumber = $itemNumber");
-    $rated = 0;
-    $divide = 0;
-    while ($ratingrow = mysqli_fetch_array($ratingResult)) {
-      $rating = $ratingrow["Rating"];
-      $rated = $rated + $rating;
-      $divide = $divide + count($ratingResult);
-    }
-    if ($divide > 0) {
-      $rated = $rated / $divide;
-
-      $i = 1;
-      $ratedRemaining = 5 - $rated;
-      $i2 = 1;
-      while ($i <= $rated) {
-        echo "<i class='material-icons tiny rated'>star</i>";
-        $i++;
-      }
-      while($i2 <= $ratedRemaining) {
-          echo "<i class='material-icons tiny rated'>star_border</i>";
-        $i2++;
-      }
-    } else {
-      $i3 = 1;
-      while($i3 <= 5) {
-          echo "<i class='material-icons tiny rated'>star_border</i>";
-        $i3++;
-      }
-    }
+     }
 }
 
 function getCategories() {

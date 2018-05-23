@@ -24,13 +24,6 @@ function getCurrentProduct($itemNumber) {
     catch(\PDOException $ex) {
         return print($ex->getMessage());
     }
-
-    /*global $connection;
-
-  $query = "SELECT Product.*, ImgGallery.URL, ProductImg.IsPrimary FROM Product INNER JOIN ProductImg ON ProductImg.ItemNumber = Product.ItemNumber INNER JOIN ImgGallery ON ImgGallery.ImgID = ProductImg.ImgID WHERE Product.ItemNumber = $itemNumber";
-  // $query = "SELECT * FROM Product WHERE ItemNumber = $itemNumber";
-  $result = mysqli_query($connection, $query);
-  return $result;*/
 }
 
 // Get reviews for current product
@@ -52,12 +45,6 @@ function getReviews($itemNumber) {
     catch(\PDOException $ex) {
         return print($ex->getMessage());
     }
-
-    /*global $connection;
-
-  $query = "SELECT * FROM Review WHERE ItemNumber = $itemNumber";
-  $result = mysqli_query($connection, $query);
-  return $result;*/
 }
 
 // Add review for current product
@@ -91,15 +78,6 @@ function addReview($item) {
         } catch(\PDOException $ex) {
             return print($ex->getMessage());
         }
-      /*global $connection;
-
-      $rating = $_POST["rating"];
-      $reviewTitle = $_POST["reviewTitle"];
-      $reviewText = $_POST["reviewText"];
-      $itemNumber = $item;
-
-      $query = "INSERT INTO Review VALUES (NULL, NULL, '{$rating}', '{$reviewTitle}', NULL, '{$reviewText}', '{$itemNumber}')";
-      mysqli_query($connection, $query);*/
 
       $succMsg = 'Your review have been submitted successfully.';
       echo $succMsg;
@@ -130,12 +108,6 @@ function getRelatedProducts($productCat, $itemNumber) {
     catch(\PDOException $ex) {
         return print($ex->getMessage());
     }
-
-    /*global $connection;
-
-  $query = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = $productCat AND NOT Product.ItemNumber = $itemNumber LIMIT 5";
-  $result = mysqli_query($connection, $query);
-  return $result;*/
 }
 
 function getRelatedProductsForBlog($productCat) {
@@ -156,10 +128,4 @@ function getRelatedProductsForBlog($productCat) {
     catch(\PDOException $ex) {
         return print($ex->getMessage());
     }
-
-    /*global $connection;
-
-    $query = "SELECT ProductImg.IsPrimary, ImgGallery.*, Product.* FROM `Product` INNER JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber INNER JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE IsPrimary = 1 AND Product.ProductStatus = 1 AND Product.ProductCategoryID = $productCat LIMIT 5";
-    $result = mysqli_query($connection, $query);
-    return $result;*/
 }
