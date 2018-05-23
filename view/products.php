@@ -17,7 +17,7 @@ $url = $_SERVER['REQUEST_URI'];
   ?>
   <div class="row">
     <?php
-    $prodResult = getProducts();
+    $prodResult = getProducts($query);
     foreach ($prodResult as $row) {
       $itemNumber = $row["ItemNumber"];
     ?>
@@ -25,7 +25,7 @@ $url = $_SERVER['REQUEST_URI'];
       <div class="col s12 m3">
         <div class="card">
           <div class="card-image">
-            <img src="<?php echo $row["URL"]; ?>">
+            <img src="<?php if(isset($row["URL"])) { echo $row["URL"]; } else { echo "http://via.placeholder.com/440x440";}?>">
             <span class="card-title"><?php echo $row["ProductName"]; ?></span>
           </div>
           <div class="card-action">
