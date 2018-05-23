@@ -33,8 +33,16 @@ if(isset($_POST["uploadImg"])) {
     <div class="row">
         <h2>Choose/Upload image</h2>
         <form class="upload-form" action="galleryBlog.php?ID=<?php echo $_GET["ID"]; ?>" method="post" enctype="multipart/form-data">
-            <input type="file" name="fileToUpload" id="fileToUpload">
-            <input type="submit" name="uploadImg" value="Upload">
+            <div class="file-field input-field">
+              <div class="waves-effect waves-light btn grey darken-4">
+                <span>Choose file</span>
+                <input type="file" name="fileToUpload" id="fileToUpload">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+            <input class="waves-effect waves-light btn grey darken-4" type="submit" name="uploadImg" value="Upload">
         </form>
     </div>
     <?php $rowCount = 0; ?>
@@ -53,7 +61,8 @@ if(isset($_POST["uploadImg"])) {
     </div>
     <form class="img-form" action="" method="post">
         <input class="sendId" type="hidden" name="imgId">
-        <input type="submit" name="submit" value="Choose image">
+        <input class="waves-effect waves-light btn grey darken-4 right choose-image" type="submit" name="submit" value="Choose image">
+        <a class="waves-effect waves-light btn grey darken-2 right" href="edit-blog-post.php?ID=<?php echo $_GET["ID"]; ?>">Cancel</a>
     </form>
 </div>
 <?php require_once("includes/footer.php"); ?>

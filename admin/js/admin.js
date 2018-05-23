@@ -73,6 +73,7 @@ $(document).ready(function() {
     $('.sendId').val($(this).attr('id'));
     $('.img-item').removeClass('selected');
     $(this).addClass('selected');
+    $('.choose-image').removeAttr('disabled');
   });
 
   // Remove image from product

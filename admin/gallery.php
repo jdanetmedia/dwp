@@ -16,6 +16,7 @@
   if(isset($_GET["item"])) {
     $item = $_GET["item"];
     $link = "gallery.php?item=" . $_GET["item"];
+    $backlink = "edit-product.php?item=" . $_GET["item"];
     if(isset($_POST["submit"])) {
       if(isset($_POST["imgId"])) {
         $gallery->attachImage($_GET["item"], $_POST["imgId"], "product"); ?>
@@ -31,6 +32,7 @@
     }
   } elseif(isset($_GET["logo"])) {
     $link = "gallery.php?logo=true";
+    $backlink = "manage-settings.php";
     if(isset($_POST["submit"])) {
       if(isset($_POST["imgId"])) {
         $gallery->addLogo($_POST["imgId"]); ?>
@@ -48,6 +50,7 @@
   } elseif(isset($_GET["slide"])) {
     $item = $_GET["slide"];
     $link = "gallery.php?slide=" . $_GET["slide"];
+    $backlink = "edit-slide.php?slideID=" . $_GET["slideID"];
     if(isset($_POST["submit"])) {
       if(isset($_POST["imgId"])) {
         $gallery->addSlideImg($_POST["imgId"], $_GET["slide"]); ?>
@@ -80,8 +83,16 @@
         }
       ?>
       <form class="upload-form" action="<?php echo $link; ?>" method="post" enctype="multipart/form-data">
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <input type="submit" name="uploadImg" value="Upload">
+        <div class="file-field input-field">
+          <div class="waves-effect waves-light btn grey darken-4">
+            <span>Choose file</span>
+            <input type="file" name="fileToUpload" id="fileToUpload">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        <input class="waves-effect waves-light btn grey darken-4" type="submit" name="uploadImg" value="Upload">
       </form>
     </div>
     <?php $rowCount = 0; ?>
@@ -100,7 +111,8 @@
     </div>
     <form class="img-form" action="" method="post">
       <input class="sendId" type="hidden" name="imgId">
-      <input type="submit" name="submit" value="Choose image">
+      <input class="waves-effect waves-light btn grey darken-4 right choose-image" type="submit" name="submit" value="Choose image">
+      <a class="waves-effect waves-light btn grey darken-2 right" href="<?php echo $backlink; ?>">Cancel</a>
     </form>
   </div>
 <?php require_once("includes/footer.php"); ?>

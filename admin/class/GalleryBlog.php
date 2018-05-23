@@ -91,6 +91,11 @@ class GalleryBlog {
                 echo "Sorry, there was an error uploading your file.";
             }
         }
+
+        $image = new SimpleImage($target_file);
+        $image->maxareafill(1920,1080,21,149,135);
+        $image->save($target_file);
+
         // Save to database
         try {
             $conn = DB::connect();
