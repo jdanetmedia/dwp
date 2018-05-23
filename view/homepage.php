@@ -2,6 +2,7 @@
 require_once("../includes/sessionstart.php");
 require_once('../includes/header.php');
 require_once("../model/indexDAO.php");
+require_once("../model/productsDAO.php");
 
 ?>
 <div class="container">

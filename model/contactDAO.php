@@ -100,11 +100,6 @@ if (isset($_POST["email"])) {
         catch(\PDOException $ex) {
             return print($ex->getMessage());
         }
-
-        /*global $connection;
-        $pageInfo = mysqli_query($connection, "SELECT BasicPageInfo.* , ZipCode.City FROM `BasicPageInfo` INNER JOIN ZipCode ON ZipCode.ZipCode = BasicPageInfo.ZipCode");
-        $row = mysqli_fetch_assoc($pageInfo);
-        return $row;*/
     }
 
     function getHours() {
@@ -121,8 +116,4 @@ if (isset($_POST["email"])) {
         catch(\PDOException $ex) {
             return print($ex->getMessage());
         }
-
-        /*global $connection;
-        $hours = mysqli_query($connection, "SELECT * FROM Hours");
-        return $hours;*/
     }

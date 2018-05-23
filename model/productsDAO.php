@@ -81,8 +81,7 @@ function getReviewForProduct($itemNumber) {
          $handle->execute();
          $ratings = $handle->fetchAll( \PDO::FETCH_ASSOC );
          $rated = 0;
-         $divide = 0;
-         $divide = $divide + count($ratings);
+         $divide = count($ratings);
          foreach ($ratings as $ratingrow) {
              $rating = $ratingrow["Rating"];
              $rated = $rated + $rating;
