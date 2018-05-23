@@ -22,7 +22,7 @@ if (!logged_in()) {
 				$newtotal =	$_SESSION["total"] - $discount;
         $_SESSION["totalWithShipping"] = $newtotal + $deliveryInfo[0]["DeliveryPrice"];
       } else {
-				$_SESSION["totalWithShipping"] = $_SESSION["total"] + $deliveryInfo["DeliveryPrice"];
+				$_SESSION["totalWithShipping"] = $_SESSION["total"] + $deliveryInfo[0]["DeliveryPrice"];
 			}
 
       if(isset($_SESSION["ordermessage"])) {

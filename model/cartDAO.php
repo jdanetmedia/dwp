@@ -176,7 +176,6 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     $CustomerEmail = Security::secureString($CustomerEmail);
     $Shippingoption = Security::secureString($Shippingoption);
     $OrderStatus = Security::secureString($OrderStatus);
-    $PromoCode = Security::secureString($PromoCode);
 
     $statement = "INSERT INTO CustomerOrder (OrderNumber, Comment, StripeChargeID, OrderDate, ShippingStreet, ShippingHouseNumber, ZipCode, CustomerEmail, DeliveryMethodID, OrderStatusID, PromoCode)
                   VALUES (NULL, :Ordermessage, :StripeChargeID, :OrderTime, :Street, :HouseNumber, :ZipCode, :CustomerEmail, :Shippingoption, :OrderStatus, :PromoCode)";
