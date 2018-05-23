@@ -8,6 +8,7 @@
     <tr>
         <th>Review Date</th>
         <th>Review Name</th>
+        <th>Title</th>
         <th>Content</th>
         <th>Rating (0-5)</th>
         <th class="right">Delete</th>
@@ -19,6 +20,7 @@
     <tr>
       <td><?php echo $review["ReviewDate"]; ?></td>
       <td><?php echo $review["ReviewName"]; ?></td>
+      <td><?php echo $review["ReviewTitle"]; ?></td>
       <td><?php echo $review["ReviewContent"]; ?></td>
       <td><?php echo $review["Rating"]; ?></td>
       <td><form action="manage-settings.php?removereview=<?php echo $review["ReviewID"]; ?>" method="post" onsubmit="return confirm('Are you sure?');"><input class="waves-effect waves-light btn grey darken-4 black right" type="submit" name="submitdeletereview" value="Delete"></form></td>

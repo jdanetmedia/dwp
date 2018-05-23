@@ -143,19 +143,19 @@ if (isset($_SESSION["cart"])) {
                       <div class="col s12 m6">
                         <ul class="stars-list">
                           <li id="1" class="star star-1">
-                            <i class="material-icons small star-icon">star_border</i>
+                            <i class="material-icons small star-icon rated">star_border</i>
                           </li>
                           <li id="2" class="star star-2">
-                            <i class="material-icons small star-icon">star_border</i>
+                            <i class="material-icons small star-icon rated">star_border</i>
                           </li>
                           <li id="3" class="star star-3">
-                            <i class="material-icons small star-icon">star_border</i>
+                            <i class="material-icons small star-icon rated">star_border</i>
                           </li>
                           <li id="4" class="star star-4">
-                            <i class="material-icons small star-icon">star_border</i>
+                            <i class="material-icons small star-icon rated">star_border</i>
                           </li>
                           <li id="5" class="star star-5">
-                            <i class="material-icons small star-icon">star_border</i>
+                            <i class="material-icons small star-icon rated">star_border</i>
                           </li>
                         </ul>
                         <div class="right">
@@ -172,14 +172,13 @@ if (isset($_SESSION["cart"])) {
           </div>
           <div class="row">
             <?php foreach($reviews as $row) {
-              if(isset($row["ReviewName"])) { $name = $row["ReviewName"]; } else { $name = "Anonymous"; }
               ?>
                 <div class="col s12 m6">
                   <div class="card">
                     <div class="card-content">
                       <span class="card-title"><?php echo $row["ReviewTitle"]; ?></span>
                       <p><?php echo $row["ReviewContent"] ?></p>
-                      <span class="review-meta"><?php echo "Posted by <b>" . $name . "</b> on <b>" . $row["ReviewDate"]
+                      <span class="review-meta"><?php echo "Posted by <b>" . $row["ReviewName"] . "</b> on <b>" . $row["ReviewDate"]
                               . "</b>"; ?></span>
                     </div>
                     <div class="card-action">
