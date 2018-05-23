@@ -3,11 +3,20 @@
 // TODO: Image Resize & crop https://gist.github.com/miguelxt/908143
 
 class Gallery {
-  function getAllImages() {
+  function getAllImages($item = NULL) {
     try {
       $conn = DB::connect();
 
-      $handle = $conn->prepare("SELECT * FROM ImgGallery");
+      if(isset($item)) {
+        // Secure input
+        $item = Security::secureString($item);
+
+        $handle = $conn->prepare("SELECT * FROM ImgGallery WHERE ImgID NOT IN (SELECT ImgID FROM ProductImg WHERE ItemNumber = :item)");
+        $handle->bindParam(":item", $item);
+      } else {
+        $handle = $conn->prepare("SELECT * FROM ImgGallery WHERE URL NOT IN (SELECT LogoURL FROM BasicPageInfo)");
+        $handle->bindParam(":item", $item);
+      }
       $handle->execute();
 
       $result = $handle->fetchAll( \PDO::FETCH_OBJ );
@@ -57,6 +66,9 @@ class Gallery {
     try {
       $conn = DB::connect();
 
+      // Secure input
+      $id = Security::secureString($id);
+
       $getLogoUrl = $conn->prepare("SELECT URL FROM ImgGallery WHERE ImgID = :id");
       $getLogoUrl->bindParam(":id", $id);
       $getLogoUrl->execute();
@@ -67,6 +79,33 @@ class Gallery {
       $query = "UPDATE BasicPageInfo SET LogoURL = :logoURL";
       $handle = $conn->prepare($query);
       $handle->bindParam(":logoURL", $logoURL);
+      $handle->execute();
+
+      $conn = DB::close();
+    }
+    catch(\PDOException $ex) {
+      print($ex->getMessage());
+    }
+  }
+
+  function addSlideImg($imgID, $slideID) {
+    try {
+      $conn = DB::connect();
+
+      $imgID = Security::secureString($imgID);
+      $slideID = Security::secureString($slideID);
+
+      $getSlideImg = $conn->prepare("SELECT URL FROM ImgGallery WHERE ImgID = :imgID");
+      $getSlideImg->bindParam(":imgID", $imgID);
+      $getSlideImg->execute();
+
+      $slideImg = $getSlideImg->fetchAll( \PDO::FETCH_ASSOC );
+      $slideImgUrl = $slideImg[0]["URL"];
+
+      $query = "UPDATE FrontSlider SET SliderImg = :SliderImg WHERE SlideID = :slideID";
+      $handle = $conn->prepare($query);
+      $handle->bindParam(":SliderImg", $slideImgUrl);
+      $handle->bindParam(":slideID", $slideID);
       $handle->execute();
 
       $conn = DB::close();
@@ -118,17 +157,18 @@ class Gallery {
       }
     }
 
+    $image = new SimpleImage($target_file);
     if($type == "logo") {
-      // Resize image to 312 x 135 px
-      $image = new SimpleImage($target_file);
+      // Resize image to 312 x 135 px and fill with green
       $image->maxareafill(312,135,21,149,135);
-      $image->save($target_file);
+    } elseif($type == "slide") {
+      // Rezise to 1170 x 400 px and fill with gray
+      $image->maxareafill(1170,400,204,204,204);
     } else {
-      // Resize image to 800 x 800 px
-      $image = new SimpleImage($target_file);
+      // Resize image to 800 x 800 px and fill with gray
       $image->maxareafill(800,800,204,204,204);
-      $image->save($target_file);
     }
+    $image->save($target_file);
 
     // Save to database
     try {

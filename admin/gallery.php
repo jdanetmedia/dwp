@@ -14,6 +14,7 @@
   $gallery = new Gallery();
 
   if(isset($_GET["item"])) {
+    $item = $_GET["item"];
     $link = "gallery.php?item=" . $_GET["item"];
     if(isset($_POST["submit"])) {
       if(isset($_POST["imgId"])) {
@@ -27,7 +28,6 @@
       if($_FILES && $_FILES['fileToUpload']['size'] > 0) {
           $gallery->uploadImage($_FILES, $_GET["item"], "product");
       }
-
     }
   } elseif(isset($_GET["logo"])) {
     $link = "gallery.php?logo=true";
@@ -45,9 +45,29 @@
       }
 
     }
+  } elseif(isset($_GET["slide"])) {
+    $item = $_GET["slide"];
+    $link = "gallery.php?slide=" . $_GET["slide"];
+    if(isset($_POST["submit"])) {
+      if(isset($_POST["imgId"])) {
+        $gallery->addSlideImg($_POST["imgId"], $_GET["slide"]); ?>
+        <script type="text/javascript">
+          window.location.href = 'edit-slide.php?slideID=<?php echo $_GET["slide"]; ?>';
+        </script>
+      <?php }
+    }
+    if(isset($_POST["uploadImg"])) {
+      if($_FILES && $_FILES['fileToUpload']['size'] > 0) {
+          $gallery->uploadImage($_FILES, "slide");
+      }
+    }
   }
 
-  $allImages = $gallery->getAllImages();
+  if(isset($_GET["item"]) || isset($_GET["slide"])) {
+    $allImages = $gallery->getAllImages($item);
+  } else {
+    $allImages = $gallery->getAllImages();
+  }
 ?>
   <div class="container gallery-cnt">
     <div class="row">

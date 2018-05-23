@@ -25,7 +25,6 @@ class Settings {
 
       // Secure input
       $cvr = Security::secureString($post["CVR"]);
-      $logoURL = Security::secureString($post["LogoURL"]);
       $shopName = Security::secureString($post["ShopName"]);
       $aboutUsText = Security::secureString($post["AboutUsText"]);
       $email = Security::secureString($post["Email"]);
@@ -47,7 +46,6 @@ class Settings {
 
       $query = "UPDATE BasicPageInfo
                 SET CVR = :CVR,
-                LogoURL = :LogoURL,
                 ShopName = :ShopName,
                 AboutUsText = :AboutUsText,
                 Email = :Email,
@@ -67,7 +65,6 @@ class Settings {
 
       $handle = $conn->prepare($query);
       $handle->bindParam(":CVR", $cvr);
-      $handle->bindParam(":LogoURL", $logoURL);
       $handle->bindParam(":ShopName", $shopName);
       $handle->bindParam(":AboutUsText", $aboutUsText);
       $handle->bindParam(":Email", $email);
