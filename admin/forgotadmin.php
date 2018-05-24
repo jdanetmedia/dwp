@@ -21,7 +21,7 @@ require_once("includes/header.php"); ?>
 					<form class="col s12" action="index.php" method="post">
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="email" type="email" name="forgotemail" maxlength="100" value="" class="validate">
+								<input id="email" type="email" name="forgotemail" maxlength="100" value="" class="validate" required="" aria-required="true">
 								<label for="first_name">Email</label>
 							</div>
 						</div>

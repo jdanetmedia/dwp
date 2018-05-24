@@ -19,27 +19,27 @@ $users = new Admin();
 			<form class="col s12" action="manage-user.php" method="post">
 	      <div class="row">
 	        <div class="input-field col s6">
-	          <input id="first_name" name="newname" type="text" class="validate">
+	          <input id="first_name" name="newname" type="text" class="validate" required="" aria-required="true">
 	          <label for="first_name">First Name</label>
 	        </div>
 	        <div class="input-field col s6">
-	          <input id="last_name" name="newlname" type="text" class="validate">
+	          <input id="last_name" name="newlname" type="text" class="validate" required="" aria-required="true">
 	          <label for="last_name">Last Name</label>
 	        </div>
 	      </div>
 	      <div class="row">
 	        <div class="input-field col s12">
-	          <input id="email" name="newmail" type="email" class="validate">
+	          <input id="email" name="newmail" type="email" class="validate" required="" aria-required="true">
 	          <label for="email">Email</label>
 	        </div>
 	      </div>
         <div class="row">
 	        <div class="input-field col s6">
-	          <input id="pass" name="newpass" type="password" class="validate">
+	          <input id="pass" name="newpass" type="password" class="validate" required="" aria-required="true">
 	          <label for="pass">Password</label>
 	        </div>
 	        <div class="input-field col s6">
-	          <input id="passrepeat" name="newrpass" type="password" class="validate">
+	          <input id="passrepeat" name="newrpass" type="password" class="validate" required="" aria-required="true">
 	          <label for="passrepeat">Repeat password</label>
 	        </div>
 	      </div>

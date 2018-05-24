@@ -32,6 +32,7 @@ $('.datepicker').pickadate({
   });
 
 $(document).ready(function() {
+  $(".button-collapse").sideNav();
   // Hide deleted message after deleting product
   setTimeout(function(){
     $('.deleted').css('opacity', '0');

@@ -36,10 +36,11 @@ $adminstuff = new Admin();
   <body class="admin-area">
     <nav class="grey darken-4 admin-topnav">
       <div class="nav-wrapper">
-        <a href="index.php" class="brand-logo">Admin area</a>
+        <a href="index.php" class="brand-logo"><img class="responsive-img" style="max-height: 64px!important; padding: 4px 0!important;" src="img/logoadmin.png"></a>
         <?php
         if (logged_in()) {
         ?>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Dashboard"><a href="index.php"><i class="material-icons">home</i></a></li>
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Manage orders"><a href="manage-orders.php"><i class="material-icons">shopping_cart</i></a></li>
@@ -52,6 +53,18 @@ $adminstuff = new Admin();
           <li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Shop settings"><a href="manage-settings.php"><i class="material-icons">settings</i></a></li>
           <li><a href="logout.php">Log out</a></li>
         </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li class="tooltipped" style="color: #000000;"><a href="index.php"><i class="material-icons">home</i>Home</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-orders.php"><i class="material-icons">shopping_cart</i>Orders</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-products.php"><i class="material-icons">view_list</i>Products</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-blog.php"><i class="material-icons">subject</i>Blog</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-categories.php"><i class="material-icons">view_module</i>Categories</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-promocodes.php"><i class="material-icons">local_atm</i>Promocodes</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-slider.php"><i class="material-icons">settings_overscan</i>Slides</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-user.php"><i class="material-icons">person</i>Users</a></li>
+          <li class="tooltipped" style="color: #000000;"><a href="manage-settings.php"><i class="material-icons">settings</i>Settings</a></li>
+          <li><a href="logout.php">Log out</a></li>
+        </ul
         <?php
         }
         ?>

@@ -64,7 +64,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12 m3">
-                                        <select name="categoryID">
+                                        <select name="categoryID" required="" aria-required="true">
                                             <?php
                                             $cats = $blogPosts->getAllCategories();
                                             foreach ($cats as $cat) {
@@ -113,7 +113,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                                                     <div class="row">
                                                                         <div class="input-field col s12">
                                                                             <input id="categoryName" type="text" class="validate"
-                                                                                   name="categoryName">
+                                                                                   name="categoryName" required="" aria-required="true">
                                                                             <label for="categoryName">Category Name</label>
                                                                         </div>
                                                                     </div>
