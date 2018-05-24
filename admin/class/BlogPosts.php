@@ -9,13 +9,31 @@ class BlogPosts {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            DB::close();
+            $conn = DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
             return print($ex->getMessage());
         }
     }
+
+    /* Stored Procedure
+    function getAllBlogPosts() {
+        try {
+            $conn = DB::connect();
+            $statement = "CALL proc_get_all_blogposts()";
+            $handle = $conn->prepare($statement);
+            $handle->execute();
+
+            $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+            $conn = DB::close();
+            return $result;
+        }
+        catch(\PDOException $ex) {
+            return print($ex->getMessage());
+        }
+    }*/
+
 
     function getAllCategories() {
         try {
@@ -25,11 +43,11 @@ class BlogPosts {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            DB::close();
+            $conn = DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
-            print($ex->getMessage());
+            return print($ex->getMessage());
         }
     }
 
@@ -47,13 +65,32 @@ class BlogPosts {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-            DB::close();
+            $conn = DB::close();
             return $result;
+        }
+        catch(\PDOException $ex) {
+            return print($ex->getMessage());
+        }
+    }
+
+    /* Stored Procedure
+    function getBlogPostDetails($blogPostID) {
+        try {
+            $conn = DB::connect();
+
+            $statement = "CALL proc_get_blogpost_details('$blogPostID')";
+            $handle = $conn->prepare($statement);
+            $handle->execute();
+
+            $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
+            $conn = DB::close();
+            return $result;
+
         }
         catch(\PDOException $ex) {
             print($ex->getMessage());
         }
-    }
+    }*/
 
     function saveBlogPost() {
         try {
@@ -80,12 +117,42 @@ class BlogPosts {
             $handle->bindParam(':BlogDate',$date);
             $handle->bindParam(':UserEmail',$_SESSION["UserEmail"]);
             $handle->execute();
-            DB::close(); //CLOSE THE CONNECTION BRUH ?!
+            $conn = DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
         }
     }
+
+    /* Stored Procedure
+    function saveBlogPost() {
+        try {
+            $conn = DB::connect();
+
+            //Stored Procedure
+            if ($_POST["relatedProducts"] == 0) {
+                $related = NULL;
+            } else {
+                $related = $_POST["relatedProducts"];
+            }
+            $blogTitle = $_POST["blogPostTitle"];
+            $categoryID = $_POST["categoryID"];
+            $blogContent = $_POST["blogPostContent"];
+            $seoTitle = $_POST["seoTitle"];
+            $metaDescription = $_POST["metaDescription"];
+            $date = date('Y/m/d H:i:s', time());
+            $userEmail = $_SESSION["UserEmail"];
+            $statement = "CALL proc_save_blogpost('$blogTitle', '$categoryID', '$related', '$blogContent', '$seoTitle', '$metaDescription',
+            '$date', '$userEmail')";
+
+            $handle = $conn->prepare($statement);
+            $handle->execute();
+            $conn = DB::close();
+        }
+        catch(\PDOExeption $ex) {
+            print($ex->getMessage());
+        }
+    }*/
 
     function updateBlogPost($blogPostID) {
         try {
@@ -116,7 +183,7 @@ class BlogPosts {
             $handle->bindParam(':MetaDescription',$_POST["metaDescription"]);
             $handle->bindParam(':BlogPostID',$blogPostID);
             $handle->execute();
-            DB::close(); //CLOSE THE CONNECTION BRUH ?!
+            $conn = DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -131,7 +198,7 @@ class BlogPosts {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
-            DB::close();
+            $conn = DB::close();
             return $result;
         }
         catch(\PDOException $ex) {
@@ -153,8 +220,7 @@ class BlogPosts {
             $handle->bindParam(':BlogPostID',$blogPostID);
             $handle->execute();
 
-
-            DB::close(); //CLOSE THE CONNECTION BRUH ?!
+            $conn = DB::close(); //CLOSE THE CONNECTION BRUH ?!
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
@@ -174,12 +240,11 @@ class BlogPosts {
             $handle->execute();
 
             $result = $handle->fetchAll( \PDO::FETCH_OBJ );
+            $conn = DB::close();
             return $result;
-
-            DB::close();
         }
         catch(\PDOException $ex) {
-            print($ex->getMessage());
+            return print($ex->getMessage());
         }
     }
 
@@ -192,7 +257,7 @@ class BlogPosts {
             $handle->bindParam(":ImgID", $id);
             $handle->execute();
 
-            DB::close();
+            $conn = DB::close();
         }
         catch(\PDOExeption $ex) {
             print($ex->getMessage());
