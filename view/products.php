@@ -26,7 +26,7 @@ $url = $_SERVER['REQUEST_URI'];
         <div class="card">
           <div class="card-image">
             <img src="<?php if(isset($row["URL"])) { echo $row["URL"]; } else { echo "http://via.placeholder.com/440x440";}?>">
-            <span class="card-title"><?php echo $row["ProductName"]; ?></span>
+            <span class="card-title" style="color: #000000;"><?php echo $row["ProductName"]; ?></span>
           </div>
           <div class="card-action">
             <?php if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {
