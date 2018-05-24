@@ -184,7 +184,7 @@ class Gallery {
       if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
         $filepath = $cleanedPath . "/" . $target_file;
       } else {
-        $filepath = $path . "/" . $target_file;
+        $filepath = "/img" . $target_file;
       }
 
       // Secure input
