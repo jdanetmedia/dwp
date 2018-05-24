@@ -160,7 +160,8 @@ function getDeliveryInfo($DeliveryMethodID) {
   }
 }
 
-function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNumber, $ZipCode, $CustomerEmail, $Shippingoption, $OrderStatus, $PromoCode) {
+function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNumber,
+                       $ZipCode, $CustomerEmail, $Shippingoption, $OrderStatus, $PromoCode) {
   try {
     //create a new PDO connection object
     $conn = DB::connect();
@@ -177,8 +178,10 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     $Shippingoption = Security::secureString($Shippingoption);
     $OrderStatus = Security::secureString($OrderStatus);
 
-    $statement = "INSERT INTO CustomerOrder (OrderNumber, Comment, StripeChargeID, OrderDate, ShippingStreet, ShippingHouseNumber, ZipCode, CustomerEmail, DeliveryMethodID, OrderStatusID, PromoCode)
-                  VALUES (NULL, :Ordermessage, :StripeChargeID, :OrderTime, :Street, :HouseNumber, :ZipCode, :CustomerEmail, :Shippingoption, :OrderStatus, :PromoCode)";
+    $statement = "INSERT INTO CustomerOrder (OrderNumber, Comment, StripeChargeID, OrderDate, ShippingStreet,
+                  ShippingHouseNumber, ZipCode, CustomerEmail, DeliveryMethodID, OrderStatusID, PromoCode)
+                  VALUES (NULL, :Ordermessage, :StripeChargeID, :OrderTime, :Street, :HouseNumber, :ZipCode,
+                  :CustomerEmail, :Shippingoption, :OrderStatus, :PromoCode)";
 
     $handle = $conn->prepare($statement);
     $handle->bindParam(':Ordermessage', $Ordermessage);
@@ -193,12 +196,9 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
     $handle->bindParam(':PromoCode', $PromoCode);
     $handle->execute();
 
-    //throw new Exception("Simulate DBMS failure");
-
     $_SESSION["cart"];
     $OrderNumber = $conn->lastInsertId();
     $_SESSION["OrderNumber"] = $OrderNumber;
-    //echo $OrderNumber;
 
     foreach($_SESSION["cart"] as $key => $value) {
       $key = Security::secureString($key);
@@ -246,7 +246,7 @@ function saveOrderToDB($Ordermessage, $StripeChargeID, $Time, $Street, $HouseNum
   catch (Exception $e)
   {
     $conn->rollBack();
-    print "Failure! Aborting!";
+    print "Failed to save your order!";
     print($e);
   }
 }
