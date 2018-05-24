@@ -60,7 +60,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
                             <form class="col s12">
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="blogPostTitle" name="blogPostTitle" type="text" class="validate">
+                                        <input id="blogPostTitle" name="blogPostTitle" type="text" class="validate" required="" aria-required="true">
                                         <label for="blogPostTitle">Blog Post Title</label>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                                                     <div class="row">
                                                                         <div class="input-field col s12">
                                                                             <input id="categoryName" type="text" class="validate"
-                                                                                   name="categoryName">
+                                                                                   name="categoryName" required="" aria-required="true">
                                                                             <label for="categoryName">Category Name</label>
                                                                         </div>
                                                                     </div>

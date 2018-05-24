@@ -52,7 +52,7 @@ $product = $products->getProductDetails($_GET["item"]);
                 <div class="col s12">
                   <div class="row">
                     <div class="input-field col s12">
-                      <input id="productName" type="text" class="validate" name="ProductName" value="<?php echo $security->secureString($product[0]["ProductName"]) ?>">
+                      <input id="productName" type="text" class="validate" name="ProductName" value="<?php echo $security->secureString($product[0]["ProductName"]) ?>" required="" aria-required="true">
                       <label for="productName">Product Name</label>
                     </div>
                   </div>
@@ -127,7 +127,7 @@ $product = $products->getProductDetails($_GET["item"]);
             <div class="collapsible-body">
               <div class="row">
                 <div class="input-field col s12 m4">
-                  <input id="price" type="number" class="validate" name="Price" value="<?php echo $security->secureString($product[0]["Price"]); ?>">
+                  <input id="price" type="number" class="validate" name="Price" value="<?php echo $security->secureString($product[0]["Price"]); ?>" required="" aria-required="true">
                   <label for="price">Price</label>
                 </div>
                 <div class="input-field col s12 m4">
@@ -147,7 +147,7 @@ $product = $products->getProductDetails($_GET["item"]);
                       $stock = $product[0]["StockStatus"];
                     }
                   ?>
-                  <input id="stock" type="number" class="validate" name="StockStatus" value="<?php if(isset($stock)) { echo $security->secureString($stock); } ?>">
+                  <input id="stock" type="number" class="validate" name="StockStatus" value="<?php if(isset($stock)) { echo $security->secureString($stock); } ?>" required="" aria-required="true">
                   <label for="stock">Stock status</label>
                 </div>
               </div>

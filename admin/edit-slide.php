@@ -49,23 +49,23 @@ $curSlide = $slide->getCurrentSlide($_GET["slideID"]);
       <form action="edit-slide.php?slideID=<?php echo $_GET["slideID"]; ?>" method="post">
         <div class="row">
           <div class="input-field col s12">
-            <input id="SliderHeader" type="text" name="SliderHeader" class="validate" <?php if(isset($curSlide["SliderHeader"])) echo "value='" . $curSlide["SliderHeader"] . "'"; ?>>
+            <input id="SliderHeader" type="text" name="SliderHeader" class="validate" <?php if(isset($curSlide["SliderHeader"])) echo "value='" . $curSlide["SliderHeader"] . "'"; ?> required="" aria-required="true">
             <label for="SliderHeader">Slide name</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="SliderText" type="text" name="SliderText" class="validate" <?php if(isset($curSlide["SliderText"])) echo "value='" . $curSlide["SliderText"] . "'"; ?>>
+            <input id="SliderText" type="text" name="SliderText" class="validate" <?php if(isset($curSlide["SliderText"])) echo "value='" . $curSlide["SliderText"] . "'"; ?> required="" aria-required="true">
             <label for="SliderText">SliderText</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s6">
-            <input id="CTAURL" type="text" name="CTAURL" class="validate" <?php if(isset($curSlide["CTAURL"])) echo "value='" . $curSlide["CTAURL"] . "'"; ?>>
+            <input id="CTAURL" type="text" name="CTAURL" class="validate" <?php if(isset($curSlide["CTAURL"])) echo "value='" . $curSlide["CTAURL"] . "'"; ?> required="" aria-required="true">
             <label for="CTAURL">CTA Url</label>
           </div>
           <div class="input-field col s6">
-            <input id="CTAButtonText" type="text" name="CTAButtonText" class="validate" <?php if(isset($curSlide["CTAButtonText"])) echo "value='" . $curSlide["CTAButtonText"] . "'"; ?>>
+            <input id="CTAButtonText" type="text" name="CTAButtonText" class="validate" <?php if(isset($curSlide["CTAButtonText"])) echo "value='" . $curSlide["CTAButtonText"] . "'"; ?> required="" aria-required="true">
             <label for="CTAButtonText">CTA Buttontext</label>
           </div>
         </div>

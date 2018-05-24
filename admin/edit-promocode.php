@@ -32,11 +32,11 @@ $promocode = $promocodes->getPromocode($_GET["promocode"]);
                             <form class="col s12">
                                 <div class="row">
                                     <div class="input-field col s12 m6">
-                                      <input id="promocode" type="text" class="validate" name="promocode" value="<?php echo $promocode[0]["PromoCode"]; ?>">
+                                      <input id="promocode" type="text" class="validate" name="promocode" value="<?php echo $promocode[0]["PromoCode"]; ?>" required="" aria-required="true">
                                       <label for="promocode">Promocode</label>
                                     </div>
                                     <div class="input-field col s12 m3">
-                                      <input id="discount" type="number" name="discount" value="<?php echo $promocode[0]["DiscountAmount"]; ?>">
+                                      <input id="discount" type="number" name="discount" value="<?php echo $promocode[0]["DiscountAmount"]; ?>" required="" aria-required="true">
                                       <label for="discount">Discount in %</label>
                                     </div>
                                     <div class="input-field col s12 m3">

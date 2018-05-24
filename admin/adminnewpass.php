@@ -20,13 +20,13 @@ require_once("includes/header.php");
 					<form class="col s12" action="index.php?admin=<?php echo $_GET['admin'] . "&key=" . $_GET['key'];?>" method="post">
             <div class="row">
 							<div class="input-field col s12">
-								<input id="password" type="password" name="pass" maxlength="30" value="" class="validate">
+								<input id="password" type="password" name="pass" maxlength="30" value="" class="validate" required="" aria-required="true">
 								<label for="password">New password</label>
 							</div>
 						</div>
             <div class="row">
 							<div class="input-field col s12">
-								<input id="password2" type="password" name="pass2" maxlength="30" value="" class="validate">
+								<input id="password2" type="password" name="pass2" maxlength="30" value="" class="validate" required="" aria-required="true">
 								<label for="password2">Repeat new password</label>
 							</div>
 						</div>

@@ -60,7 +60,7 @@ if(isset($_POST["uploadImg"])) {
         <?php } ?>
     </div>
     <form class="img-form" action="" method="post">
-        <input class="sendId" type="hidden" name="imgId">
+        <input class="sendId" type="hidden" name="imgId" required="" aria-required="true">
         <input class="waves-effect waves-light btn grey darken-4 right choose-image" type="submit" name="submit" value="Choose image">
         <a class="waves-effect waves-light btn grey darken-2 right" href="edit-blog-post.php?ID=<?php echo $_GET["ID"]; ?>">Cancel</a>
     </form>

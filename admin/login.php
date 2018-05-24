@@ -21,13 +21,13 @@ require_once("includes/header.php"); ?>
 					<form class="col s12" action="" method="post">
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="email" type="email" name="email" maxlength="100" value="" class="validate">
+								<input id="email" type="email" name="email" maxlength="100" value="" class="validate" required="" aria-required="true">
 								<label for="first_name">Email</label>
 							</div>
 						</div>
 						<div class="row">
 							<div class="input-field col s12">
-								<input id="password" type="password" name="pass" maxlength="30" value="" class="validate">
+								<input id="password" type="password" name="pass" maxlength="30" value="" class="validate" required="" aria-required="true">
 								<label for="password">Password</label>
 							</div>
 						</div>

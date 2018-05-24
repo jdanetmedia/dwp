@@ -44,7 +44,7 @@ if(isset($_POST["submit"])) {
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <input id="categoryName" type="text" class="validate" name="categoryName"
-                                               value="<?php echo $aCategory[0]["CategoryName"]; ?>">
+                                               value="<?php echo $aCategory[0]["CategoryName"]; ?>" required="" aria-required="true">
                                         <label for="categoryName">Category Name</label>
                                     </div>
                                 </div>

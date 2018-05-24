@@ -115,7 +115,7 @@ elseif (isset($_POST["toGallery"])) {
                   <label for="offerPrice">Discount Price</label>
                 </div>
                 <div class="input-field col s12 m4">
-                  <input id="stock" type="number" class="validate" name="StockStatus">
+                  <input id="stock" type="number" class="validate" name="StockStatus" required="" aria-required="true">
                   <label for="stock">Stock status</label>
                 </div>
               </div>
