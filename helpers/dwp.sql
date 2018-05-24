@@ -1952,3 +1952,29 @@ VALUES (NULL, '9:00', '17:00', 'Weekdays');
 
 INSERT INTO Hours
 VALUES (NULL, '10:00', '14:00', 'Weekends');
+
+/*DELIMITER $$
+CREATE DEFINER = `root`@`localhost` PROCEDURE `proc_get_all_blogposts`()
+  BEGIN
+    SELECT BlogPost.*, BlogCategory.CategoryName FROM `BlogPost` INNER JOIN BlogCategory ON BlogPost.BlogCategoryID =  BlogCategory
+    .BlogCategoryID ORDER BY BlogPost.BlogDate DESC;
+  END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER = `root`@`localhost` PROCEDURE `proc_get_blogpost_details`(
+  IN blogID int)
+  BEGIN
+    SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN
+    ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = blogID ORDER BY BlogImg.ImgID ASC;
+  END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER = `root`@`localhost` PROCEDURE `proc_save_blogposts`(
+  IN blogTitle varchar(255), IN categoryID int, IN relatedProducts int, IN blogContent text, IN seoTitle varchar(255), IN metaDescription varchar(255), IN blogDate timestamp, IN userEmail varchar(255))
+  BEGIN
+    INSERT INTO BlogPost (Title, BlogCategoryID, RelatedProducts, BlogContent, SeoTitle, MetaDescription, BlogDate, UserEmail) VALUES
+    (blogTitle, categoryID, relatedProducts, blogContent, seoTitle, metaDescription, blogDate, userEmail);
+  END$$
+DELIMITER ;*/
