@@ -160,21 +160,22 @@ class Gallery {
     $image = new SimpleImage($target_file);
     if($type == "logo") {
       // Resize image to 312 x 135 px and fill with green
+      $image->resizeToWidth(312);
       $image->maxareafill(312,135,21,149,135);
     } elseif($type == "slide") {
-      // Rezise to 1170 x 400 px and fill with gray
-      $image->maxareafill(1170,400,204,204,204);
+      // Rezise and crop to 1170 x 400 px
+      $image->resizeToWidth(1170);
+      $image->cutFromCenter(1170,400);
     } else {
-      // Resize image to 800 x 800 px and fill with gray
-      $image->maxareafill(800,800,204,204,204);
+      // Resize and crop image to 800 x 800 px
+      $image->resizeToWidth(800);
+      $image->square(800);
     }
     $image->save($target_file);
 
     // Save to database
     try {
       $conn = DB::connect();
-      // $path = $_SERVER["DOCUMENT_ROOT"] . getcwd();
-      // $cleanedPath = str_replace('/Applications/MAMP/htdocs/Applications/MAMP/htdocs', 'http://localhost:8888', $path);
 
       // Check if the system is running on localhost
       $whitelist = array(
