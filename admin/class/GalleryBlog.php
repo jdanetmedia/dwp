@@ -93,14 +93,13 @@ class GalleryBlog {
         }
 
         $image = new SimpleImage($target_file);
-        $image->maxareafill(1920,1080,21,149,135);
+        $image->resizeToWidth(1920);
+        $image->cutFromCenter(1920,1080);
         $image->save($target_file);
 
         // Save to database
         try {
             $conn = DB::connect();
-            $path = $_SERVER["DOCUMENT_ROOT"] . getcwd();
-            $cleanedPath = str_replace('/Applications/MAMP/htdocs/Applications/MAMP/htdocs', 'http://localhost:8888', $path);
 
             // Check if the system is running on localhost
             $whitelist = array(
@@ -108,9 +107,9 @@ class GalleryBlog {
                 '::1'
             );
             if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-                $filepath = $cleanedPath . "/" . $target_file;
+              $filepath = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/" . "dwp" . "/" . "admin" . "/" . $target_file;
             } else {
-                $filepath = $path . "/" . $target_file;
+              $filepath = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/" . "admin" . "/" . $target_file;
             }
 
             // Secure input

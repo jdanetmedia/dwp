@@ -52,7 +52,7 @@ if(isset($_GET["search"])) {
                   <th>Price</th>
                   <th>Sale price</th>
                   <th>Short Description</th>
-                  <th>Created on:</th>
+                  <th>Status</th>
                   <th>Edit</th>
               </tr>
             </thead>
@@ -84,7 +84,14 @@ if(isset($_GET["search"])) {
                           }
                         ?>
                       </td>
-                      <td><?php echo $product->CreationDate; ?></td>
+											<?php
+												if($product->ProductStatus == 1) {
+													$status = "Active";
+												} else {
+													$status = "Inactive";
+												}
+											?>
+                      <td><?php echo $status; ?></td>
                       <td><a href="edit-product.php?item=<?php echo $product->ItemNumber; ?>">Edit</a></td>
                     </tr>
                     <?php
