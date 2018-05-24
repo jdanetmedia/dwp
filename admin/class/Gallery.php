@@ -183,9 +183,9 @@ class Gallery {
       );
 
       if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)){
-        $filepath = "http://" . $_SERVER['HTTP_HOST'] . "/" . "dwp" . "/" . "admin" . "/" . $target_file;
+        $filepath = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/" . "dwp" . "/" . "admin" . "/" . $target_file;
       } else {
-        $filepath = $_SERVER['HTTP_HOST'] . "/" . "admin" . "/" . $target_file;
+        $filepath = (isset($_SERVER["HTTPS"]) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/" . "admin" . "/" . $target_file;
       }
 
       // Secure input
