@@ -1,7 +1,7 @@
 <?php
 class Order {
 
-  function mailCheck($connection, $ordernumber)
+  function mailCheck($ordernumber)
   {
       try {
           $conn = DB::connect();
@@ -15,7 +15,6 @@ class Order {
           $handle->execute();
 
           $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
-          $conn = DB::close();
 
           if (count($result) == 1) {
             // username/password authenticated
@@ -74,13 +73,13 @@ class Order {
 
       mail($email_to, $subject, $email_message, $headers);
 
-      $insertquery = "INSERT INTO OrderMessage VALUES (NULL, :message, :timenow, :ordernumber);";
+      $insertquery = "INSERT INTO OrderMessage (OrderMessage, OrderMessageDate, OrderNumber) VALUES (:message, :timenow, :ordernumber)";
       $handle = $conn->prepare($insertquery);
       $handle->bindParam(':ordernumber', $ordernumber);
       $handle->bindParam(':message', $message);
       $handle->bindParam(':timenow', $time);
       $handle->execute();
-
+      $conn = DB::close();
       echo "Your message was '$message' and was sent from $email";
     }
     catch(\PDOException $ex) {

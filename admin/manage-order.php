@@ -17,7 +17,7 @@ if (!logged_in()) {
 $order = new Order();
 
 if (isset($_POST["ordermessage"])) {
-    $order->mailCheck($connection, $_GET["order"]);
+    $order->mailCheck($_GET["order"]);
 }
 
 if (isset($_POST["status"])) {
