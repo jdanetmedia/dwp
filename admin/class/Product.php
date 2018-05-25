@@ -87,7 +87,7 @@ class Product {
       $productCategoryID = Security::secureString($_POST["ProductCategoryID"]);
       $productStatus = Security::secureString($_POST["ProductStatus"]);
       $shortDescription = Security::secureString($_POST["ShortDescription"]);
-      $longDescription = Security::secureString($_POST["LongDescription"]);
+      $longDescription = $_POST["LongDescription"];
       $price = Security::secureString($_POST["Price"]);
       $offerPrice = Security::secureString($_POST["OfferPrice"]);
       $stockStatus = Security::secureString($_POST["StockStatus"]);
@@ -131,7 +131,7 @@ class Product {
         $productCategoryID = Security::secureString($_POST["ProductCategoryID"]);
         $productStatus = Security::secureString($_POST["ProductStatus"]);
         $shortDescription = Security::secureString($_POST["ShortDescription"]);
-        $longDescription = Security::secureString($_POST["LongDescription"]);
+        $longDescription = $_POST["LongDescription"];
         $price = Security::secureString($_POST["Price"]);
         $offerPrice = Security::secureString($_POST["OfferPrice"]);
         $stockStatus = Security::secureString($_POST["StockStatus"]);
