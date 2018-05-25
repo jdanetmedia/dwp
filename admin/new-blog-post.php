@@ -103,7 +103,7 @@ if (isset($_POST["saveBlogPostCategory"])) {
                                                                     <div class="row">
                                                                         <div class="input-field col s12">
                                                                             <input id="categoryName" type="text" class="validate"
-                                                                                   name="categoryName" required="" aria-required="true">
+                                                                                   name="categoryName">
                                                                             <label for="categoryName">Category Name</label>
                                                                         </div>
                                                                     </div>

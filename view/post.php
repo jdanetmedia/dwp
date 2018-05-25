@@ -48,7 +48,7 @@ $author = getAuthor($postData[0]["UserEmail"]);
                       <div class="card">
                           <div class="card-image">
                               <img src="<?php echo $row["URL"]; ?>">
-                              <span class="card-title"><?php echo $row["ProductName"]; ?></span>
+                              <span class="card-title" style="color: #000000;"><?php echo $row["ProductName"]; ?></span>
                           </div>
                           <div class="card-action">
                               <?php if ($row["OfferPrice"] != NULL && $row["OfferPrice"] != 0) {

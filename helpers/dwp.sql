@@ -263,7 +263,7 @@ INSERT INTO User
 VALUES ('rasmus.andreas96@gmail.com', '$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li', 'Rasmus Andreas', 'Nielsen', NULL, 1);
 
 INSERT INTO User
-VALUES ('admin@admin.com', '$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li', 'Admin', 'Admin', NULL, 1);
+VALUES ('admin@dwp.com', '$2y$10$8esR6xSS.3XBOC3trjPXS.yZJsQluApvQsoyHeJOLbshZsdkFFU5a', 'Admin', 'Admin', NULL, 1);
 
 INSERT INTO User
 VALUES ('post@jdanet.dk', '$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li', 'Jesper', 'Dalsgaard', NULL, 0);
@@ -1812,7 +1812,7 @@ INSERT INTO Customer
 VALUES ('rasmus.andreas96@gmail.com', '$2a$10$74zsjq9/Tv6Ydq.QLlKeju.bwxXfs8GUSN051E1EeMIi4L/beo1Li', 'Spangsbjerg Kirkevej','99B', NULL, 'Rasmus Andreas', 'Nielsen', '6700', NULL);
 
 INSERT INTO Customer
-VALUES ('sebastiankbuch@hotmail.com', '$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO', NULL, NULL, NULL, 'Sebastian', 'Buch', NULL, NULL);
+VALUES ('kunde@dwp.com', '$2y$10$8esR6xSS.3XBOC3trjPXS.yZJsQluApvQsoyHeJOLbshZsdkFFU5a', NULL, NULL, NULL, 'Kunde', 'Bruger', NULL, NULL);
 
 INSERT INTO Customer
 VALUES ('post@jdanet.dk', '$2a$10$QMmK4nTUF6szqmNG3t8V/uTu5BM7ejLvaRSN7aUFoxJY4hsvzYBhO', NULL, NULL, NULL, 'Jesper', 'Dalsgaard', NULL, NULL);
@@ -1854,10 +1854,10 @@ INSERT INTO CustomerOrder
 VALUES (NULL, 'This is a order comment', 'testChargeID', '2008-11-11 13:23:44', 'Nørregade', '30', 6700, 'rasmus.andreas96@gmail.com', 3, 1, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, 'This is a order comment', 'testChargeID', '2010-11-11 13:23:44', 'Spangsbjerg Kirkevej', '99B, 16', 6700, 'sebastiankbuch@hotmail.com', 1, 2, NULL);
+VALUES (NULL, 'This is a order comment', 'testChargeID', '2010-11-11 13:23:44', 'Spangsbjerg Kirkevej', '99B, 16', 6700, 'kunde@dwp.com', 1, 2, NULL);
 
 INSERT INTO CustomerOrder
-VALUES (NULL, 'This is a order comment', 'testChargeID', '2005-11-11 13:23:44', 'Nørregade', '30', 6700, 'sebastiankbuch@hotmail.com', 3, 1, NULL);
+VALUES (NULL, 'This is a order comment', 'testChargeID', '2005-11-11 13:23:44', 'Nørregade', '30', 6700, 'kunde@dwp.com', 3, 1, NULL);
 
 INSERT INTO CustomerOrder
 VALUES (NULL, 'This is a order comment', 'testChargeID', '2012-11-11 13:23:44', 'Spangsbjerg Kirkevej', '99B, 16', 6700, 'post@jdanet.dk', 1, 2, NULL);
@@ -1952,3 +1952,29 @@ VALUES (NULL, '9:00', '17:00', 'Weekdays');
 
 INSERT INTO Hours
 VALUES (NULL, '10:00', '14:00', 'Weekends');
+
+/*DELIMITER $$
+CREATE DEFINER = `root`@`localhost` PROCEDURE `proc_get_all_blogposts`()
+  BEGIN
+    SELECT BlogPost.*, BlogCategory.CategoryName FROM `BlogPost` INNER JOIN BlogCategory ON BlogPost.BlogCategoryID =  BlogCategory
+    .BlogCategoryID ORDER BY BlogPost.BlogDate DESC;
+  END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER = `root`@`localhost` PROCEDURE `proc_get_blogpost_details`(
+  IN blogID int)
+  BEGIN
+    SELECT BlogPost.*, ImgGallery.ImgID, ImgGallery.URL FROM BlogPost LEFT JOIN BlogImg ON BlogImg.BlogPostID = BlogPost.BlogPostID LEFT JOIN
+    ImgGallery ON ImgGallery.ImgID = BlogImg.ImgID WHERE BlogPost.BlogPostID = blogID ORDER BY BlogImg.ImgID ASC;
+  END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER = `root`@`localhost` PROCEDURE `proc_save_blogposts`(
+  IN blogTitle varchar(255), IN categoryID int, IN relatedProducts int, IN blogContent text, IN seoTitle varchar(255), IN metaDescription varchar(255), IN blogDate timestamp, IN userEmail varchar(255))
+  BEGIN
+    INSERT INTO BlogPost (Title, BlogCategoryID, RelatedProducts, BlogContent, SeoTitle, MetaDescription, BlogDate, UserEmail) VALUES
+    (blogTitle, categoryID, relatedProducts, blogContent, seoTitle, metaDescription, blogDate, userEmail);
+  END$$
+DELIMITER ;*/

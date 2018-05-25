@@ -73,7 +73,7 @@
 		if ($password == $passwordvali && $vali == true) {
 			$firstName = Security::secureString($_POST['firstName']);
 			$lastName = Security::secureString($_POST['lastName']);
-			$email = $_POST['CustomerEmail'];
+			$email = Security::secureString($_POST['CustomerEmail']);
 	    $iterations = ['cost' => 10];
 	    $hashed_password = password_hash($password, PASSWORD_BCRYPT, $iterations);
 			try {
@@ -90,7 +90,6 @@
 	        $handle->bindParam(':lastName', $lastName);
 	        $handle->execute();
 
-	        $result = $handle->fetchAll( \PDO::FETCH_ASSOC );
 	        $conn = DB::close();
 	        return $result;
 
@@ -98,13 +97,6 @@
 	    catch(\PDOException $ex) {
 	        return print($ex->getMessage());
 	    }
-			if ($result) {
-				$message = "User Created.";
-				redirect_to("login.php");
-			} else {
-				$message = "User could not be created.";
-				//$message .= "<br />" . mysql_error();
-			}
 		} else {
 			$message .= "The passwords has to be the same!";
 		}

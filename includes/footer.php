@@ -37,7 +37,7 @@ $hours = getHours();
       </div>
       <div class="footer-copyright">
         <div class="container">
-          <p class="center">&copy; 2018 Copyright Text</p>
+          <p class="center">&copy; <?php echo date("Y");?> - <?php echo $pageInfo[0]["ShopName"]; ?>. All rights reserved</p>
         </div>
       </div>
     </footer>

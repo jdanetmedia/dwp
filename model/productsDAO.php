@@ -1,7 +1,7 @@
 <?php
 
 $query = "SELECT * FROM `Product` LEFT JOIN `ProductImg` ON Product.ItemNumber = ProductImg.ItemNumber
-          LEFT JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1";
+          LEFT JOIN `ImgGallery` ON ProductImg.ImgID = ImgGallery.ImgID WHERE Product.ProductStatus = 1 AND ProductImg.IsPrimary = 1";
 if (isset($_GET["cat"])) {
   if ($_GET["cat"] != "0") {
     $cat = $_GET["cat"];
